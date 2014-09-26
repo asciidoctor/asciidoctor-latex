@@ -1,0 +1,48 @@
+
+== Usage
+
+The command
+
+[source]
+--
+$ asciidoctor -r ./tex-converter.rb -b latex sample1.ad -o sample1.tex
+--
+
+will transform +sample1.ad+ into the tex file  +sample1.tex+,
+but for now without the preamble and the closing +\end{document}+
+The command
+
+[source]
+--
+$ ./run.sh sample1
+--
+incorporates the preamble and closing line.
+The resulting file can then be run through
++pdflatex+.
+
+
+
+== Files
+
+=== The main files
+
+* tex-converter.rb -- the main file
+* preamble -- needed by tex-converter.rb
+
+=== Code for testing things
+
+* run.sh
+* preprocess.rb
+* postprocess.rb
+
+=== Test files
+
+* sample1.ad
+* elliptic.ad
+
+===  Other
+
+* issues.ad
+
+
+

@@ -1,0 +1,12 @@
+== Issues for TeX conversion
+
+* The following symbols need to be passed through unchanged
+
+** +--+
+** +<+ 
+** +>+
+
+* The construct +\[ \begin{anything} ... \end{anything} \]+ 
+needs to be transformed to +\begin{anything} ... \end{anything}+
+
+* Some apostrophes and quotes are bad

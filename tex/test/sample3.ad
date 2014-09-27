@@ -1,0 +1,44 @@
+== Bad character test
+
+Please solve the inequality $x^2 > 2$.
+
+Please evaluate: $x^2 \ 2$.
+
+Please evaluate: $x^2 \\ 2$.
+
+\[ 
+M = \left[ 
+  \begin{array}{ c c } 
+	 1 & 2 \\ 
+	 3 & 4 
+  \end{array} \right] 
+\]
+
+== Passthrough tests
+
+++++
+Pass this through, please.
+++++
+
+== Quotes
+
+The below demonstrates the use of quotes:
+
+[quote, Abraham Lincoln, Soldiers' National Cemetery Dedication]
+____
+Four score and seven years ago our fathers brought forth
+on this continent a new nation 
+____
+
+It worked, but note that the standard TeX quote macro
+discards information used in some instances of the 
+Asciidoc quote.
+
+== Theorems, etc.
+
+.Theorem {counter:theorem}
+--
+Pythagoras said that $a^2 + b^2 = c^2$.
+--
+
+The theorem was used in Mesopotamia, ca. 1725 BCE.footnote:[See the tablet at Yale University]

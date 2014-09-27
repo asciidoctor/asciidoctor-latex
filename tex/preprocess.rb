@@ -1,12 +1,33 @@
+# For trying things out
+# Call the input file foo.in
+# Then execute
+# 
+#   $ ruby preprocess foo
+#
+# Currently output is directed to the
+# console.  Uncomment the last line
+# to direct output to foo.out
+
+require '/Users/carlson/Dropbox/prog/git/asciidoctor-backends/tex/tex_block/'
+include TeXBlock
+
+
 base_name = ARGV[0]
-input_file = base_name + ".ad"
-output_file = base_name + "2.ad"
+input_file = base_name + ".in"
+output_file = base_name + "out"
 
 input = File.open(input_file, 'r') { |f| f.read }
 
-TEX_DOLLAR_RX = /(^|\s|\()\$(.*?)\$($|\s|\)|,|\.)/
-TEX_DOLLAR_SUB = '\1stem:[\2]\3'
+puts "input:"
+puts "-----------------"
+puts input
+puts "-----------------\n\n"
 
-output = input.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB
+output = TeXBlock.process_environments input 
 
-File.open(output_file, 'w') {|f| f.write(output) }
+puts "output:"
+puts "-----------------"
+puts output
+puts "-----------------\n\n"
+
+# File.open(output_file, 'w') {|f| f.write(output) }

@@ -1,0 +1,145 @@
+= A Compendius Treatise of the Mathematical Arts
+Haarald Gruundahl
+2014-09-26
+:numbered:
+:toc:
+:homepage: epsilon.my.noteshare.io
+
+== Introduction
+
+Twas brillig and the slithey toves +
+went the bar and had a blast.
+
+Ho hum, ho hum, fee fie fo fum, +
+said the Jolly Green Giant.
+
+
+WARNING: The Jolly Green Giant is good,
+but he is often shadowed by the frumious
+bandersnatch, who is very, very bad. 
+
+We will study the cubic equation $\ref{eq:cubic}$
+later in this treatise.  The present cash
+value of the equation is 50 dollars.
+
+<<<
+
+== Technical matters
+
+=== Arithmetic
+
+$1 + 1 = 2$
+
+=== Algebra
+
+The name of our *much beloved* subject
+comes from 
+
+* Italian
+* Spanish
+* Medieval Latin
+* Arabic 
+
+
+The Arabic origin, _al-jabr_, is primary.
+It signifies the reunion of broken parts, bone setting, 
+from _jabara_, reunite, restore. The original sense, 
+the surgical treatment of fractures, probably came 
+via Spanish, in which it survives; the mathematical s
+ense comes from the title of a book, 
+ilm al-jabr wal-mukabala the science of 
+restoring what is missing and equating like with 
+like, by the mathematician al-Kwarizmi[[alkwarizmi]] (see algorithm).
+
+http://en.wikipedia.org/wiki/History_of_algebra[History of Algebra]
+
+* Arithmetic
+** Additive Operators
+** Multiplicative Operators
+* Algebra
+** Substitution
+** Equations
+
+
+Again: 
+
+. Arithmetic
+.. Additive Operators
+.. Multiplicative Operators
+. Algebra
+.. Substitution
+.. Equations
+
+
+....
+This
+  is
+literal
+  text
+    Do you
+	  see
+	what
+	  I mean?
+....
+
+
+=== Algorithm
+
+Nowadays [red]#algorithms# are implmented in `code`.
+
+=== Binomial Formula
+
+
+
+==== Exercise
+
+\[
+ (a + b)^2 = a^2 + 2ab + b^2
+\]
+
+
+. Substitute $a = 1$, $b = 2$ in both sides
+and verify that equality holds.
+
+. Above is the binomial formula with exponent two.
+What is the binomial formul for exponent three?
+
+===== Comment
+
+We are getting so deep in the nesting that this
+is getting ridiculous!
+
+
+====== Subcomment
+
+And even more ridiculous still!!
+
+== Matrices
+
+\[ 
+M = \left[ 
+  \begin{array}{ c c } 
+	 1 & 2 \\ 
+	 3 & 4 
+  \end{array} \right] 
+\]
+
+
+
+== Numbered equations
+
+\[
+\begin{equation}
+\label{eq:cubic}
+  a^3 + b^3 = c^3
+\end{equation}
+\]
+
+The above is an equation.  Such equations were extensively treated in
+the medieval Islamic period.  See <<alkwarizmi>> .
+	
+== Things to do
+
+Implement tables.  Such a pain in TeX, so much nicer in Asciidoc!
+
+PS.  We should handle both plain TeX and LaTeX.

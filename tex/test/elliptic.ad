@@ -1,6 +1,57 @@
+= Hodge Theory
+James Carlson
+2014-09-25
+
+:latex:
+
+////
+This is a comment.  It is not
+passed on by Asciidoc in the rendering
+process and so tex-converter does 
+not see it, since it is a node processor.
+////
+
+++++
+\(
+
+%% Macro definitions
+%% J. Carlson
+%% 9/26/2014
 
 
+%% Blackboard Bold
+\def\AA{\mathbb{A}}
+\def\BB{\mathbb{B}}
+\def\CC{\mathbb{C}}
+\def\DD{\mathbb{D}}
+\def\EE{\mathbb{E}}
+\def\FF{\mathbb{F}}
+\def\NN{\mathbb{N}}
+\def\OO\mathbb{{O}}
+\def\PP{\mathbb{P}}
+\def\QQ{\mathbb{Q}}
+\def\RR{\mathbb{R}}
+\def\ZZ{\mathbb{Z}}
+\def\ffp{\mathfrak{p}}
+\def\bold#1{\bf #1}
 
+%% Mathcal
+\def\EEE{\mathcal{E}}
+\def\PPP{\mathcal{P}}
+
+%% Arrows, sets, etc.
+\newcommand{\commadots}{, \ldots, }
+\newcommand{\set}[1]{ \{\,#1\,  \} }
+\newcommand{\sett}[2]{ \{\,#1\, \mid\, #2\, \} }
+\newcommand{\Set}[1]{ \Big\{\,#1\,  \Big\} }
+\newcommand{\Sett}[2]{ \Big\{\,#1\, \Big\vert\; #2\,  \Big\} }
+\newcommand{\mapright}[1]{\ \smash{ 
+\mathop{\longrightarrow}\limits^{#1}}\ }
+\newcommand{\vars}[2]{{#1}_1\commadots{#1}_{#2}}
+\newcommand{\map}{\longrightarrow}
+
+\)
+++++
 
 == Elliptic Curves
 
@@ -9,16 +60,24 @@ by an equation of the form
 \[
    w^2 = p(z),
 \]
-where $p(z)$ is a cubic or quartic polynomial.  Thus $\EEE$ is an algebraic curve --
-in fact a projective algebraic curve.   It is an algebraic curve of degree three,
-meaning that a generic line $L$ intersects $\EEE$ in three points.  Any line
-intersects $\EEE$ in three points counting multiplicity.  This fact allows
-one to define the structure of a group on $\EEE$.  The addition law
-is defined as follows.  Given points $A$ and $B$ on $\EEE$, let $L$ be the line
-joining $A$ and $B$, and let $C$ be the third point in which $L$ cuts
-$\EEE$.  If $C = (z,w)$, let $C' = (z,-w)$.  Then $A + B = C'$ is the 
-correct addition law.  It is easy to see that it is commutative, and it
-is not hard to find additive inverses, once one has found the zero element.
+where $p(z)$ is a cubic or quartic polynomial.  
+Thus $\EEE$ is an algebraic curve 
+in fact a projective algebraic curve.   
+It is an algebraic curve of degree three,
+meaning that a generic line $L$ intersects 
+$\EEE$ in three points.  Any line
+intersects $\EEE$ in three points counting 
+multiplicity.  This fact allows
+one to define the structure of a group on 
+$\EEE$.  The addition lawis defined as follows.  
+Given points $A$ and $B$ on $\EEE$, 
+let $L$ be the line joining $A$ and $B$, 
+and let $C$ be the third point in which $L$ cuts
+$\EEE$.  If $C = (z,w)$, let $C' = (z,-w)$.  
+Then $A + B = C'$ is the correct addition law.  
+It is easy to see that it is commutative, and it
+is not hard to find additive inverses, once one x
+has found the zero element.
 Associativity is what is difficult to prove.
 
 === Topology
@@ -48,8 +107,8 @@ $\phi(z) = \sqrt{p(z)}$ be the branch of the square root such that $\phi(a) = b$
 Then $z \mapsto (z,\phi(z))$ is a parametrization of  a neighborhood of $(a,b)$
 by a neighborhood of $a$.  This parametrization has nonzero derivative at
 each point of the neighborhood and so is a diffeomorphism.  Notice that
-$z \mapsto (z, \phi(z))$ is the inverse of projection of $\EEE$ onto the
-$z$-axis.
+$z \mapsto (z, \phi(z))$ is the inverse of projection of $\EEE$ 
+onto the $z$-axis.
 
 When $a$ is a root of of $p(z)$, the construction just given does not give
 a parametrization of a neighborhood of $(a,0$ on $\EEE$.
@@ -177,7 +236,7 @@ in the first, and a doubled line in the second.
 
 === deRham Cohomology
 
-deRham's theorem tells us that the cohomology groups of a differentiable 
+The theorem of deRham tells us that the cohomology groups of a differentiable 
 manifold can be computed as the quotient of the vector space
 of closed differential forms by the exact forms:
 \[
@@ -205,13 +264,17 @@ form has type $(p,q)$.  The set of $k$-forms which locally
 has type $(p,q)$ is well-defined.  It is a vector space which we
 denote by $A^{p,q}$.  This gives the _Hodge decomposition_ on the level
 of differential forms:
+
 \[
    A^k = \oplus_{p+q=k} A^{p,q}
 \]
+
 Let 
+
 \[
    H^{p,q}_{DR} = \frac{\text{closed $p,q$ forms  + exact $k$-forms}}{\text{exact $k$-forms}}
 \]
+
 This vector space is a subspace of $H^k_{DR}$; it depends only on the complex structure
 of the underlying manifold.  However, it is emphatically _not_ true for general complex
 manifolds, even compact ones, that the complex cohomology is the direct
@@ -220,21 +283,27 @@ XX.
 
 Let us now return to the case of elliptic curves.  As a diffrentiable
 manifold, an elliptic curve $\EEE$ is isomorphic to a product of of
-two circles: $\EEE = S^1 \times S^1$.  Let $\theta_1$ and $\theta_2$
+two circles: $\EEE = S^1 \times S^1$.  
+Let $\theta_1$ and  $\theta_2$
 be angular coordinates on the first and second factor.  Consider the 
-$\RR$-vector space spanned by $d\theta_1$ and $d\theta_2$.
+$\RR$ -vector space spanned by 
+$d\theta_1$ and $d\theta_2$.
 The exterior algebra on this vector space is a sub complex of the 
 deRham complex.
                                
 === Exercises
-. Consider the elliptic curve with affine equation  $w^2 = z(z-1)(z-2)$.
-What is its equation as a projective curve?  What is the intersection of
-this curve with the line at infinity in $\PP^2$?
+. Consider the elliptic curve with affine 
+equation  $w^2 = z(z-1)(z-2)$.
+What is its equation as a projective curve?  
+What is the intersection of
+this curve with the line at infinity in (($\PP^2$))?
 
-.  What is the zero element for the group structure on $\EEE$?  If $(z,w)$
+.  What is the zero element for the group structure on $\EEE$ ?  
+If $(z,w)$
 is a point of $\EEE$, what is its additive inverse?
 
-. Let $\EEE$ be as in the previous problem.  Let $a = 5$.  What is the
+. Let $\EEE$ be as in the previous problem.  
+Let $a = 5$.  What is the
 radius of the largest disk such that the parametrization $z \mapsto (z,\phi(z))$
 discussed above is defined?  Same question for $z= \frac{1}{10}$.
 
@@ -248,6 +317,4 @@ Explain why these are holomorphic functions.
 . For the singular elliptic curve $\EEE$ given by $z^2 - w^2 + z^3 = 0$,
 find analytic coordinates $(u,v)$ in a neighborhood of the origin such that
 $\EEE$ is given by $u^2 - v^2 = 0$.
-i
-
 

@@ -1,3 +1,9 @@
+= A Compendius Treatise of the Mathematical Arts
+Haarald Gruundahl
+2014-09-26
+:numbered:
+:toc2:
+:stem: 
 
 == Introduction
 
@@ -11,7 +17,9 @@ said the Jolly Green Giant.
 
 === Arithmetic
 
-$1 + 1 = 2$
+First, let me say that stem:[1 + 1 = 2].  If you understand
+this much, you have found the right path.  Now consider
+this stem:[2^3 = 8].
 
 === Algebra
 
@@ -20,7 +28,7 @@ comes from
 
 * Italian
 * Spanish
-* medieval Latin
+* Medieval Latin
 * Arabic 
 
 
@@ -38,11 +46,15 @@ http://en.wikipedia.org/wiki/History_of_algebra[History of Algebra]
 
 === Binomial Formula
 
-\[
- (a + b)^2 = a^2 + 2ab + b^2
-\]
+
 
 ==== Exercise
+
+[stem]
+++++
+ (a + b)^2 = a^2 + 2ab + b^2
+++++
+
 
 . Substitute $a = 1$, $b = 2$ in both sides
 and verify that equality holds.
@@ -59,6 +71,31 @@ is getting ridiculous!
 ====== Subcomment
 
 And even more ridiculous still!!
+
+== Matrices
+
+[stem]
+++++
+M = \left[ 
+  \begin{array}{ c c } 
+	 1 & 2 \\ 
+	 3 & 4 
+  \end{array} \right] 
+++++
+
+
+
+== Numbered equations
+
+
+[stem]
+++++
+\begin{equation}
+  a^3 + b^3 = c^3
+\end{equation}
+++++
+
+By the way:  stem:[a < b < c].
 
 == Things to do
 

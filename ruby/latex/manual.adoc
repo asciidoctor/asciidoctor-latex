@@ -1,4 +1,4 @@
-= TeX Converter Manual
+latex_converter= TeX Converter Manual
 James Carlson
 :toc2:
 :numbered:
@@ -14,28 +14,27 @@ of a wide range of mathematical documents,
 from one-page handouts to articles to entire books.
 
 As a demonstration of the current state of this 
-project, the file you are looking at, `manual.ad` via
+project, the file you are looking at, `manual.adoc`,
+can be rendered into HTML by
 ----
-    asciidoctor -latex manual.ad,
+    asciidoctor -latex manual.adoc,
 ----
-or can be 
-rendered as an Asciidoc file via `asciidoctor`,
-or by `pdflatex` after first running it 
-through the tex converter:
+or can be rendered as a latex file via
+----
+    asciidoctor -r ./latex_converter.rb -b latex manual.adoc
+	# => manual.tex
+----
+For the moment this conversion must be done
+in the directory in which `latex_converter.rb` resides.
+The `.tex` file can in turn be rendred into pdf via
+`pdflatex`.
 
-----
-    asciidoctor -r ./tex-converter.rb -b latex manual.ad -o manual.tex
-----
-
-The file `tex-converter.rb` is availalbe at
-https://github.com/jxxcarlson/asciidoctor-backends/tree/master/tex[github.com].
-The opton `- latex`.footnote:[The option `-latex`  has not yet been released]
 
 Mathematical text in Asciidoc can be written as 
 one usually does in LaTeX if one invokes the 
 latex option.footnote:[This option exists but has not yet been released.  To use
 	the option at http://noteshare.io[noteshare.io], include the code `:latex:` in
-	your document].  You do this via  `asciidoctor -latex foo.ad`.
+	your document].  You do this via  `asciidoctor -latex foo.adoc`.
 Thus for the Pythagorean
 theorem $a^2  + b^2 = c^2$, one writes
 

@@ -1,4 +1,4 @@
-= TeX-Converter
+= LaTeX_Converter
 James Carlson
 :numbered:
 :toc:
@@ -8,14 +8,14 @@ James Carlson
 
 == Purpose
 
-The aim of +tex-converter+ is to transform an Asciidoc
+The aim of `latex_converter` is to transform an Asciidoc
 document containing mathematics into a LaTeX document.
 Please see the file [red]#manual.ad# 
 in this repository for a more details than presented 
 here.
 
-Tex-converter supports two closely-related math formats, [blue]#asciimath#
-and [blue]#LaTeX#. With them you can render expressions
+Lalatex_converter supports two closely-related math formats, [blue]#asciimath#
+and [blue]#LaTeX#. With the latex_converter you can render expressions
 such as stem:[ a^2 + b^2 = c^2 ] and
 
 [stem]
@@ -72,21 +72,11 @@ The command
 
 [source]
 --
-$ asciidoctor -r ./tex-converter.rb -b latex sample1.ad -o sample1.tex
+$ asciidoctor -r ./latex_converter.rb -b latex sample1.adoc 
 --
 
-will transform [blue]#+sample1.ad+# into the tex file  [blue]#+sample1.tex+#.
-It can then be run through +pdflatex+. For a shortcut, use the 
-included shell script [blue]#run#:
-
-[source]
---
-$ ./run sample1
--- 
-
-This script translates `foo.ad` to `foo.tex`, i.e., it expects
-its inputs to have extension `.ad`.
-
+will create a file `sample1.tex` from `sample1.adoc`.
+Then `sample1.tex` can be run through +pdflatex+. 
 For a more complex example with a lot of math, 
 see the file `elliptic.ad` in this repo.
 The HTML is rendered at  http://epsilon.my.noteshare.io/notebook/195/?note=782[noteshare.io] for purposes of comparison.
@@ -97,12 +87,12 @@ The HTML is rendered at  http://epsilon.my.noteshare.io/notebook/195/?note=782[n
 === Code
 
 * Ruby
-** `tex-converter.rb` -- the driver program to transform asciidoc files to tex files
+** `latex_converter.rb` -- the driver program to transform asciidoc files to tex files
 ** `node_processor.rb`-- extends classes in the Asciidoctor module which translate
   Asciidoc elements to TeX elements
 ** `tex_block.rb` -- strips enclosing escaped braces as needed.
 * TeX
-** `preamble,tex` -- needed by tex-converter.rb to write a standara LaTeX preamble
+** `preamble,tex` -- needed by latex_converter.rb to write a standara LaTeX preamble
 ** `asciidoc_macros.tex` -- needed to carry out the translation of Asciidoc
    blocks to LaTeX environments
 ** `macros.tex` -- user macros
@@ -121,7 +111,7 @@ One should use all four files in testing the code.
 
 === Asciidoc
 
-The following constructs are among the those handled by `tex-converter.rb` at this time.  Please see `manual.ad` for a complete list.
+The following constructs are among the those handled by `latex_converter.rb` at this time.  Please see `manual.ad` for a complete list.
 
 
 . Sections through level 5

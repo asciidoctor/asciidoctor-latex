@@ -89,6 +89,12 @@ class LaTeXConverter
   NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES
   
   def convert node, transform = nil
+    
+    def initialize backend, opts
+      super
+      basebackend 'tex'
+      outfilesuffix '.tex'
+    end
         
     if NODE_TYPES.include? node.node_name
       node.tex_process

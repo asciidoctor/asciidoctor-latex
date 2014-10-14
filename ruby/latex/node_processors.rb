@@ -1,8 +1,5 @@
 require_relative 'colored_text'
 
-VERBOSE=true
-QUIET=false
-
 class Asciidoctor::Document
   
   
@@ -23,9 +20,9 @@ class Asciidoctor::Document
   #   field 
   #
   def tex_process
-    puts "Node: #{self.class}".blue if VERBOSE
-    # puts "Attributes: #{self.attributes}".yellow
-    # puts "#{self.methods}".magenta
+    warn "Node: #{self.class}".blue if $VERBOSE
+    # warn "Attributes: #{self.attributes}".yellow
+    # warn "#{self.methods}".magenta
     doc = "%% Preamble %%\n"
     doc << File.open("preamble.tex", 'r') { |f| f.read }
     doc << "%% Asciidoc TeX Macros %%\n"
@@ -46,7 +43,7 @@ class Asciidoctor::Document
       
     processed_content = TeXBlock.process_environments self.content
     doc << processed_content
-    # puts self.content
+    # warn self.content
     
     doc << "\n\n\\end{document}\n\n" 
   end 
@@ -59,7 +56,7 @@ end
 class Asciidoctor::Section
  
   def tex_process
-    puts ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if VERBOSE
+    warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
     case self.level
     when 1
        "\\section\{#{self.title}\}\n\n#{self.content}\n\n"
@@ -83,21 +80,21 @@ end
 class Asciidoctor::List
   
   def tex_process
-   puts ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if VERBOSE
+   warn ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if $VERBOSE
    case self.node_name
    when 'ulist'
      ulist_process
    when 'olist'
      olist_process
    else
-     puts "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" unless QUIET
+     warn "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" unless $VERBOSE.nil?
    end
   end 
    
   def ulist_process
     list = "\\begin{itemize}\n\n"
     self.content.each do |item|
-      puts ["  --  item: ".blue, "#{item.text.abbreviate}"].join(" ") if VERBOSE
+      warn ["  --  item: ".blue, "#{item.text.abbreviate}"].join(" ") if $VERBOSE
       list << "\\item #{item.text}\n\n"
       list << item.content
     end
@@ -107,7 +104,7 @@ class Asciidoctor::List
   def olist_process
     list = "\\begin{enumerate}\n\n"
     self.content.each do |item|
-      puts ["  --  item:  ".blue, "#{item.text.abbreviate}"].join(" ") if VERBOSE
+      warn ["  --  item:  ".blue, "#{item.text.abbreviate}"].join(" ") if $VERBOSE
       list << "\\item #{item.text}\n\n"
       list << item.content
     end
@@ -121,7 +118,7 @@ end
 class Asciidoctor::Block
   
   def tex_process
-    puts ["Node:".blue , "#{self.blockname}".blue].join(" ") if VERBOSE
+    warn ["Node:".blue , "#{self.blockname}".blue].join(" ") if $VERBOSE
     case self.blockname
     when :paragraph
       paragraph_process
@@ -142,7 +139,7 @@ class Asciidoctor::Block
     when :listing
       self.listing_process
     else
-      puts "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" unless QUIET
+      warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" unless $VERBOSE.nil?
       ""
     end  
   end 
@@ -152,12 +149,12 @@ class Asciidoctor::Block
   end
   
   def stem_process
-    puts ["Node:".blue, "#{self.blockname}".cyan].join(" ") if VERBOSE 
-    puts self.content.cyan
+    warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE 
+    warn self.content.cyan
     environment = TeXBlock.environment_type self.content
     if TeXBlock::INNER_TYPES.include? environment
       out = "\\\[\n#{self.content.stem_post_process}\n\\\]\n"
-      puts out.yellow
+      warn out.yellow
       out
     else
       self.content
@@ -165,27 +162,27 @@ class Asciidoctor::Block
   end
   
   def admonition_process
-    puts ["Node:".blue, "#{self.blockname}".cyan, "#{self.style}:".magenta, "#{self.lines[0]}"].join(" ") if VERBOSE   
+    warn ["Node:".blue, "#{self.blockname}".cyan, "#{self.style}:".magenta, "#{self.lines[0]}"].join(" ") if $VERBOSE   
     "\\admonition\{#{self.style}\}\{#{self.content}\}\n"
   end
   
   def page_break_process
-    puts ["Node:".blue, "#{self.blockname}".cyan].join(" ") if VERBOSE
+    warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     "\n\\vfill\\eject\n"
   end
   
   def literal_process
-    puts ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if VERBOSE
+    warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
   end
   
   def pass_process
-    puts ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if VERBOSE
+    warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     self.content
   end
   
   def quote_process
-    puts ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if VERBOSE
+    warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     "\\begin\{quote\}\n#{self.content}\n\\end\{quote\}\n"
   end
   
@@ -209,21 +206,21 @@ class Asciidoctor::Block
   # of either other than their form.
   #
   def open_process
-     puts ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ") if VERBOSE
-     puts ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if VERBOSE
-     #puts ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if VERBOSE
+     warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ") if $VERBOSE
+     warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+     #warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if $VERBOSE
      title = self.attributes["title"]
      title = title.gsub /\{.*?\}/, ""
      title = title.strip
-     puts ["Title: ".magenta, title.cyan].join(" ")
-     puts ["Content:".magenta, "#{self.content}".yellow].join(" ") if VERBOSE
+     warn ["Title: ".magenta, title.cyan].join(" ")
+     warn ["Content:".magenta, "#{self.content}".yellow].join(" ") if $VERBOSE
      "\\begin\{#{title}\}\n\\label\{#{self.id}\}\n#{self.content}\n\\end\{#{title}\}\n"
          
   end
   
   def listing_process
-    puts ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if VERBOSE
-    puts self.content.yellow
+    warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+    warn self.content.yellow
     "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
   end
  
@@ -244,13 +241,13 @@ class Asciidoctor::Inline
     when 'inline_footnote'
       self.inline_footnote_process
     else
-      puts "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})" unless QUIET
+      warn "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})" unless $VERBOSE.nil?
       ""
     end  
   end 
   
   def inline_quoted_process
-    puts ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if VERBOSE 
+    warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE 
     case self.type
     when :strong
       "\\textbf\{#{self.text}\}"
@@ -262,11 +259,11 @@ class Asciidoctor::Inline
       "\{\\tt #{self.text}\}"
     when :unquoted
       role = self.attributes["role"]
-      puts "  --  role = #{role}".yellow if VERBOSE
+      warn "  --  role = #{role}".yellow if $VERBOSE
       if role == "red"
         "\\rolered\{ #{self.text}\}"
       else
-        puts "This is inline_quoted_process.  I don't understand role = #{role}" unless QUIET
+        warn "This is inline_quoted_process.  I don't understand role = #{role}" unless $VERBOSE.nil?
       end
     else
       "\\unknown\\{#{self.text}\\}"
@@ -274,8 +271,8 @@ class Asciidoctor::Inline
   end
   
   def inline_anchor_process
-    puts ["Node:".blue, "#{self.node_name}".magenta,  "type[#{self.type}], ".green + " text: #{self.text} target: #{self.target}".cyan].join(" ") if VERBOSE
-    # puts "self.class = #{class}".yellow if VERBOSE
+    warn ["Node:".blue, "#{self.node_name}".magenta,  "type[#{self.type}], ".green + " text: #{self.text} target: #{self.target}".cyan].join(" ") if $VERBOSE
+    # warn "self.class = #{class}".yellow if $VERBOSE
     case self.type
     when :link
       "\\href\{#{self.target}\}\{#{self.text}\}"
@@ -284,19 +281,19 @@ class Asciidoctor::Inline
     when :xref
       "\\ref\{#{self.target.gsub('#','')}\}"
     else
-      puts "!!  : undefined inline anchor -----------".magenta unless QUIET
+      warn "!!  : undefined inline anchor -----------".magenta unless $VERBOSE.nil?
     end
   end
   
   def inline_break_process
-    puts ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if VERBOSE
+    warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
     "#{self.text} \\\\"
   end
   
   def inline_footnote_process
-    puts ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if VERBOSE
-    # puts self.content.yellow
-    # puts self.style.magenta
+    warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
+    # warn self.content.yellow
+    # warn self.style.magenta
     "\\footnote\{#{self.text}\}"
   end
   

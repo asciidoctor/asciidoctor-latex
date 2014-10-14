@@ -87,14 +87,14 @@ class LaTeXConverter
   INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)   
   BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)    
   NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES
+    
+  def initialize backend, opts
+    super
+    basebackend 'tex'
+    outfilesuffix '.tex'
+  end
   
   def convert node, transform = nil
-    
-    def initialize backend, opts
-      super
-      basebackend 'tex'
-      outfilesuffix '.tex'
-    end
         
     if NODE_TYPES.include? node.node_name
       node.tex_process

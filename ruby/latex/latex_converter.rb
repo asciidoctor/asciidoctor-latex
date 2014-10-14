@@ -1,5 +1,5 @@
 #
-# File: tex-converter.rb
+# File: latex-converter.rb
 # Author: J. Carlson (jxxcarlson@gmail.com)
 # Date: 9/26/2014
 #
@@ -16,13 +16,13 @@
 # 
 # Usage: 
 #
-#   $ asciidoctor -r ./tex-converter.rb -b latex sample1.ad -o sample1.tex
+#   $ asciidoctor -r ./latex-converter.rb -b latex test/sample1.adoc
 #
 # Comments
 #
 #   1.  The "warn" clause in the converter code is quite useful.  
 #       For example, you will discover in running the converter on 
-#       "sample-1.ad" that you have not implemented code for 
+#       "test/sample-1.adoc" that you have not implemented code for 
 #       the "olist" node. Thus you can work through ever more complex 
 #       examples to discover what you need to do to increase the coverage
 #       of the converter. Hackish and ad hoc, but a process nonetheless.
@@ -38,8 +38,8 @@
 #       Other than the asciidoc ->  tex mapping, the tex-converter 
 #       does not need to understand tex.
 #
-#   4.  Included in this repo are the files "sample1.ad", "sample2.ad",
-#       and "elliptic.ad" which can be used to test the code
+#   4.  Included in this repo are the files "test/sample1.adoc", "test/sample2.adoc",
+#       and "test/elliptic.adoc" which can be used to test the code
 #
 #   5.  Beginning with version 0.0.2 we use a new dispatch mechanism
 #       which should permit one to better manage growth of the code
@@ -105,6 +105,3 @@ class LaTeXConverter
   end
   
 end
-
-
-

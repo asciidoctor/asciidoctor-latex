@@ -1,10 +1,9 @@
 #!/bin/sh
 #
-# Example: ./run sample1
+# Example: ./run test/sample1.adoc
 #
-# Effect: run asciidoctor on test/ample1.adoc
-# to create test/sample1.texple1.tex
+# Effect: run asciidoctor on test/sample1.adoc
+# to create test/sample1.tex
 
-clean
-asciidoctor -r ./latex_converter.rb -b latex test/$1 -o test/foo.tex
-
+#clean
+asciidoctor -r ./latex_converter.rb -b latex test/$1

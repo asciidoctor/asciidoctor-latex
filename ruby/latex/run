@@ -1,7 +1,0 @@
-#!/bin/sh
-#
-# Example: ./run test/sample1.adoc
-#
-# Effect: run asciidoctor on test/sample1.adoc to create test/sample1.tex
-
-asciidoctor -r ./latex_converter.rb -b latex test/$1

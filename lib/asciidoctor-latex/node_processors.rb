@@ -19,15 +19,16 @@ class Asciidoctor::Document
   #   field 
   #
   def tex_process    
+    data_dir = File.join File.dirname(__FILE__), '..', '..', 'data'
     warn "Node: #{self.class}".blue if $VERBOSE
     # warn "Attributes: #{self.attributes}".yellow
     # warn "#{self.methods}".magenta
     doc = "%% Preamble %%\n"
-    doc << File.open("preamble.tex", 'r') { |f| f.read }
+    doc << File.open(File.join(data_dir, 'preamble.tex'), 'r') { |f| f.read }
     doc << "%% Asciidoc TeX Macros %%\n"
-    doc << File.open("asciidoc_tex_macros.tex", 'r') { |f| f.read }
+    doc << File.open(File.join(data_dir, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
     doc << "%% User Macros %%\n"
-    doc << File.open("macros.tex", 'r') { |f| f.read }
+    doc << File.open(File.join(data_dir, 'macros.tex'), 'r') { |f| f.read }
     doc << "%% Front Matter %%"
     doc << "\n\n\\title\{#{self.doctitle}\}\n"
     doc << "\\author\{#{self.author}\}\n"
@@ -45,7 +46,7 @@ class Asciidoctor::Document
     
     # Now write the defnitions of the new environments
     # discovered to file
-    puts "Writing environment definitions to file: new_environments.tex"
+    warn "Writing environment definitions to file: new_environments.tex" if $VERBOSE
     definitions = ""
     $latex_environment_names.each do |name|
       puts name

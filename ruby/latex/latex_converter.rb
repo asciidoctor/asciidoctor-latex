@@ -79,6 +79,7 @@ require_relative 'tex_block'
 include TeXBlock
 
 class LaTeXConverter
+  
   include Asciidoctor::Converter
   register_for 'latex'
   
@@ -94,14 +95,18 @@ class LaTeXConverter
     outfilesuffix '.tex'
   end
   
+  $latex_environment_names = [] 
+  $label_counter = 0 
+  
   def convert node, transform = nil
         
     if NODE_TYPES.include? node.node_name
       node.tex_process
     else
       warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta
-    end
+    end 
     
   end
   
+   
 end

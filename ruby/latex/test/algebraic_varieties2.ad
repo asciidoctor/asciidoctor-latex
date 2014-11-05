@@ -1,0 +1,618 @@
+:numbered:
+:toc2:
+
+:section_number: 2
+
+:latex:
+
+== Algebraic Varieties
+
+Let $\CC^n$ denote complex $n$-space with coordinates 
+$(z_1, \ldots, z_n)$, 
+let $f(z_1, \ldots, z_n)$  be a polynomial of degree $d$ with complex
+coefficients,  and let $X$ be the set of solutions to the equation
+$f(z) = 0$.  Such a set  an _affine algebraic hypersurface
+of degree_ $d$  --
+a special kind _affine algebraic set_  A general affine
+variety is the set of common zeroes of an arbitrary collection of polynomials.
+By two deep theorems in commutative algebra (the Hilbert Nullstellensatz
+and the fact that polynomial rings are Noetherian) we know that a finite number
+of polynomials is sufficient to define any algebraic set.  If an 
+algebraic set $X$ can be written as the union of two algebraic 
+sets, $X = X_1 \cup X_2$, we say that it is _reducible_.  
+An algebraic set that is not reducible is called _irreducble_
+and we say that the set is an _algebraic variety_.  
+
+.Comment
+[click]
+--
+Again,
+there is a connection with commutatiive algebra.  Let 
+$I(X)$ be the set of polynomials that vanish on $X$.  It is an
+ideal in the ring of polynomials $k[z_1, \ldots, z_n]$. Then $X$
+is a variety if and only if $I(X)$ is a prime ideal.  Any algebraic
+set  can be written as a union of irreducibel varieities.  This
+decompositon is analogous to the factorization of a number
+into to primes, or to writing an ideal as an intersection of
+primary ideals.
+--
+
+=== Examples of affine varieties
+
+Let us look at examples.  The set
+defined by $z_1 + \cdots + z_n = 0$  in $\CC^n$ is an affine
+algebraic variety of degree one.  It is isomorphic to $\CC^{n-1}$.
+The set defined by $z_1^2 + \cdots + z_n^2 =1$ is an affine
+algebraic variety of degree two, a so-called _smooth quadric_.
+It has dimension $n-1$.  (How would we define dimension?)
+The set $X$ defined by $z_1^2 + \cdots + z_n^2 = 0$ is also a quadric --
+this is the generic term for a variety of degree two.  IT is a _cone_,
+since the line joining the origin to a point $P$ of $X$  is also in $X$.
+The origin is a _singular point_ of $X$: it looks different
+from the other points, and that difference can be made precise.
+(Try to formulate a definition that distinguishes "ordinary" from
+"singular" points).  The notions 
+of smooth and singular are discussed below.
+
+
+.Problem {counter:problem}
+--
+_In how many points does a line $L \subset \CC^n$ meet
+an hypersurface of $X$ of degree $d$?_
+--
+
+.Comment
+[click]
+--
+To make the notion of number of intersection point precise,
+consider a parameterization $t \mapsto \ell(t)$ of a line $L$.
+Let $f(z) = 0$ be the equation of $X$.  The composition
+$f(\ell(t)$ is a polynomial function of one variable.  It's degree
+is a measure of the number of points of intersection.
+-- 
+.Problem {counter:problem}
+--
+_Consider the variety $X \subset \CC^n$ defined by the equation
+$z_1 + \cdots + z_n = 0$ and $z_1^2 + \cdots + z_n^2 =1$ .
+Is it non-empty?  What is its dimension?  Can one define a 
+notion of degree for it?_
+--
+
+.Problem {counter:problem}
+--
+_Consider the affine cone $X$ defined by the equation $z^2 + w^2 = 0$ in $\CC^2$.  Let $S^3(r)$ be
+the sphere of radius $r$ centered at the origin  Describe the intersection $X \cap S^3(r)$.
+Is it independent of the radius, up to homeomorphism?  Let $X'$ be the variety defined
+by $z = 0$  Compare $X \cap S^3(\epsilon)$ to $X' \cap S^3(\epsilon)$._
+--
+
+For another class of examples, consider the polynomial equation $f(z,w) = 0$,
+where $f$ has degree $d$.   The solution set $X$ is a _plane algebraic curve_.
+Consider, the degree two case, say the _conic_  $f(z,w) =z^2 +(w-1)^2 - 1$.
+Fix a point of $X$, say $A = (0,0)$.  Given $P \in X$, let $L$
+be the line joining $A$ to $P$, and note that $L$ meets $X$ _only_
+in $A$ and $P$.  Let $\Pi$ be the plane tangent to $X$ at $B = (0,2)$,
+and let $Q$ be the intersection of $L$ and $\Pi$.  As  $P$ approaches $A$, 
+the point $Q$ approaches infinity.  Let $\bar \Pi$ be the _Riemann sphere_ --
+the one-point compactification of the space of complex numbers:
+\[  
+  S^2 = \bar \Pi = \Pi \cup \set{\infty}.
+\]
+
+
+
+Then the map 
+$P \mapsto Q$ is a homeomorphism 
+of $X$ with its image in $\bar \Pi$,  It turns out the image is 
+consists of the Riemann sphere minus two points.  This space is
+holomorphically isomorhpic to $\CC^*$.
+
+.Problem {counter:problem}
+--
+_Verify the details of the argument of the homeomorphism 
+$X  \map \bar\Pi$
+and show that that homeomorphism is algebraic.._
+--
+
+Consider next the plane curve $C$ with equation
+$z^3 + w^3 = 1$. It is an example of
+an  _affine elliptic curves_  These play an especially important role in the development
+of algebraic geometry and also number theory,  e.g., Andrew Wiles' 
+proof of Fermat's last theorem.   Because $C$ is of degree three, the
+argement give earlier does not a apply, and we cannot conclude 
+that $C$ is isomorphic to a punctured Riemann sphere.   Nonetheless,
+there is information that we can extract from the line-drawing
+construction. Let $A$ be any point of $C$, and let $\Pi$ be a plane not
+containing $A$.  The line $L = AP$ generally intersections $C$ in 
+two points,  $P$ and $P'$.  Map these to $Q = L\cap \bar \Pi$.  The
+result is a 2-to-1 map of $C$ to $\bar \Pi$.  If the line $L$ is tangent
+to $C$ at $P$, the the map is 1-to-1 at $P$.  Such a point is a 
+_branch point_ of the map.  _We conclude that the cubic curve
+$z^3 + w^3 = 1$ is a 2-to-1 branched cover of an open set in $\bar \Pi$._
+
+Here is another way of constructing a 2-to-1 branched cover.  Let $g(z)$
+be a polynomial of degree $d$, and consider the affine algebraic curve $X$
+with equation $w^2 = g(z)$.  Consider the projection of $\CC^2$ 
+onto the $z$-axis.  This map induces a map
+$X \map \CC$ which is of degree two: the inverse image of a "generic" point
+consist of two distinct points, namely, the square roots of $f(z)$.  When
+$f(z) = 0$, the inverse image consists of a single point.   The set of roots
+of $f$ is the _branch locus_.
+
+When $g(z)$ is of degree three or four, then the affine curve $w^2 = g(z)$
+is an elliptic curve. The line-drawing construction still applies, except that
+the point $A$ is the point at infinity, and so the lines drawn are vertical.
+In this case se see that the image of the line-drawing map (projection)
+is the complex plane, that is, the Riemann sphere minus a point.
+
+.Problem {counter:problem}
+--
+_Use the branched cover description of an affine elliptic curve
+to compute its Euler characteristic  Then generalize your result.
+Consider also the case in which the polynomial $f(z)$ has 
+multiple roots._
+--
+
+=== Singular points and manifold structure
+
+The variety $X$ defined by a single equation 
+is a _hypersurface_.  Suppose for a moment that the gradient of $f$
+is nonzero at a point $a$ of $X$.  Then (by the holomorphic implicit
+function theorem),  there is a neighborhood
+$U$ of $a$ and a parametrization $u: U' \map U \subset X$ where (a) $U'$ is a neighborhood
+in $\CC^{n+1}$, (b) $u$ is a homeomorphism of $U$ and $U'$, and (c),
+$\nabla u(b) \ne 0$ for all $b \in U'$.  We say that components $u_i$ of $u$
+are _local coordinates_ on $U$, and we say that the points of $U$ are _smooth_.
+If all points of $X$ are smooth, we say that $X$ is smooth. This is synonymous
+with being a manifold.   If all derivatives of $f$ vanish at $a$, then there exist
+no local coordinates, and the point in question is said to be _singular_.  The origin in 
+$\CC^2$ is  a singular point of the hypersurfaces $xy = 0$, $y^2 =  x^2 + x^3 = 0$,
+and $y^2 = x^3$.  These singularities have names: the first two are _nodes_,
+and the last is a _cusp_.
+
+
+
+There is, by the way, no mystery about how local coordinates are constructed.
+If $a$ is a point of $X$, then there is an $i$ such that $\partial f/\partial z_i(a) \ne 0$.
+Consider the projection "deletion of the $i$-th coordinate",
+\[
+  p_i: \CC^n \map \CC^{n-1},
+\]
+given by
+\[
+   p_i(z_1, \ldots, z_n) = (z_1,\ldots,z_{i-1},z_{i+1},\ldots z_n),
+\]
+where $p_1(z) = (z_2, \ldots, z_n)$ and $p_n(z) = (z_1, \ldots, z_{n-1})$.
+The there is a small neighboorhood $U$ of $a$ such that $p_i$ is  
+a homeomorphism of $U$ onto its image $U'$. The restriction
+of $p_{i}^{-1}$ to a $U'$ is the sought-after local coordinate.
+Local coordinates can always be constructed in this way, as the
+inverses of projections.
+
+
+
+=== Projective space
+
+An affine algebraic curve is never compact (give a proof!).  We can
+compactify such an object in various ways, but the most natural
+way is to take the topological closure in complex projective 2-space.
+Complex projective $n$-space, denoted by $\CC\PP^n$,
+is the set of lines through the origin
+in complex $(n+1)$-space.  Thus it is the same as the quotient
+of the space $\CC^{n+1} - \set{0}$ by the action of the 
+group $\CC^* = \CC - \set{0}$,
+where the action is given by the dilations $f_\lambda(Z) = \lambda Z$,
+for $\lambda \in \CC^*$ and $Z \in \CC^{n+1} - \set{0}$. 
+
+A point $[Z]$ in $\CC\PP^n$ is an equivalence class of vectors 
+$Z' \in \CC^{n+1} - \set{0}$ under the relation $Z' \sim \lambda Z$,
+where $\lambda \ne 0$.  Any one these $Z$'s including $Z$ 
+itself, is said to be a _homogeneous coordinate vector_ of the
+point $[Z]$.  
+
+Consider the set 
+\[
+  U_i = \sett{ [Z] \in \CC\PP^n }{ Z_i \ne 0}
+\]
+If the condition $Z_i \ne 0$ holds for any $Z \in [Z]$,
+it holds for all $Z \in [Z]$.  Thus $U_i$ is a well-defined
+subset of projective space.  Since it is defined by
+the negation of an equation, it is an open set.  These
+sets cover projective space, and constitute its _standard cover_.
+(Why do they cover $\CC\PP^n$?)
+
+The open sets $U_i$ are biholomorphic to $\CC^n$ via the map
+that sends a homogeneous coordinate vector to the vector
+of ratios $Z_j/Z_i$ for $j \ne i$.  The ratios are _affine
+coordinates_ on the $U_i$.
+
+Consider now the complement of $U_i$ in $\CC\PP^n$.  This is
+the closed set $Z_i$, which we can identify with $\CC\PP^{n-1}$.
+Thus we have the decompostion
+\[
+  \CC\PP^n \cong \CC^n \cup \CC\PP^{n-1}
+\]
+into disjoint open sets, one open and one closed. When $n = 1$, this decomposition
+is 
+\[
+  \CC\PP^1 \cong \CC \cup \set{\text{point}}.
+\]
+Thus $\CC\PP^1$ is the same as the one point compactification of $\RR^2$.
+Using stereographic projection, we identify this compactificaton as the
+two-sphere, $S^2$.  One can use this description to present $\CC\PP^1$
+in another way. as the 2-disk $D^2  = \sett{ x \in \RR^2 }{ ||x|| \le 1 }$
+with its boundary $S^1 = \sett{ x \in \RR^2 }{ ||x|| = 1 }$ identified to a point.
+That is, we have found the cell decomposition of $\CC\PP^1$.  If one is 
+familiar with cellular homology, the cell decomposition gives the homology.
+The boundary of the only two-cell is a linear combination of one-cells, of which
+thee are none.  Thus the two-cell $D^2$ is a generator of $H_2(S^2,\ZZ)$.  It is
+the fundamental homology class.  There are no one-cells in this decomposition,
+so $H_1(S^2) = 0$.  Finally, there is a single zero-cell which generates 
+the zeroth homology.
+
+.Problem {counter:problem}
+-- 
+_Describe the cell structure of $\CC\PP^n$ and compute its homology._
+--
+
+.Problem {counter:problem}
+-- 
+_Let $S^{2n + 1}$ be the unit sphere in $\CC^{n+1}$. The equivalence relation
+on $\CC^{n+1} - \set{0}$ used to define complex projective space restricts
+to an equivalence relation on the unit sphere.  Describe the map that goes
+from the sphere to the quotation of the sphere by the relation._
+--
+
+The standard cover of projective space leads to its description as a complex manifold.
+The archetype of a complex manifold of dimension $n$ is an open set $U$ in $\CC^n$,
+for which one has the usual global coordinates $z_1, \ldots, z_n$.  A general
+complex manifold $M$ is a topological space endowed with an open cover 
+$\set{U_\alpha}$ and homeomorphisms
+\[
+   f_\alpha: U_\alpha \map V_\alpha \subset \CC^n
+\]
+When $U_\alpha \cap U_\beta \ne \emptyset $,  the compositions
+
+\[
+  g_{\alpha\beta} = f_\alpha^{-1}\circ f_\beta: 
+\text{subset of $U_\beta$ } \map  \text{subset of $U_\alpha$ }
+\]
+
+are defined.  These are the _transition functions_.  
+These compositions are called _transition functions_.  They satisfy the 
+identities
+\[ 
+  g_{\alpha\beta}\circ g_{\beta\gamma} = g_{\alpha\gamma}.
+\]
+Since the domain
+and range are open sets in $\CC^n$, it makes sense to require
+them to be holomorphic.   and holomorphic.  
+
+The previous observation, which we make in the
+context of an algebraic curve with charts coming from the parameterizations
+given by projections onto the coordinate axes, is the starting point for
+the abstract definition of a manifold.  We take as the given data a collection
+of open sets $\set{U_\alpha}$ on a topological space $M$ and a set of
+homeomorphisms $f_\alpha: U_\alpha \map V_\alpha$, where the 
+$V_\alpha$ are open sets in real or complex Euclidean space ($\RR^n$ or
+$\CC^n$).  We assume that the transition functions are of a given category:
+ diffeomorphisms, holomorphic diffeomorphisms, etc.
+We assume also that they satisfy the cocycle condition $\eqref{eq:cocycle}$.  Then 
+we say that the charts define the structure of a differential manifold,
+complex manifold, etc.
+
+
+=== Projective varieties
+
+Consider now a homogeneous polynomial $F(Z)$
+of degree $d$.  Its zero-set $\tilde X$ in $\CC^{n+1} - \set{0}$ is invariant
+under the $\CC^*$ action and so defines a closed subset $X \subset \CC\PP^n$.
+This set is by definition a _projective algebraic hypersurface_.
+
+
+=== Stop here
+
+Thus $\EEE$ is an algebraic curve --
+in fact a projective algebraic curve.   It is an algebraic curve of degree three,
+meaning that a generic line $L$ intersects $\EEE$ in three points.  Any line
+intersects $\EEE$ in three points counting multiplicity.  This fact allows
+one to define the structure of a group on $\EEE$.  The addition law
+is defined as follows.  Given points $A$ and $B$ on $\EEE$, let $L$ be the line
+joining $A$ and $B$, and let $C$ be the third point in which $L$ cuts
+$\EEE$.  If $C = (z,w)$, let $C' = (z,-w)$.  Then $A + B = C'$ is the 
+correct addition law.  It is easy to see that it is commutative, and it
+is not hard to find additive inverses, once one has found the zero element.
+Associativity is what is difficult to prove.
+
+=== Topology
+As a topological space, an elliptic curve is a torus, as 
+depicted in the figure below.  Its homology is generated by the two cycles
+$\delta$ and $\gamma$.  Thus we have
+\[
+   H_1(\EEE, \ZZ) \cong \ZZ^2 = \ZZ\set{ \delta, \gamma}.
+\]
+
+FIGURE
+
+=== Analytic Structure
+
+
+An algebraic curve is also a _complex manifold_,
+meaning that locally it is a manifold modeled on open sets in $\CC^n$.  An elliptic
+curve is a complex manifold of dimension one, and so we may take the local
+models to the disk, of radius $\epsilon$,
+\[
+  \Delta_\epsilon = \sett{ z \in \CC }{ |z| < \epsilon }.
+\]  What this means
+is that any point in $\EEE$ has a neighborhood which is parameterized by $\Delta$.
+To see what this means in concrete terms, let $a$ be any point in $\CC$ which is
+not a root of  the polynomial $p$.  Let $b$ be one of the two solutions of
+the equation $w^2 = p(a)$.  Then $(a,b)$ is a point of $\EEE$.  Let 
+$\phi(z) = \sqrt{p(z)}$ be the branch of the square root such that $\phi(a) = b$.
+Then $z \mapsto (z,\phi(z))$ is a parametrization of  a neighborhood of $(a,b)$
+by a neighborhood of $a$.  This parametrization has nonzero derivative at
+each point of the neighborhood and so is a diffeomorphism.  Notice that
+$z \mapsto (z, \phi(z))$ is the inverse of projection of $\EEE$ onto the
+$z$-axis.
+
+When $a$ is a root of of $p(z)$, the construction just given does not give
+a parametrization of a neighborhood of $(a,0$ on $\EEE$.
+(Why?).  However, it turns out that the inverse of projection of $\EEE$
+onto the $w$ axis does give the needed parametrization.  This is because
+$p(z)$ has a simple zero at $z = a$ and so has an inverse function $q$.
+Then 
+\[
+  w \mapsto (z,w) = (q(w^2)),w)
+\]
+is the required parametrization.  Notice that it has nonzero derivative near $w = 0$.
+
+The parametrization just given is in terms of complex variables, and 
+the parametrizing functions are complex analytic, i.e., holomorphic.
+The complex variable $z$ can be written in terms of real and imaginary
+parts as $z = u + \sqrt{-1}v$.  Then the parametrization can be written as
+\[
+   (u,v) \mapsto (u,v,\lambda(u,v), \mu(u,v),
+\]
+where
+\[
+  \phi(u,v) = \lambda(u,v)  + \sqrt{-1}\mu(u,v)
+\] 
+is the decomposition into real and imaginary part.
+
+So far we have treated the real and complex manifold structures on 
+an elliptic curve in terms of parameterizations.  The official treatment
+is to use their inverse functions, which we refer to as _charts_.   If
+\[
+   z \mapsto (z,w) = (z,\phi(z))
+\]
+is a parameterization, then its inverse function 
+is just 
+\[
+  (z,w) \in \EEE \mapsto z
+\]
+Via this chart we view $z$ as a  _function_ of points $(z,w)$ of $\EEE$.
+We refer to $z$ as a _local coordinates_.
+
+
+=== Singular Varieties
+
+Consider an algebraic curve $M$ given by an equation $f(z,w) = 0$.
+In the case of our elliptic curve, $f(z,w) = w^2 - p(z)$.
+The  construction of charts or holomorphic parameterizations via
+projections onto the axes and their inverses work in a neighborhood
+of a point on $M$, provide that $\nabla f \ne 0$ at the point.
+This is a consequence of the implicit function theorem.  A point
+at which $\nabla f = 0$ is called _singular_.  A point at which 
+$\nabla f \ne 0$ is called _non-singular_, or _smooth_.  If all 
+points of $M$ are smooth, then we say that $M$ is smooth.  In that
+case it is a complex manifold.  
+
+As an example, consider the elliptic curve $\EEE$
+with equation $x^2 - y^2 + x^3 = 0$.  The origin is a singular point.  In 
+suitable analytic coordinates $u,v$ in a neighborhood of the origin,
+$\EEE$ is given by the equation
+\[
+   u^2 - v^2 = 0
+\]
+Near the origin, $\EEE$ looks like the union of the lines $u = v$ and $u  = -v$.
+This kind of singularity is called a _node_.  The other important type 
+of singularity for elliptic curves is the _cusp_, with equation $w^2 = z^3$.
+
+Both the node and the cusp are singularities of multiplicity two.  To define
+multiplicity, consider a polynomial equation $f(z,w) = 0$ with $(0,0)$ as solution.
+The 
+\[
+   f(z,w) = f_m(z,w) + f_{m+1}(z,w) + \cdots,
+\]
+where the $f_\ell(z,w)$ are homogeneous polynomials of degree $\ell \le d$
+where $d$ is the degree of $f$.  The leading term has degree $m \ge 1$, and
+that degree is by definition the multiplicity. The variety defined by 
+$f_m(z,w)$ is the _tangent cone_ of $f = 0$ at the given point.  
+Thus the multiplicity is just the degree of the tangent cone.
+
+To understand the significance
+of the tangent cone, consider  a parametric line 
+$\phi(t) =(\lambda t, \mu t)$, and let 
+ $f\circ\phi(t) = f(\lambda t , \mu t)$ be the composition with $f$.  Then
+\[
+   f\circ\phi(t) = f_m(\lambda.\mu)t^m + f_{m+1}(\lambda.\mu)t^{m+1} + \cdots
+\]
+If $(\lambda. \mu)$ is not a solution of $f_m(\lambda.\mu) = 0$, the
+$f\circ\phi(t)$ vanshhes to order $m$. If $f_m(\lambda.\mu) = 0$, then
+the composition vanishes to order greater than $m$.  In other words,
+the tangent cone, viewed as a _projective_ variety, is the set of lines
+which are "more tangent" to the variety at $p$ than a generic line through $p$.
+
+For elliptic curves, the two kinds of tangent cones which appear are those
+of the node and cusp, respectively.  The cones are a pair of distinct lines
+in the first, and a doubled line in the second.
+
+
+=== deRham Cohomology
+
+
+Let $\phi$ be a differential form of degree $k$ on a differentiable
+manifold $M$. If $x_1 \commadots x_n$ are local coordinates,
+then $\phi$ is a linear combination of forms
+\[
+   dx_{i_1}\wedge \cdots \wedge dx_{i_k}
+\]
+with smooth functions as coefficients.  Recall that the wedge product
+is skew-symmetric, i.e., $dx_i \wedge dx_j = - dx_j \wedge dx_i$.
+
+Let us abbreviate this
+"basic" differential form as $dx_I$, where $I = (i_1, \ldots, i_k)$
+is a _multi-index_ of degree $k$.  Thus $\phi$ can be written
+locally as
+\[
+   \phi = \sum_{I} f_I(x) dx_I.
+\]
+The exterior derivative of a form $\phi$ is defined by the formula
+\[
+   d\phi = \sum_{I,k} \frac{\partial f_I}{\partial x_k}(x)dx_k\wedge dx_I.
+\]
+Differentiation  is a symmetric operator, that is, 
+\[
+   \frac{\partial^2 f}{\partial x \partial y} =  \frac{\partial^2 f}{\partial y \partial x}.
+\]
+This fact, combined with the skew-symmetry of the wedge product, implies
+that
+\[
+   d^2\phi = 0
+\]
+Consequently the vectors spaces 
+\[
+   A^k(M) = \set{\text{differential $k$-forms}}
+\]
+fit together to form a complex,
+\[
+  A^\bullet = [A^0 \mapright{d} A^1 \mapright{d} A^2 \mapright{d} \cdots ]
+\]
+Let 
+\[ 
+ Z^k = \sett{ \phi \in A^k }{ d\phi = 0 }.
+\]
+be the space of _closed forms_, and let 
+\[ 
+ B^k = \sett{ d\psi }{ \psi \in A^{k-1} }.
+\]
+be the space of _exact_ forms.  Because $d^2\phi = 0$, the exact
+forms are a subspace of the closed forms:
+\[
+   B^k \subset Z^k.
+\]
+Therefore the quotient vector space,
+\[
+   H^k = \frac{ Z^k }{ B^k },
+\]
+is defined.  This quotient is by definition the $k$-th  _deRham cohomology_.
+We sometimes write it as $H^k_{DR}(M)$, distinguishing it from the 
+$k$-th singular cohomology group, $H^k_{sing}(M)$. 
+
+.Theorem {counter:theorem}
+--
+_Integration defines a functorial isomorphism $H^k_{DR}(M) \map H^k_{sing}(M)$._
+--
+
+TO BE CONTINUED ...
+
+and let $A^k(M)$ be the vector space of all
+such forms.  Let $d\phi$ be the exterior derivative of $\phi$.
+Thus, if $\phi = a(x_1\commadots x_n)$
+
+
+
+and let $\sigma$ be a differentiable
+chain of degree $k$.  The the integral
+\[
+    \int_\sigma \phi
+\]
+is defined.  If $\psi$ is a differential form of degree $k-1$, then
+Stokes' theorem says that
+\[
+      \int_\sigma d\psi = \int_{\partial \sigma} \psi,
+\]
+where $\partial \sigma$ is the boundary of $\sigma$ and
+where $d\phi$ is the exterior derivative. 
+
+
+\[
+   \phi \mapsto \int \phi
+\]
+takes differential forms
+
+deRham's theorem tells us that the cohomology groups of a differentiable 
+manifold can be computed as the quotient of the vector space
+of closed differential forms by the exact forms:
+\[
+  H^k(M,\RR) = \frac{\text{closed $k$-forms}}{\text{exact $k$-forms}}.
+\]
+This assertion holds for both real and complex coefficients:
+\[
+  H^k(M,\CC) = \frac{\text{closed $k$-forms}}{\text{exact $k$-forms}}.
+\]
+where the forms in each case have coefficients in the given field. 
+
+
+In the case
+of a Riemann surface we can expression complex-valued differential
+one-forms in two ways.  The first is as linear combinations $du$ and $dv$, 
+where $u$ and $v$ are real coordinates, e.g., the real and imaginary
+parts of a holomorphic coordinate $z$.  The second way is as 
+ linear combinations of $dz$ and $d\bar z$, where $z$
+is a holomorphic coordinate.  If a one-form can be expressed locally
+in all coordinate systems as $\phi = fdz$, then we say that it is of
+type $(1,0)$.  A form that is locally given by $gd\bar z$ is said to
+be of type $(0,1)$.  Such fancy terminology is not needed for 
+Riemann surfaces, but is required for varieties of higher dimension.
+Thus, if $M$ is an $n$-dimensional complex manifold with local holomorphic
+coordinates $z_1, \ldots, z_n$, then we can take wedge products
+of $p$ of the $dz_i$ and $q$ of the $d\bar z_j$.  We say that such a 
+form has type $(p,q)$.  The set of $k$-forms which locally
+has type $(p,q)$ is well-defined.  It is a vector space which we
+denote by $A^{p,q}$.  This gives the _Hodge decomposition_ on the level
+of differential forms:
+\[
+   A^k = \oplus_{p+q=k} A^{p,q}
+\]
+Let 
+\[
+   H^{p,q}_{DR} = \frac{\text{closed $p,q$ forms  + exact $k$-forms}}{\text{exact $k$-forms}}
+\]
+This vector space is a subspace of $H^k_{DR}$; it depends only on the complex structure
+of the underlying manifold.  However, it is emphatically _not_ true for general complex
+manifolds, even compact ones, that the complex cohomology is the direct
+sum of the Hodge spaces $H^{p,q}$.  We will discuss counterexamples in section
+XX.  
+
+Let us now return to the case of elliptic curves.  As a differentiable
+manifold, an elliptic curve $\EEE$ is isomorphic to a product of of
+two circles: $\EEE = S^1 \times S^1$.  Let $\theta_1$ and $\theta_2$
+be angular coordinates on the first and second factor.  Consider the 
+$\RR$-vector space spanned by $d\theta_1$ and $d\theta_2$.
+The exterior algebra on this vector space is a sub complex of the 
+deRham complex.
+                               
+=== Exercises
+. Consider the elliptic curve with affine equation  $w^2 = z(z-1)(z-2)$.
+What is its equation as a projective curve?  What is the intersection of
+this curve with the line at infinity in $\PP^2$?
+
+.  What is the zero element for the group structure on $\EEE$?  If $(z,w)$
+is a point of $\EEE$, what is its additive inverse?
+
+. Let $\EEE$ be as in the previous problem.  Let $a = 5$.  What is the
+radius of the largest disk such that the parametrization $z \mapsto (z,\phi(z))$
+discussed above is defined?  Same question for $z= \frac{1}{10}$.
+
+. Determine the domain and range of the structure functions
+\[
+  g_{\alpha\beta} = f_\alpha^{-1}\circ f_\beta: 
+\text{subset of $U_\beta$} \map  \text{subset of $U_\alpha$}
+\]
+Explain why these are holomorphic functions.
+
+. For the singular elliptic curve $\EEE$ given by $z^2 - w^2 + z^3 = 0$,
+find analytic coordinates $(u,v)$ in a neighborhood of the origin such that
+$\EEE$ is given by $u^2 - v^2 = 0$.
+

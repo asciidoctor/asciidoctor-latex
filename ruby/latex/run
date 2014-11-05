@@ -2,8 +2,6 @@
 #
 # Example: ./run test/sample1.adoc
 #
-# Effect: run asciidoctor on test/sample1.adoc
-# to create test/sample1.tex
+# Effect: run asciidoctor on test/sample1.adoc to create test/sample1.tex
 
-#clean
 asciidoctor -r ./latex_converter.rb -b latex test/$1

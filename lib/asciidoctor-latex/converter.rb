@@ -75,6 +75,7 @@ require 'asciidoctor'
 require_relative 'colored_text'
 require_relative 'node_processors'
 require_relative 'tex_block'
+require_relative 'environment_block'
 
 include TeXBlock
 
@@ -83,11 +84,16 @@ class LaTeXConverter
   include Asciidoctor::Converter
   register_for 'latex'
   
+  Extensions.register :latex do
+    block EnvironmentBlock
+  end
+  
   TOP_TYPES = %w(document section)
   LIST_TYPES = %w(olist ulist )        
   INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)   
-  BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)    
-  NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES
+  BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)
+  OTHER_TYPES = %w(environment table)    
+  NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
     
   def initialize backend, opts
     super

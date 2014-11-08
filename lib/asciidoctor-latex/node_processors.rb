@@ -1,5 +1,7 @@
 require_relative 'colored_text'
 
+DEVELOPMENT=true  
+
 class Asciidoctor::Document
 
   # Write preamble for tex file, write closing
@@ -18,6 +20,8 @@ class Asciidoctor::Document
   #   macro definitions.  In noteshare there is a database
   #   field 
   #
+   
+  
   def tex_process    
     data_dir = File.join File.dirname(__FILE__), '..', '..', 'data'
     warn "Node: #{self.class}".blue if $VERBOSE
@@ -50,7 +54,7 @@ class Asciidoctor::Document
     definitions = ""
     $latex_environment_names.each do |name|
       puts name
-      definitions << "\\newtheorem\{#{name}\}\{#{name}\}" << "\n"
+      definitions << "\\newtheorem\{#{name}\}\{#{name.capitalize}\}" << "\n"
     end
     File.open('new_environments.tex', 'w') { |f| f.write(definitions) }
     
@@ -125,6 +129,8 @@ end
 # Proces block elements of varios kinds
 class Asciidoctor::Block
   
+  STANDARD_ENVIRONMENT_NAMES = %w(theorem proposition lemma definition example problem)
+  
   def tex_process
     warn ["Node:".blue , "#{self.blockname}".blue].join(" ") if $VERBOSE
     case self.blockname
@@ -144,6 +150,8 @@ class Asciidoctor::Block
       self.quote_process
     when :open
       self.open_process
+    when :environment
+      self.environment_process
     when :listing
       self.listing_process
     else
@@ -191,8 +199,36 @@ class Asciidoctor::Block
   
   def quote_process
     warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-    "\\begin\{quote\}\n#{self.content}\n\\end\{quote\}\n"
+    "\\begin\{quote\}\n#{self.content}\\end\{quote\}\n"
   end
+  
+  
+  
+  def environment_process
+        
+    puts "begin environment_process".blue if DEVELOPMENT
+    # construct the LaTeX for this node
+    puts "title = #{self.title}".yellow
+    puts self.content.cyan
+  
+    env = self.attributes["role"]
+    # record any environments encounted but not built=in
+    if !STANDARD_ENVIRONMENT_NAMES.include? env
+      $latex_environment_names << env
+    end
+    
+    if self.id == nil # No label
+      output = "\\begin\{#{env}\}\n#{self.content}\n\\end\{#{env}\}\n"
+    else
+      output = "\\begin\{#{env}\}\n\\label\{#{self.id}\}\n#{self.content}\\end\{#{env}\}\n"
+    end
+   
+    puts "end environment_process\n".blue if DEVELOPMENT
+    
+    output
+     
+  end
+  
   
   # Process open blocks.  Map a block of the form
   #
@@ -214,31 +250,26 @@ class Asciidoctor::Block
   # of either other than their form.
   #
   def open_process
+    
+    # Get title !- nil or make a dummy one
+    title = self.attributes["title"]
+    if title == nil
+      title = "Dummy"
+    end
+         
+     # Report on this node
      warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ") if $VERBOSE
      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
      warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if $VERBOSE
-     title = self.attributes["title"]
-     if title
-       title = title.gsub /\{.*?\}/, ""
-       title = title.strip
-     else
-       warn "Empty title".yellow if $VERBOSE
-     end
      warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ")
      warn ["Content:".magenta, "#{self.content}".yellow].join(" ") if $VERBOSE
      warn ["Style:".green, "#{self.style}".red].join(" ") if $VERBOSE
-     warn ["METHODS:".red, "#{self.mathods}".yellow].join(" ") if $VERBOSE
-     if !$latex_environment_names.include? title
-       $latex_environment_names << title
-     end
-     # Write unique labels, as informative as possible:
-     if self.id == nil
-       $label_counter += 1
-       label_text = "#{title.downcase}:#{$label_counter}"
-     else
-       label_text = self.id
-     end
-     "\\begin\{#{title}\}\n\\label\{#{label_text}\}\n#{self.content}\n\\end\{#{title}\}\n"
+     warn ["METHODS:".red, "#{self.methods}".yellow].join(" ") if $VERBOSE
+          
+     # strip constructs like {counter:theorem} from the title
+     title = title.gsub /\{.*?\}/, ""
+     title = title.strip
+     
   end
   
   def listing_process
@@ -263,7 +294,7 @@ class Asciidoctor::Inline
     when 'inline_footnote'
       self.inline_footnote_process
     else
-      warn "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})" unless $VERBOSE.nil?
+      warn "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})".yellow unless $VERBOSE.nil?
       ""
     end  
   end 
@@ -320,6 +351,27 @@ class Asciidoctor::Inline
   end
   
 end
+
+class Asciidoctor::Table
+  
+  def tex_process
+    warn "This is Asciidoctor::Table, tex_process.  I don't know how to do that".yellow +  " (#{self.node_name})".magenta unless $VERBOSE.nil?
+    warn ["-- Node:".blue, "#{self.node_name}".cyan, "Methods: #{self.methods}".yellow ].join(" ") if $VERBOSE
+    a = self.rows.body.pop 
+    warn "#{a[0].content} - #{a[1].content}"
+    b = self.rows.body.pop 
+    warn "#{b[0].content} - #{b[1].content}"
+    c = self.rows.body.pop 
+    warn "#{c[0].content} - #{c[1].content}"
+    n = 0
+    warn self.rows.class  
+    
+  end
+  
+end
+
+
+
 
 class String
   

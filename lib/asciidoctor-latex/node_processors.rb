@@ -216,12 +216,18 @@ class Asciidoctor::Block
   def open_process
      warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ") if $VERBOSE
      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-     #warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if $VERBOSE
+     warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if $VERBOSE
      title = self.attributes["title"]
-     title = title.gsub /\{.*?\}/, ""
-     title = title.strip
+     if title
+       title = title.gsub /\{.*?\}/, ""
+       title = title.strip
+     else
+       warn "Empty title".yellow if $VERBOSE
+     end
      warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ")
      warn ["Content:".magenta, "#{self.content}".yellow].join(" ") if $VERBOSE
+     warn ["Style:".green, "#{self.style}".red].join(" ") if $VERBOSE
+     warn ["METHODS:".red, "#{self.mathods}".yellow].join(" ") if $VERBOSE
      if !$latex_environment_names.include? title
        $latex_environment_names << title
      end

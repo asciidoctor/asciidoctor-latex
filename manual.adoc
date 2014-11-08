@@ -1,4 +1,4 @@
-latex_converter= TeX Converter Manual
+= LaTeX Converter Manual
 James Carlson
 :toc2:
 :numbered:
@@ -176,8 +176,9 @@ is mapped to
 
 ----
     \begin{quote}
-    Four score and seven years ago our fathers brought forth
-    on this continent a new nation
+      Four score and seven years ago our fathers brought forth
+      on this continent a new nation
+    \end{quote}
 ----
 
 === Footnotes

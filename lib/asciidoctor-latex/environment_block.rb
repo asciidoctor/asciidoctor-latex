@@ -54,6 +54,8 @@
 # Note to self: when done with this, eliminate 
 # the puts lines with DEVELOPMENT
 # or toggle them with $VERBOSE
+
+require 'asciidoctor'
  
 class EnvironmentBlock < Extensions::BlockProcessor
   

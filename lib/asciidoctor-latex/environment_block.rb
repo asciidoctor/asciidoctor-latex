@@ -56,10 +56,14 @@
 # or toggle them with $VERBOSE
 
 require 'asciidoctor'
+require 'asciidoctor/extensions'
+include Asciidoctor
+include Asciidoctor::Extensions
  
 class EnvironmentBlock < Extensions::BlockProcessor
   
   require_relative 'colored_text'
+  # require 
   
   use_dsl
   # ^^^ don't know what this is.  Could you explain?

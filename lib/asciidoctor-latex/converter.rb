@@ -76,8 +76,28 @@ require_relative 'colored_text'
 require_relative 'node_processors'
 require_relative 'tex_block'
 require_relative 'environment_block'
+require_relative 'click_block'
 
 include TeXBlock
+
+require 'asciidoctor/converter/html5'
+
+module Asciidoctor
+  module LaTeX
+    module Html5ConverterExtensions
+      def environment node
+        # simply add the "environment" role and delegate to the open block convert handler
+        node.attributes['roles'] = (node.roles + ['environment']) * ' '
+        self.open node
+      end
+    end
+  end
+end
+
+class Asciidoctor::Converter::Html5Converter
+  # inject our custom code into the existing Html5Converter class (Ruby 2.0 and above)
+  prepend Asciidoctor::LaTeX::Html5ConverterExtensions
+end
 
 class LaTeXConverter
   
@@ -86,13 +106,14 @@ class LaTeXConverter
   
   Extensions.register :latex do
     block EnvironmentBlock
+    block ClickBlock
   end
   
   TOP_TYPES = %w(document section)
   LIST_TYPES = %w(olist ulist )        
   INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)   
   BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)
-  OTHER_TYPES = %w(environment table)    
+  OTHER_TYPES = %w(environment click table)    
   NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
     
   def initialize backend, opts

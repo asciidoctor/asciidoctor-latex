@@ -152,6 +152,8 @@ class Asciidoctor::Block
       self.open_process
     when :environment
       self.environment_process
+    when :click
+      self.click_process
     when :listing
       self.listing_process
     else
@@ -224,6 +226,31 @@ class Asciidoctor::Block
     end
    
     puts "end environment_process\n".blue if DEVELOPMENT
+    
+    output
+     
+  end
+  
+  def click_process
+        
+    puts "begin click_process".blue if DEVELOPMENT
+    # construct the LaTeX for this node
+    puts "title = #{self.title}".yellow
+    puts self.content.cyan
+  
+    click = self.attributes["role"]
+    # record any environments encounted but not built=in
+    if !STANDARD_ENVIRONMENT_NAMES.include? click
+      $latex_environment_names << click
+    end
+    
+    if self.id == nil # No label
+      output = "\\begin\{#{click}\}\n#{self.content}\n\\end\{#{click}\}\n"
+    else
+      output = "\\begin\{#{click}\}\n\\label\{#{self.id}\}\n#{self.content}\\end\{#{click}\}\n"
+    end
+   
+    puts "end click_process\n".blue if DEVELOPMENT
     
     output
      
@@ -303,7 +330,8 @@ class Asciidoctor::Inline
     warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE 
     case self.type
     when :strong
-      "\\textbf\{#{self.text}\}"
+      #"\\textbf\{#{self.text}\}"
+      self.text
     when :emphasis
       "\\emph\{#{self.text}\}"
     when :asciimath

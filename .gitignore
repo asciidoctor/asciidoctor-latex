@@ -3,3 +3,14 @@
 /pkg/
 /.ruby-gemset
 /.ruby-version
+
+
+samples/*.html
+samples/*.tex
+MYNOTES.adoc
+
+# working directories jc
+samples2
+xx
+work
+tests

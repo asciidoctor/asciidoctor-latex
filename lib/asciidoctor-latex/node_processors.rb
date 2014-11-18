@@ -1,6 +1,6 @@
 require_relative 'colored_text'
 
-DEVELOPMENT=true  
+ 
 
 class Asciidoctor::Document
 
@@ -208,7 +208,7 @@ class Asciidoctor::Block
   
   def environment_process
         
-    puts "begin environment_process".blue if DEVELOPMENT
+    warn "begin environment_process".blue if $VERBOSE
     # construct the LaTeX for this node
     puts "title = #{self.title}".yellow
     puts self.content.cyan
@@ -225,7 +225,7 @@ class Asciidoctor::Block
       output = "\\begin\{#{env}\}\n\\label\{#{self.id}\}\n#{self.content}\\end\{#{env}\}\n"
     end
    
-    puts "end environment_process\n".blue if DEVELOPMENT
+    warn "end environment_process\n".blue if $VERBOSE
     
     output
      
@@ -233,10 +233,10 @@ class Asciidoctor::Block
   
   def click_process
         
-    puts "begin click_process".blue if DEVELOPMENT
+    warn "begin click_process".blue if $VERBOSE
     # construct the LaTeX for this node
-    puts "title = #{self.title}".yellow
-    puts self.content.cyan
+    warn "title = #{self.title}".yellow if $VERBOSE
+    warn self.content.cyan if $VERBOSE
   
     click = self.attributes["role"]
     # record any environments encounted but not built=in
@@ -250,7 +250,7 @@ class Asciidoctor::Block
       output = "\\begin\{#{click}\}\n\\label\{#{self.id}\}\n#{self.content}\\end\{#{click}\}\n"
     end
    
-    puts "end click_process\n".blue if DEVELOPMENT
+    warn "end click_process\n".blue if $VERBOSE
     
     output
      

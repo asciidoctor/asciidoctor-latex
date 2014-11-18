@@ -51,9 +51,6 @@
 # conventions: the body of the block is
 # italicized.
 
-# Note to self: when done with this, eliminate 
-# the puts lines with DEVELOPMENT
-# or toggle them with $VERBOSE
 
 require 'asciidoctor'
 require 'asciidoctor/extensions'
@@ -79,7 +76,7 @@ class EnvironmentBlock < Extensions::BlockProcessor
 
   def process parent, reader, attrs
     
-    puts "begin EnvironmentBlock".blue if DEVELOPMENT
+    warn "begin EnvironmentBlock".blue if $VERBOSE
     env_name = attrs["role"]
     
     if $counter[env_name] == nil
@@ -90,8 +87,8 @@ class EnvironmentBlock < Extensions::BlockProcessor
       
     attrs["title"] = env_name.capitalize + " " + $counter[env_name].to_s 
     
-    puts "env_name: #{env_name}".cyan if DEVELOPMENT 
-    puts "end EnvironmentBlock\n".blue if DEVELOPMENT  
+    warn "env_name: #{env_name}".cyan if $VERBOSE 
+    warn "end EnvironmentBlock\n".blue if $VERBOSE  
       
     create_block parent, :environment, reader.lines, attrs
   end

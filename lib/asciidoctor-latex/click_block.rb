@@ -8,6 +8,10 @@
 # or toggle them with $VERBOSE
 
 require 'asciidoctor'
+require 'asciidoctor/extensions'
+
+include Asciidoctor
+include Asciidoctor::Extensions
  
 class ClickBlock < Extensions::BlockProcessor
   

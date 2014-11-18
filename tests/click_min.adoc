@@ -1,0 +1,8 @@
+
+== Minimal test of click block
+
+[click.solution]
+--
+The answer is 43.
+--
+

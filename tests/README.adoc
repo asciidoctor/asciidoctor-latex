@@ -1,33 +1,56 @@
 == Testing the LaTeX converter
 
-Use the command
+Run the comand 
+
 ```
-  $ sh tests.sh
+$ alias ru 'sh test.sh'
 ```
 
-to run a series of tests for the LaTeX extensions
-and backend.  Before doing so the first time,
-edit the settings for the variables `adx` and `laco` --
-the first points to asciidoctor, the second to
-the LaTeX converter (`converter.rb` in 
-`asciidoctor-latex/lib/asciidoctor-latex`).
+Then use run tests as follows:
 
-Here is the test setup as of 11/19/2014:
+```
+- ru env_min -h 
+- ru env -hm
+- ru click_min -h 
+- ru latex -hm
+- ru latex -t
+- ru big -hm 
+- ru big -t
+  Etc
+```
 
-[source, sh]
---
-# file: tests.sh
+For information about the comand, use `ru`
+with no arguments or read the file
+`test.sh`
 
-adx=/Users/carlson/.rbenv/shims/asciidoctor
-laco=/Users/carlson/Dropbox/prog/git/asciidoctor-latex/lib/asciidoctor-latex/converter.rb
 
-$adx math.adoc
-$adx -r $laco -a stem=latexmath env.adoc
-$adx -r $laco -a stem=latexmath env.adoc -b latex
-$adx -r $laco -a stem=latexmath big.adoc
-$adx -r $laco -a stem=latexmath big.adoc -b latex
-# ruby test.rb big.adoc --tex
---
+.Note
+To run `ru`, take a look at the variables
+in `test.sh` and edit them to conform
+to your setup.
 
+.Note on test results
+As of 11/19/2015, 5 pm Beijing time,
+the test results are as follows:
+
+
+- `ru env_min -h` -- PASS
+- `ru env -hm` -- PASS
+- `ru click_min -h` -- PASS
+- `ru latex -hm` -- PASS
+- `ru latex -t` -- PASS
+- `ru big -hm` -- CONDITIONAL PASS
+- `ru big -t` -- CONDITIONAL PASS
+
+
+The test `ru big -hm` is conditional pass
+because the regex misses a few of the
+constructs $ ... $.  The test `ru big -t`
+is also conditonal becasue of six 
+errors of the type
+```
+    l.1098 $ H
+              \unknown \{{k}(\CP\}n) \cong \ZZ $ for $ k \in \set{0, 2 \commadots...
+```
 
 

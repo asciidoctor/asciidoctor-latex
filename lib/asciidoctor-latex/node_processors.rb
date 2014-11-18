@@ -1,7 +1,7 @@
 require_relative 'colored_text'
 
+$VERBOSE=true
  
-
 class Asciidoctor::Document
 
   # Write preamble for tex file, write closing
@@ -22,7 +22,8 @@ class Asciidoctor::Document
   #
    
   
-  def tex_process    
+  def tex_process 
+    puts "Hola".blue   
     data_dir = File.join File.dirname(__FILE__), '..', '..', 'data'
     warn "Node: #{self.class}".blue if $VERBOSE
     # warn "Attributes: #{self.attributes}".yellow

@@ -76,7 +76,11 @@ require 'asciidoctor'
 require_relative 'colored_text'
 require_relative 'node_processors'
 require_relative 'tex_block'
+require_relative 'click_block'
 require_relative 'environment_block'
+require_relative 'tex_preprocessor'
+require_relative 'ent_to_uni'
+
 
 include TeXBlock
 
@@ -88,6 +92,11 @@ module Asciidoctor
       def environment node
         # simply add the "environment" role and delegate to the open block convert handler
         node.attributes['roles'] = (node.roles + ['environment']) * ' '
+        self.open node
+      end
+      def click node
+        # simply add the "environment" role and delegate to the open block convert handler
+        node.attributes['roles'] = (node.roles + ['click']) * ' '
         self.open node
       end
     end
@@ -105,8 +114,19 @@ class LaTeXConverter
   include Asciidoctor::Converter
   register_for 'latex'
   
-  Extensions.register :latex do
+
+  Extensions.register do
+    puts "Extensions.register)".magenta
+    preprocessor TeXPreprocessor if document.basebackend? 'html'
+    postprocessor EntToUni if document.basebackend? 'tex'
     block EnvironmentBlock
+    block ClickBlock
+  end
+
+
+  Extensions.register :latex do
+    puts "Extensions.register (2)".magenta
+    # EnvironmentBlock
   end
   
 
@@ -118,6 +138,7 @@ class LaTeXConverter
   NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
     
   def initialize backend, opts
+     puts "initialize".magenta
     super
     basebackend 'tex'
     outfilesuffix '.tex'
@@ -127,11 +148,14 @@ class LaTeXConverter
   $label_counter = 0 
   
   def convert node, transform = nil
+    
+    puts "HOLA (1)".magenta
         
     if NODE_TYPES.include? node.node_name
       node.tex_process
     else
       warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta
+      # This warning should not be switched off by $VERBOSE
     end 
     
   end

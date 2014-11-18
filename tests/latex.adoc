@@ -1,0 +1,10 @@
+== Test of LaTeX Notation
+
+
+Pythagoras said: $a^2  + b^2= c^2$
+
+Fermat thought about this:
+\[
+  a^3 + b^3 = c^3
+\]
+

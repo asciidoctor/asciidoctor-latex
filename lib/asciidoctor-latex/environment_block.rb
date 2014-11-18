@@ -63,7 +63,6 @@ class EnvironmentBlock < Extensions::BlockProcessor
   # require 
   
   use_dsl
-  # ^^^ don't know what this is.  Could you explain?
 
   named :env
   on_context :open
@@ -87,10 +86,12 @@ class EnvironmentBlock < Extensions::BlockProcessor
       
     attrs["title"] = env_name.capitalize + " " + $counter[env_name].to_s 
     
-    warn "env_name: #{env_name}".cyan if $VERBOSE 
-    warn "end EnvironmentBlock\n".blue if $VERBOSE  
+    warn "env_name: #{env_name}".cyan if DEVELOPMENT
+    warn "end EnvironmentBlock\n".blue if DEVELOPMENT 
       
-    create_block parent, :environment, reader.lines, attrs
+    # doctored_lines = ['+++<i>+++'] + reader.lines + ['+++</i><br/><br/>+++']
+    doctored_lines = ['+++<div style="font-style:italic; line-height: 1.4em;">+++'] + reader.lines + ['+++</div><br/><br/>+++']
+    create_block parent, :environment, doctored_lines, attrs
   end
   
 end

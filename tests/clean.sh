@@ -1,2 +1,1 @@
-rm *.aux *.html *.log *.out *.pdf *.gz
-rm *.tex
+rm *.aux *.html *.log *.out *.pdf *.toc *.tex

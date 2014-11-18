@@ -1,1 +1,33 @@
+== Testing the LaTeX converter
+
+Use the command
+```
+  $ sh tests.sh
+```
+
+to run a series of tests for the LaTeX extensions
+and backend.  Before doing so the first time,
+edit the settings for the variables `adx` and `laco` --
+the first points to asciidoctor, the second to
+the LaTeX converter (`converter.rb` in 
+`asciidoctor-latex/lib/asciidoctor-latex`).
+
+Here is the test setup as of 11/19/2014:
+
+[source, sh]
+--
+# file: tests.sh
+
+adx=/Users/carlson/.rbenv/shims/asciidoctor
+laco=/Users/carlson/Dropbox/prog/git/asciidoctor-latex/lib/asciidoctor-latex/converter.rb
+
+$adx math.adoc
+$adx -r $laco -a stem=latexmath env.adoc
+$adx -r $laco -a stem=latexmath env.adoc -b latex
+$adx -r $laco -a stem=latexmath big.adoc
+$adx -r $laco -a stem=latexmath big.adoc -b latex
+# ruby test.rb big.adoc --tex
+--
+
+
 

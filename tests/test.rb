@@ -55,6 +55,23 @@ include Asciidoctor
 include Asciidoctor::Extensions
 
 
+class String
+
+  def eos
+    return ''  if self == ''
+    n = self.length - 1
+    return self[n]
+  end
+
+  def whack
+    return '' if self == ''
+    n = self.length - 1
+    return self[0...n]
+  end
+
+end
+
+
 # Map $ ... $ to latexmath:[ ... ] before
 # running Asciidoctor
 class TeXPreprocessor < Extensions::Preprocessor
@@ -142,6 +159,106 @@ class EnvironmentBlock < Extensions::BlockProcessor
   
 end
 
+class ClickBlock < Extensions::BlockProcessor
+
+   use_dsl
+
+   named :click
+   on_context :open
+   # parse_context_as :complex
+   # ^^^ The above line gave me an error. I'm not sure what do to with it.
+
+   # Hash to count the number of times each environment is encountered
+   # Global variables again. Is there a better way?
+   # $counter = {}
+   # Initialize it is LaTeXProcessor.setup
+
+
+   def process parent, reader, attrs
+
+
+     # Ensure that the role is defined
+     if attrs['role'] == nil
+       role = '__item'
+     else
+       role = attrs['role']
+     end
+
+     # Use the value of the role to determine
+     # whether this is a numbered block
+     numbered = false
+     if role
+       if role.eos == '+'
+         numbered = true
+         role = role.whack
+       end
+     end
+
+
+
+     # If the block is numbered, update the counter
+     if numbered
+       click_name = 'click-'+role
+       if $counter[click_name] == nil
+         $counter[click_name] = 1
+       else
+         $counter[click_name] += 1
+       end
+     end
+
+     # Set pseudo role
+     if role == 'code'
+       pseudo_role = 'listing'
+     elsif role == '__item'
+       pseudo_role = 'item'
+     else
+       pseudo_role = role
+     end
+
+     # Set title
+     if attrs['title']
+       title = attrs['title']
+     else
+       title = ''
+     end
+
+     if numbered
+       if title != ''
+         title = pseudo_role.capitalize + " #{$counter[click_name]}. #{title}"
+       else
+         title = pseudo_role.capitalize + " #{$counter[click_name]}"
+       end
+     end
+
+     if !numbered and title == ''
+       if role == '__item'
+         title = 'Item'
+       else
+         title = pseudo_role.capitalize
+       end
+     end
+
+
+     puts "LXX: role=#{role}, title = #{title}, numbered = #{numbered}"
+
+     attrs['title'] = title
+
+
+     # Set the role attribute to click so as to be visible to
+     # the $('click') jQuery code
+     attrs['role'] = 'click'
+
+     if role == 'code'
+       create_block parent, :open, reader.lines, attrs
+     else
+       create_block parent, :open, reader.lines, attrs
+     end
+
+     # create_block parent, :environment, reader.lines, attr  ### XXX: Official line to restore post-hack
+   end
+
+ end
+
 # Map HTML entties to their unicode equivalents
 # before running LaTeX
 class EntToUni < Extensions::Postprocessor
@@ -162,22 +279,27 @@ end
 
 Extensions.register :latex do
   block EnvironmentBlock
-end
-
-if ARGV.count == 0
-  puts "Please say 'ruby env.rb --html' or 'ruby env.rb --tex"
-  exit
+  block ClickBlock
 end
 
 
-if ARGV[0] == "--html"
-  Asciidoctor.render_file '../samples/env.adoc', :template_dir => 'templates'
-  puts "Output is in 'samples/env.html'"
-else  
-  cmd = "#{AD} -r #{PRE} -r #{POST} -r #{LCO} -b latex"
-  cmd = cmd + " ../samples/env.adoc"
-  system(cmd)
-  puts "Output is in 'samples/env.tex'"
+case ARGV[1]
+when "--html"  
+  Asciidoctor.render_file ARGV[0], :template_dir => 'templates'
+when "--texp"  
+  render = "#{AD} -r #{PRE} -r #{POST} -r #{LCO} -b latex"
+  preprocess = "preprocess_tex #{ARGV[0]} /tmp/foobar111"
+  mv = "mv /tmp/foobar111 #{ARGV[0]}"
+  render = render + "  #{ARGV[0]}"    
+  system(preprocess)
+  system(mv)
+  system(render)
+when "--tex"  
+  render = "#{AD} -r #{PRE} -r #{POST} -r #{LCO} -b latex"
+  render = render + "  #{ARGV[0]}"
+  system(render)
+else
+  puts "unrecognized option"
 end
 
-
+system("cp blank.tex new_environments.tex")

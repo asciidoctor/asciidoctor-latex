@@ -13,4 +13,6 @@ MYNOTES.adoc
 samples2
 xx
 work
-tests
+tests/templates
+tests/foo
+

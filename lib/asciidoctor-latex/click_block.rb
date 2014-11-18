@@ -27,7 +27,7 @@ class ClickBlock < Extensions::BlockProcessor
 
   def process parent, reader, attrs
     
-    puts "begin ClickBlock".blue if DEVELOPMENT
+    warn "begin ClickBlock".blue if $VERBOSE
     click_name = attrs["role"]
     
     if $counter[click_name] == nil
@@ -38,8 +38,8 @@ class ClickBlock < Extensions::BlockProcessor
       
     attrs["title"] = click_name.capitalize + " " + $counter[click_name].to_s 
     
-    puts "click_name: #{click_name}".cyan if DEVELOPMENT 
-    puts "end Clicklock\n".blue if DEVELOPMENT  
+    warn "click_name: #{click_name}".cyan if $VERBOSE 
+    warn "end Clicklock\n".blue if $VERBOSE  
       
     create_block parent, :click, reader.lines, attrs
   end

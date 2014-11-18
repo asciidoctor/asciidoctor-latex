@@ -21,6 +21,10 @@ within an AsciiDoc file.
 
 (The above won't render properly on GitHub right now, but will render if this README is run through Asciidoctor).
 
+=== Tests
+
+See the directory `tests` and the file `README.adoc` therein.
+
 === Asciimath syntax
 
 AsciiMath syntax is as in

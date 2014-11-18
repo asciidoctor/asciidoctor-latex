@@ -53,7 +53,7 @@ class Asciidoctor::Document
     warn "Writing environment definitions to file: new_environments.tex" if $VERBOSE
     definitions = ""
     $latex_environment_names.each do |name|
-      puts name
+      warn name if $VERBOSE
       definitions << "\\newtheorem\{#{name}\}\{#{name.capitalize}\}" << "\n"
     end
     File.open('new_environments.tex', 'w') { |f| f.write(definitions) }
@@ -100,7 +100,7 @@ class Asciidoctor::List
    when 'olist'
      olist_process
    else
-     warn "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" unless $VERBOSE.nil?
+     warn "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" if $VERBOSE
    end
   end 
    
@@ -157,7 +157,7 @@ class Asciidoctor::Block
     when :listing
       self.listing_process
     else
-      warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" unless $VERBOSE.nil?
+      warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" if $VERBOSE if $VERBOSE 
       ""
     end  
   end 
@@ -168,11 +168,11 @@ class Asciidoctor::Block
   
   def stem_process
     warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE 
-    warn self.content.cyan
+    warn self.content.cyan if $VERBOSE 
     environment = TeXBlock.environment_type self.content
     if TeXBlock::INNER_TYPES.include? environment
       out = "\\\[\n#{self.content.stem_post_process}\n\\\]\n"
-      warn out.yellow
+      warn out.yellow if $VERBOSE 
       out
     else
       self.content
@@ -210,8 +210,8 @@ class Asciidoctor::Block
         
     warn "begin environment_process".blue if $VERBOSE
     # construct the LaTeX for this node
-    puts "title = #{self.title}".yellow
-    puts self.content.cyan
+    warn "title = #{self.title}".yellow if $VERBOSE
+    warn self.content.cyan if $VERBOSE
   
     env = self.attributes["role"]
     # record any environments encounted but not built=in
@@ -288,7 +288,7 @@ class Asciidoctor::Block
      warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ") if $VERBOSE
      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
      warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if $VERBOSE
-     warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ")
+     warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ") if $VERBOSE
      warn ["Content:".magenta, "#{self.content}".yellow].join(" ") if $VERBOSE
      warn ["Style:".green, "#{self.style}".red].join(" ") if $VERBOSE
      warn ["METHODS:".red, "#{self.methods}".yellow].join(" ") if $VERBOSE
@@ -301,7 +301,7 @@ class Asciidoctor::Block
   
   def listing_process
     warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-    warn self.content.yellow
+    warn self.content.yellow if $VERBOSE
     "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
   end
  
@@ -321,7 +321,7 @@ class Asciidoctor::Inline
     when 'inline_footnote'
       self.inline_footnote_process
     else
-      warn "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})".yellow unless $VERBOSE.nil?
+      warn "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})".yellow if $VERBOSE
       ""
     end  
   end 
@@ -344,7 +344,7 @@ class Asciidoctor::Inline
       if role == "red"
         "\\rolered\{ #{self.text}\}"
       else
-        warn "This is inline_quoted_process.  I don't understand role = #{role}" unless $VERBOSE.nil?
+        warn "This is inline_quoted_process.  I don't understand role = #{role}" if $VERBOSE
       end
     else
       "\\unknown\\{#{self.text}\\}"
@@ -362,7 +362,7 @@ class Asciidoctor::Inline
     when :xref
       "\\ref\{#{self.target.gsub('#','')}\}"
     else
-      warn "!!  : undefined inline anchor -----------".magenta unless $VERBOSE.nil?
+      warn "!!  : undefined inline anchor -----------".magenta if $VERBOSE
     end
   end
   
@@ -383,16 +383,16 @@ end
 class Asciidoctor::Table
   
   def tex_process
-    warn "This is Asciidoctor::Table, tex_process.  I don't know how to do that".yellow +  " (#{self.node_name})".magenta unless $VERBOSE.nil?
+    warn "This is Asciidoctor::Table, tex_process.  I don't know how to do that".yellow +  " (#{self.node_name})".magenta if $VERBOSE
     warn ["-- Node:".blue, "#{self.node_name}".cyan, "Methods: #{self.methods}".yellow ].join(" ") if $VERBOSE
     a = self.rows.body.pop 
-    warn "#{a[0].content} - #{a[1].content}"
+    warn "#{a[0].content} - #{a[1].content}" if $VERBOSE
     b = self.rows.body.pop 
-    warn "#{b[0].content} - #{b[1].content}"
+    warn "#{b[0].content} - #{b[1].content}" if $VERBOSE
     c = self.rows.body.pop 
-    warn "#{c[0].content} - #{c[1].content}"
+    warn "#{c[0].content} - #{c[1].content}" if $VERBOSE
     n = 0
-    warn self.rows.class  
+    warn self.rows.class  if $VERBOSE
     
   end
   

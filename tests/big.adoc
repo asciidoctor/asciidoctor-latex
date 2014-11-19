@@ -65,7 +65,8 @@ is a purely algebraic construction.  We then take up the study of Riemann
 surfaces, with special emphasis on elliptic curves ...
 
 
-.Comment: click on me
+.click on me
+[click.Commen]
 --
 You will learn a lot by doing the problems.  Also, text in blue
 is typically a clickable heading that will reveal new content.

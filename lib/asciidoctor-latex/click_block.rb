@@ -34,13 +34,72 @@ class ClickBlock < Extensions::BlockProcessor
     warn "begin ClickBlock".blue if $VERBOSE
     click_name = attrs["role"]
     
-    if $counter[click_name] == nil
-      $counter[click_name] = 1
-    else
-      $counter[click_name] += 1
-    end
+    # Ensure that the role is defined
+         if attrs['role'] == nil
+           role = '__item'
+         else
+           role = attrs['role']
+         end
+
+         # Use the value of the role to determine
+         # whether this is a numbered block
+         numbered = false
+         if role
+           if role.eos == '+'
+             numbered = true
+             role = role.whack
+           end
+         end
+
+
+
+         # If the block is numbered, update the counter
+         if numbered
+           click_name = 'click-'+role
+           if $counter[click_name] == nil
+             $counter[click_name] = 1
+           else
+             $counter[click_name] += 1
+           end
+         end
+
+         # Set pseudo role
+         if role == 'code'
+           pseudo_role = 'listing'
+         elsif role == '__item'
+           pseudo_role = 'item'
+         else
+           pseudo_role = role
+         end
+
+         # Set title
+         if attrs['title']
+           title = attrs['title']
+         else
+           title = ''
+         end
+
+         if numbered
+           if title != ''
+             title = pseudo_role.capitalize + " #{$counter[click_name]}. #{title}"
+           else
+             title = pseudo_role.capitalize + " #{$counter[click_name]}"
+           end
+         end
+
+         if !numbered and title == ''
+           if role == '__item'
+             title = 'Item'
+           else
+             title = pseudo_role.capitalize
+           end
+         end
+  
       
-    attrs["title"] = click_name.capitalize + " " + $counter[click_name].to_s 
+         attrs['title'] = title
+      
+      
+    attrs['role'] = 'click'
     
     warn "click_name: #{click_name}".cyan if $VERBOSE 
     warn "end Clicklock\n".blue if $VERBOSE  
@@ -50,3 +109,20 @@ class ClickBlock < Extensions::BlockProcessor
   
 end
 
+
+
+class String
+
+  def eos
+    return ''  if self == ''
+    n = self.length - 1
+    return self[n]
+  end
+
+  def whack
+    return '' if self == ''
+    n = self.length - 1
+    return self[0...n]
+  end
+
+end

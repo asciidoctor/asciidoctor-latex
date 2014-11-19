@@ -1,0 +1,11 @@
+
+== Minimal test of EnvironmentBlock
+
+[env.joke]
+--
+Isn't that funny?
+--
+
+.Hey!
+La di dah doo day!
+

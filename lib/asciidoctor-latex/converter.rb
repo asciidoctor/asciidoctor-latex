@@ -80,25 +80,37 @@ require_relative 'click_block'
 require_relative 'environment_block'
 require_relative 'tex_preprocessor'
 require_relative 'ent_to_uni'
+# require_relative 'preamble_processor'
+require_relative 'prepend_processor'
 
 
 include TeXBlock
 
 require 'asciidoctor/converter/html5'
 
+
+# @mojavelinux's code for an Html5ConverterExtension & its insertion
 module Asciidoctor
   module LaTeX
     module Html5ConverterExtensions
+      
       def environment node
         # simply add the "environment" role and delegate to the open block convert handler
+        # doctored_lines = ['+++<i>+++'] + reader.lines + ['+++</i><br/><br/>+++']
+        puts node.role.cyan
+        puts node.methods.to_s.magenta
+        # node.style = 'style="color:blue"'
+        
         node.attributes['roles'] = (node.roles + ['environment']) * ' '
         self.open node
       end
+      
       def click node
         # simply add the "environment" role and delegate to the open block convert handler
         node.attributes['roles'] = (node.roles + ['click']) * ' '
         self.open node
       end
+      
     end
   end
 end
@@ -116,16 +128,15 @@ class LaTeXConverter
   
 
   Extensions.register do
-    puts "Extensions.register)".magenta
-    preprocessor TeXPreprocessor if document.basebackend? 'html'
+    preprocessor PrependProcessor if document.basebackend? 'html'
+    preprocessor TeXPreprocessor 
     postprocessor EntToUni if document.basebackend? 'tex'
     block EnvironmentBlock
-    block ClickBlock
+    block ClickBlock                                                                                                                                                                                                                                                                                                                                                                  
   end
 
 
   Extensions.register :latex do
-    puts "Extensions.register (2)".magenta
     # EnvironmentBlock
   end
   
@@ -138,7 +149,7 @@ class LaTeXConverter
   NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
     
   def initialize backend, opts
-     puts "initialize".magenta
+    puts "initialize".magenta
     super
     basebackend 'tex'
     outfilesuffix '.tex'
@@ -149,8 +160,6 @@ class LaTeXConverter
   
   def convert node, transform = nil
     
-    puts "HOLA (1)".magenta
-        
     if NODE_TYPES.include? node.node_name
       node.tex_process
     else

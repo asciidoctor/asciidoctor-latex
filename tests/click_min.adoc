@@ -1,8 +1,24 @@
 
 == Minimal test of click block
 
+
 [click.solution]
 --
 The answer is 43.
 --
 
+
+.Heliam Uu
+[click.comment+]
+--
+Fine!  What is the question?
+--
+
+
+.Morliaakh Tor
+[click.comment+]
+--
+The solution is correct, but the question,
+which was once well-known,
+is ill-posed.
+--

@@ -22,7 +22,7 @@ viewpdf='open -a /Applications/Preview.app'
 
 case $1 in
     -c)  echo "running all command line tests"
-         $adx math.adoc
+         $adx latex.adoc
          $adx -r $laco -a stem=latexmath env.adoc
          $adx -r $laco -a stem=latexmath env.adoc -b latex
          $adx -r $laco -a stem=latexmath big.adoc
@@ -32,8 +32,8 @@ case $1 in
 		cp blank.tex new_environments.tex
 	    exit;;
 	-a) echo "running all tests"
-	    sh test1.sh -c
-		sh test1.sh -r
+	    sh test.sh -c
+		sh test.sh -r
 		echo	
 		exit;;
 esac
@@ -52,13 +52,19 @@ case $2 in
         exit;;
    -t)  echo $1.adoc '--> tex'
         $adx -r $laco -r $post $1.adoc -b latex
-		cp blank.tex new_environments.tex 
+		# cp blank.tex new_environments.tex 
 		# ^^^ this is kludge - should not be necessary
 		$tex $1.tex
 		$tex $1.tex
 		tail -25 $1.tex
 		$viewpdf $1.pdf
         exit;;
+  -tq)  echo $1.adoc '--> tex'
+        $adx -r $laco -r $post $1.adoc -b latex
+ 		cp blank.tex new_environments.tex 
+ 		tail -25 $1.tex
+        exit;;
+
 esac
 
 echo " "
@@ -70,6 +76,7 @@ echo " "
 echo "  ru <file> -h        -- html output"
 echo "  ru <file> -hm       -- html output, math mode: use preprocessor and -a stem:latexmath"
 echo "  ru <file> -t        -- tex output"
+echo "  ru <file> -tq       -- tex output (quiet -- don't run LaTeX)"
 echo "  ru -c               -- run all command line tests"
 echo "  ru -r               -- run all ruby API tests"
 echo "  ru -a               -- run all tests"

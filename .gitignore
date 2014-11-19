@@ -16,3 +16,18 @@ work
 tests/templates
 tests/foo
 
+# workng & test files
+*.tex
+*.pdf
+*.aux
+*.log
+*.out
+*.toc
+*.html
+tmp
+
+ud.sh
+
+LOG.adoc
+
+

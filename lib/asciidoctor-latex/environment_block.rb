@@ -86,12 +86,10 @@ class EnvironmentBlock < Extensions::BlockProcessor
       
     attrs["title"] = env_name.capitalize + " " + $counter[env_name].to_s 
     
-    warn "env_name: #{env_name}".cyan if DEVELOPMENT
-    warn "end EnvironmentBlock\n".blue if DEVELOPMENT 
-      
-    # doctored_lines = ['+++<i>+++'] + reader.lines + ['+++</i><br/><br/>+++']
-    doctored_lines = ['+++<div style="font-style:italic; line-height: 1.4em;">+++'] + reader.lines + ['+++</div><br/><br/>+++']
-    create_block parent, :environment, doctored_lines, attrs
+    warn "env_name: #{env_name}".cyan if $VERBOSE 
+    warn "end EnvironmentBlock\n".blue if $VERBOSE 
+    
+    create_block parent, :environment, reader.lines, attrs
   end
   
 end

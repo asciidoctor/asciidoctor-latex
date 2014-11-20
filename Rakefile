@@ -47,7 +47,6 @@ begin
 rescue LoadError
 end
 
-
 begin
   require 'cucumber'
   require 'cucumber/rake/task'

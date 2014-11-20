@@ -35,4 +35,6 @@ An extension for Asciidoctor that converts AsciiDoc documents to LaTeX.
   #s.add_development_dependency 'rdoc', '~> 4.1.0'
 
   s.add_runtime_dependency 'asciidoctor', '~> 1.5.0', '>= 1.5.0'
+  
+  spec.add_development_dependency("aruba")
 end

@@ -29,7 +29,9 @@ begin
 rescue LoadError
 end
 
-=begin NOT CURRENTLY IN USE
+
+
+#=begin NOT CURRENTLY IN USE
 begin
   require 'rake/testtask'
   Rake::TestTask.new do |t|
@@ -44,6 +46,7 @@ begin
   default_tasks << :test
 rescue LoadError
 end
+
 
 begin
   require 'cucumber'
@@ -73,6 +76,6 @@ begin
   task :wip => 'features:wip'
 rescue LoadError
 end
-=end
+# =end
 
 task :default => default_tasks unless default_tasks.empty?

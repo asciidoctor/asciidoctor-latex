@@ -94,19 +94,14 @@ module Asciidoctor
   module LaTeX
     module Html5ConverterExtensions
       
-      def environment node
-        # simply add the "environment" role and delegate to the open block convert handler
-        # doctored_lines = ['+++<i>+++'] + reader.lines + ['+++</i><br/><br/>+++']
-        puts node.role.cyan
-        puts node.methods.to_s.magenta
-        # node.style = 'style="color:blue"'
-        
+      def environment node      
+        node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
         node.attributes['roles'] = (node.roles + ['environment']) * ' '
         self.open node
       end
       
       def click node
-        # simply add the "environment" role and delegate to the open block convert handler
+        node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
         node.attributes['roles'] = (node.roles + ['click']) * ' '
         self.open node
       end
@@ -114,6 +109,7 @@ module Asciidoctor
     end
   end
 end
+
 
 class Asciidoctor::Converter::Html5Converter
   # inject our custom code into the existing Html5Converter class (Ruby 2.0 and above)
@@ -128,11 +124,11 @@ class LaTeXConverter
   
 
   Extensions.register do
-    preprocessor PrependProcessor if document.basebackend? 'html'
-    preprocessor TeXPreprocessor 
-    postprocessor EntToUni if document.basebackend? 'tex'
+    preprocessor TeXPreprocessor    
     block EnvironmentBlock
     block ClickBlock                                                                                                                                                                                                                                                                                                                                                                  
+    preprocessor PrependProcessor if document.basebackend? 'html'
+    postprocessor EntToUni if document.basebackend? 'tex'
   end
 
 

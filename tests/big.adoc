@@ -1,4 +1,4 @@
-= Hodge Theory
+Hodge Theory
 James Carlson
 :toc2:
 

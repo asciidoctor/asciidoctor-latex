@@ -94,8 +94,23 @@ module Asciidoctor
   module LaTeX
     module Html5ConverterExtensions
       
-      def environment node      
-        node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
+      def environment node 
+        
+        warn "\n    node: #{node.node_name}".cyan if $VERBOSE
+        warn "   attrs: #{node.attributes}".cyan if $VERBOSE
+        warn "    role: #{node.attributes['role']}".cyan if $VERBOSE
+        warn " options: #{node.attributes['options']}".cyan if $VERBOSE
+        warn "    topu: #{node.attributes['topu']}".cyan if $VERBOSE
+        warn "      id: #{node.attributes['id']}".cyan if $VERBOSE
+        warn " content: #{node.content}".blue if $VERBOSE
+        
+        
+        if node.attributes['role'] == 'eq'
+          node.lines = ["\\["] + node.lines + ["\\]"]
+        else
+          node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
+        end
+    
         node.attributes['roles'] = (node.roles + ['environment']) * ' '
         self.open node
       end

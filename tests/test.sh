@@ -46,7 +46,7 @@ case $2 in
 		$browse $1.html
         exit;;
   -hm)  echo $1.adoc ' --> html, math mode: use preprocessor and -a stem=latexmath'
-        $adx -r $laco -a stem=latexmath $1.adoc
+        $adx --verbose -r $laco -a stem=latexmath $1.adoc
  		$browse $1.html
 		tail -25 $1.html
         exit;;
@@ -60,7 +60,7 @@ case $2 in
 		$viewpdf $1.pdf
         exit;;
   -tq)  echo $1.adoc '--> tex'
-        $adx -r $laco -r $post $1.adoc -b latex
+        $adx --verbose -r $laco -r $post $1.adoc -b latex
  		cp blank.tex new_environments.tex 
  		tail -25 $1.tex
         exit;;

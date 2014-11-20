@@ -215,6 +215,11 @@ class Asciidoctor::Block
     warn self.content.cyan if $VERBOSE
   
     env = self.attributes["role"]
+    warn "\nenv attributes: #{attributes}".cyan if $VERBOSE
+    warn "    role: #{attributes['role']}".cyan if $VERBOSE
+    warn " options: #{attributes['options']}".cyan if $VERBOSE
+    warn "    topu: #{attributes['topu']}".cyan if $VERBOSE
+    warn "      id: #{attributes['id']}".cyan if $VERBOSE
     # record any environments encounted but not built=in
     if !STANDARD_ENVIRONMENT_NAMES.include? env
       $latex_environment_names << env

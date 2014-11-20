@@ -76,6 +76,7 @@ class EnvironmentBlock < Extensions::BlockProcessor
   def process parent, reader, attrs
     
     warn "begin EnvironmentBlock".blue if $VERBOSE
+        
     env_name = attrs["role"]
     
     if $counter[env_name] == nil
@@ -84,7 +85,13 @@ class EnvironmentBlock < Extensions::BlockProcessor
       $counter[env_name] += 1
     end
       
-    attrs["title"] = env_name.capitalize + " " + $counter[env_name].to_s 
+    if env_name == 'eq'
+      title_prefix = 'Equation'
+    else
+      title_prefix = env_name.capitalize
+    end
+
+    attrs["title"] = title_prefix.capitalize + " " + $counter[env_name].to_s 
     
     warn "env_name: #{env_name}".cyan if $VERBOSE 
     warn "end EnvironmentBlock\n".blue if $VERBOSE 

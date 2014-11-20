@@ -1,0 +1,30 @@
+== Test of Math Environnment
+
+:numbered:
+
+
+[env.theorem%uu:nork]
+--
+The equation
+\[
+  a^2 + b^2 = c^2
+\]
+has infinitely many non-proportional 
+integer solutions.
+--
+
+[env.theorem#mu%baa=21%foo=45,topu=note,gradu=luup]
+--
+The only solution in the integers
+of the equation
+\[
+  a^3 + b^3 = c^3
+\]
+are the obvious ones in which one
+of the variables is zero.
+--
+
+[env.eq]
+--
+\int_0^n x^2 dx = \frac{1}{n}
+--

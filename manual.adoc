@@ -21,11 +21,9 @@ can be rendered into HTML by
 ----
 or can be rendered as a latex file via
 ----
-    asciidoctor -r ./latex_converter.rb -b latex manual.adoc
+    asciidoctor -r asciidoctor-latex -b latex manual.adoc
 	# => manual.tex
 ----
-For the moment this conversion must be done
-in the directory in which `latex_converter.rb` resides.
 The `.tex` file can in turn be rendred into pdf via
 `pdflatex`.
 

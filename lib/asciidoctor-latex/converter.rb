@@ -104,7 +104,7 @@ module Asciidoctor
         warn "      id: #{node.attributes['id']}".cyan if $VERBOSE
         warn " content: #{node.content}".blue if $VERBOSE
         
-        
+
         if node.attributes['role'] == 'equation'
           node.lines = ["\\["] + node.lines + ["\\]"]
         else

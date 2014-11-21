@@ -87,6 +87,7 @@ class EnvironmentBlock < Extensions::BlockProcessor
       
 
     attrs["title"] = env_name.capitalize + " " + $counter[env_name].to_s 
+
     
     warn "env_name: #{env_name}".cyan if $VERBOSE 
     warn "end EnvironmentBlock\n".blue if $VERBOSE 

@@ -1,4 +1,4 @@
-
+#
 # The purpose of the module TeXBlock is to
 # transform structure of the form
 # \[ ... \], either by passing them on unchanged
@@ -23,7 +23,7 @@
 # whereas the number of other environments is large
 # and essentially unbounded, since users can define
 # their own environments.
-
+#
 module TeXBlock
 
   # Find blocks delmited by \[ ... \]

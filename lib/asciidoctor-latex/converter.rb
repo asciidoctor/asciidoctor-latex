@@ -70,7 +70,6 @@
 #  * hyperlinks like http://foo.com[Nerdy Stuff]
 #
 
-
 require 'asciidoctor'
 require_relative 'colored_text'
 require_relative 'node_processors'
@@ -107,6 +106,5 @@ class LaTeXConverter
     end
 
   end
-
 
 end

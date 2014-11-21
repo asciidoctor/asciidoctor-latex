@@ -118,7 +118,7 @@ class Asciidoctor::List
   def ulist_process
     list = "\\begin{itemize}\n\n"
     self.content.each do |item|
-      warn ["  --  item: ".blue, "#{item.text.abbreviate}"].join(" ") if $VERBOSE
+      warn ["  --  item: ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
       list << "\\item #{item.text}\n\n"
       list << item.content
     end
@@ -128,7 +128,7 @@ class Asciidoctor::List
   def olist_process
     list = "\\begin{enumerate}\n\n"
     self.content.each do |item|
-      warn ["  --  item:  ".blue, "#{item.text.abbreviate}"].join(" ") if $VERBOSE
+      warn ["  --  item:  ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
       list << "\\item #{item.text}\n\n"
       list << item.content
     end
@@ -175,7 +175,7 @@ class Asciidoctor::Block
   end
 
   def paragraph_process
-    self.content.tex_post_process << "\n\n"
+    TexPostProcess.make_substitutions(self.content) << "\n\n"
   end
 
   def stem_process
@@ -183,7 +183,7 @@ class Asciidoctor::Block
     warn self.content.cyan if $VERBOSE
     environment = TeXBlock.environment_type self.content
     if TeXBlock::INNER_TYPES.include? environment
-      out = "\\\[\n#{self.content.stem_post_process}\n\\\]\n"
+      out = "\\\[\n#{TexPostProcess.stem_substitutions self.content}\n\\\]\n"
       warn out.yellow if $VERBOSE
       out
     else
@@ -359,7 +359,7 @@ class Asciidoctor::Inline
     when :emphasis
       "\\emph\{#{self.text}\}"
     when :asciimath
-      "\$#{self.text.stem_post_process}\$"
+      "\$#{TexPostProcess.stem_substitutions self.text}\$"
     when :monospaced
       "\{\\tt #{self.text}\}"
     when :unquoted
@@ -424,20 +424,6 @@ class Asciidoctor::Table
 
 end
 
-
-
-
-class String
-
-  def tex_post_process
-    TexPostProcess.make_substitutions self
-  end
-
-  def stem_post_process
-    TexPostProcess.stem_substitutions self
-  end
-
-end
 
 # TeXPostProcess cleans up undesired transformations
 # inside the TeX enveronment.  Strings

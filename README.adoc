@@ -1,213 +1,118 @@
 = AsciiDoc to LaTeX Converter for Asciidoctor
 James Carlson
 :numbered:
-:toc:
+:toc2:
 :stem: 
 
 == Purpose
 
-The aim of the LaTeX converter, [path]_converter.rb_, is t
-to transform an AsciiDoc document containing mathematics into a LaTeX document.
-The convert also adds to Asciidoctors facilities for handling mathematical 
-notation when rendered as HTML.
-Please see the file [path]_manual.adoc_ in this repository for a more details than presented here.
+The aim of the LaTeX converter, [path]_converter.rb_, is
+to transform an AsciiDoc document containing mathematical notation into a LaTeX document.
+The converter also adds to Asciidoctor's facilities for handling mathematical 
+notation when rendered as HTML.  Among these is the automatic numbering of theorems.
+Please see the file [path]_manual.adoc_ in this repository for additional details
+and for technical information.  
 
-The LaTeX converter supports two closely-related math formats, [blue]#AsciiMath# and [blue]#LaTeX#.
-With the LaTeX converter, you can render expressions such as stem:[ a^2 + b^2 = c^2 ] and
+For examples and a quick start guide, see <<Getting started>>. 
+Below, we describe the <<Document format,document formats>> used
+for mathematics and the <<Command for rendering,commands>> for rendering a document into HTML or LaTeX.
 
-[stem]
-++++
-e^{2\pi \sqrt{-1}} = 1
-++++
 
-within an AsciiDoc file.  Please note that the above won't render properly on 
-GitHub, but will render if this README is run through Asciidoctor.
+== Getting started
 
-=== Tests
+The directory `try-out` contains a set of examples which 
+show what Asciidoctor LateX can do.  Consult the `README` file
+for directions on how to render an examples as  
+HTML or LaTeX. By comparing the source and rendered files, 
+you will quickly see how to write Asciidoc LaTeX.  
 
-See the directory `tests` and the file `README.adoc` therein.
 
-=== Asciimath syntax
 
-AsciiMath syntax is as in
+== Document format
 
+Asciidoctor supports two closely-related math formats, [blue]#AsciiMath# and [blue]#LaTeX#.
+For in-line mathematics, the first looks like `+++stem:[ a^2 + b^2 = c^2 ]+++`, while the
+second looks like `$ a^2 + b^2 = c^2 $`.  Both render as stem:[ a^2 + b^2 = c^2 ].
+For displayed text, one can use
 ----
-stem:[ a^2 + b^2 = c^2 ]
+  [stem]
+  ++++
+    e^{2\pi \sqrt{-1}} = 1
+  ++++
 ----
-
-and
-
+or 
 ----
-[stem]
-++++
-e^{2\pi \sqrt{-1}} = 1
-++++
+  \[
+     e^{2\pi \sqrt{-1}} = 1
+  \]
 ----
+Both render as
+  \[
+     e^{2\pi \sqrt{-1}} = 1
+  \]
+_Please note that the formulae above will not render properly 
+if you are reading it on GitHub.  It will, however, render properly if you run 
+this file through Asciidoctor_.
 
-These are for inline and display math, respectively
-The math content is written in LaTeX.
-To activitate AsciiMath processing, set [blue]#+:stem:+# or [blue]#+:stem: latexmath+#. 
+== Commands for rendering
 
-=== LaTeX syntax
+Asciidoc math files can be rendered 
 
-The syntax is standard LaTeX:
+. as HTML (the default)
+. with the LaTeX converter additions such as automatic theorem numbering
+. as LaTeX
++
+*Note.* Forthcoming releases will make it possible to render 
++
+. as PDF
+. as EPUB3 (Electronic book)
 
-----
-$ a^2 + b^2 = c^2 $
-----
 
-and
+=== HTML output
 
-----
-\[ 
-  e^{2\pi \sqrt{-1}} = 1 
-\]
-----
+To render a file into HTML, the Asciidoctor default, 
+use the usual `asciidoctor` command with this option:
+```
+  $ asciidoctor -a stem foo.adoc
+```
+or with this
+```
+  $ asciidoctor -a stem:latexmath foo.adoc
+```
+depending on the format.
 
-== Usage
+=== LaTeX converter additions
 
-The command
 
- $ asciidoctor -r ./latex_converter.rb -b latex test/sample1.adoc 
+To employ the converter additions such as automatic theorem numbering, use
+```
+  $ asciidoctor -r LACO -a stem:latexmath foo.adoc
+```
+or
+```
+  $ asciidoctor -r LACO -a stem:latexmath foo.adoc
+```
+Here LACO is the path to the Asciidoctor LaTeX converter and the
+option `-r` says to require (load) the converter.
 
-will create a file [path]_test/sample1.tex_ from [path]_test/sample1.adoc_.
-Then [path]_test/sample1.tex_ can be run through the +pdflatex+ command.
-For a more complex example with a lot of math, see the file [path]_test/elliptic.adoc_ in this repo.
-The HTML is rendered at  http://epsilon.my.noteshare.io/notebook/195/?note=782[noteshare.io] for purposes of comparison.
+WARNING: We need to make LACO as simple as possible.  It was a stumbling
+block for me when I was getting started.
 
-== Files
 
-=== Code
+=== LaTeX output
 
-* Ruby
-  latex_converter.rb:: the driver program to transform asciidoc files to tex files
-  node_processor.rb:: extends classes in the Asciidoctor module which translate AsciiDoc elements to TeX elements
-  tex_block.rb:: strips enclosing escaped braces as needed
+To render a file into LaTeX, use the `-b` (backend) option, e.g.,
+```
+  $ asciidoctor -r LACO -a stem:latexmath -b latex foo.adoc
+```
 
-* TeX
-  preamble.tex:: needed by latex_converter.rb to write a standara LaTeX preamble
-  asciidoc_macros.tex:: needed to carry out the translation of AsciiDoc blocks to LaTeX environments
-  macros.tex:: user macros
 
-=== Test
+== Switches
 
-manual.adoc:: describes which elments of Asciidoctor are translated into LaTeX
-sample1.adoc:: math in conventonal LaTeX form, `$ ... $`, etc.
-sample2.adoc:: like sample1, but the math is as in `stem:[a^ + b^2 = c^2]`, etc.
-elliptic.adoc:: a complete example with lots of math
-algebraic_varieties.ad:: a draft, very rough, but more like a real math article.
+Switch `:stem:` processing on by putthng the text `:stem:`
+in your file.  To turn the swtich on and set it to `latexmath`, say
+instaed `stem:latexmth`.
 
-One should use all four files in testing the code.
 
-== Coverage
 
-=== AsciiDoc
 
-The following constructs are among the those handled by the LaTeX converter at this time.
-Please see [path]_manual.adoc_ for a complete list.
-
-. Sections through level 5
-. Numbered and un-numbered lists, including nested lists.
-. Hyperlinks, e.g. `http://asciidoctor.org[Asciidoctor]`.
-. Bold and italic text
-. Hard break: line with trailing `+`
-. Roles.  Each role wich is translated into TeX require an entry in the `asciidoc_tex_macros` file.
-For example, the role `[red]` [red]#which you see in use here# has the entry `\newcommand{\rolered}[1]{ \textcolor{red}{#1} }`.
-
-=== LaTeX
-
-A construct like the equation environment:
-
-----
-\[ 
-    \begin{equation} 
- 	... 
-    \end{equation} 
-\]
-----
-
-needs to be transformed to ----
-
-----
-\begin{equation} 
-... 
-\end{equation} 
-----
-
-////
-There is a tricky point here.
-Environments like the equation environment live outside of the delimiters `\[ ... \]`.
-But others live inside.
-Those that live outside in LaTeX must have their delimiters stripped.
-The needed transformation is given by `TeXBlock.process_environments` in the file `tex_block.rb`. 
-////
-
-=== LaTeX Environments
-
-The converter transforms open blocks into LaTeX environments.
-Thus the source text:
-
-----
-.Comment
-[[foobar]]
---
-This is merely a test.
---
-----
-
-is mapped to
-
-----
-\begin{Comment}
-\label{foobar}
-This is merely a test.
-\end{Comment}
-----
-
-If an identifier as in `[[foobar]]` is not specified, then a label is generated automatically, as in the example below:
-
-----
-.Comment
---
-This is merely a test.
---
-----
-
-is mapped to
-
-----
-\begin{Comment}
-\label{comment:13}
-This is merely a test.
-\end{Comment}
-----
-
-In this case the "13" means that this
-was the 13th unlabeled comment.
-
-The converter has little knowlege of LaTeX, so
-it compiles a file of dumb definitions of environments
-corresponding to the open blocks it encounters, e.g.,
-
-----
-\newtheorem{Comment}{Comment}
-----
-
-These definitions are found in the file `new_environments.tex`.
-The definition above has no necessary connection with theorem-proving, but it does provide an easy way to define a serviceable environment: "Comment" is in bold, and it is followed by an automatically generated number.
-The body of the block is italicized.
-The user will likely want to replace theses environment definitions better suited to the task at hand.
-
-The TeXBlock package addresses the points made above in the case of both conventional LaTeX syntax and the `[stem]` block syntax.
-
-=== Issues
-
-. The following symbols need to be passed through unchanged
-
-** +--+
-** +<+ 
-** +>+
-** +&+ -- important for typesettig matrices
-** +...+ -- horizontal rule
-
-. Some apostrophes and quotes are bad -- they get translated as +&#1234;+ and TeX chokes on them.

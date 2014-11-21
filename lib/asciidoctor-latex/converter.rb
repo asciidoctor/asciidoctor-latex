@@ -160,7 +160,7 @@ class LaTeXConverter
   NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
     
   def initialize backend, opts
-    puts "initialize".magenta
+    warn "initialize converter".magenta if $VERBOSE
     super
     basebackend 'tex'
     outfilesuffix '.tex'

@@ -26,7 +26,8 @@ class PrependProcessor < Extensions::Preprocessor
     putline ".click .title { color: blue; }"
     putline ".click .title { color: blue; }"
     putline "</style>"
-    putline "<script src='js/jquery.js'></script>"
+    putline '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>'
+    # putline "<script src='js/jquery.js'></script>"
 	  putline "<script>"
     putline "$(document).ready(function(){ "	
     putline "$('.openblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )"  

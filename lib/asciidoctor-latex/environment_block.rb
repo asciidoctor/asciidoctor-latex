@@ -75,24 +75,71 @@ class EnvironmentBlock < Extensions::BlockProcessor
 
   def process parent, reader, attrs
     
-    warn "begin EnvironmentBlock".blue if $VERBOSE
-        
-    env_name = attrs["role"]
     
-    if $counter[env_name] == nil
-      $counter[env_name] = 1
-    else
-      $counter[env_name] += 1
-    end
-      
+    # Ensure that role is defined
+     if attrs['role'] == nil
+       role = 'item'
+     else
+       role = attrs['role']
+     end
 
-    attrs["title"] = env_name.capitalize + " " + $counter[env_name].to_s 
+     # Use the value of the role to determine
+     # whether this is a numbered block
+     numbered = true
+     if attrs['options'] and attrs['options'].include? 'no-number'
+       numbered = false
+     end
 
-    
+
+     # If the block is numbered, update the counter
+     if numbered
+       env_name = 'env-'+role
+       if $counter[env_name] == nil
+         $counter[env_name] = 1
+       else
+         $counter[env_name] += 1
+       end
+     end
+
+
+     # Set title
+     if role == 'code'
+       title = 'Listing'
+     else
+       title = role.capitalize
+     end
+     if numbered
+       title = title + ' ' + $counter[env_name].to_s
+     end
+     if attrs['title']
+       title = title + '. ' + attrs['title'].capitalize
+     end
+     
+     # The following is bad code
+     if role != 'equation' 
+       attrs['title']  = title
+     end
+     
+     if role == 'equation'
+       if numbered
+         attrs['title'] = title
+       end
+     end
+     
+         
+         
+   
     warn "env_name: #{env_name}".cyan if $VERBOSE 
     warn "end EnvironmentBlock\n".blue if $VERBOSE 
     
-    create_block parent, :environment, reader.lines, attrs
+    if attrs['role'] == 'code'
+      create_block parent, :listing, reader.lines, attrs
+    elsif attrs['role'] == 'code'
+      create_block parent, :environment, ['\\['] + reader.lines + ['\\]'],  attrs
+    else
+      create_block parent, :environment, reader.lines, attrs
+    end
+    
   end
   
 end

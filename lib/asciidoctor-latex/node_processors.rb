@@ -22,8 +22,7 @@ class Asciidoctor::Document
   #
   
   
-  def tex_process 
-    puts "Hola".blue   
+  def tex_process  
     data_dir = File.join File.dirname(__FILE__), '..', '..', 'data'
     warn "Node: #{self.class}".blue if $VERBOSE
     # warn "Attributes: #{self.attributes}".yellow

@@ -46,11 +46,6 @@ class ClickBlock < Extensions::BlockProcessor
          if attrs['options'] and attrs['options'].include? 'numbered'
              numbered = true
          end
-         
-         puts "logging ... ".cyan
-         puts "attrs['options'] = #{attrs['options']}".cyan
-
-
 
          # If the block is numbered, update the counter
          if numbered

@@ -1,6 +1,8 @@
 = Trying out Asciidoctor LaTeX
 James Carlson <jxxcarlson@mac.com>
 v0.1, 2014-11-20
+
+
 :numbered:
 :toc2:
 
@@ -95,9 +97,12 @@ file and its source.
 |===
 | LaTeX | STEM | Comments
 | `eq-latex.adoc` | `eq-stem.adoc` | Basic equations
-| `pyth-latex.adoc` | -- | Numbered theorems
-| `env-latex.adoc` | `env-stem.adoc` | Env blocks 
+| `eqno-latex.adoc` | --  | Numbered equations
+| `theorem-latex.adoc` | -- | Numbered theorems
+| `env.adoc` | `env.adoc` | Env blocks 
+| `click.adoc` | `click.adoc`  | Click blocks
 |===
+
 
 
 == Comments on the examples
@@ -114,8 +119,34 @@ TIP: If the mathematics does not display properly,
  you need to run this file through Asciidoctor with the `-a stem=latexmath` switch:
 `$ asciidoctor -a stem:latexmath README.adoc`.
 
+=== eqno-latex
 
-=== pyth-latex
+
+The environment `[env.equation]` is automatically
+numbered by default, as in the examples below.
+
+
+[env.equation]
+--
+  a^3 + b^3 = c^3
+--
+
+
+[env.equation]
+--
+  \int_0^1 x^n dx = \frac{1}{n}
+--
+
+Here is how the first equation is done:
+----
+[env.equation]
+--
+  a^3 + b^3 = c^3
+--
+----
+
+
+=== theorem-latex
 
 Numbered theorems, like the those below. 
 
@@ -140,11 +171,58 @@ you need to run this file through Asciidoctor with the `-r $laco` switch:
 `$ asciidoctor -r $laco -a stem:latexmath README.adoc`
 
 
-=== env-latex & env-stem
+=== env
 
-The files `env-latex.adoc` and `env-stem.adoc` are the same; they
-illustrated generaal usage of the `env`-block.
+The file `env.adoc`, which only requires the converter,
+illustrates general usage of the `env`-block.  It gives
+an automatically numbered and titled block.  Thus repeated use
+of `[env.objection]` gives this.
 
+[env.objection]
+--
+This is hearsay.
+--
+
+[env.objection]
+--
+That evidence has not been admitted before the court.
+--
+
+The first objection was written like this:
+
+----
+[env.objection]
+--
+This is hearsay.
+--
+----
+
+=== click
+
+
+Click blocks are like `env`-blocks, except that 
+when you open a document, only the title,
+not the body of the block, is displayed.
+Click on the title to reveal the body;
+clicking again will return the body
+to its hidden sate.  Click blocks
+signal their presence by the blue
+color of the title.
+
+.Secret message
+[click.message]
+--
+The path to wisdom is written on no
+secret map.
+--
+
+Click blocks are useful in making up problem sets, 
+homework assignments, study guides, etc.
+
+NOTE: At the moment the ClickBlock Processor is configured
+to load `jquery.js` from the root of this directory.
+That is because I am in Beijing and most Google resources
+are blocked.  
 
 == Issues
 
@@ -152,3 +230,5 @@ The following have not yet been resolved.
 
 . The matrix environment in `eq-stem.adoc` does not render correctly.
 . Fix title in latex mode
+
+

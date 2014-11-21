@@ -29,7 +29,7 @@ module TeXBlock
   # Find blocks delmited by \[ ... \]
 	def TeXBlock.get_tex_blocks str
 	  rx_tex_block = /(\\\[)(.*?)(\\\])/m
-	  matches = str.scan rx_tex_block
+	  str.scan rx_tex_block
 	end
 
 

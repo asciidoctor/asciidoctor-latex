@@ -41,15 +41,14 @@ class ClickBlock < Extensions::BlockProcessor
            role = attrs['role']
          end
 
-         # Use the value of the role to determine
-         # whether this is a numbered block
+         # Should the block be numbered?
          numbered = false
-         if role
-           if role.eos == '+'
+         if attrs['options'] and attrs['options'].include? 'numbered'
              numbered = true
-             role = role.whack
-           end
          end
+         
+         puts "logging ... ".cyan
+         puts "attrs['options'] = #{attrs['options']}".cyan
 
 
 

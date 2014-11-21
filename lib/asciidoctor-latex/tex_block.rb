@@ -27,7 +27,7 @@
 module TeXBlock
 
   # Find blocks delmited by \[ ... \]
-  def TeXBlock.get_tex_blocks str
+  def self.get_tex_blocks str
     rx_tex_block = /(\\\[)(.*?)(\\\])/m
     matches = str.scan rx_tex_block
   end
@@ -36,7 +36,7 @@ module TeXBlock
   # Return the environment type of a tex block.
   # Thus, if str = \[\begin{foo} ho ho ho \end{foo}\],
   # the string "foo" is returned.
-  def TeXBlock.environment_type str
+  def self.environment_type str
     rx_env_block = /\\begin\{(.*?)\}/
     m = str.match rx_env_block
     if m
@@ -52,38 +52,38 @@ module TeXBlock
   # get_tex_blocks -- each element is a
   # three-element array with the tex block
   # as the middle element.
-  def TeXBlock.environmemt_type_of_match m
+  def self.environmemt_type_of_match m
     environment_type m[1]
   end
 
   # Return the block as-is -- do not
   # strip delimiters.
-  def TeXBlock.restore_match_data m
+  def self.restore_match_data m
     m.join()
   end
 
   # Return the block sans delimiters
-  def TeXBlock.strip_match_data m
+  def self.strip_match_data m
     m[1]
   end
 
   # Transform the input string for a given block m
-  def TeXBlock.process_tex_block m, str
-    block_type = TeXBlock.environmemt_type_of_match m
+  def self.process_tex_block m, str
+    block_type = environmemt_type_of_match m
     if INNER_TYPES.include? block_type
      output = str
     else
-     output = str.gsub TeXBlock.restore_match_data(m), TeXBlock.strip_match_data(m)
+     output = str.gsub restore_match_data(m), strip_match_data(m)
     end
     output
   end
 
   # Transform the input string by stripping or
   # passing each tex block as required
-   def TeXBlock.process_environments str
+   def self.process_environments str
      tbs = get_tex_blocks str
      tbs.each do |tb|
-       str = TeXBlock.process_tex_block tb, str
+       str = process_tex_block tb, str
      end
      str
    end

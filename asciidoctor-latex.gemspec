@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path('lib/asciidoctor-latex/version', File.dirname(__FILE__))
 
-Gem::Specification.new do |s| 
+Gem::Specification.new do |s|
   s.name = 'asciidoctor-latex'
   s.version = Asciidoctor::LaTeX::VERSION
 

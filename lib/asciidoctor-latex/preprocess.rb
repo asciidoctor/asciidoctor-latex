@@ -1,14 +1,14 @@
 # For trying things out
 # Call the input file foo.in
 # Then execute
-# 
+#
 #   $ ruby preprocess foo
 #
 # Currently output is directed to the
 # console.  Uncomment the last line
 # to direct output to foo.out
 
-require '/Users/carlson/Dropbox/prog/git/asciidoctor-backends/tex/tex_block/'
+require 'asciidoctor-latex/tex_block'
 include TeXBlock
 
 
@@ -23,7 +23,7 @@ puts "-----------------"
 puts input
 puts "-----------------\n\n"
 
-output = TeXBlock.process_environments input 
+output = TeXBlock.process_environments input
 
 puts "output:"
 puts "-----------------"

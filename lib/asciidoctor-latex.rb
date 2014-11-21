@@ -1,1 +1,1 @@
-require_relative 'asciidoctor-latex/converter'
+require 'asciidoctor-latex/converter'

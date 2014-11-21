@@ -1,4 +1,4 @@
-require_relative 'colored_text'
+require 'asciidoctor-latex/core_ext/colored_string'
 
 class Asciidoctor::Document
 
@@ -16,9 +16,9 @@ class Asciidoctor::Document
   # - macros: supplied by the user.  We need a good
   #   mechanism for identifying and reading the user's
   #   macro definitions.  In noteshare there is a database
-  #   field 
+  #   field
   #
-  def tex_process    
+  def tex_process
     data_dir = File.join File.dirname(__FILE__), '..', '..', 'data'
     warn "Node: #{self.class}".blue if $VERBOSE
     # warn "Attributes: #{self.attributes}".yellow
@@ -40,10 +40,10 @@ class Asciidoctor::Document
       doc << "\\tableofcontents\n"
     end
     doc << "%% Begin Document Text %%\n"
-      
+
     processed_content = TeXBlock.process_environments self.content
     doc << processed_content
-    
+
     # Now write the defnitions of the new environments
     # discovered to file
     warn "Writing environment definitions to file: new_environments.tex" if $VERBOSE
@@ -53,18 +53,18 @@ class Asciidoctor::Document
       definitions << "\\newtheorem\{#{name}\}\{#{name}\}" << "\n"
     end
     File.open('new_environments.tex', 'w') { |f| f.write(definitions) }
-    
+
     # Output
-    doc << "\n\n\\end{document}\n\n" 
-      
-  end 
+    doc << "\n\n\\end{document}\n\n"
+
+  end
 
 end
 
 # Write TeX for each of five levels of Ascidoc section,
 # .e.g. \section{Introction} for == Introduction
 class Asciidoctor::Section
- 
+
   def tex_process
     warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
     case self.level
@@ -78,16 +78,16 @@ class Asciidoctor::Section
        "\\paragraph\{#{self.title}\}\n\n#{self.content}\n\n"
      when 5
        "\\subparagraph\{#{self.title}\}\n\n#{self.content}\n\n"
-     end  
+     end
   end
- 
+
 end
 
 # Write TeX \itemize or \enumerate lists
 # for ulist and olist.  Recurses for
 # nested lists.
 class Asciidoctor::List
-  
+
   def tex_process
    warn ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if $VERBOSE
    case self.node_name
@@ -98,33 +98,33 @@ class Asciidoctor::List
    else
      warn "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" unless $VERBOSE.nil?
    end
-  end 
-   
+  end
+
   def ulist_process
     list = "\\begin{itemize}\n\n"
     self.content.each do |item|
-      warn ["  --  item: ".blue, "#{item.text.abbreviate}"].join(" ") if $VERBOSE
+      warn ["  --  item: ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
       list << "\\item #{item.text}\n\n"
       list << item.content
     end
-    list << "\\end{itemize}\n\n"  
+    list << "\\end{itemize}\n\n"
   end
-  
+
   def olist_process
     list = "\\begin{enumerate}\n\n"
     self.content.each do |item|
-      warn ["  --  item:  ".blue, "#{item.text.abbreviate}"].join(" ") if $VERBOSE
+      warn ["  --  item:  ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
       list << "\\item #{item.text}\n\n"
       list << item.content
     end
-    list << "\\end{enumerate}\n\n"  
+    list << "\\end{enumerate}\n\n"
   end
-  
+
 end
 
 # Proces block elements of varios kinds
 class Asciidoctor::Block
-  
+
   def tex_process
     warn ["Node:".blue , "#{self.blockname}".blue].join(" ") if $VERBOSE
     case self.blockname
@@ -149,15 +149,15 @@ class Asciidoctor::Block
     else
       warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" unless $VERBOSE.nil?
       ""
-    end  
-  end 
-  
+    end
+  end
+
   def paragraph_process
     self.content.tex_post_process << "\n\n"
   end
-  
+
   def stem_process
-    warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE 
+    warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     warn self.content.cyan
     environment = TeXBlock.environment_type self.content
     if TeXBlock::INNER_TYPES.include? environment
@@ -168,32 +168,32 @@ class Asciidoctor::Block
       self.content
     end
   end
-  
+
   def admonition_process
-    warn ["Node:".blue, "#{self.blockname}".cyan, "#{self.style}:".magenta, "#{self.lines[0]}"].join(" ") if $VERBOSE   
+    warn ["Node:".blue, "#{self.blockname}".cyan, "#{self.style}:".magenta, "#{self.lines[0]}"].join(" ") if $VERBOSE
     "\\admonition\{#{self.style}\}\{#{self.content}\}\n"
   end
-  
+
   def page_break_process
     warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     "\n\\vfill\\eject\n"
   end
-  
+
   def literal_process
     warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
   end
-  
+
   def pass_process
     warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     self.content
   end
-  
+
   def quote_process
     warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     "\\begin\{quote\}\n#{self.content}\n\\end\{quote\}\n"
   end
-  
+
   # Process open blocks.  Map a block of the form
   #
   # .Foo
@@ -209,7 +209,7 @@ class Asciidoctor::Block
   # La di dah
   # \end{Foo}
   #
-  # This scheme enables one to map Asciidoc blocks to 
+  # This scheme enables one to map Asciidoc blocks to
   # LaTeX environments with essentally no knoweldge
   # of either other than their form.
   #
@@ -234,18 +234,18 @@ class Asciidoctor::Block
      end
      "\\begin\{#{title}\}\n\\label\{#{label_text}\}\n#{self.content}\n\\end\{#{title}\}\n"
   end
-  
+
   def listing_process
     warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
     warn self.content.yellow
     "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
   end
- 
+
 end
 
 # Process inline elements
 class Asciidoctor::Inline
-  
+
   def tex_process
     case self.node_name
     when 'inline_quoted'
@@ -259,11 +259,11 @@ class Asciidoctor::Inline
     else
       warn "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})" unless $VERBOSE.nil?
       ""
-    end  
-  end 
-  
+    end
+  end
+
   def inline_quoted_process
-    warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE 
+    warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
     case self.type
     when :strong
       "\\textbf\{#{self.text}\}"
@@ -283,9 +283,9 @@ class Asciidoctor::Inline
       end
     else
       "\\unknown\\{#{self.text}\\}"
-    end 
+    end
   end
-  
+
   def inline_anchor_process
     warn ["Node:".blue, "#{self.node_name}".magenta,  "type[#{self.type}], ".green + " text: #{self.text} target: #{self.target}".cyan].join(" ") if $VERBOSE
     # warn "self.class = #{class}".yellow if $VERBOSE
@@ -293,92 +293,92 @@ class Asciidoctor::Inline
     when :link
       "\\href\{#{self.target}\}\{#{self.text}\}"
     when :ref
-      "\\label\{#{self.text.gsub(/\[(.*?)\]/, "\\1")}\}"    
+      "\\label\{#{self.text.gsub(/\[(.*?)\]/, "\\1")}\}"
     when :xref
       "\\ref\{#{self.target.gsub('#','')}\}"
     else
       warn "!!  : undefined inline anchor -----------".magenta unless $VERBOSE.nil?
     end
   end
-  
+
   def inline_break_process
     warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
     "#{self.text} \\\\"
   end
-  
+
   def inline_footnote_process
     warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
     # warn self.content.yellow
     # warn self.style.magenta
     "\\footnote\{#{self.text}\}"
   end
-  
+
 end
 
 class String
-  
+
   def tex_post_process
     TexPostProcess.make_substitutions self
   end
-  
+
   def stem_post_process
     TexPostProcess.stem_substitutions self
   end
-  
+
 end
 
 # TeXPostProcess cleans up undesired transformations
 # inside the TeX enveronment.  Strings
-# &ampp;, &gt;, &lt; are mapped back to 
+# &ampp;, &gt;, &lt; are mapped back to
 # &, >, < and \\ is conserved.
 module TexPostProcess
-  
-  def TexPostProcess.getInline str
-	  rx_tex_inline = /\$(.*?)\$/
-	  matches = str.scan rx_tex_inline
+
+  def self.match_inline str
+    rx_tex_inline = /\$(.*?)\$/
+    matches = str.scan rx_tex_inline
   end
-  
-  def TexPostProcess.getBlock str
-	  rx_tex_block = /\\\[(.*?)\\\]/m
-	  matches = str.scan rx_tex_block
+
+  def self.match_block str
+    rx_tex_block = /\\\[(.*?)\\\]/m
+    matches = str.scan rx_tex_block
   end
-  
-  def TexPostProcess.make_substitutions1 str
-	  str = str.gsub("&amp;", "&")
+
+  def self.make_substitutions1 str
+    str = str.gsub("&amp;", "&")
     str = str.gsub("&gt;", ">")
-    str = str.gsub("&lt;", "<")	  
+    str = str.gsub("&lt;", "<")
   end
-  
-  def TexPostProcess.make_substitutions_in_matches matches, str   
-	  matches.each do |m|
+
+  def self.make_substitutions_in_matches matches, str
+    matches.each do |m|
       m_str = m[0]
-      m_transformed = TexPostProcess.make_substitutions1 m_str
+      m_transformed = make_substitutions1 m_str
       str = str.gsub(m_str,m_transformed)
     end
     str
   end
-  
+
   # (1) & (2) are needed together to protect \\
   # inside of matrices, etc.
-  def TexPostProcess.make_substitutions str
+  def self.make_substitutions str
     str = str.gsub('\\\\', '@@')   # (1)
-	  matches = TexPostProcess.getInline str
+    matches = match_inline str
     if matches.count > 0
-      str = TexPostProcess.make_substitutions_in_matches matches, str
+      str = make_substitutions_in_matches matches, str
     end
-	  matches = TexPostProcess.getBlock str
+    matches = match_block str
     if matches.count > 0
-      str = TexPostProcess.make_substitutions_in_matches matches, str
-    end 
+      str = make_substitutions_in_matches matches, str
+    end
     str = str.tr('@','\\')         # (2)
     str
   end
-  
-  def TexPostProcess.stem_substitutions str
+
+  def self.stem_substitutions str
     str = str.gsub('\\\\', '@@')   # (1)
-	  str = TexPostProcess.make_substitutions1 str
+    str = make_substitutions1 str
     str = str.tr('@','\\')         # (2)
     str
   end
-  
+
 end

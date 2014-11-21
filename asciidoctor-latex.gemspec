@@ -1,14 +1,13 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('lib/asciidoctor-latex/version', File.dirname(__FILE__))
+require File.expand_path('../lib/asciidoctor-latex/version', __FILE__)
 
-Gem::Specification.new do |s| 
+Gem::Specification.new do |s|
   s.name = 'asciidoctor-latex'
   s.version = Asciidoctor::LaTeX::VERSION
+  s.date = Time.now.strftime('%Y-%m-%d')
 
   s.summary = 'Converts AsciiDoc documents to LaTeX'
-  s.description = <<-EOS
-An extension for Asciidoctor that converts AsciiDoc documents to LaTeX.
-  EOS
+  s.description = 'An extension for Asciidoctor that converts AsciiDoc documents to LaTeX.'
 
   s.authors = ['James Carlson', 'Dan Allen']
   s.email = 'jxxcarlson@mac.com'
@@ -23,9 +22,9 @@ An extension for Asciidoctor that converts AsciiDoc documents to LaTeX.
     s.files = Dir['**/*']
   end
 
-  s.executables = %w(asciidoctor-latex)
+  s.executables = ['asciidoctor-latex']
   s.test_files = s.files.grep(/^(?:test|spec|feature)\/.*$/)
-  s.require_paths = %w(lib)
+  s.require_paths = ['lib']
 
   s.has_rdoc = true
   s.rdoc_options = %(--charset=UTF-8 --title="Asciidoctor LaTeX" --main=README.adoc -ri)

@@ -2,11 +2,11 @@
 James Carlson
 :numbered:
 :toc:
-:stem: 
+:stem:
 
 == Purpose
 
-The aim of the LaTeX converter, [path]_latex_converter.rb_, is to transform an AsciiDoc document containing mathematics into a LaTeX document.
+The aim of the LaTeX converter is to transform an AsciiDoc document containing mathematics into a LaTeX document.
 Please see the file [path]_manual.adoc_ in this repository for a more details than presented here.
 
 The LaTeX converter supports two closely-related math formats, [blue]#AsciiMath# and [blue]#LaTeX#.
@@ -40,7 +40,7 @@ e^{2\pi \sqrt{-1}} = 1
 
 These are for inline and display math, respectively
 The math content is written in LaTeX.
-To activitate AsciiMath processing, set [blue]#+:stem:+# or [blue]#+:stem: latexmath+#. 
+To activitate AsciiMath processing, set [blue]#+:stem:+# or [blue]#+:stem: latexmath+#.
 
 === LaTeX syntax
 
@@ -53,28 +53,55 @@ $ a^2 + b^2 = c^2 $
 and
 
 ----
-\[ 
-  e^{2\pi \sqrt{-1}} = 1 
+\[
+  e^{2\pi \sqrt{-1}} = 1
 \]
 ----
 
+== Installation
+
+=== Using Rubygems
+
+Open a terminal and type (without the leading `$`):
+
+ $ gem install asciidoctor-latex
+
+If you want to install a pre-release version (e.g. a release candidate), use:
+
+ $ gem install asciidoctor-latex --pre
+
+=== From repository
+
+If you’d like to install a development version from the repository, then use:
+
+ $ git clone https://github.com/asciidoctor/asciidoctor-latex.git
+ $ cd asciidoctor-latex
+ $ gem build asciidoctor-latex.gemspec
+ $ gem install *.gem
+
+
 == Usage
 
-The command
+The command:
 
- $ asciidoctor -r ./latex_converter.rb -b latex test/sample1.adoc 
+ $ asciidoctor -r asciidoctor-latex -b latex samples/sample1.adoc
 
-will create a file [path]_test/sample1.tex_ from [path]_test/sample1.adoc_.
-Then [path]_test/sample1.tex_ can be run through the +pdflatex+ command.
-For a more complex example with a lot of math, see the file [path]_test/elliptic.adoc_ in this repo.
+will create a file [path]_samples/sample1.tex_ from [path]_samples/sample1.adoc_.
+Then [path]_samples/sample1.tex_ can be run through the +pdflatex+ command.
+For a more complex example with a lot of math, see the file [path]_samples/elliptic.adoc_ in this repo.
 The HTML is rendered at  http://epsilon.my.noteshare.io/notebook/195/?note=782[noteshare.io] for purposes of comparison.
+
+If you want to run the converter directly without installing the gem, then run it via Bundler:
+
+ $ bundle exec asciidoctor -r asciidoctor-latex -b latex samples/sample1.adoc
+
 
 == Files
 
 === Code
 
 * Ruby
-  latex_converter.rb:: the driver program to transform asciidoc files to tex files
+  converter.rb:: the driver program to transform asciidoc files to tex files
   node_processor.rb:: extends classes in the Asciidoctor module which translate AsciiDoc elements to TeX elements
   tex_block.rb:: strips enclosing escaped braces as needed
 
@@ -113,19 +140,19 @@ For example, the role `[red]` [red]#which you see in use here# has the entry `\n
 A construct like the equation environment:
 
 ----
-\[ 
-    \begin{equation} 
- 	... 
-    \end{equation} 
+\[
+    \begin{equation}
+ 	...
+    \end{equation}
 \]
 ----
 
 needs to be transformed to ----
 
 ----
-\begin{equation} 
-... 
-\end{equation} 
+\begin{equation}
+...
+\end{equation}
 ----
 
 ////
@@ -133,7 +160,7 @@ There is a tricky point here.
 Environments like the equation environment live outside of the delimiters `\[ ... \]`.
 But others live inside.
 Those that live outside in LaTeX must have their delimiters stripped.
-The needed transformation is given by `TeXBlock.process_environments` in the file `tex_block.rb`. 
+The needed transformation is given by `TeXBlock.process_environments` in the file `tex_block.rb`.
 ////
 
 === LaTeX Environments
@@ -199,7 +226,7 @@ The TeXBlock package addresses the points made above in the case of both convent
 . The following symbols need to be passed through unchanged
 
 ** +--+
-** +<+ 
+** +<+
 ** +>+
 ** +&+ -- important for typesettig matrices
 ** +...+ -- horizontal rule

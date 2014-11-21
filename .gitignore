@@ -1,4 +1,4 @@
-/_*/
+*/_*/
 /Gemfile.lock
 /pkg/
 /.ruby-gemset
@@ -30,4 +30,5 @@ ud.sh
 
 LOG.adoc
 
+try-out/possible/
 

@@ -1,0 +1,100 @@
+:numbered:
+:toc2:
+
+
+== Trying out Asciidoctor LaTeX
+
+
+
+The aim of the LaTeX converter is 
+
+- to transform AsciiDoc documents containing mathematics into LaTeX documents
+
+- to add to Asciidoctor's facilities for handling mathematical notation when rendered as HTML
+
+=== Setup and the first tests
+
+Below are some examples you can run through Asciidoctor to see what you can do with it.
+Before trying them out, however, you need to do a little setting-up.  First, be
+sure that you are in the directory where you found this `README` document.
+Second,  find the path to the asciidoctor-latex directory.  For the purpose
+of this explanation, let's imagine that it is 
+`/users/poincare/git/asciidoctor-latex`. Third, run the commands
+```
+  $ export la=/users/poincare/git/asciidoctor-latex
+  $ export laco=$la/lib/asciidoctor-latex/converter.rb
+```
+
+That's it!  If all was successful, you can run the test
+
+```
+  $ asciidoctor -r $laco -a stem=latexmath eq-latex.adoc
+```
+
+Here the `-r $laco` says _use the file at_ `$laco`, and the 
+ `-a stem=latexmath` says _use the_ `stem` notation processor
+with the `latexmath` _option_.
+
+After running the above command, you should find the file `eq-latex.html`
+next to the source file `eq-latex.adoc`. View it in your browser.
+You will need to be connected to the internet so that your browser
+can load the MathJax fonts used to render mathematical 
+notation.footnote:[You can also install the fonts on your system.
+See http://www.mathjax.org/help/fonts/[mathjax-fonts]. this will give you faster reponse.
+Turning off your internet conneection makes it better still:-(]
+
+Let's test the analogous file written in `stem` format:
+
+```
+  $ asciidoctor -r $laco -a stem eq-stem.adoc
+```
+
+In this case, the converter is not needed.  The
+command below also works.
+
+```
+  $ asciidoctor -a stem eq-stem.adoc
+```
+
+Finaly, lets convert our first file into LaTeX by running the commaand
+
+```
+  $ asciidoctor -r $laco -a stem=latexmath -b latex eq-latex.adoc
+```
+If all was successful, there will be a file `eq-latex.tex` alongside
+your source file `eq-latex.adoc`.  You can process it as you
+would any LaTeX file.
+
+
+
+
+=== Examples
+
+Below is a list of files which demsonstrate various features
+of the converter.  In most cases there are two versions, e.g.
+`eq-latex.adoc` and ``eq-stem.adoc`, each written in the 
+indicated format.footnote:[A missing entry in the table
+may mean that a feature has not yet been implemented,
+or that the file demonstrating it has not yet been
+written and/or tested.]  One of the best ways
+of learning how to use the features of 
+Asciidotor LaTeX is to use your
+natural talent for reverse-engineering:
+run the example, the compare the rendered
+file and its source.
+
+[options=header, width=80%, align=center]
+|===
+| LaTeX | STEM | Comments
+| `eq-latex.adoc` | `eq-stem.adoc` | Basic equations
+| `pyth-latex.adoc` | -- | Numbered theorems
+|===
+
+
+
+== Issues
+
+The following have not yet been resolved.
+
+. The matrix environment in `eq-stem.adoc` does not render correctly.
+. Fix title in latex mode

@@ -6,7 +6,10 @@ James Carlson
 
 == Purpose
 
-The aim of the LaTeX converter, [path]_latex_converter.rb_, is to transform an AsciiDoc document containing mathematics into a LaTeX document.
+The aim of the LaTeX converter, [path]_converter.rb_, is t
+to transform an AsciiDoc document containing mathematics into a LaTeX document.
+The convert also adds to Asciidoctors facilities for handling mathematical 
+notation when rendered as HTML.
 Please see the file [path]_manual.adoc_ in this repository for a more details than presented here.
 
 The LaTeX converter supports two closely-related math formats, [blue]#AsciiMath# and [blue]#LaTeX#.
@@ -17,9 +20,8 @@ With the LaTeX converter, you can render expressions such as stem:[ a^2 + b^2 = 
 e^{2\pi \sqrt{-1}} = 1
 ++++
 
-within an AsciiDoc file.
-
-(The above won't render properly on GitHub right now, but will render if this README is run through Asciidoctor).
+within an AsciiDoc file.  Please note that the above won't render properly on 
+GitHub, but will render if this README is run through Asciidoctor.
 
 === Tests
 

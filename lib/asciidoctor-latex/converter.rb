@@ -71,9 +71,9 @@
 #
 
 require 'asciidoctor'
-require_relative 'colored_text'
-require_relative 'node_processors'
-require_relative 'tex_block'
+require 'asciidoctor-latex/colored_text'
+require 'asciidoctor-latex/node_processors'
+require 'asciidoctor-latex/tex_block'
 
 include TeXBlock
 

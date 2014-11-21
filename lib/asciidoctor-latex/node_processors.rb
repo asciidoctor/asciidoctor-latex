@@ -1,4 +1,4 @@
-require_relative 'colored_text'
+require 'asciidoctor-latex/colored_text'
 
 class Asciidoctor::Document
 

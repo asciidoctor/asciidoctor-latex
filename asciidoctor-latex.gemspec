@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('lib/asciidoctor-latex/version', File.dirname(__FILE__))
+require File.expand_path('../lib/asciidoctor-latex/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name = 'asciidoctor-latex'
   s.version = Asciidoctor::LaTeX::VERSION
+  s.date = Time.now.strftime('%Y-%m-%d')
 
   s.summary = 'Converts AsciiDoc documents to LaTeX'
   s.description = 'An extension for Asciidoctor that converts AsciiDoc documents to LaTeX.'

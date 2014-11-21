@@ -134,8 +134,6 @@ class EnvironmentBlock < Extensions::BlockProcessor
     
     if attrs['role'] == 'code'
       create_block parent, :listing, reader.lines, attrs
-    elsif attrs['role'] == 'code'
-      create_block parent, :environment, ['\\['] + reader.lines + ['\\]'],  attrs
     else
       create_block parent, :environment, reader.lines, attrs
     end

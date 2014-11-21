@@ -1,4 +1,4 @@
-require 'asciidoctor-latex/colored_text'
+require 'asciidoctor-latex/core_ext/colored_string'
 
 class Asciidoctor::Document
 

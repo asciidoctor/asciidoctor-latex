@@ -71,7 +71,7 @@
 #
 
 require 'asciidoctor'
-require 'asciidoctor-latex/colored_text'
+require 'asciidoctor-latex/core_ext/colored_string'
 require 'asciidoctor-latex/node_processors'
 require 'asciidoctor-latex/tex_block'
 

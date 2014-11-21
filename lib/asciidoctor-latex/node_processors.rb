@@ -20,7 +20,7 @@ class Asciidoctor::Document
   #   macro definitions.  In noteshare there is a database
   #   field 
   #
-   
+  
   
   def tex_process 
     puts "Hola".blue   
@@ -34,6 +34,16 @@ class Asciidoctor::Document
     doc << File.open(File.join(data_dir, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
     doc << "%% User Macros %%\n"
     doc << File.open(File.join(data_dir, 'macros.tex'), 'r') { |f| f.read }
+    
+    if File.exist?('myEnvironments.tex')
+      warn "I will take input from myEnvironments.tex".magenta
+      doc << "\\input myEnvironments.tex\n"
+    else
+      warn "I will take input from newEnvironments.tex".magenta
+      doc << "\\input newEnvironments.tex\n"
+    end
+    
+    
     doc << "%% Front Matter %%"
     doc << "\n\n\\title\{#{self.doctitle}\}\n"
     doc << "\\author\{#{self.author}\}\n"
@@ -51,13 +61,14 @@ class Asciidoctor::Document
     
     # Now write the defnitions of the new environments
     # discovered to file
-    warn "Writing environment definitions to file: new_environments.tex" if $VERBOSE
+    warn "Writing environment definitions to file: newEnvironments.tex" if $VERBOSE
     definitions = ""
     $latex_environment_names.each do |name|
       warn name if $VERBOSE
       definitions << "\\newtheorem\{#{name}\}\{#{name.capitalize}\}" << "\n"
     end
-    File.open('new_environments.tex', 'w') { |f| f.write(definitions) }
+    
+    File.open('newEnvironments.tex', 'w') { |f| f.write(definitions) }
     
     # Output
     doc << "\n\n\\end{document}\n\n" 

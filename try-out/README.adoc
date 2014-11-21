@@ -1,18 +1,24 @@
+= Trying out Asciidoctor LaTeX
+James Carlson <jxxcarlson@mac.com>
+v0.1, 2014-11-20
 :numbered:
 :toc2:
 
 
-== Trying out Asciidoctor LaTeX
 
 
 
-The aim of the LaTeX converter is 
+== Introduction
+
+
+
+The aim of Asciidoctor's LaTeX converter is 
 
 - to transform AsciiDoc documents containing mathematics into LaTeX documents
 
 - to add to Asciidoctor's facilities for handling mathematical notation when rendered as HTML
 
-=== Setup and the first tests
+== Setup 
 
 Below are some examples you can run through Asciidoctor to see what you can do with it.
 Before trying them out, however, you need to do a little setting-up.  First, be
@@ -43,6 +49,8 @@ notation.footnote:[You can also install the fonts on your system.
 See http://www.mathjax.org/help/fonts/[mathjax-fonts]. this will give you faster reponse.
 Turning off your internet conneection makes it better still:-(]
 
+== First tests
+
 Let's test the analogous file written in `stem` format:
 
 ```
@@ -68,7 +76,7 @@ would any LaTeX file.
 
 
 
-=== Examples
+== Examples
 
 Below is a list of files which demsonstrate various features
 of the converter.  In most cases there are two versions, e.g.
@@ -88,8 +96,54 @@ file and its source.
 | LaTeX | STEM | Comments
 | `eq-latex.adoc` | `eq-stem.adoc` | Basic equations
 | `pyth-latex.adoc` | -- | Numbered theorems
+| `env-latex.adoc` | `env-stem.adoc` | Env blocks 
 |===
 
+
+== Comments on the examples
+
+=== eq-latex
+
+Basic equations, both in-line, as with \(a^2 + b^2 = c^2\),
+and displayed, as with
+\[
+  a^n + b^n = c^n
+\]
+
+TIP: If the mathematics does not display properly,
+ you need to run this file through Asciidoctor with the `-a stem=latexmath` switch:
+`$ asciidoctor -a stem:latexmath README.adoc`.
+
+
+=== pyth-latex
+
+Numbered theorems, like the those below. 
+
+
+[env.theorem]
+--
+\[
+  a + (b + c) = (a + b) + c
+\]
+--
+
+[env.theorem]
+--
+\[
+  a(b+c) = ab + ac
+\]
+--
+
+TIP: If you don't
+see the words [red]#Theorem 1#, etc., 
+you need to run this file through Asciidoctor with the `-r $laco` switch:
+`$ asciidoctor -r $laco -a stem:latexmath README.adoc`
+
+
+=== env-latex & env-stem
+
+The files `env-latex.adoc` and `env-stem.adoc` are the same; they
+illustrated generaal usage of the `env`-block.
 
 
 == Issues

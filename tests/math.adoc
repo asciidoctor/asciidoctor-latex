@@ -24,7 +24,13 @@ are the obvious ones in which one
 of the variables is zero.
 --
 
-[env.eq]
+[env.equation]
 --
-\int_0^n x^2 dx = \frac{1}{n}
+\int_0^n x^n dx = \frac{1}{n}
+--
+
+
+[env.equation]
+--
+\int_{|z| = 1}\frac{dz}{z} = 2\pi\sqrt{-1}
 --

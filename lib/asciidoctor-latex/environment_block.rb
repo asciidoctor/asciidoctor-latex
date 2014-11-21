@@ -85,13 +85,8 @@ class EnvironmentBlock < Extensions::BlockProcessor
       $counter[env_name] += 1
     end
       
-    if env_name == 'eq'
-      title_prefix = 'Equation'
-    else
-      title_prefix = env_name.capitalize
-    end
 
-    attrs["title"] = title_prefix.capitalize + " " + $counter[env_name].to_s 
+    attrs["title"] = env_name.capitalize + " " + $counter[env_name].to_s 
     
     warn "env_name: #{env_name}".cyan if $VERBOSE 
     warn "end EnvironmentBlock\n".blue if $VERBOSE 

@@ -1,10 +1,5 @@
 class String
 
-  def abbreviate
-    self.split("\n")[0]
-  end
-
-
   def blue
     "\e[1;34m#{self}\e[0m"
   end

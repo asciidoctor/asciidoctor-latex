@@ -103,7 +103,7 @@ class Asciidoctor::List
   def ulist_process
     list = "\\begin{itemize}\n\n"
     self.content.each do |item|
-      warn ["  --  item: ".blue, "#{item.text.abbreviate}"].join(" ") if $VERBOSE
+      warn ["  --  item: ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
       list << "\\item #{item.text}\n\n"
       list << item.content
     end
@@ -113,7 +113,7 @@ class Asciidoctor::List
   def olist_process
     list = "\\begin{enumerate}\n\n"
     self.content.each do |item|
-      warn ["  --  item:  ".blue, "#{item.text.abbreviate}"].join(" ") if $VERBOSE
+      warn ["  --  item:  ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
       list << "\\item #{item.text}\n\n"
       list << item.content
     end

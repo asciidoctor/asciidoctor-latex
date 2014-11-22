@@ -24,6 +24,34 @@ Here is how the first equation is done:
 --
 ----
 
+=== Some more equations
+
+.Pythagorean theorem
+[env.equation#pyth]
+--
+a^2  + b^2 = c^2
+--
+
+A Fourier series:
+
+[env.equation#fourier]
+--
+f(z)  = \sum_{n=-\infty}^\infty e^{2\pi i n z }.
+--
+
+
+A matrix:
+[env.equation]
+--
+M = \left(
+\begin{matrix}
+1 & 2 \\
+3 & 4 
+\end{matrix}
+\right)
+--
+
+
 === Titles
 
 Equations can take a title:

@@ -108,10 +108,12 @@ module Asciidoctor
         if node.attributes['role'] == 'equation'
           if node.attributes['equation_number']
             node.attributes['title'] = nil
-            number_part = '<span style="float:right;margin-top:-1.75em;">' + "(#{node.attributes['equation_number']}) </span>"
+            number_part = '<td style="text-align:right">' + "(#{node.attributes['equation_number']}) </td>"
             number_part = ["+++ #{number_part} +++"]
-            equation_part = ['+++<span>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</span>+++']
-            node.lines =  equation_part + number_part
+            equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
+            table_style='style="width:100%; border-collapse:collapse"'
+            row_style='style="border-collapse: collapse"'
+            node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
           end        
         else
           node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]

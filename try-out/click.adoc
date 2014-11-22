@@ -10,7 +10,7 @@ to its hidden sate.  Click blocks
 signal their presence by the blue
 color of the title.
 
-.Secret message
+.Secret
 [click.message]
 --
 The path to wisdom is written on no

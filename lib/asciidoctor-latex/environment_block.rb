@@ -93,7 +93,7 @@ class EnvironmentBlock < Extensions::BlockProcessor
 
      # If the block is numbered, update the counter
      if numbered
-       env_name = 'env-'+role
+       env_name = role   ##################'env-'+role
        if $counter[env_name] == nil
          $counter[env_name] = 1
        else

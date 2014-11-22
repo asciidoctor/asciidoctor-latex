@@ -128,6 +128,7 @@ file and its source.
 | `theorem-latex.adoc` | -- | Numbered theorems
 | `env.adoc` | `env.adoc` | Env blocks 
 | `click.adoc` | `click.adoc`  | Click blocks
+| `code.adoc` | code.adoc` | Code blocks
 |===
 
 
@@ -234,6 +235,39 @@ secret map.
 
 Click blocks are useful in making up problem sets, 
 homework assignments, study guides, etc.
+
+
+=== code
+
+The file `code.adoc` illstrates the versatilty of the `[env]`
+and `[click]` blocks which are used here in their `code` role.
+We explain how we do the two blocks below and related pieces
+of writing.
+
+
+[env.code#iter]
+--
+def iter(f, a, n)
+  n.times do
+    a = f.call(a)
+    puts a
+  end
+  return  a
+end
+--
+
+.Results
+[click.code%numbered]
+--
+irb> iter $g, 1.0, 6
+1.5
+1.4166666666666665
+1.4142156862745097
+1.4142135623746899
+1.414213562373095
+1.414213562373095
+=> 1.414213562373095            
+--
  
 
 == Issues

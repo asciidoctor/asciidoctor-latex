@@ -34,71 +34,81 @@ class ClickBlock < Extensions::BlockProcessor
     warn "begin ClickBlock".blue if $VERBOSE
     click_name = attrs["role"]
     
-    # Ensure that the role is defined
-         if attrs['role'] == nil
-           role = '__item'
-         else
-           role = attrs['role']
-         end
+    # Ensure that role is defined
+     if attrs['role'] == nil
+       role = 'item'
+     else
+       role = attrs['role']
+     end
 
-         # Should the block be numbered?
-         numbered = false
-         if attrs['options'] and attrs['options'].include? 'numbered'
-             numbered = true
-         end
+     # Use the value of the role to determine
+     # whether this is a numbered block
+     numbered = false
+     if attrs['options'] and attrs['options'].include? 'number'
+       numbered = true
+     end
 
-         # If the block is numbered, update the counter
-         if numbered
-           click_name = 'click-'+role
-           if $counter[click_name] == nil
-             $counter[click_name] = 1
-           else
-             $counter[click_name] += 1
-           end
-         end
 
-         # Set pseudo role
-         if role == 'code'
-           pseudo_role = 'listing'
-         elsif role == '__item'
-           pseudo_role = 'item'
-         else
-           pseudo_role = role
-         end
+     # If the block is numbered, update the counter
+     if numbered
+       env_name = role     ##############  'click-'+role
+       if $counter[env_name] == nil
+         $counter[env_name] = 1
+       else
+         $counter[env_name] += 1
+       end
+     end
 
-         # Set title
-         if attrs['title']
-           title = attrs['title']
-         else
-           title = ''
-         end
 
-         if numbered
-           if title != ''
-             title = pseudo_role.capitalize + " #{$counter[click_name]}. #{title}"
-           else
-             title = pseudo_role.capitalize + " #{$counter[click_name]}"
-           end
-         end
-
-         if !numbered and title == ''
-           if role == '__item'
-             title = 'Item'
-           else
-             title = pseudo_role.capitalize
-           end
-         end
+     # Set title
+     if role == 'code'
+       title = 'Listing'
+     else
+       title = role.capitalize
+     end
+     if numbered
+       title = title + ' ' + $counter[env_name].to_s
+     end
+     if attrs['title']
+       if numbered
+         title = title + '. ' + attrs['title'].capitalize
+       else
+         title = title + ': ' + attrs['title'].capitalize
+       end 
+     end
+     
+     if role != 'equation' 
+       attrs['title']  = title
+     else
+       if numbered
+         attrs['equation_number'] = $counter[env_name].to_s
+       end
+     end
   
       
-         attrs['title'] = title
+    attrs['title'] = title
       
-      
+     
+    if attrs['role'] == 'code'
+      role = 'listing'
+    else
+      role  = 'click'
+    end 
     attrs['role'] = 'click'
+    
     
     warn "click_name: #{click_name}".cyan if $VERBOSE 
     warn "end Clicklock\n".blue if $VERBOSE  
-      
-    create_block parent, :click, reader.lines, attrs
+    
+    warn "role = #{role}".red
+    if role == 'listing'
+      warn "creating listing block".red
+      create_block parent, :listing, reader.lines, attrs
+    else
+      warn "creating click block".red
+      create_block parent, :click, reader.lines, attrs
+    end
+     
   end
   
 end

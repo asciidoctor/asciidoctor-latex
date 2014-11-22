@@ -1,13 +1,8 @@
-= Trying out Asciidoctor LaTeX
-James Carlson <jxxcarlson@mac.com>
-v0.1, 2014-11-20
-
-
 :numbered:
 :toc2:
-:max-width: 40%
+:max-width: 60%
 
-
+:stem: latexmath
 
 
 
@@ -17,9 +12,33 @@ v0.1, 2014-11-20
 
 The aim of Asciidoctor's LaTeX converter is 
 
-- to transform AsciiDoc documents containing mathematics into LaTeX documents
+. To render AsciiDoc documents as LaTeX.
 
-- to add to Asciidoctor's facilities for handling mathematical notation when rendered as HTML
+. To add to Asciidoctor's facilities for handling mathematical notation when rendered as HTML
+
+As an exmaple of both features, you can write automatically numbered equations, e.g.,
+
+[env.equation]
+--
+\int_{|z| = 1} \frac{dz}{z} = 2\pi \sqrt{-1}
+--
+
+by writing this in Asciidoc
+
+----
+[env.equation]
+--
+\int_{|z| = 1} \frac{dz}{z} = 2\pi \sqrt{-1}
+--
+----
+
+To render your document as HTML, type the 
+command `asciidoctor -r $laco -a stem=math foo.adoc`.
+Here `$laco` points to the converter file. See beow for
+instructions on setting  `$laco`.  To render
+your document as tex, type the commmand
+`asciidoctor -r $laco -a stem=math -b latex foo.adoc`.
+
 
 == Setup 
 
@@ -82,12 +101,19 @@ would any LaTeX file.
 == Examples
 
 Below is a list of files which demsonstrate various features
-of the converter.  In most cases there are two versions, e.g.
-`eq-latex.adoc` and ``eq-stem.adoc`, each written in the 
+of the converter.  In some cases there are two versions, e.g.
+`eq-latex.adoc` and `eq-stem.adoc`, each written in the 
 indicated format.footnote:[A missing entry in the table
 may mean that a feature has not yet been implemented,
 or that the file demonstrating it has not yet been
-written and/or tested.]  One of the best ways
+written and/or tested.]  In other cases, there
+is the same file appears in both the LaTeX
+and the STEM columns.  In those cases
+the `-a stem` or `-a stem:latexmath` option
+is not required unless there is mathematical
+content.  
+
+One of the best ways
 of learning how to use the features of 
 Asciidotor LaTeX is to use your
 natural talent for reverse-engineering:
@@ -114,13 +140,7 @@ Basic equations, both in-line, as with \(a^2 + b^2 = c^2\),
 and displayed, as with
 \[
   a^n + b^n = c^n
-\]
-
-TIP: If the mathematics does not display properly,
- you need to run this file through Asciidoctor with the `-a stem=latexmath` switch:
-`$ asciidoctor -a stem:latexmath README.adoc`.
-
-=== eqno-latex
+\]  
 
 
 The environment `[env.equation]` is automatically
@@ -165,11 +185,6 @@ Numbered theorems, like the those below.
   a(b+c) = ab + ac
 \]
 --
-
-TIP: If you don't
-see the words [red]#Theorem 1#, etc., 
-you need to run this file through Asciidoctor with the `-r $laco` switch:
-`$ asciidoctor -r $laco -a stem:latexmath README.adoc`
 
 
 === env
@@ -219,17 +234,25 @@ secret map.
 
 Click blocks are useful in making up problem sets, 
 homework assignments, study guides, etc.
-
-NOTE: At the moment the ClickBlock Processor is configured
-to load `jquery.js` from the root of this directory.
-That is because I am in Beijing and most Google resources
-are blocked.  
+ 
 
 == Issues
 
-The following have not yet been resolved.
+One should be able to tex this document wihout error
+and obtain the desired output.  This is very much a work
+in progress.  In particaulr, the following have not yet been resolved.
 
+. Dollars signs used to illustrated command cause LaTeX to choke. 
+  We need to map dollar sign to escaped dollar sig in 
+  post-processing for tex.  Or is there a better solution?
+  
+. The table block in Asciidoc is not implmented -- or rather,
+  is partially implemnted.
+  
+. The Click block is not implented in teh TeX output.
+  
 . The matrix environment in `eq-stem.adoc` does not render correctly.
+
 . Fix title in latex mode
 
 

@@ -35,10 +35,10 @@ class Asciidoctor::Document
     doc << File.open(File.join(data_dir, 'macros.tex'), 'r') { |f| f.read }
     
     if File.exist?('myEnvironments.tex')
-      warn "I will take input from myEnvironments.tex".magenta
+      warn "I will take input from myEnvironments.tex".blue
       doc << "\\input myEnvironments.tex\n"
     else
-      warn "I will take input from newEnvironments.tex".magenta
+      warn "I will take input from newEnvironments.tex".blue
       doc << "\\input newEnvironments.tex\n"
     end
     
@@ -140,7 +140,8 @@ end
 # Proces block elements of varios kinds
 class Asciidoctor::Block
   
-  STANDARD_ENVIRONMENT_NAMES = %w(theorem proposition lemma definition example problem)
+  # STANDARD_ENVIRONMENT_NAMES = %w(theorem proposition lemma definition example problem equation)
+  STANDARD_ENVIRONMENT_NAMES = %w(equation theorem)
   
   def tex_process
     warn ["Node:".blue , "#{self.blockname}".blue].join(" ") if $VERBOSE
@@ -231,7 +232,8 @@ class Asciidoctor::Block
     warn "    topu: #{attributes['topu']}".cyan if $VERBOSE
     warn "      id: #{attributes['id']}".cyan if $VERBOSE
     # record any environments encounted but not built=in
-    if !STANDARD_ENVIRONMENT_NAMES.include? env
+    if !STANDARD_ENVIRONMENT_NAMES.include? env and !$latex_environment_names.include? env
+      warn "env added: [#{env}]".blue if $VERBOSE
       $latex_environment_names << env
     end
     

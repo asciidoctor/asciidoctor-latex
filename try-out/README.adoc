@@ -5,6 +5,7 @@ v0.1, 2014-11-20
 
 :numbered:
 :toc2:
+:max-width: 40%
 
 
 

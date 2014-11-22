@@ -115,19 +115,14 @@ class EnvironmentBlock < Extensions::BlockProcessor
        title = title + '. ' + attrs['title'].capitalize
      end
      
-     # The following is bad code
      if role != 'equation' 
        attrs['title']  = title
-     end
-     
-     if role == 'equation'
+     else
        if numbered
-         attrs['title'] = title
+         attrs['equation_number'] = $counter[env_name].to_s
        end
      end
-     
-         
-         
+            
    
     warn "env_name: #{env_name}".cyan if $VERBOSE 
     warn "end EnvironmentBlock\n".blue if $VERBOSE 

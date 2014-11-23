@@ -8,15 +8,17 @@ of a small part of the code.  This is the
 I had been having  some trouble with 
 instances of $ ... $ not being mapped
 properly, and I think I've narrowd it down 
-to a single edge case in which the the 
-text $ ... $ occurs at the end of the line.
-This is a partial and tentative, not definitive 
-diagnosis.
+to a few small edge cases -- I am trying
+to collect these in the wild, as welll
+as t imagine them.
 
-Runnng the tests will give you better idea
-of where the problem might lie.  It occurs
-infrequently, but for large files (say 80K),
-those rare occurences add up.
+I've organized the files as `a.rb`. `b.rb`,
+and `c.rb`.  The first two pass, the third
+deos not.  The strings that I try the 
+transformer on in `c.rb` are only a few
+characters long.
+
+=== Help
 
 @mojavelinux, my knowledge of regular expressions is not
 so great -- could you look at this?

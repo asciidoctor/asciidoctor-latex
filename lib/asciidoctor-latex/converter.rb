@@ -106,14 +106,18 @@ module Asciidoctor
         
 
         if node.attributes['role'] == 'equation'
+          puts "hc: role = equation".magenta          
+          node.attributes['title'] = nil
+          number_part = '<td style="text-align:right">' + "(#{node.attributes['equation_number']}) </td>"
+          number_part = ["+++ #{number_part} +++"]
+          equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
+          table_style='style="width:100%; border-collapse:collapse"'
+          # row_style='style="border-collapse: collapse"'
+          row_style='class="zero" style="border-collapse: collapse; font-size: 10pt; "'
           if node.attributes['equation_number']
-            node.attributes['title'] = nil
-            number_part = '<td style="text-align:right">' + "(#{node.attributes['equation_number']}) </td>"
-            number_part = ["+++ #{number_part} +++"]
-            equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
-            table_style='style="width:100%; border-collapse:collapse"'
-            row_style='style="border-collapse: collapse"'
             node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
+          else
+            node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + ['+++</tr></table>+++']
           end        
         else
           node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]

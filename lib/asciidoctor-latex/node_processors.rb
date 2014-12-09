@@ -319,6 +319,7 @@ class Asciidoctor::Block
   
   def listing_process
     warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+    warn "atributes: #{self.attributes}".cyan if $VERBOSE
     warn self.content.yellow if $VERBOSE
     "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
   end

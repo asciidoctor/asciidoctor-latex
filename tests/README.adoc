@@ -29,6 +29,34 @@ To run `ru`, take a look at the variables
 in `test.sh` and edit them to conform
 to your setup.
 
+=== Options
+
+Below is the output of `ru` with no arguments.
+
+[env.code]
+--
+ 
+  Usage:
+ 
+  <file> means file without extension
+  Thus use '<file> = foo' for 'foo.adoc', etc
+ 
+  ru <file> -h        -- html output
+  ru <file> -hm       -- html output, math mode: use preprocessor and -a stem:latexmath
+  ru <file> -t        -- tex output
+  ru <file> -tq       -- tex output (quiet -- don't run LaTeX)
+  ru -c               -- run all command line tests
+  ru -r               -- run all ruby API tests
+  ru -a               -- run all tests
+ 
+  Some test files:
+  
+  math.adoc, env.adoc, big.adoc
+--
+
+
+=== Test results
+
 .Note on test results
 As of 11/19/2015, 5 pm Beijing time,
 the test results are as follows:

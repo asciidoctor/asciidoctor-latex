@@ -66,5 +66,55 @@ describe Transform do
     
   end
   
+  it 'maps the text "$\pi:U^+ \map U$" correctly (E)' do
+    
+    input = '$\pi:U^+ \map U$'
+    expected_output = '\(\pi:U^+ \map U\)'
+    compare_transform input, expected_output, $fixmath
+    
+  end
+  
+  it 'maps the text "$\pi^{-1}(U) = U^+ \cup U^-" correctly (E)' do
+    
+    input = '$\pi^{-1}(U) = U^+ \cup U^-$'
+    expected_output = '\(\pi^{-1}(U) = U^+ \cup U^-\)'
+    compare_transform input, expected_output, $fixmath
+    
+  end
+  
+  it 'maps the text "Then $\pi^{-1}(U) = U^+ \cup U^-$ is the disjoint union of two\nopen sets and $\pi:U^+ \map U$ is a local coordinate." correctly (E)' do
+    
+    input = 'Then $\pi^{-1}(U) = U^+ \cup U^-$ is the disjoint union of two\nopen sets and $\pi:U^+ \map U$ is a local coordinate.'
+    expected_output = 'Then \(\pi^{-1}(U) = U^+ \cup U^-\) is the disjoint union of two\nopen sets and \(\pi:U^+ \map U\) is a local coordinate.'
+    compare_transform input, expected_output, $fixmath
+    
+  end
+  
+  it 'parses a complicated expression correctly (1)' do
+    
+    input = <<EOF    
+iLet $a$ be a point of the set $\\CC - B$  let $U$ be a neighborhood of $a$ in 
+that set.  Then $\pi^{-1}(U) = U^+ \\cup U^-$ is the disjoint union of two
+open sets and $\pi:U^+ \map U$ is a local coordinate.
+EOF
+
+    expected_output = <<EOF    
+Let \(a\) be a point of the set \(\\CC - B\)  let \(U\) be a neighborhood of \(a\) in 
+that set.  Then \(pi^{-1}(U) = U^+ \\cup U^-\) is the disjoint union of two
+open sets and \(\pi:U^+ \map U\)is a local coordinate.
+EOF
+
+  compare_transform input, expected_output, $fixmath
+    
+  end
+
+  it 'maps the text "Call these $y_+$ and $y_-$." correctly (E)' do
+    
+    input = 'Call these $y_+$ and $y_-$.'
+    expected_output = 'Call these \(y_+\) and \(y_-\).'
+    compare_transform input, expected_output, $fixmath
+    
+  end
+  
   
 end

@@ -118,7 +118,8 @@ module Asciidoctor
             node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
           else
             node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + ['+++</tr></table>+++']
-          end        
+          end  
+          # node.title = "(#{node.attributes['equation_number']})"      
         else
           node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
         end
@@ -131,6 +132,18 @@ module Asciidoctor
         node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
         node.attributes['roles'] = (node.roles + ['click']) * ' '
         self.open node
+      end
+      
+      def inline_anchor node
+        puts "inline_anchor attributes:".blue
+        puts node.attributes.to_s.cyan
+        puts "/inline_anchor".blue
+        refid = node.attributes['refid']
+        if refid and refid[0] == '_'
+          "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
+        elsif $ref2counter[refid]
+          "<a href=\##{refid}>(#{$ref2counter[refid]})</a>"
+        end
       end
       
     end

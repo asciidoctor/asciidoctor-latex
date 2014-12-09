@@ -72,6 +72,7 @@ class EnvironmentBlock < Extensions::BlockProcessor
   # Hash to count the number of times each environment is encountered
   # Global variables again.  Is there a better way?
   $counter = {}
+  $ref2counter = {}
 
   def process parent, reader, attrs
     
@@ -123,6 +124,11 @@ class EnvironmentBlock < Extensions::BlockProcessor
        end
      end
             
+     if numbered and attrs['id']
+       $ref2counter[attrs['id']] = $counter[env_name].to_s
+       puts "$ref2counter: #{attrs['id']} => #{$counter[env_name].to_s}".yellow
+     end
+       
    
     warn "env_name: #{env_name}".cyan if $VERBOSE 
     warn "end EnvironmentBlock\n".blue if $VERBOSE 

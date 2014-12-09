@@ -41,7 +41,7 @@ f(z)  = \sum_{n=-\infty}^\infty e^{2\pi i n z }.
 
 
 A matrix:
-[env.equation]
+[env.equation#eq-matrix]
 --
 M = \left(
 \begin{matrix}
@@ -79,7 +79,7 @@ Numbering can be suppresed on a per-item basis.
 This gives a "bare" equation.
 
 
-[env.equation%no-number]
+[env.equation%no-number	]
 --
 M = \left[ 
   \begin{array}{ c c } 
@@ -116,3 +116,5 @@ M = \left[
 --
 ----
 
+
+Note:  In <<eq-matrix>> we defined a matrix.

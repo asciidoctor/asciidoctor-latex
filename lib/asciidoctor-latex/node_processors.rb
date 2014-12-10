@@ -274,6 +274,17 @@ class Asciidoctor::Block
      
   end
   
+  def report
+    # Report on this node
+    warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ") if $VERBOSE
+    warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+    warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if $VERBOSE
+    warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ") if $VERBOSE
+    warn ["Content:".magenta, "#{self.content}".yellow].join(" ") if $VERBOSE
+    warn ["Style:".green, "#{self.style}".red].join(" ") if $VERBOSE
+    warn ["METHODS:".red, "#{self.methods}".yellow].join(" ") if $VERBOSE
+  end       
+  
   
   # Process open blocks.  Map a block of the form
   #
@@ -296,21 +307,15 @@ class Asciidoctor::Block
   #
   def open_process
     
+    report
+    
     # Get title !- nil or make a dummy one
     title = self.attributes["title"]
     if title == nil
       title = "Dummy"
     end
          
-     # Report on this node
-     warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ") if $VERBOSE
-     warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-     warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if $VERBOSE
-     warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ") if $VERBOSE
-     warn ["Content:".magenta, "#{self.content}".yellow].join(" ") if $VERBOSE
-     warn ["Style:".green, "#{self.style}".red].join(" ") if $VERBOSE
-     warn ["METHODS:".red, "#{self.methods}".yellow].join(" ") if $VERBOSE
-          
+
      # strip constructs like {counter:theorem} from the title
      title = title.gsub /\{.*?\}/, ""
      title = title.strip
@@ -371,7 +376,9 @@ class Asciidoctor::Inline
   end
   
   def inline_anchor_process
+    
     warn ["Node:".blue, "#{self.node_name}".magenta,  "type[#{self.type}], ".green + " text: #{self.text} target: #{self.target}".cyan].join(" ") if $VERBOSE
+    warn "Attributes: #{self.attributes}".yellow
     # warn "self.class = #{class}".yellow if $VERBOSE
     case self.type
     when :link

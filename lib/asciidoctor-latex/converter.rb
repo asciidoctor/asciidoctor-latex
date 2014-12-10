@@ -101,6 +101,7 @@ module Asciidoctor
         warn "   attrs: #{node.attributes}".cyan if $VERBOSE
         warn "    role: #{node.attributes['role']}".cyan if $VERBOSE
         warn " options: #{node.attributes['options']}".cyan if $VERBOSE
+         warn " type: #{node.attributes['type']}".cyan if $VERBOSE
         warn "    topu: #{node.attributes['topu']}".cyan if $VERBOSE
         warn "      id: #{node.attributes['id']}".cyan if $VERBOSE
         warn " content: #{node.content}".blue if $VERBOSE
@@ -136,16 +137,21 @@ module Asciidoctor
       end
       
       def inline_anchor node
-        puts "inline_anchor attributes:".blue
-        puts node.attributes.to_s.cyan
-        puts "/inline_anchor".blue
-        refid = node.attributes['refid']
-        if refid and refid[0] == '_'
-          "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
-        elsif $ref2counter[refid]
-          "<a href=\##{refid}>(#{$ref2counter[refid]})</a>"
+        case node.type.to_s
+        when 'xref'
+          refid = node.attributes['refid']
+          if refid and refid[0] == '_'
+            output = "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
+          elsif $ref2counter[refid]
+            output = "<a href=\##{refid} style='text-decoration:none'>(#{$ref2counter[refid]})</a>"
+          end
+        when 'link'
+          output = "<a href=#{node.target}>#{node.text}</a>"
+        else
+          output = "FOOBAR"
         end
-      end
+        output
+      end         
       
     end
   end

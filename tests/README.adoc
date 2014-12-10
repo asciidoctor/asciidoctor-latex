@@ -3,7 +3,7 @@
 Run the comand 
 
 ```
-$ alias ru 'sh test.sh'
+$ alias ru='sh test.sh'
 ```
 
 Then use run tests as follows:

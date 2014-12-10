@@ -94,7 +94,7 @@ end
 
 DocTest::GeneratorTask.new(:generate) do |task|
   task.output_suite = DocTest::HTML::ExamplesSuite.new(examples_path: 'test/examples/html')
-  task.renderer_opts[:template_dirs] = 'data/templates'
+  # task.renderer_opts[:template_dirs] = 'data/templates'
   #
   # add extra input examples (optional)
   task.examples_path.unshift 'test/examples/adoc'

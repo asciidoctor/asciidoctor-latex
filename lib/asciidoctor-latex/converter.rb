@@ -89,7 +89,8 @@ include TeXBlock
 require 'asciidoctor/converter/html5'
 
 
-# @mojavelinux's code for an Html5ConverterExtension & its insertion
+# code for Html5ConverterExtension & its insertion
+# template by @mojavelinux
 module Asciidoctor
   module LaTeX
     module Html5ConverterExtensions

@@ -1,0 +1,12 @@
+== Equation test
+
+The Pythagorean theorem, $a^2 + b^2 = c^2$,
+relates the hypotenuse to the altitude
+and base of a right triangle.
+
+Euler's formula states that
+\[
+  e^{2\pi \sqrt{-1}} = 1
+\]
+
+Ain't that great!

@@ -9,7 +9,7 @@ The equation
 \[
   a^2 + b^2 = c^2
 \]
-has infinitely many non-proportional 
+has infinitely many non-proportional
 integer solutions.
 --
 

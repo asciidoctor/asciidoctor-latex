@@ -3,7 +3,7 @@
 # file: test1.rb
 
 # Test suite for LateX backend for Asciidoctor
-# Run 
+# Run
 #
 #   $ alias ru='sh test1.rb'
 #
@@ -34,12 +34,12 @@ case $1 in
 	-a) echo "running all tests"
 	    sh test.sh -c
 		sh test.sh -r
-		echo	
+		echo
 		exit;;
 esac
-	
 
-case $2 in 
+
+case $2 in
    -h)  echo $1.adoc ' --> html'
         $adx -r $laco $1.adoc
 		tail -25 $1.html
@@ -52,7 +52,7 @@ case $2 in
         exit;;
    -t)  echo $1.adoc '--> tex'
         $adx -r $laco -r $post $1.adoc -b latex
-		# cp blank.tex new_environments.tex 
+		# cp blank.tex new_environments.tex
 		# ^^^ this is kludge - should not be necessary
 		$tex $1.tex
 		$tex $1.tex
@@ -61,7 +61,7 @@ case $2 in
         exit;;
   -tq)  echo $1.adoc '--> tex'
         $adx --verbose -r $laco -r $post $1.adoc -b latex
- 		cp blank.tex new_environments.tex 
+ 		cp blank.tex new_environments.tex
  		tail -25 $1.tex
         exit;;
 
@@ -85,5 +85,3 @@ echo "  Some test files:"
 echo "  "
 echo "  math.adoc, env.adoc, big.adoc"
 echo
-
-

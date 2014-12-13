@@ -1,6 +1,6 @@
 == Testing the LaTeX converter
 
-Run the comand 
+Run the comand
 
 ```
 $ alias ru='sh test.sh'
@@ -9,12 +9,12 @@ $ alias ru='sh test.sh'
 Then use run tests as follows:
 
 ```
-- ru env_min -h 
+- ru env_min -h
 - ru env -hm
-- ru click_min -h 
+- ru click_min -h
 - ru latex -hm
 - ru latex -t
-- ru big -hm 
+- ru big -hm
 - ru big -t
   Etc
 ```
@@ -35,12 +35,12 @@ Below is the output of `ru` with no arguments.
 
 [env.code]
 --
- 
+
   Usage:
- 
+
   <file> means file without extension
   Thus use '<file> = foo' for 'foo.adoc', etc
- 
+
   ru <file> -h        -- html output
   ru <file> -hm       -- html output, math mode: use preprocessor and -a stem:latexmath
   ru <file> -t        -- tex output
@@ -48,9 +48,9 @@ Below is the output of `ru` with no arguments.
   ru -c               -- run all command line tests
   ru -r               -- run all ruby API tests
   ru -a               -- run all tests
- 
+
   Some test files:
-  
+
   math.adoc, env.adoc, big.adoc
 --
 
@@ -74,11 +74,9 @@ the test results are as follows:
 The test `ru big -hm` is conditional pass
 because the regex misses a few of the
 constructs $ ... $.  The test `ru big -t`
-is also conditonal becasue of six 
+is also conditonal becasue of six
 errors of the type
 ```
     l.1098 $ H
               \unknown \{{k}(\CP\}n) \cong \ZZ $ for $ k \in \set{0, 2 \commadots...
 ```
-
-

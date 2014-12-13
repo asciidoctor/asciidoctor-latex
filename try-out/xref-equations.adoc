@@ -26,4 +26,3 @@ Proin ac blandit magna, vel ultrices magna. Suspendisse non ligula lobortis, fau
 The first section is <<This is a test>>
 
 The professor harrumphed and said: I repeat, equation <<qq>> is very important.
-

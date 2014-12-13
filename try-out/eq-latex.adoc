@@ -4,8 +4,8 @@
 === Number Theory
 
 The equation
-$a^2 + b^2 = c^2$ has infinitely many 
-non-proportional integer solutions. 
+$a^2 + b^2 = c^2$ has infinitely many
+non-proportional integer solutions.
 The integer solutions of the equation
 \[
   a^3 + b^3 = c^3
@@ -24,14 +24,14 @@ The fundamental theorem of calculus:
 \[
    \frac{d}{dx} \int_a^x f(t) dt = f(x)
  \]
- 
+
 === Linear algebra
 
 A matrix:
-\[ 
-M = \left[ 
-  \begin{array}{ c c } 
-	 1 & 2 \\ 
-	 3 & 4 
-  \end{array} \right] 
+\[
+M = \left[
+  \begin{array}{ c c }
+	 1 & 2 \\
+	 3 & 4
+  \end{array} \right]
 \]

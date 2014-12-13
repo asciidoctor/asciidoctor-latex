@@ -5,26 +5,26 @@
 # Date: 9/26/2014
 #
 # This is a first step towards writing a LaTeX backend
-# for Asciidoctor. It is based on the 
+# for Asciidoctor. It is based on the
 # Dan Allen's demo-converter.rb.  The "convert" method
-# is unchanged, the methods "document node" and "section node" 
+# is unchanged, the methods "document node" and "section node"
 # have been redefined, and several new methods have been added.
 #
 # The main work will be in identifying asciidoc elements
 # that need to be transformed and adding a method for
 # each such element.  As noted below, the "warn" clause
 # in the "convert" method is a useful tool for this task.
-# 
-# Usage: 
+#
+# Usage:
 #
 #   $ asciidoctor -r ./latex-converter.rb -b latex test/sample1.adoc
 #
 # Comments
 #
-#   1.  The "warn" clause in the converter code is quite useful.  
-#       For example, you will discover in running the converter on 
-#       "test/sample-1.adoc" that you have not implemented code for 
-#       the "olist" node. Thus you can work through ever more complex 
+#   1.  The "warn" clause in the converter code is quite useful.
+#       For example, you will discover in running the converter on
+#       "test/sample-1.adoc" that you have not implemented code for
+#       the "olist" node. Thus you can work through ever more complex
 #       examples to discover what you need to do to increase the coverage
 #       of the converter. Hackish and ad hoc, but a process nonetheless.
 #
@@ -34,9 +34,9 @@
 #       This can be done at the preprocessor level.
 #
 #   3.  In view of the preceding, we may need to chain a frontend
-#       (preprocessor) to the backend. In any case, the main work 
+#       (preprocessor) to the backend. In any case, the main work
 #       is in transforming Asciidoc elements to TeX elements.
-#       Other than the asciidoc ->  tex mapping, the tex-converter 
+#       Other than the asciidoc ->  tex mapping, the tex-converter
 #       does not need to understand tex.
 #
 #   4.  Included in this repo are the files "test/sample1.adoc", "test/sample2.adoc",
@@ -44,7 +44,7 @@
 #
 #   5.  Beginning with version 0.0.2 we use a new dispatch mechanism
 #       which should permit one to better manage growth of the code
-#       as the coverage of the converter increases. Briefly, the 
+#       as the coverage of the converter increases. Briefly, the
 #       main convert method, whose duty is to process nodes, looks
 #       at node.node_name, then makes the method call node.tex_process
 #       if the node_name is registered in NODE_TYPES. The method
@@ -56,7 +56,7 @@
 #       If node.node_name is not found in NODE_TYPES, then
 #       a warning message is issued.  We can use it as a clue
 #       to find what to do to handle this node.  All the code
-#       in "node_processors.rb" to date was written using this 
+#       in "node_processors.rb" to date was written using this
 #       hackish process.
 #
 #
@@ -70,7 +70,6 @@
 #  * *bold* and _italic_
 #  * hyperlinks like http://foo.com[Nerdy Stuff]
 #
-
 
 require 'asciidoctor'
 require_relative 'colored_text'
@@ -94,9 +93,9 @@ require 'asciidoctor/converter/html5'
 module Asciidoctor
   module LaTeX
     module Html5ConverterExtensions
-      
-      def environment node 
-        
+
+      def environment node
+
         warn "\n    node: #{node.node_name}".cyan if $VERBOSE
         warn "   attrs: #{node.attributes}".cyan if $VERBOSE
         warn "    role: #{node.attributes['role']}".cyan if $VERBOSE
@@ -105,10 +104,10 @@ module Asciidoctor
         warn "    topu: #{node.attributes['topu']}".cyan if $VERBOSE
         warn "      id: #{node.attributes['id']}".cyan if $VERBOSE
         warn " content: #{node.content}".blue if $VERBOSE
-        
+
 
         if node.attributes['role'] == 'equation'
-          puts "hc: role = equation".magenta          
+          puts "hc: role = equation".magenta
           node.attributes['title'] = nil
           number_part = '<td style="text-align:right">' + "(#{node.attributes['equation_number']}) </td>"
           number_part = ["+++ #{number_part} +++"]
@@ -120,22 +119,22 @@ module Asciidoctor
             node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
           else
             node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + ['+++</tr></table>+++']
-          end  
-          # node.title = "(#{node.attributes['equation_number']})"      
+          end
+          # node.title = "(#{node.attributes['equation_number']})"
         else
           node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
         end
-    
+
         node.attributes['roles'] = (node.roles + ['environment']) * ' '
         self.open node
       end
-      
+
       def click node
         node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
         node.attributes['roles'] = (node.roles + ['click']) * ' '
         self.open node
       end
-      
+
       def inline_anchor node
         case node.type.to_s
         when 'xref'
@@ -151,8 +150,8 @@ module Asciidoctor
           output = "FOOBAR"
         end
         output
-      end         
-      
+      end
+
     end
   end
 end
@@ -161,19 +160,19 @@ end
 class Asciidoctor::Converter::Html5Converter
   # inject our custom code into the existing Html5Converter class (Ruby 2.0 and above)
   prepend Asciidoctor::LaTeX::Html5ConverterExtensions
-end                             
+end
 
 
 class LaTeXConverter
-  
+
   include Asciidoctor::Converter
   register_for 'latex'
-  
+
 
   Extensions.register do
-    preprocessor TeXPreprocessor    
+    preprocessor TeXPreprocessor
     block EnvironmentBlock
-    block ClickBlock                                                                                                                                                                                                                                                                                                                                                                  
+    block ClickBlock
     preprocessor PrependProcessor if document.basebackend? 'html'
     postprocessor EntToUni if document.basebackend? 'tex'
   end
@@ -182,35 +181,34 @@ class LaTeXConverter
   Extensions.register :latex do
     # EnvironmentBlock
   end
-  
+
 
   TOP_TYPES = %w(document section)
-  LIST_TYPES = %w(olist ulist )        
-  INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)   
+  LIST_TYPES = %w(olist ulist )
+  INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)
   BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)
-  OTHER_TYPES = %w(environment table)    
+  OTHER_TYPES = %w(environment table)
   NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
-    
+
   def initialize backend, opts
     warn "initialize converter".magenta if $VERBOSE
     super
     basebackend 'tex'
     outfilesuffix '.tex'
   end
-  
-  $latex_environment_names = [] 
-  $label_counter = 0 
-  
+
+  $latex_environment_names = []
+  $label_counter = 0
+
   def convert node, transform = nil
-    
+
     if NODE_TYPES.include? node.node_name
       node.tex_process
     else
       warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta
       # This warning should not be switched off by $VERBOSE
-    end 
-    
+    end
+
   end
-  
-   
+
 end

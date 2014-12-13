@@ -2,29 +2,29 @@
 James Carlson
 :numbered:
 :toc2:
-:stem: 
+:stem:
 
 == Purpose
 
 The aim of the LaTeX converter, [path]_converter.rb_, is
 to transform an AsciiDoc document containing mathematical notation into a LaTeX document.
-The converter also adds to Asciidoctor's facilities for handling mathematical 
+The converter also adds to Asciidoctor's facilities for handling mathematical
 notation when rendered as HTML.  Among these is the automatic numbering of theorems.
 Please see the file [path]_manual.adoc_ in this repository for additional details
-and for technical information.  
+and for technical information.
 
-For examples and a quick start guide, see <<Getting started>>. 
+For examples and a quick start guide, see <<Getting started>>.
 Below, we describe the <<Document format,document formats>> used
 for mathematics and the <<Command for rendering,commands>> for rendering a document into HTML or LaTeX.
 
 
 == Getting started
 
-The directory `try-out` contains a set of examples which 
+The directory `try-out` contains a set of examples which
 show what Asciidoctor LateX can do.  Consult the `README` file
-for directions on how to render an examples as  
-HTML or LaTeX. By comparing the source and rendered files, 
-you will quickly see how to write Asciidoc LaTeX.  
+for directions on how to render an examples as
+HTML or LaTeX. By comparing the source and rendered files,
+you will quickly see how to write Asciidoc LaTeX.
 
 
 
@@ -40,7 +40,7 @@ For displayed text, one can use
     e^{2\pi \sqrt{-1}} = 1
   ++++
 ----
-or 
+or
 ----
   \[
      e^{2\pi \sqrt{-1}} = 1
@@ -50,19 +50,19 @@ Both render as
   \[
      e^{2\pi \sqrt{-1}} = 1
   \]
-_Please note that the formulae above will not render properly 
-if you are reading it on GitHub.  It will, however, render properly if you run 
+_Please note that the formulae above will not render properly
+if you are reading it on GitHub.  It will, however, render properly if you run
 this file through Asciidoctor_.
 
 == Commands for rendering
 
-Asciidoc math files can be rendered 
+Asciidoc math files can be rendered
 
 . as HTML (the default)
 . with the LaTeX converter additions such as automatic theorem numbering
 . as LaTeX
 +
-*Note.* Forthcoming releases will make it possible to render 
+*Note.* Forthcoming releases will make it possible to render
 +
 . as PDF
 . as EPUB3 (Electronic book)
@@ -70,7 +70,7 @@ Asciidoc math files can be rendered
 
 === HTML output
 
-To render a file into HTML, the Asciidoctor default, 
+To render a file into HTML, the Asciidoctor default,
 use the usual `asciidoctor` command with this option:
 ```
   $ asciidoctor -a stem foo.adoc
@@ -112,7 +112,3 @@ To render a file into LaTeX, use the `-b` (backend) option, e.g.,
 Switch `:stem:` processing on by putthng the text `:stem:`
 in your file.  To turn the swtich on and set it to `latexmath`, say
 instaed `stem:latexmth`.
-
-
-
-

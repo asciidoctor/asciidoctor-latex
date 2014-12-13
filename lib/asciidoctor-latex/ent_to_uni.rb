@@ -12,8 +12,8 @@ require 'htmlentities'
 class EntToUni < Extensions::Postprocessor
 
   def process document, output
-    decoder = HTMLEntities.new  
+    decoder = HTMLEntities.new
     output = decoder.decode output
   end
-  
+
 end

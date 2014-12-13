@@ -15,7 +15,7 @@ include Asciidoctor::Extensions
 
 class ClickBlock < Extensions::BlockProcessor
 
-  require_relative 'colored_text'
+  require_relative 'core_ext/colored_string'
 
   use_dsl
   # ^^^ don't know what this is.  Could you explain?

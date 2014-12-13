@@ -5,7 +5,7 @@ require 'asciidoctor/extensions'
 include Asciidoctor
 include Asciidoctor::Extensions
 
-require_relative 'colored_text'
+require_relative 'core_ext/colored_string'
 
 
 # Prepend lines to a document

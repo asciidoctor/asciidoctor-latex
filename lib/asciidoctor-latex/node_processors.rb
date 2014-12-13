@@ -1,4 +1,4 @@
-require_relative 'colored_text'
+require_relative 'core_ext/colored_string'
 
 $VERBOSE=true
 

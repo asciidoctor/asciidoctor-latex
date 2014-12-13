@@ -72,7 +72,7 @@
 #
 
 require 'asciidoctor'
-require_relative 'colored_text'
+require_relative 'core_ext/colored_string'
 require_relative 'node_processors'
 require_relative 'tex_block'
 require_relative 'click_block'

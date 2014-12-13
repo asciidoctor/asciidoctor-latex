@@ -1,5 +1,6 @@
 require 'asciidoctor-latex/tex_block'
-include TeXBlock
+
+TeXBlock = Asciidoctor::LaTeX::TeXBlock
 
 require 'test/unit'
 

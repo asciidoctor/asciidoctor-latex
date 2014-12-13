@@ -11,100 +11,103 @@ require 'asciidoctor'
 require 'asciidoctor/extensions'
 require 'asciidoctor-latex/core_ext/colored_string'
 
-class ClickBlock < Asciidoctor::Extensions::BlockProcessor
 
-  use_dsl
-  # ^^^ don't know what this is.  Could you explain?
+module Asciidoctor::LaTeX
+  class ClickBlock < Asciidoctor::Extensions::BlockProcessor
 
-  named :click
-  on_context :open
-  # parse_context_as :complex
-  # ^^^ The above line gave me an error.  I'm not sure what do to with it.
+    use_dsl
+    # ^^^ don't know what this is.  Could you explain?
 
-  # Hash to count the number of times each environment is encountered
-  # Global variables again.  Is there a better way?
-  $counter = {}
+    named :click
+    on_context :open
+    # parse_context_as :complex
+    # ^^^ The above line gave me an error.  I'm not sure what do to with it.
 
-  def process parent, reader, attrs
+    # Hash to count the number of times each environment is encountered
+    # Global variables again.  Is there a better way?
+    $counter = {}
 
-    warn "begin ClickBlock".blue if $VERBOSE
-    click_name = attrs["role"]
+    def process parent, reader, attrs
 
-    # Ensure that role is defined
-     if attrs['role'] == nil
-       role = 'item'
-     else
-       role = attrs['role']
-     end
+      warn "begin ClickBlock".blue if $VERBOSE
+      click_name = attrs["role"]
 
-     # Use the value of the role to determine
-     # whether this is a numbered block
-     numbered = false
-     if attrs['options'] and attrs['options'].include? 'number'
-       numbered = true
-     end
-
-
-     # If the block is numbered, update the counter
-     if numbered
-       env_name = role     ##############  'click-'+role
-       if $counter[env_name] == nil
-         $counter[env_name] = 1
+      # Ensure that role is defined
+       if attrs['role'] == nil
+         role = 'item'
        else
-         $counter[env_name] += 1
+         role = attrs['role']
        end
-     end
+
+       # Use the value of the role to determine
+       # whether this is a numbered block
+       numbered = false
+       if attrs['options'] and attrs['options'].include? 'number'
+         numbered = true
+       end
 
 
-     # Set title
-     if role == 'code'
-       title = 'Listing'
-     else
-       title = role.capitalize
-     end
-     if numbered
-       title = title + ' ' + $counter[env_name].to_s
-     end
-     if attrs['title']
+       # If the block is numbered, update the counter
        if numbered
-         title = title + '. ' + attrs['title'].capitalize
+         env_name = role     ##############  'click-'+role
+         if $counter[env_name] == nil
+           $counter[env_name] = 1
+         else
+           $counter[env_name] += 1
+         end
+       end
+
+
+       # Set title
+       if role == 'code'
+         title = 'Listing'
        else
-         title = title + ': ' + attrs['title'].capitalize
+         title = role.capitalize
        end
-     end
-
-     if role != 'equation'
-       attrs['title']  = title
-     else
        if numbered
-         attrs['equation_number'] = $counter[env_name].to_s
+         title = title + ' ' + $counter[env_name].to_s
        end
-     end
+       if attrs['title']
+         if numbered
+           title = title + '. ' + attrs['title'].capitalize
+         else
+           title = title + ': ' + attrs['title'].capitalize
+         end
+       end
+
+       if role != 'equation'
+         attrs['title']  = title
+       else
+         if numbered
+           attrs['equation_number'] = $counter[env_name].to_s
+         end
+       end
 
 
-    attrs['title'] = title
+      attrs['title'] = title
 
 
-    if attrs['role'] == 'code'
-      role = 'listing'
-    else
-      role  = 'click'
-    end
-    attrs['role'] = 'click'
+      if attrs['role'] == 'code'
+        role = 'listing'
+      else
+        role  = 'click'
+      end
+      attrs['role'] = 'click'
 
 
-    warn "click_name: #{click_name}".cyan if $VERBOSE
-    warn "end Clicklock\n".blue if $VERBOSE
+      warn "click_name: #{click_name}".cyan if $VERBOSE
+      warn "end Clicklock\n".blue if $VERBOSE
 
-    warn "role = #{role}".red
-    if role == 'listing'
-      warn "creating listing block".red
-      create_block parent, :listing, reader.lines, attrs
-    else
-      warn "creating click block".red
-      create_block parent, :click, reader.lines, attrs
+      warn "role = #{role}".red
+      if role == 'listing'
+        warn "creating listing block".red
+        create_block parent, :listing, reader.lines, attrs
+      else
+        warn "creating click block".red
+        create_block parent, :click, reader.lines, attrs
+      end
+
     end
 
   end
-
 end

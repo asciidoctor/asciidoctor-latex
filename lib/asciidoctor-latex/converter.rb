@@ -84,74 +84,120 @@ require 'asciidoctor-latex/tex_preprocessor'
 # require 'asciidoctor-latex/preamble_processor'
 
 
-include TeXBlock
-
-
 # code for Html5ConverterExtension & its insertion
 # template by @mojavelinux
-module Asciidoctor
-  module LaTeX
-    module Html5ConverterExtensions
+module Asciidoctor::LaTeX
+  module Html5ConverterExtensions
 
-      def environment node
+    def environment node
 
-        warn "\n    node: #{node.node_name}".cyan if $VERBOSE
-        warn "   attrs: #{node.attributes}".cyan if $VERBOSE
-        warn "    role: #{node.attributes['role']}".cyan if $VERBOSE
-        warn " options: #{node.attributes['options']}".cyan if $VERBOSE
-         warn " type: #{node.attributes['type']}".cyan if $VERBOSE
-        warn "    topu: #{node.attributes['topu']}".cyan if $VERBOSE
-        warn "      id: #{node.attributes['id']}".cyan if $VERBOSE
-        warn " content: #{node.content}".blue if $VERBOSE
+      warn "\n    node: #{node.node_name}".cyan if $VERBOSE
+      warn "   attrs: #{node.attributes}".cyan if $VERBOSE
+      warn "    role: #{node.attributes['role']}".cyan if $VERBOSE
+      warn " options: #{node.attributes['options']}".cyan if $VERBOSE
+      warn " type: #{node.attributes['type']}".cyan if $VERBOSE
+      warn "    topu: #{node.attributes['topu']}".cyan if $VERBOSE
+      warn "      id: #{node.attributes['id']}".cyan if $VERBOSE
+      warn " content: #{node.content}".blue if $VERBOSE
 
 
-        if node.attributes['role'] == 'equation'
-          puts "hc: role = equation".magenta
-          node.attributes['title'] = nil
-          number_part = '<td style="text-align:right">' + "(#{node.attributes['equation_number']}) </td>"
-          number_part = ["+++ #{number_part} +++"]
-          equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
-          table_style='style="width:100%; border-collapse:collapse"'
-          # row_style='style="border-collapse: collapse"'
-          row_style='class="zero" style="border-collapse: collapse; font-size: 10pt; "'
-          if node.attributes['equation_number']
-            node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
-          else
-            node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + ['+++</tr></table>+++']
-          end
-          # node.title = "(#{node.attributes['equation_number']})"
+      if node.attributes['role'] == 'equation'
+        puts "hc: role = equation".magenta
+        node.attributes['title'] = nil
+        number_part = '<td style="text-align:right">' + "(#{node.attributes['equation_number']}) </td>"
+        number_part = ["+++ #{number_part} +++"]
+        equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
+        table_style='style="width:100%; border-collapse:collapse"'
+        # row_style='style="border-collapse: collapse"'
+        row_style='class="zero" style="border-collapse: collapse; font-size: 10pt; "'
+        if node.attributes['equation_number']
+          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
         else
-          node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
+          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + ['+++</tr></table>+++']
         end
-
-        node.attributes['roles'] = (node.roles + ['environment']) * ' '
-        self.open node
-      end
-
-      def click node
+        # node.title = "(#{node.attributes['equation_number']})"
+      else
         node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
-        node.attributes['roles'] = (node.roles + ['click']) * ' '
-        self.open node
       end
 
-      def inline_anchor node
-        case node.type.to_s
-        when 'xref'
-          refid = node.attributes['refid']
-          if refid and refid[0] == '_'
-            output = "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
-          elsif $ref2counter[refid]
-            output = "<a href=\##{refid} style='text-decoration:none'>(#{$ref2counter[refid]})</a>"
-          end
-        when 'link'
-          output = "<a href=#{node.target}>#{node.text}</a>"
-        else
-          output = "FOOBAR"
+      node.attributes['roles'] = (node.roles + ['environment']) * ' '
+      self.open node
+    end
+
+    def click node
+      node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
+      node.attributes['roles'] = (node.roles + ['click']) * ' '
+      self.open node
+    end
+
+    def inline_anchor node
+      case node.type.to_s
+      when 'xref'
+        refid = node.attributes['refid']
+        if refid and refid[0] == '_'
+          output = "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
+        elsif $ref2counter[refid]
+          output = "<a href=\##{refid} style='text-decoration:none'>(#{$ref2counter[refid]})</a>"
         end
-        output
+      when 'link'
+        output = "<a href=#{node.target}>#{node.text}</a>"
+      else
+        output = "FOOBAR"
+      end
+      output
+    end
+
+  end
+
+
+  class Converter
+    include Asciidoctor::Converter
+
+    register_for 'latex'
+
+
+    Asciidoctor::Extensions.register do
+      preprocessor TeXPreprocessor
+      block EnvironmentBlock
+      block ClickBlock
+      preprocessor PrependProcessor if document.basebackend? 'html'
+      postprocessor EntToUni if document.basebackend? 'tex'
+    end
+
+
+    Asciidoctor::Extensions.register :latex do
+      # EnvironmentBlock
+    end
+
+
+    TOP_TYPES = %w(document section)
+    LIST_TYPES = %w(olist ulist )
+    INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)
+    BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)
+    OTHER_TYPES = %w(environment table)
+    NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
+
+    def initialize backend, opts
+      warn "initialize converter".magenta if $VERBOSE
+      super
+      basebackend 'tex'
+      outfilesuffix '.tex'
+    end
+
+    $latex_environment_names = []
+    $label_counter = 0
+
+    def convert node, transform = nil
+
+      if NODE_TYPES.include? node.node_name
+        node.tex_process
+      else
+        warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta
+        # This warning should not be switched off by $VERBOSE
       end
 
     end
+
   end
 end
 
@@ -159,55 +205,4 @@ end
 class Asciidoctor::Converter::Html5Converter
   # inject our custom code into the existing Html5Converter class (Ruby 2.0 and above)
   prepend Asciidoctor::LaTeX::Html5ConverterExtensions
-end
-
-
-class LaTeXConverter
-  include Asciidoctor::Converter
-
-  register_for 'latex'
-
-
-  Asciidoctor::Extensions.register do
-    preprocessor TeXPreprocessor
-    block EnvironmentBlock
-    block ClickBlock
-    preprocessor PrependProcessor if document.basebackend? 'html'
-    postprocessor EntToUni if document.basebackend? 'tex'
-  end
-
-
-  Asciidoctor::Extensions.register :latex do
-    # EnvironmentBlock
-  end
-
-
-  TOP_TYPES = %w(document section)
-  LIST_TYPES = %w(olist ulist )
-  INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)
-  BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)
-  OTHER_TYPES = %w(environment table)
-  NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
-
-  def initialize backend, opts
-    warn "initialize converter".magenta if $VERBOSE
-    super
-    basebackend 'tex'
-    outfilesuffix '.tex'
-  end
-
-  $latex_environment_names = []
-  $label_counter = 0
-
-  def convert node, transform = nil
-
-    if NODE_TYPES.include? node.node_name
-      node.tex_process
-    else
-      warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta
-      # This warning should not be switched off by $VERBOSE
-    end
-
-  end
-
 end

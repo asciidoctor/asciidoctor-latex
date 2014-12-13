@@ -10,8 +10,6 @@
 
 require 'asciidoctor-latex/tex_block'
 
-include TeXBlock
-
 
 base_name = ARGV[0]
 input_file = base_name + ".in"
@@ -24,7 +22,7 @@ puts "-----------------"
 puts input
 puts "-----------------\n\n"
 
-output = TeXBlock.process_environments input
+output = Asciidoctor::LaTeX::TeXBlock.process_environments input
 
 puts "output:"
 puts "-----------------"

@@ -56,85 +56,86 @@ require 'asciidoctor/extensions'
 require 'asciidoctor-latex/core_ext/colored_string'
 
 
-class EnvironmentBlock < Asciidoctor::Extensions::BlockProcessor
+module Asciidoctor::LaTeX
+  class EnvironmentBlock < Asciidoctor::Extensions::BlockProcessor
 
-  use_dsl
+    use_dsl
 
-  named :env
-  on_context :open
-  # parse_context_as :complex
-  # ^^^ The above line gave me an error.  I'm not sure what do to with it.
+    named :env
+    on_context :open
+    # parse_context_as :complex
+    # ^^^ The above line gave me an error.  I'm not sure what do to with it.
 
-  # Hash to count the number of times each environment is encountered
-  # Global variables again.  Is there a better way?
-  $counter = {}
-  $ref2counter = {}
+    # Hash to count the number of times each environment is encountered
+    # Global variables again.  Is there a better way?
+    $counter = {}
+    $ref2counter = {}
 
-  def process parent, reader, attrs
+    def process parent, reader, attrs
 
+      # Ensure that role is defined
+      if attrs['role'] == nil
+        role = 'item'
+      else
+        role = attrs['role']
+      end
 
-    # Ensure that role is defined
-     if attrs['role'] == nil
-       role = 'item'
-     else
-       role = attrs['role']
-     end
-
-     # Use the value of the role to determine
-     # whether this is a numbered block
-     numbered = true
-     if attrs['options'] and attrs['options'].include? 'no-number'
-       numbered = false
-     end
-
-
-     # If the block is numbered, update the counter
-     if numbered
-       env_name = role   ##################'env-'+role
-       if $counter[env_name] == nil
-         $counter[env_name] = 1
-       else
-         $counter[env_name] += 1
-       end
-     end
+      # Use the value of the role to determine
+      # whether this is a numbered block
+      numbered = true
+      if attrs['options'] and attrs['options'].include? 'no-number'
+        numbered = false
+      end
 
 
-     # Set title
-     if role == 'code'
-       title = 'Listing'
-     else
-       title = role.capitalize
-     end
-     if numbered
-       title = title + ' ' + $counter[env_name].to_s
-     end
-     if attrs['title']
-       title = title + '. ' + attrs['title'].capitalize
-     end
-
-     if role != 'equation'
-       attrs['title']  = title
-     else
-       if numbered
-         attrs['equation_number'] = $counter[env_name].to_s
-       end
-     end
-
-     if numbered and attrs['id']
-       $ref2counter[attrs['id']] = $counter[env_name].to_s
-       puts "$ref2counter: #{attrs['id']} => #{$counter[env_name].to_s}".yellow
-     end
+      # If the block is numbered, update the counter
+      if numbered
+        env_name = role   ##################'env-'+role
+        if $counter[env_name] == nil
+          $counter[env_name] = 1
+        else
+          $counter[env_name] += 1
+        end
+      end
 
 
-    warn "env_name: #{env_name}".cyan if $VERBOSE
-    warn "end EnvironmentBlock\n".blue if $VERBOSE
+      # Set title
+      if role == 'code'
+        title = 'Listing'
+      else
+        title = role.capitalize
+      end
+      if numbered
+        title = title + ' ' + $counter[env_name].to_s
+      end
+      if attrs['title']
+        title = title + '. ' + attrs['title'].capitalize
+      end
 
-    if attrs['role'] == 'code'
-      create_block parent, :listing, reader.lines, attrs
-    else
-      create_block parent, :environment, reader.lines, attrs
+      if role != 'equation'
+        attrs['title']  = title
+      else
+        if numbered
+          attrs['equation_number'] = $counter[env_name].to_s
+        end
+      end
+
+      if numbered and attrs['id']
+        $ref2counter[attrs['id']] = $counter[env_name].to_s
+        puts "$ref2counter: #{attrs['id']} => #{$counter[env_name].to_s}".yellow
+      end
+
+
+      warn "env_name: #{env_name}".cyan if $VERBOSE
+      warn "end EnvironmentBlock\n".blue if $VERBOSE
+
+      if attrs['role'] == 'code'
+        create_block parent, :listing, reader.lines, attrs
+      else
+        create_block parent, :environment, reader.lines, attrs
+      end
+
     end
 
   end
-
 end

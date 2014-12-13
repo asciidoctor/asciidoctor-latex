@@ -1,6 +1,6 @@
 # This is a test file for the asciidoctor-latex toolchain.
 # Run it on the sibling file ../samples/env.doc using
-# 
+#
 #  $ ruby env_test.rb --html
 #
 #  or
@@ -37,12 +37,12 @@
 #   set of templates.  As it is, when I refer to a custom template directory,
 #   I get almost plain vanilla output ... only the new template is operative.
 #
-#   NOTE ALSO: The block_environment template is a very slight variation on the 
+#   NOTE ALSO: The block_environment template is a very slight variation on the
 #   open block template: diffrent name, italicizd body, that's it.
 
 
 AD = "/Users/carlson/Dropbox/prog/git/asciidoctor/bin/asciidoctor"                             # Asciidoctor
-PRE = "/Users/carlson/Dropbox/prog/git/asciidoctor-extensions-lab/lib/tex-preprocessor.rb"     # Preprocessor 
+PRE = "/Users/carlson/Dropbox/prog/git/asciidoctor-extensions-lab/lib/tex-preprocessor.rb"     # Preprocessor
 POST = "/Users/carlson/Dropbox/prog/git/asciidoctor-extensions-lab/lib/ent2uni.rb "            # Postprocessor
 LCO = "/Users/carlson/Dropbox/prog/git/asciidoctor-latex/lib/asciidoctor-latex/converter.rb "  # Latex converter
 
@@ -98,10 +98,10 @@ end
 #    --
 #    Ho ho, this is test: $a^2 = 1$
 #    --
-# 
+#
 # The construct a block of type environment
 # with title = environment name capitalized.
-# In this case the title is "Theorem", but 
+# In this case the title is "Theorem", but
 # it could be anything. Consider: [env.joke]
 #
 # In addition create and/or update a counter
@@ -116,7 +116,7 @@ end
 #    --
 #    Ho ho, ...
 #    --
-# 
+#
 # excpet that the body ("Ho ho, ...") is italicized
 # in accordance with LaTeX convention.  All of
 # this is handled by the file
@@ -156,7 +156,7 @@ class EnvironmentBlock < Extensions::BlockProcessor
     attrs["title"] = env_name.capitalize + " " + $counter[env_name].to_s
     create_block parent, :environment, reader.lines, attrs
   end
-  
+
 end
 
 class ClickBlock < Extensions::BlockProcessor
@@ -264,10 +264,10 @@ class ClickBlock < Extensions::BlockProcessor
 class EntToUni < Extensions::Postprocessor
 
   def process document, output
-    decoder = HTMLEntities.new  
+    decoder = HTMLEntities.new
     output = decoder.decode output
   end
-  
+
 end
 
 
@@ -284,17 +284,17 @@ end
 
 
 case ARGV[1]
-when "--html"  
+when "--html"
   Asciidoctor.render_file ARGV[0], :template_dir => 'templates'
-when "--texp"  
+when "--texp"
   render = "#{AD} -r #{PRE} -r #{POST} -r #{LCO} -b latex"
   preprocess = "preprocess_tex #{ARGV[0]} /tmp/foobar111"
   mv = "mv /tmp/foobar111 #{ARGV[0]}"
-  render = render + "  #{ARGV[0]}"    
+  render = render + "  #{ARGV[0]}"
   system(preprocess)
   system(mv)
   system(render)
-when "--tex"  
+when "--tex"
   render = "#{AD} -r #{PRE} -r #{POST} -r #{LCO} -b latex"
   render = render + "  #{ARGV[0]}"
   system(render)

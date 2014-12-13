@@ -1,7 +1,7 @@
 ==== The tautological and Hopf bundles
 
 Projective space may also be viewed as the quotient under
-a group action.  Consider a space $Y$ and a group $G$.  An 
+a group action.  Consider a space $Y$ and a group $G$.  An
 action of $G$ on $Y$ is a map $G\times Y \map Y$,
 written $(g,y) \mapsto g.y$, that satisfies $e.y = y$ for all
 $y$, where $e$ is the neutral element, and $g.(h.y) = (gh).y$
@@ -13,27 +13,27 @@ of $Y$ under the relation $y' \sim y$ if there is an element $g \in G$
 such that $y'  = g.y$.
 
 Returning to the construction of projective space,
-the map 
+the map
 $(\lambda, Z) \mapsto \lambda Z$
 defines an
-action of the group $\CC^*$ on 
-$\CC^{n+1} - \set{0}$, and 
+action of the group $\CC^*$ on
+$\CC^{n+1} - \set{0}$, and
 \[
    \CP^n = (\CC^{n+1} - \set{0})\big/\CC^*
 \]
 is the quotient. If $p: \CC^{n+1} - \set{0} \map \CP^n$
-is the projection map, then the set 
+is the projection map, then the set
 \[
   p^{-1}([Z]) = \set{ Z \in [Z]} \cong \CC^*,
 \]
 the so-called
 _fiber_ of $p$ at $[Z]$ can be identified with $\CC^*$.
-This leads to the important diagram 
+This leads to the important diagram
 \[
    \CC^* \map \CC^{n+1} - \set{0} \mapright{p} \CP^n,
 \]
-which defines a $\CC^*$ bundle over $\CP^n$ called the 
-_tautological bundle_.  
+which defines a $\CC^*$ bundle over $\CP^n$ called the
+_tautological bundle_.
 It plays a key role in the theory of projective varieties.
 
 FIG
@@ -46,10 +46,10 @@ It is stable under the action of unit circle subgroup
 \[
   U = \sett{ \lambda \in \CC}{ |\lambda| = 1 }.
 \]
-The natural map 
+The natural map
 \[
   S^{2n+1} \map \CC^{n+1} - \set{0}
-\] 
+\]
 restricts ot a map of quotient spaces
 \[
    S^{2n+1}/U \map (\CC^{n+1} - \set{0})/\CC^*,
@@ -63,5 +63,3 @@ _Hopf fibration_,
 \]
 The Hopf map is, by the way, the generator of the homotopy
 group $\pi_3(S^2)$.
-
-

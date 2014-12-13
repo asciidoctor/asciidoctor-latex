@@ -46,7 +46,7 @@ A matrix:
 M = \left(
 \begin{matrix}
 1 & 2 \\
-3 & 4 
+3 & 4
 \end{matrix}
 \right)
 --
@@ -81,11 +81,11 @@ This gives a "bare" equation.
 
 [env.equation%no-number	]
 --
-M = \left[ 
-  \begin{array}{ c c } 
-	 1 & 2 \\ 
-	 3 & 4 
-  \end{array} \right] 
+M = \left[
+  \begin{array}{ c c }
+	 1 & 2 \\
+	 3 & 4
+  \end{array} \right]
 --
 
 We wrote `[env.equation%no-number]`.
@@ -95,11 +95,11 @@ the title is displayed.
 .Symmetric matrix
 [env.equation%no-number]
 --
-M = \left[ 
-  \begin{array}{ c c } 
-	 1 & 2 \\ 
-	 -2 & 5 
-  \end{array} \right] 
+M = \left[
+  \begin{array}{ c c }
+	 1 & 2 \\
+	 -2 & 5
+  \end{array} \right]
 --
 
 Here is the source:
@@ -108,11 +108,11 @@ Here is the source:
 .Symmetric matrix
 [env.equation%no-number]
 --
-M = \left[ 
-  \begin{array}{ c c } 
-	 1 & 2 \\ 
-	 -2 & 5 
-  \end{array} \right] 
+M = \left[
+  \begin{array}{ c c }
+	 1 & 2 \\
+	 -2 & 5
+  \end{array} \right]
 --
 ----
 

@@ -1,7 +1,7 @@
 # For trying things out
 # Call the input file foo.in
 # Then execute
-# 
+#
 #   $ ruby preprocess foo
 #
 # Currently output is directed to the
@@ -23,7 +23,7 @@ puts "-----------------"
 puts input
 puts "-----------------\n\n"
 
-output = TeXBlock.process_environments input 
+output = TeXBlock.process_environments input
 
 puts "output:"
 puts "-----------------"

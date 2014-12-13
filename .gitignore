@@ -2,7 +2,7 @@
 /Gemfile.lock
 /pkg/
 /.ruby-gemset
-/.ruby-version	
+/.ruby-version
 
 
 samples/*.html
@@ -31,4 +31,3 @@ ud.sh
 LOG.adoc
 
 try-out/possible/
-

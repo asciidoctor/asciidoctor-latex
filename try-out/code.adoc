@@ -3,7 +3,7 @@ _This section ilustrates the use of_ `[env.code]` _for
 listing code, of the_ `[env.equation]` _block for numbered
 equations,_ `[click.code]` _block for code listings
 that can be clicked on to reveal more text, and
-cross references to_ `[env]` blocks. 
+cross references to_ `[env]` blocks.
 
 == On code and computing square roots
 
@@ -25,7 +25,7 @@ end
 --
 
 The purpose of the program is to repeatedly apply a function
-to an initial value, each time taking as input the 
+to an initial value, each time taking as input the
 output of the previous step.  Thus, if $a = 1$, $f(x)  = 2x$, an
 $n = 4$, we have the sequence $a = 1$, $f(1) = 2$, $f(2) = 4$,
 $f(4) = 8$, and $f(8) = 16$.  This is the sequence
@@ -40,20 +40,20 @@ irb> $double = lambda { |x| 2*x) }
 irb> iter($double, 1, 4)
 --
 Here is what we think the Babylonians did
-to compute the square root of 2.  Take an 
-initial guess for the square root, say, 
+to compute the square root of 2.  Take an
+initial guess for the square root, say,
 $a = 1$.  Divide it into 2.  If you happened
 to have guessed exaclty right, the quotient
 would be the same as your guess.  If you
 guessed low, the quotient would be high.
-If you guessed low, the quotient would 
-be high.  So take the average of 
+If you guessed low, the quotient would
+be high.  So take the average of
 $a$ and $2/a$ to get a better guess.
 And let's repeat this process in order
 to refine our guess still further.
 Computing by hand (which is always
 a good idea for starters) give the
-sequence 
+sequence
 \[
   1,\ \frac{3}{2},\ \frac{9}{8}
  \]
@@ -72,7 +72,7 @@ irb> iter $g, 1.0, 6
 1.4142135623746899
 1.414213562373095
 1.414213562373095
-=> 1.414213562373095            
+=> 1.414213562373095
 --
 
 You can see that the sequence converges
@@ -83,20 +83,20 @@ very rapidly to the square root of two:
 --
 This was good for the Babylonian
 scribes, who did all of their
-computations in base 60 with 
+computations in base 60 with
 a stylus and a clay tablet!
 The "Babylonian method" is special case
 of Newton's metod for computing roots
 of an equation $f(x) = 0$.  The idea is
 to take an initial guess $a_0$, as above,
-then make it better.  We do this by 
+then make it better.  We do this by
 constructing the tangent line to the
 graph if $f$ at $x = a_0$, then finding
 the point $a_1$ where the tangent line
-at $(a_0,f(a_0))$ intersects the $x$-axis.  
+at $(a_0,f(a_0))$ intersects the $x$-axis.
 Using calculus to compute the slope
 of the tangent line, one obtains
-the function below for computing 
+the function below for computing
 $\sqrt a$.
 [env.equation]
 --
@@ -116,9 +116,7 @@ What are the solutions of $g(x) = x$?
 [click.remark]
 --
 A point $p$ that satifies $g(p) = p$
-is called a *fixed point*.  Iteration 
+is called a *fixed point*.  Iteration
 of a function on such point results
 in the sequence $p, p, p, \ldots$.
 --
-
-

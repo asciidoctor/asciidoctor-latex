@@ -4,8 +4,8 @@
 === Number Theory
 
 The equation
-stem:[a^2 + b^2 = c^2] has infinitely many 
-non-proportional integer solutions. 
+stem:[a^2 + b^2 = c^2] has infinitely many
+non-proportional integer solutions.
 The integer solutions of the equation
 [stem]
 ++++
@@ -27,15 +27,15 @@ The fundamental theorem of calculus:
 ++++
    \frac{d}{dx} \int_a^x f(t) dt = f(x)
 ++++
- 
+
 === Linear algebra
 
 A matrix:
 [stem]
 ++++
 M = \left[
-  \begin{array}{ c c } 
-	 1 & 2 \\ 
-	 3 & 4 
-  \end{array} \right] 
+  \begin{array}{ c c }
+	 1 & 2 \\
+	 3 & 4
+  \end{array} \right]
 ++++

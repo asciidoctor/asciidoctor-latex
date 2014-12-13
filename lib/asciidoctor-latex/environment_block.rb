@@ -16,19 +16,19 @@
 # and environment-type "foo"
 #
 # In the act of creating an environment
-# block, information extracted from 
+# block, information extracted from
 # [env.foo] is used to title the block
 # as "Foo n", where n is a counter for
-# environments of type "foo".  The 
+# environments of type "foo".  The
 # counter is created in a hash the first
 # time an environment of that kind
 # is encountered.  We set
 #
 #    counter["foo"] = 1
 #
-# Subsequent encounters cause the 
+# Subsequent encounters cause the
 # counter to be incremented.
-# 
+#
 # Later, when the backend process the AST,
 # the information bundled by the
 # EnvironmentBlock is used as is
@@ -56,27 +56,27 @@ require 'asciidoctor'
 require 'asciidoctor/extensions'
 include Asciidoctor
 include Asciidoctor::Extensions
- 
+
 class EnvironmentBlock < Extensions::BlockProcessor
-  
+
   require_relative 'colored_text'
-  # require 
-  
+  # require
+
   use_dsl
 
   named :env
   on_context :open
   # parse_context_as :complex
   # ^^^ The above line gave me an error.  I'm not sure what do to with it.
-  
+
   # Hash to count the number of times each environment is encountered
   # Global variables again.  Is there a better way?
   $counter = {}
   $ref2counter = {}
 
   def process parent, reader, attrs
-    
-    
+
+
     # Ensure that role is defined
      if attrs['role'] == nil
        role = 'item'
@@ -115,31 +115,30 @@ class EnvironmentBlock < Extensions::BlockProcessor
      if attrs['title']
        title = title + '. ' + attrs['title'].capitalize
      end
-     
-     if role != 'equation' 
+
+     if role != 'equation'
        attrs['title']  = title
      else
        if numbered
          attrs['equation_number'] = $counter[env_name].to_s
        end
      end
-            
+
      if numbered and attrs['id']
        $ref2counter[attrs['id']] = $counter[env_name].to_s
        puts "$ref2counter: #{attrs['id']} => #{$counter[env_name].to_s}".yellow
      end
-       
-   
-    warn "env_name: #{env_name}".cyan if $VERBOSE 
-    warn "end EnvironmentBlock\n".blue if $VERBOSE 
-    
+
+
+    warn "env_name: #{env_name}".cyan if $VERBOSE
+    warn "end EnvironmentBlock\n".blue if $VERBOSE
+
     if attrs['role'] == 'code'
       create_block parent, :listing, reader.lines, attrs
     else
       create_block parent, :environment, reader.lines, attrs
     end
-    
-  end
-  
-end
 
+  end
+
+end

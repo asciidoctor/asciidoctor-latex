@@ -10,7 +10,7 @@
 
 
 
-The aim of Asciidoctor's LaTeX converter is 
+The aim of Asciidoctor's LaTeX converter is
 
 . To render AsciiDoc documents as LaTeX.
 
@@ -32,7 +32,7 @@ by writing this in Asciidoc
 --
 ----
 
-To render your document as HTML, type the 
+To render your document as HTML, type the
 command `asciidoctor -r $laco -a stem=math foo.adoc`.
 Here `$laco` points to the converter file. See beow for
 instructions on setting  `$laco`.  To render
@@ -40,13 +40,13 @@ your document as tex, type the commmand
 `asciidoctor -r $laco -a stem=math -b latex foo.adoc`.
 
 
-== Setup 
+== Setup
 
 Below are some examples you can run through Asciidoctor to see what you can do with it.
 Before trying them out, however, you need to do a little setting-up.  First, be
 sure that you are in the directory where you found this `README` document.
 Second,  find the path to the asciidoctor-latex directory.  For the purpose
-of this explanation, let's imagine that it is 
+of this explanation, let's imagine that it is
 `/users/poincare/git/asciidoctor-latex`. Third, run the commands
 ```
   $ export la=/users/poincare/git/asciidoctor-latex
@@ -59,14 +59,14 @@ That's it!  If all was successful, you can run the test
   $ asciidoctor -r $laco -a stem=latexmath eq-latex.adoc
 ```
 
-Here the `-r $laco` says _use the file at_ `$laco`, and the 
+Here the `-r $laco` says _use the file at_ `$laco`, and the
  `-a stem=latexmath` says _use the_ `stem` notation processor
 with the `latexmath` _option_.
 
 After running the above command, you should find the file `eq-latex.html`
 next to the source file `eq-latex.adoc`. View it in your browser.
 You will need to be connected to the internet so that your browser
-can load the MathJax fonts used to render mathematical 
+can load the MathJax fonts used to render mathematical
 notation.footnote:[You can also install the fonts on your system.
 See http://www.mathjax.org/help/fonts/[mathjax-fonts]. this will give you faster reponse.
 Turning off your internet conneection makes it better still:-(]
@@ -102,7 +102,7 @@ would any LaTeX file.
 
 Below is a list of files which demsonstrate various features
 of the converter.  In some cases there are two versions, e.g.
-`eq-latex.adoc` and `eq-stem.adoc`, each written in the 
+`eq-latex.adoc` and `eq-stem.adoc`, each written in the
 indicated format.footnote:[A missing entry in the table
 may mean that a feature has not yet been implemented,
 or that the file demonstrating it has not yet been
@@ -111,10 +111,10 @@ is the same file appears in both the LaTeX
 and the STEM columns.  In those cases
 the `-a stem` or `-a stem:latexmath` option
 is not required unless there is mathematical
-content.  
+content.
 
 One of the best ways
-of learning how to use the features of 
+of learning how to use the features of
 Asciidotor LaTeX is to use your
 natural talent for reverse-engineering:
 run the example, the compare the rendered
@@ -126,7 +126,7 @@ file and its source.
 | `eq-latex.adoc` | `eq-stem.adoc` | Basic equations
 | `eqno-latex.adoc` | --  | Numbered equations
 | `theorem-latex.adoc` | -- | Numbered theorems
-| `env.adoc` | `env.adoc` | Env blocks 
+| `env.adoc` | `env.adoc` | Env blocks
 | `click.adoc` | `click.adoc`  | Click blocks
 | `code.adoc` | code.adoc` | Code blocks
 |===
@@ -141,7 +141,7 @@ Basic equations, both in-line, as with \(a^2 + b^2 = c^2\),
 and displayed, as with
 \[
   a^n + b^n = c^n
-\]  
+\]
 
 
 The environment `[env.equation]` is automatically
@@ -170,7 +170,7 @@ Here is how the first equation is done:
 
 === theorem-latex
 
-Numbered theorems, like the those below. 
+Numbered theorems, like the those below.
 
 
 [env.theorem]
@@ -217,7 +217,7 @@ This is hearsay.
 === click
 
 
-Click blocks are like `env`-blocks, except that 
+Click blocks are like `env`-blocks, except that
 when you open a document, only the title,
 not the body of the block, is displayed.
 Click on the title to reveal the body;
@@ -233,7 +233,7 @@ The path to wisdom is written on no
 secret map.
 --
 
-Click blocks are useful in making up problem sets, 
+Click blocks are useful in making up problem sets,
 homework assignments, study guides, etc.
 
 
@@ -266,9 +266,9 @@ irb> iter $g, 1.0, 6
 1.4142135623746899
 1.414213562373095
 1.414213562373095
-=> 1.414213562373095            
+=> 1.414213562373095
 --
- 
+
 
 == Issues
 
@@ -276,17 +276,15 @@ One should be able to tex this document wihout error
 and obtain the desired output.  This is very much a work
 in progress.  In particaulr, the following have not yet been resolved.
 
-. Dollars signs used to illustrated command cause LaTeX to choke. 
-  We need to map dollar sign to escaped dollar sig in 
+. Dollars signs used to illustrated command cause LaTeX to choke.
+  We need to map dollar sign to escaped dollar sig in
   post-processing for tex.  Or is there a better solution?
-  
+
 . The table block in Asciidoc is not implmented -- or rather,
   is partially implemnted.
-  
+
 . The Click block is not implented in teh TeX output.
-  
+
 . The matrix environment in `eq-stem.adoc` does not render correctly.
 
 . Fix title in latex mode
-
-

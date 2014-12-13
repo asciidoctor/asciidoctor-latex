@@ -1,7 +1,8 @@
 require 'asciidoctor'
 require 'asciidoctor-latex'
+require 'asciidoctor-latex/core_ext/colored_string'
 require_relative 'transform'
-require_relative '../lib/asciidoctor-latex/core_ext/colored_string'
+
 include Transform
 
 VERBOSE = true

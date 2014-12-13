@@ -72,20 +72,19 @@
 #
 
 require 'asciidoctor'
-require_relative 'core_ext/colored_string'
-require_relative 'node_processors'
-require_relative 'tex_block'
-require_relative 'click_block'
-require_relative 'environment_block'
-require_relative 'tex_preprocessor'
-require_relative 'ent_to_uni'
-# require_relative 'preamble_processor'
-require_relative 'prepend_processor'
+require 'asciidoctor/converter/html5'
+require 'asciidoctor-latex/core_ext/colored_string'
+require 'asciidoctor-latex/click_block'
+require 'asciidoctor-latex/ent_to_uni'
+require 'asciidoctor-latex/environment_block'
+require 'asciidoctor-latex/node_processors'
+require 'asciidoctor-latex/prepend_processor'
+require 'asciidoctor-latex/tex_block'
+require 'asciidoctor-latex/tex_preprocessor'
+# require 'asciidoctor-latex/preamble_processor'
 
 
 include TeXBlock
-
-require 'asciidoctor/converter/html5'
 
 
 # code for Html5ConverterExtension & its insertion

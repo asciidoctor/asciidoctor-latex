@@ -1,5 +1,4 @@
-
-require '/Users/carlson/Dropbox/prog/git/asciidoctor-backends/tex/tex_block/'
+require 'asciidoctor-latex/tex_block'
 include TeXBlock
 
 require 'test/unit'

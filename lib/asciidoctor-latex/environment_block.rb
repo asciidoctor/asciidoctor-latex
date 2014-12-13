@@ -51,14 +51,12 @@
 # conventions: the body of the block is
 # italicized.
 
-
 require 'asciidoctor'
 require 'asciidoctor/extensions'
+require 'asciidoctor-latex/core_ext/colored_string'
+
 
 class EnvironmentBlock < Asciidoctor::Extensions::BlockProcessor
-
-  require_relative 'core_ext/colored_string'
-  # require
 
   use_dsl
 

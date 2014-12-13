@@ -40,11 +40,12 @@
 #   NOTE ALSO: The block_environment template is a very slight variation on the
 #   open block template: diffrent name, italicizd body, that's it.
 
+BASE_DIR = File.expand_path('..', __dir__)
 
-AD = "/Users/carlson/Dropbox/prog/git/asciidoctor/bin/asciidoctor"                             # Asciidoctor
+AD = File.join BASE_DIR, 'bin/asciidoctor-latex'                                               # Asciidoctor
+# FIXME!
 PRE = "/Users/carlson/Dropbox/prog/git/asciidoctor-extensions-lab/lib/tex-preprocessor.rb"     # Preprocessor
 POST = "/Users/carlson/Dropbox/prog/git/asciidoctor-extensions-lab/lib/ent2uni.rb "            # Postprocessor
-LCO = "/Users/carlson/Dropbox/prog/git/asciidoctor-latex/lib/asciidoctor-latex/converter.rb "  # Latex converter
 
 require 'asciidoctor'
 require 'asciidoctor/extensions'
@@ -287,7 +288,7 @@ case ARGV[1]
 when "--html"
   Asciidoctor.render_file ARGV[0], :template_dir => 'templates'
 when "--texp"
-  render = "#{AD} -r #{PRE} -r #{POST} -r #{LCO} -b latex"
+  render = "#{AD} -r #{PRE} -r #{POST}"
   preprocess = "preprocess_tex #{ARGV[0]} /tmp/foobar111"
   mv = "mv /tmp/foobar111 #{ARGV[0]}"
   render = render + "  #{ARGV[0]}"
@@ -295,7 +296,7 @@ when "--texp"
   system(mv)
   system(render)
 when "--tex"
-  render = "#{AD} -r #{PRE} -r #{POST} -r #{LCO} -b latex"
+  render = "#{AD} -r #{PRE} -r #{POST}"
   render = render + "  #{ARGV[0]}"
   system(render)
 else

@@ -9,10 +9,9 @@
 
 require 'asciidoctor'
 require 'asciidoctor/extensions'
+require 'asciidoctor-latex/core_ext/colored_string'
 
 class ClickBlock < Asciidoctor::Extensions::BlockProcessor
-
-  require_relative 'core_ext/colored_string'
 
   use_dsl
   # ^^^ don't know what this is.  Could you explain?

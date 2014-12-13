@@ -1,9 +1,5 @@
-
 require 'asciidoctor'
 require 'asciidoctor/extensions'
-
-require_relative 'core_ext/colored_string'
-
 
 # Prepend lines to a document
 class PrependProcessor < Asciidoctor::Extensions::Preprocessor

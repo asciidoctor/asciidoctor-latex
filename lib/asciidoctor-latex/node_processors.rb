@@ -1,4 +1,5 @@
-require_relative 'core_ext/colored_string'
+require 'asciidoctor'
+require 'asciidoctor-latex/core_ext/colored_string'
 
 $VERBOSE=true
 

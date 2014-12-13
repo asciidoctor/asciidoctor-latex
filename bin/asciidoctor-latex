@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/asciidoctor-latex'
+LIB_DIR = File.expand_path('../lib', __dir__)
+$LOAD_PATH.unshift LIB_DIR unless $LOAD_PATH.include? LIB_DIR
+
+require 'asciidoctor-latex'
 require 'asciidoctor/cli'
 
 options = Asciidoctor::Cli::Options.new backend: 'latex'

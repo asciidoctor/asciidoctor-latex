@@ -1,4 +1,3 @@
-
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 require 'htmlentities'

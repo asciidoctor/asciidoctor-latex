@@ -33,14 +33,14 @@ class PrependProcessor < Extensions::Preprocessor
     putline "$(document).ready(function(){ "
     putline "$('.openblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )"
     putline "$('.openblock.click').find('.content').hide()"
-    putline  "	});"
+    putline  "  });"
     putline "</script>"
 
-	  putline "<script>"
+    putline "<script>"
     putline "$(document).ready(function(){ "
     putline "$('.listingblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )"
     putline "$('.listingblock.click').find('.content').hide()"
-    putline  "	});"
+    putline  "  });"
     putline "</script>"
 
     putline "++++"

@@ -446,23 +446,23 @@ end
 module TexPostProcess
 
   def TexPostProcess.getInline str
-	  rx_tex_inline = /\$(.*?)\$/
-	  matches = str.scan rx_tex_inline
+    rx_tex_inline = /\$(.*?)\$/
+    matches = str.scan rx_tex_inline
   end
 
   def TexPostProcess.getBlock str
-	  rx_tex_block = /\\\[(.*?)\\\]/m
-	  matches = str.scan rx_tex_block
+    rx_tex_block = /\\\[(.*?)\\\]/m
+    matches = str.scan rx_tex_block
   end
 
   def TexPostProcess.make_substitutions1 str
-	  str = str.gsub("&amp;", "&")
+    str = str.gsub("&amp;", "&")
     str = str.gsub("&gt;", ">")
     str = str.gsub("&lt;", "<")
   end
 
   def TexPostProcess.make_substitutions_in_matches matches, str
-	  matches.each do |m|
+    matches.each do |m|
       m_str = m[0]
       m_transformed = TexPostProcess.make_substitutions1 m_str
       str = str.gsub(m_str,m_transformed)
@@ -474,11 +474,11 @@ module TexPostProcess
   # inside of matrices, etc.
   def TexPostProcess.make_substitutions str
     str = str.gsub('\\\\', '@@')   # (1)
-	  matches = TexPostProcess.getInline str
+    matches = TexPostProcess.getInline str
     if matches.count > 0
       str = TexPostProcess.make_substitutions_in_matches matches, str
     end
-	  matches = TexPostProcess.getBlock str
+    matches = TexPostProcess.getBlock str
     if matches.count > 0
       str = TexPostProcess.make_substitutions_in_matches matches, str
     end
@@ -488,7 +488,7 @@ module TexPostProcess
 
   def TexPostProcess.stem_substitutions str
     str = str.gsub('\\\\', '@@')   # (1)
-	  str = TexPostProcess.make_substitutions1 str
+    str = TexPostProcess.make_substitutions1 str
     str = str.tr('@','\\')         # (2)
     str
   end

@@ -1,14 +1,9 @@
-
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 
-include Asciidoctor
-include Asciidoctor::Extensions
-
-
 # Map $ ... $ to latexmath:[ ... ] before
 # running Asciidoctor
-class TeXPreprocessor < Extensions::Preprocessor
+class TeXPreprocessor < Asciidoctor::Extensions::Preprocessor
 
   # Map $...$ to stem:[...]
   TEX_DOLLAR_RX = /(^|\s|\()\$(.*?)\$($|\s|\)|,|\.)/

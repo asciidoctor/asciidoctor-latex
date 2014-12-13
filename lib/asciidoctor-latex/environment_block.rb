@@ -54,10 +54,8 @@
 
 require 'asciidoctor'
 require 'asciidoctor/extensions'
-include Asciidoctor
-include Asciidoctor::Extensions
 
-class EnvironmentBlock < Extensions::BlockProcessor
+class EnvironmentBlock < Asciidoctor::Extensions::BlockProcessor
 
   require_relative 'core_ext/colored_string'
   # require

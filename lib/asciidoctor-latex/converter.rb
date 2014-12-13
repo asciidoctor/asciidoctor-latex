@@ -164,12 +164,12 @@ end
 
 
 class LaTeXConverter
-
   include Asciidoctor::Converter
+
   register_for 'latex'
 
 
-  Extensions.register do
+  Asciidoctor::Extensions.register do
     preprocessor TeXPreprocessor
     block EnvironmentBlock
     block ClickBlock
@@ -178,7 +178,7 @@ class LaTeXConverter
   end
 
 
-  Extensions.register :latex do
+  Asciidoctor::Extensions.register :latex do
     # EnvironmentBlock
   end
 

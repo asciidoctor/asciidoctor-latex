@@ -10,10 +10,7 @@
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 
-include Asciidoctor
-include Asciidoctor::Extensions
-
-class ClickBlock < Extensions::BlockProcessor
+class ClickBlock < Asciidoctor::Extensions::BlockProcessor
 
   require_relative 'core_ext/colored_string'
 

@@ -112,21 +112,3 @@ class ClickBlock < Extensions::BlockProcessor
   end
 
 end
-
-
-
-class String
-
-  def eos
-    return ''  if self == ''
-    n = self.length - 1
-    return self[n]
-  end
-
-  def whack
-    return '' if self == ''
-    n = self.length - 1
-    return self[0...n]
-  end
-
-end

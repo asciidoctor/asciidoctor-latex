@@ -431,14 +431,14 @@ end
 # &, >, < and \\ is conserved.
 module TexPostProcess
 
-  def self.getInline str
+  def self.match_inline str
     rx_tex_inline = /\$(.*?)\$/
-    matches = str.scan rx_tex_inline
+    str.scan rx_tex_inline
   end
 
-  def self.getBlock str
+  def self.match_block str
     rx_tex_block = /\\\[(.*?)\\\]/m
-    matches = str.scan rx_tex_block
+    str.scan rx_tex_block
   end
 
   def self.make_substitutions1 str
@@ -460,11 +460,11 @@ module TexPostProcess
   # inside of matrices, etc.
   def self.make_substitutions str
     str = str.gsub('\\\\', '@@')   # (1)
-    matches = getInline str
+    matches = match_inline str
     if matches.count > 0
       str = make_substitutions_in_matches matches, str
     end
-    matches = getBlock str
+    matches = match_block str
     if matches.count > 0
       str = make_substitutions_in_matches matches, str
     end

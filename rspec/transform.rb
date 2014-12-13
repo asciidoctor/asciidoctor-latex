@@ -15,15 +15,15 @@ module Transform
 
   $identity = lambda { |x| x }
 
-  def Transform.read_string in_file
+  def self.read_string in_file
     return File.open(in_file, 'r') { |f| f.read }
   end
 
-  def Transform.map_string str, transformer
+  def self.map_string str, transformer
     return transformer.call str
   end
 
-  def Transform.map_file in_file, out_file, transform_string
+  def self.map_file in_file, out_file, transform_string
 
     input = File.open(in_file, 'r') { |f| f.read }
     output = transform_string.call(input)

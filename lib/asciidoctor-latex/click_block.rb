@@ -10,12 +10,9 @@
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 
-include Asciidoctor
-include Asciidoctor::Extensions
+class ClickBlock < Asciidoctor::Extensions::BlockProcessor
 
-class ClickBlock < Extensions::BlockProcessor
-
-  require_relative 'colored_text'
+  require_relative 'core_ext/colored_string'
 
   use_dsl
   # ^^^ don't know what this is.  Could you explain?
@@ -109,24 +106,6 @@ class ClickBlock < Extensions::BlockProcessor
       create_block parent, :click, reader.lines, attrs
     end
 
-  end
-
-end
-
-
-
-class String
-
-  def eos
-    return ''  if self == ''
-    n = self.length - 1
-    return self[n]
-  end
-
-  def whack
-    return '' if self == ''
-    n = self.length - 1
-    return self[0...n]
   end
 
 end

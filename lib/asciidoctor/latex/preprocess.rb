@@ -8,7 +8,7 @@
 # console.  Uncomment the last line
 # to direct output to foo.out
 
-require 'asciidoctor-latex/tex_block'
+require 'asciidoctor/latex/tex_block'
 
 
 base_name = ARGV[0]

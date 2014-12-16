@@ -1,6 +1,6 @@
 require 'asciidoctor'
-require 'asciidoctor-latex'
-require 'asciidoctor-latex/core_ext/colored_string'
+require 'asciidoctor/latex'
+require 'asciidoctor/latex/core_ext/colored_string'
 require_relative 'transform'
 
 include Transform

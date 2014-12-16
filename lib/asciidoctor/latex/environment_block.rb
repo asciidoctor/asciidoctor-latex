@@ -53,7 +53,7 @@
 
 require 'asciidoctor'
 require 'asciidoctor/extensions'
-require 'asciidoctor-latex/core_ext/colored_string'
+require 'asciidoctor/latex/core_ext/colored_string'
 
 
 module Asciidoctor::LaTeX

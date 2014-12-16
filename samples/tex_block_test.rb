@@ -1,4 +1,4 @@
-require 'asciidoctor-latex/tex_block'
+require 'asciidoctor/latex/tex_block'
 
 TeXBlock = Asciidoctor::LaTeX::TeXBlock
 

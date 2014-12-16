@@ -1,5 +1,5 @@
 require 'asciidoctor'
-require 'asciidoctor-latex/core_ext/colored_string'
+require 'asciidoctor/latex/core_ext/colored_string'
 
 $VERBOSE=true
 
@@ -25,16 +25,15 @@ module Asciidoctor
 
 
     def tex_process
-      data_dir = File.join File.dirname(__FILE__), '..', '..', 'data'
       warn "Node: #{self.class}".blue if $VERBOSE
       # warn "Attributes: #{self.attributes}".yellow
       # warn "#{self.methods}".magenta
       doc = "%% Preamble %%\n"
-      doc << File.open(File.join(data_dir, 'preamble.tex'), 'r') { |f| f.read }
+      doc << File.open(File.join(LaTeX::DATA_DIR, 'preamble.tex'), 'r') { |f| f.read }
       doc << "%% Asciidoc TeX Macros %%\n"
-      doc << File.open(File.join(data_dir, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
+      doc << File.open(File.join(LaTeX::DATA_DIR, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
       doc << "%% User Macros %%\n"
-      doc << File.open(File.join(data_dir, 'macros.tex'), 'r') { |f| f.read }
+      doc << File.open(File.join(LaTeX::DATA_DIR, 'macros.tex'), 'r') { |f| f.read }
 
       if File.exist?('myEnvironments.tex')
         warn "I will take input from myEnvironments.tex".blue

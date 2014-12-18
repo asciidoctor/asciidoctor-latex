@@ -33,34 +33,22 @@ by writing this in Asciidoc
 ----
 
 To render your document as HTML, type the
-command `asciidoctor -r $laco -a stem=math foo.adoc`.
-Here `$laco` points to the converter file. See beow for
-instructions on setting  `$laco`.  To render
-your document as tex, type the commmand
-`asciidoctor -r $laco -a stem=math -b latex foo.adoc`.
+command `asciidoctor -a stem=latexmath foo.adoc`.
+To render your document as tex, type the commmand
+`asciidoctor-latex foo.adoc`.
 
 
-== Setup
+== First tests
 
 Below are some examples you can run through Asciidoctor to see what you can do with it.
-Before trying them out, however, you need to do a little setting-up.  First, be
-sure that you are in the directory where you found this `README` document.
-Second,  find the path to the asciidoctor-latex directory.  For the purpose
-of this explanation, let's imagine that it is
-`/users/poincare/git/asciidoctor-latex`. Third, run the commands
-```
-  $ export la=/users/poincare/git/asciidoctor-latex
-  $ export laco=$la/lib/asciidoctor-latex/converter.rb
-```
-
-That's it!  If all was successful, you can run the test
+We assume that you've already installed asciidoctor-latex (see README for instructions).
 
 ```
-  $ asciidoctor -r $laco -a stem=latexmath eq-latex.adoc
+  $ asciidoctor -r asciidoctor-latex -a stem=latexmath eq-latex.adoc
 ```
 
-Here the `-r $laco` says _use the file at_ `$laco`, and the
- `-a stem=latexmath` says _use the_ `stem` notation processor
+Here the `-r asciidoctor-latex` says _require the rubygem asciidoctor-latex_, and the
+`-a stem=latexmath` says _use the_ `stem` notation processor
 with the `latexmath` _option_.
 
 After running the above command, you should find the file `eq-latex.html`
@@ -71,26 +59,22 @@ notation.footnote:[You can also install the fonts on your system.
 See http://www.mathjax.org/help/fonts/[mathjax-fonts]. this will give you faster reponse.
 Turning off your internet conneection makes it better still:-(]
 
-== First tests
-
-Let's test the analogous file written in `stem` format:
+Lets test the analogous file written in `stem` format:
 
 ```
-  $ asciidoctor -r $laco -a stem eq-stem.adoc
+  $ asciidoctor -r asciidoctor-latex -a stem eq-stem.adoc
 ```
 
-In this case, the converter is not needed.  The
-command below also works.
+Now convert our first file into LaTeX by running the command
 
 ```
-  $ asciidoctor -a stem eq-stem.adoc
+  $ asciidoctor -r asciidoctor-latex -a stem=latexmath -b latex eq-latex.adoc
+```
+or simply with the wrapper script
+```
+  $ asciidoctor-latex eq-latex.adoc
 ```
 
-Finaly, lets convert our first file into LaTeX by running the commaand
-
-```
-  $ asciidoctor -r $laco -a stem=latexmath -b latex eq-latex.adoc
-```
 If all was successful, there will be a file `eq-latex.tex` alongside
 your source file `eq-latex.adoc`.  You can process it as you
 would any LaTeX file.

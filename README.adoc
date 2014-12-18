@@ -6,8 +6,8 @@ James Carlson
 
 == Purpose
 
-The aim of the LaTeX converter, [path]_converter.rb_, is
-to transform an AsciiDoc document containing mathematical notation into a LaTeX document.
+The aim of the LaTeX converter is to transform an AsciiDoc document containing
+mathematical notation into a LaTeX document.
 The converter also adds to Asciidoctor's facilities for handling mathematical
 notation when rendered as HTML.  Among these is the automatic numbering of theorems.
 Please see the file [path]_manual.adoc_ in this repository for additional details
@@ -16,6 +16,22 @@ and for technical information.
 For examples and a quick start guide, see <<Getting started>>.
 Below, we describe the <<Document format,document formats>> used
 for mathematics and the <<Command for rendering,commands>> for rendering a document into HTML or LaTeX.
+
+
+== Installation
+
+=== Using Rubygems
+
+_asciidoctor-latex has not been released yet_
+
+=== From repository
+
+If you'd like to install a development version from the repository, then use:
+
+ $ git clone https://github.com/asciidoctor/asciidoctor-latex.git
+ $ cd asciidoctor-latex
+ $ gem build asciidoctor-latex.gemspec
+ $ gem install *.gem
 
 
 == Getting started
@@ -77,33 +93,32 @@ use the usual `asciidoctor` command with this option:
 ```
 or with this
 ```
-  $ asciidoctor -a stem:latexmath foo.adoc
+  $ asciidoctor -a stem=latexmath foo.adoc
 ```
 depending on the format.
 
-=== LaTeX converter additions
 
+=== LaTeX converter additions
 
 To employ the converter additions such as automatic theorem numbering, use
 ```
-  $ asciidoctor -r LACO -a stem:latexmath foo.adoc
+  $ asciidoctor -r asciidoctor-latex -a stem=latexmath -b html foo.adoc
 ```
 or
 ```
-  $ asciidoctor -r LACO -a stem:latexmath foo.adoc
+  $ asciidoctor-latex -b html foo.adoc
 ```
-Here LACO is the path to the Asciidoctor LaTeX converter and the
-option `-r` says to require (load) the converter.
-
-WARNING: We need to make LACO as simple as possible.  It was a stumbling
-block for me when I was getting started.
 
 
 === LaTeX output
 
-To render a file into LaTeX, use the `-b` (backend) option, e.g.,
+To render a file into LaTeX, use the `-r` (require rubygem) and `-b` (backend) option, e.g.:
 ```
-  $ asciidoctor -r LACO -a stem:latexmath -b latex foo.adoc
+  $ asciidoctor -r asciidoctor-latex -a stem=latexmath -b latex foo.adoc
+```
+or simply with the wrapper script:
+```
+  $ asciidoctor-latex foo.adoc
 ```
 
 

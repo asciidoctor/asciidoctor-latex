@@ -8,8 +8,7 @@
 # console.  Uncomment the last line
 # to direct output to foo.out
 
-require '/Users/carlson/Dropbox/prog/git/asciidoctor-backends/tex/tex_block/'
-include TeXBlock
+require 'asciidoctor/latex/tex_block'
 
 
 base_name = ARGV[0]
@@ -23,7 +22,7 @@ puts "-----------------"
 puts input
 puts "-----------------\n\n"
 
-output = TeXBlock.process_environments input
+output = Asciidoctor::LaTeX::TeXBlock.process_environments input
 
 puts "output:"
 puts "-----------------"

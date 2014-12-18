@@ -1,9 +1,16 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/asciidoctor-latex'
+LIB_DIR = File.expand_path('../lib', __dir__)
+$LOAD_PATH.unshift LIB_DIR unless $LOAD_PATH.include? LIB_DIR
+
+require 'asciidoctor/latex'
 require 'asciidoctor/cli'
 
-options = Asciidoctor::Cli::Options.new backend: 'latex'
+DEFAULT_OPTS = {
+  backend: 'latex',
+  attributes: { 'stem' => 'latexmath' }
+}
+options = Asciidoctor::Cli::Options.new DEFAULT_OPTS
 # FIXME This is a really bizarre API. Please make me simpler.
 if (options.parse! ARGV) == 0
   exit 0

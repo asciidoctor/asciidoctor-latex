@@ -1,6 +1,6 @@
+require 'asciidoctor/latex/tex_block'
 
-require '/Users/carlson/Dropbox/prog/git/asciidoctor-backends/tex/tex_block/'
-include TeXBlock
+TeXBlock = Asciidoctor::LaTeX::TeXBlock
 
 require 'test/unit'
 

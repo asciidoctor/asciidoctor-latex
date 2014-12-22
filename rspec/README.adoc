@@ -1,0 +1,45 @@
+== rspec
+
+At the moment there is just one set of tests, in
+`transform_spec.rb`, which test a tiny piece
+of a small part of the code.  This is the
+`gsub` call in the `TeXPreprocessor`.
+
+I had been having  some trouble with
+instances of $ ... $ not being mapped
+properly, and I think I've narrowd it down
+to a few small edge cases -- I am trying
+to collect these in the wild, as welll
+as t imagine them.
+
+I've organized the files as `a.rb`. `b.rb`,
+and `c.rb`.  The first two pass, the third
+deos not.  The strings that I try the
+transformer on in `c.rb` are only a few
+characters long.
+
+=== Help
+
+@mojavelinux, my knowledge of regular expressions is not
+so great -- could you look at this?
+
+Please note that I had changed the output regular expression:
+
+----
+  TEX_DOLLAR_SUB = '\1\\\(\2\\\)\3'
+  TEX_DOLLAR_SUB2 = '\1latexmath:[\2]\3'
+----
+
+using the first, rather than the second, which is your original.  I don't
+think that that is the problem -- it must be in the
+recognizer,
+
+----
+  TEX_DOLLAR_RX = /(^|\s|\()\$(.*?)\$($|\s|\)|,|\.)/
+----
+
+We can change back to (2), though I must say I like
+(1) better since it parallels `\[ ... \]` and is more
+succinct.  Is there any difference in their function or
+behavior _vis a vis_ Asciidoctor, i.e., in being
+protected from substitution?

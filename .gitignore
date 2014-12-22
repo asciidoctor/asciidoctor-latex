@@ -1,5 +1,33 @@
-/_*/
+*/_*/
 /Gemfile.lock
 /pkg/
 /.ruby-gemset
 /.ruby-version
+
+
+samples/*.html
+samples/*.tex
+MYNOTES.adoc
+
+# working directories jc
+samples2
+xx
+work
+tests/templates
+tests/foo
+
+# workng & test files
+*.tex
+*.pdf
+*.aux
+*.log
+*.out
+*.toc
+*.html
+tmp
+
+ud.sh
+
+LOG.adoc
+
+try-out/possible/

@@ -13,10 +13,13 @@ went the bar and had a blast.
 Ho hum, ho hum, fee fie fo fum, +
 said the Jolly Green Giant.
 
+by Henri Poincaré
+
+
 
 WARNING: The Jolly Green Giant is good,
 but he is often shadowed by the frumious
-bandersnatch, who is very, very bad. 
+bandersnatch, who is very, very bad.
 
 We will study the cubic equation $\ref{eq:cubic}$
 later in this treatise.  The present cash
@@ -33,22 +36,22 @@ $1 + 1 = 2$
 === Algebra
 
 The name of our *much beloved* subject
-comes from 
+comes from
 
 * Italian
 * Spanish
 * Medieval Latin
-* Arabic 
+* Arabic
 
 
 The Arabic origin, _al-jabr_, is primary.
-It signifies the reunion of broken parts, bone setting, 
-from _jabara_, reunite, restore. The original sense, 
-the surgical treatment of fractures, probably came 
+It signifies the reunion of broken parts, bone setting,
+from _jabara_, reunite, restore. The original sense,
+the surgical treatment of fractures, probably came
 via Spanish, in which it survives; the mathematical s
-ense comes from the title of a book, 
-ilm al-jabr wal-mukabala the science of 
-restoring what is missing and equating like with 
+ense comes from the title of a book,
+ilm al-jabr wal-mukabala the science of
+restoring what is missing and equating like with
 like, by the mathematician al-Kwarizmi[[alkwarizmi]] (see algorithm).
 
 http://en.wikipedia.org/wiki/History_of_algebra[History of Algebra]
@@ -61,7 +64,7 @@ http://en.wikipedia.org/wiki/History_of_algebra[History of Algebra]
 ** Equations
 
 
-Again: 
+Again:
 
 . Arithmetic
 .. Additive Operators
@@ -116,12 +119,12 @@ And even more ridiculous still!!
 
 == Matrices
 
-\[ 
-M = \left[ 
-  \begin{array}{ c c } 
-	 1 & 2 \\ 
-	 3 & 4 
-  \end{array} \right] 
+\[
+M = \left[
+  \begin{array}{ c c }
+	 1 & 2 \\
+	 3 & 4
+  \end{array} \right]
 \]
 
 
@@ -137,7 +140,7 @@ M = \left[
 
 The above is an equation.  Such equations were extensively treated in
 the medieval Islamic period.  See <<alkwarizmi>> .
-	
+
 == Things to do
 
 Implement tables.  Such a pain in TeX, so much nicer in Asciidoc!

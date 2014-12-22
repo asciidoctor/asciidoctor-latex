@@ -1,7 +1,12 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('lib/asciidoctor-latex/version', File.dirname(__FILE__))
+require File.expand_path('lib/asciidoctor/latex/version', File.dirname(__FILE__))
 
 require 'rake/clean'
+
+require 'asciidoctor/doctest'
+require 'rake/testtask'
+require 'thread_safe'
+# require 'tilt'
 
 default_tasks = []
 
@@ -29,7 +34,9 @@ begin
 rescue LoadError
 end
 
-=begin NOT CURRENTLY IN USE
+
+
+#=begin NOT CURRENTLY IN USE
 begin
   require 'rake/testtask'
   Rake::TestTask.new do |t|
@@ -73,6 +80,26 @@ begin
   task :wip => 'features:wip'
 rescue LoadError
 end
-=end
+# =end
 
 task :default => default_tasks unless default_tasks.empty?
+
+################################################################
+
+Rake::TestTask.new(:test) do |task|
+  task.description = 'Run tests for templates'
+  task.pattern = 'test/templates_test.rb'
+  task.libs << 'test'
+end
+
+DocTest::GeneratorTask.new(:generate) do |task|
+  task.output_suite = DocTest::HTML::ExamplesSuite.new(examples_path: 'test/examples/html')
+  # task.renderer_opts[:template_dirs] = 'data/templates'
+  task.renderer_opts backend_name: :latex
+  #
+  # add extra input examples (optional)
+  task.examples_path.unshift 'test/examples/adoc'
+end
+
+# When no task specified, run test.
+task :default => :test

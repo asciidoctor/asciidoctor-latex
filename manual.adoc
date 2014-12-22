@@ -1,37 +1,35 @@
-latex_converter= TeX Converter Manual
+= LaTeX Converter Manual
 James Carlson
 :toc2:
 :numbered:
-:stem: latexmath	
+:stem: latexmath
 
 == Introduction
 
 TexConverter translates a file written
-in a subset of Asciidoc to LaTeX.  The 
+in a subset of Asciidoc to LaTeX.  The
 subset is described below.  While not
 complete, it is adequate for the preparation
 of a wide range of mathematical documents,
 from one-page handouts to articles to entire books.
 
-As a demonstration of the current state of this 
+As a demonstration of the current state of this
 project, the file you are looking at, `manual.adoc`,
 can be rendered into HTML by
 ----
-    asciidoctor -latex manual.adoc,
+  $ asciidoctor manual.adoc
 ----
-or can be rendered as a latex file via
+or can be rendered as a LaTeX file via
 ----
-    asciidoctor -r ./latex_converter.rb -b latex manual.adoc
-	# => manual.tex
+  $ asciidoctor-latex manual.adoc
+  # => manual.tex
 ----
-For the moment this conversion must be done
-in the directory in which `latex_converter.rb` resides.
 The `.tex` file can in turn be rendred into pdf via
 `pdflatex`.
 
 
-Mathematical text in Asciidoc can be written as 
-one usually does in LaTeX if one invokes the 
+Mathematical text in Asciidoc can be written as
+one usually does in LaTeX if one invokes the
 latex option.footnote:[This option exists but has not yet been released.  To use
 	the option at http://noteshare.io[noteshare.io], include the code `:latex:` in
 	your document].  You do this via  `asciidoctor -latex foo.adoc`.
@@ -43,14 +41,14 @@ theorem $a^2  + b^2 = c^2$, one writes
 ----
 
 For the famous formula of Euler,
-\[ 
-  e^{2\pi \sqrt{-1}} = 1 
+\[
+  e^{2\pi \sqrt{-1}} = 1
 \]
 one writes
 
 ----
-\[ 
-  e^{2\pi \sqrt{-1}} = 1 
+\[
+  e^{2\pi \sqrt{-1}} = 1
 \]
 ----
 
@@ -94,7 +92,7 @@ Its translation into LaTeX is
        \item Milk
        \item Bread
        \item Orange Juice
-   \end{itemize} 
+   \end{itemize}
    \item Change Oil Filter on Car
    \end{itemize}
 ----
@@ -124,7 +122,7 @@ with the following source in LaTex:
 ----
 	\begin{enumerate}
 	\item Pay Bills
-	\item Get Groceries   
+	\item Get Groceries
     \begin{enumerate}
 	    \item Milk
 	    \item Bread
@@ -136,7 +134,7 @@ with the following source in LaTex:
 
 === Bold, italic, and monospaced text
 
-The text "She said _potatoes_ but he said *potaatoes*", written 
+The text "She said _potatoes_ but he said *potaatoes*", written
 in Asciidoc as
 
 ----
@@ -154,7 +152,7 @@ The text
     `monospaced`
 ----
 
-is mapped to 
+is mapped to
 
 ----
     {\tt monospaced}
@@ -169,15 +167,16 @@ The text
     [quote, Abraham Lincoln, Soldiers' National Cemetery Dedication]
     ____
     Four score and seven years ago our fathers brought forth
-    on this continent a new nation 
+    on this continent a new nation
     ____
 ----
-is mapped to 
+is mapped to
 
 ----
     \begin{quote}
-    Four score and seven years ago our fathers brought forth
-    on this continent a new nation
+      Four score and seven years ago our fathers brought forth
+      on this continent a new nation
+    \end{quote}
 ----
 
 === Footnotes
@@ -200,7 +199,7 @@ The label
     Ho hum[[foo]]
 ----
 
-is mapped to 
+is mapped to
 
 ----
     Ho hum\label{foo}
@@ -225,14 +224,14 @@ is mapped to
 The hyperlink
 
 ----
-    http://nytimes.com[All the news that is fit to print] 
+    http://nytimes.com[All the news that is fit to print]
 ----
 
-is mapped to 
+is mapped to
 
 ----
    \href{http://nytimes.com}{All the news that is fit to print}
-----   
+----
 
 === Line breaks `+`
 
@@ -247,11 +246,11 @@ is mapped to
 === Pass
 
 ////
-  INLINE_TYPES = %w( inline_quoted)   
-  BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)  
-////  
+  INLINE_TYPES = %w( inline_quoted)
+  BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)
+////
 
-	
+
 == Mathematical text
 
 We distinguish between _inner text_ amd _outer text_.  the first
@@ -284,7 +283,3 @@ This will render in Asciidoc as
 --
 _For all $a$, $b$, $c$, the relation $a(b+c) = ab + ac$ holds._
 --
-
-
-
-

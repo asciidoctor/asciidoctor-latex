@@ -1,0 +1,24 @@
+
+== Minimal test of click block
+
+
+[click.solution]
+--
+The answer is 43.
+--
+
+
+.Heliam Uu
+[click.comment%numbered]
+--
+Fine!  What is the question?
+--
+
+
+.Morliaakh Tor
+[click.comment%numbered%howdy]
+--
+The solution is correct, but the question,
+which was once well-known,
+is ill-posed.
+--

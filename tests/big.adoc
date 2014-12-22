@@ -1,0 +1,2298 @@
+Hodge Theory
+James Carlson
+:toc2:
+
+
+++++
+\(
+
+
+%% Blackboard Bold
+\def\AA{\mathbb{A}}
+\def\BB{\mathbb{B}}
+\def\CC{\mathbb{C}}
+\def\DD{\mathbb{D}}
+\def\EE{\mathbb{E}}
+\def\FF{\mathbb{F}}
+\def\NN{\mathbb{N}}
+\def\OO\mathbb{{O}}
+\def\PP{\mathbb{P}}
+\def\QQ{\mathbb{Q}}
+\def\RR{\mathbb{R}}
+\def\ZZ{\mathbb{Z}}
+\def\ffp{\mathfrak{p}}
+\def\bold#1{\bf #1}
+
+%% Mathcal
+\def\EEE{\mathcal{E}}
+\def\PPP{\mathcal{P}}
+\def\UUU{\mathcal{U}}
+\def\CCC{\mathcal{C}}
+
+%% Arrows, sets, etc.
+\newcommand{\commadots}{, \ldots, }
+\newcommand{\set}[1]{ \{\,#1\,  \} }
+\newcommand{\sett}[2]{ \{\,#1\, \mid\, #2\, \} }
+\newcommand{\Set}[1]{ \Big\{\,#1\,  \Big\} }
+\newcommand{\Sett}[2]{ \Big\{\,#1\, \Big\vert\; #2\,  \Big\} }
+\newcommand{\mapright}[1]{\ \smash{
+\mathop{\longrightarrow}\limits^{#1}}\ }
+\newcommand{\vars}[2]{{#1}_1\commadots{#1}_{#2}}
+\newcommand{\map}{\longrightarrow}
+
+%% Math operators
+\def\rank{\mathop{rank}}
+\def\dim{\mathop{dim}}
+\def\height{\mathop{height}}
+
+\def\ord{\mathop{ord}\nolimits}
+\def\CP{\CC\PP}
+
+%% Document appearance
+\parskip8pt
+\parindent0pt
+
+\)
+++++
+
+== Introduction
+
+We begin with quick review of algebraic geometry: affine and projective
+varieties, some facts about their topology, their structure as complex
+manifolds, and two versions of the de Rham theorem: the classical
+one, with differential forms, and the Cech-de Rham version, which
+is a purely algebraic construction.  We then take up the study of Riemann
+surfaces, with special emphasis on elliptic curves ...
+
+
+.click on me
+[click.Commen]
+--
+You will learn a lot by doing the problems.  Also, text in blue
+is typically a clickable heading that will reveal new content.
+--
+
+
+=== Notes on reading this document online
+
+Some sections of this document have an _aside_.  That is the 
+text you are reading right now.  I appears on the right-hand
+side of the main text.  
+
+From time to time you will see a blue subheading with no text
+beneath it.  The text is hidden -- click to reveal it.  Click
+again to hide it.
+
+
+== Basic Algebraic Geometry
+
+Algebraic geometry is vast subject, one whose mastery is complicated by the use
+of at least two mathematical languages -- the classical language, and the language
+of schemes.  The subject draws on algebraic topology, the theory of manifolds, 
+commutative algebra, and -- for Hodge theory -- differential geometry and the 
+theory of elliptic partial differential operators.  It is not possible to master
+all of this material in a short period of time.  The approach of these notes
+is to introduce basic notions with a large set of examples and problem
+and just enough theory for the whole to make some sense.  By working
+through the problems and discussing them in class, it is hoped that
+the student will gain a real appreciation and understanding of the subject
+that will serve as a useful introduction to later, more in-depth studies.
+
+
+
+
+
+=== Affine Varieties
+
+\(\def\ord{\mathop{ord}\nolimits}\)
+
+<<Examples>> + 
+<<Smooth and singular points>> +
+<<Tangent space and tangent cone>> +
+<<Manifold Structure>> +
+<<Double Covers>>
+
+
+
+Let $ \CC^n $ denote complex $ n $-space with coordinates 
+$ (z_1, \ldots, z_n) $, 
+let $ f(z_1, \ldots, z_n) $  be a polynomial of degree $ d $ with complex
+coefficients,  and let $ X $ be the set of solutions to the equation
+$ f(z) = 0 $.  Such a set  an _affine algebraic hypersurface_
+of degree $ d $  --
+a special kind _affine algebraic set_.  A general affine
+variety is the set of common zeroes of an arbitrary collection of polynomials.
+By two deep theorems in commutative algebra (the Hilbert Nullstellensatz
+and the fact that polynomial rings are 
+Noetherian)footnote:[A _Noetherian ring_ is one in which
+every increasing chain of ideals $ I_1 \subset I_2 \subset \cdots $ becomes constant after a finite
+number of steps.  That is, there no genuinely infinite chains of
+ideals.] we know that a finite number
+of polynomials is sufficient to define any algebraic variety.
+
+==== Examples
+
+Let us look at examples.  The set
+defined by $ z_1 + \cdots + z_n = 0 $  in $ \CC^n $ is an affine
+algebraic variety of degree one.  It is isomorphic to $ \CC^{n-1} $.
+The set defined by $ z_1^2 + \cdots + z_n^2 =1 $ is an affine
+algebraic variety of degree two, a so-called _smooth quadric_
+of dimension $ n-1 $. By _smooth_, we mean that a neighborhood of any
+point can be identified with the neighborhood of a point in $ \CC^n $
+by a suitable homeomorphism.  Indeed, projection onto a coordinate
+hyperplane $ z_i = 0 $ will work, as it does for the sphere $ x^2 + y^2 + z^2 = 1 $
+in $ \RR^3 $, as pictured below.
+
+FIGURE. 
+
+
+The set $ X $ defined by $ z_1^2 + \cdots + z_n^2 = 0 $ is a 
+_quadric  cone_.   By _cone_ we mean that there is a point $ O $
+in $ X $ such that if $ P $ is in $ X $, then so is the line $ OP $.
+This special point is called the _vertex_.
+In the case at hand, $ O $ is the origin.
+It is also a _singular point_ of $ X $.  Near $ O $, $ X $ is
+different than it is near other point. 
+(Try to formulate a definition that distinguishes "ordinary" or "smooth"
+points from points that are "singular".  The notions 
+of smooth and singular are discussed below, but do give this a try now.)
+
+
+[env.problem]
+--
+_In how many points does a line $ L \subset \CC^n $ meet
+a hypersurface of $ X $ of degree $ d $?_  Is this notion 
+completely well formulated?
+--
+
+.Comment
+--
+To make the notion of number of intersection points precise,
+consider a parameterization $ t \mapsto \ell(t) $ of a line $ L $.
+Let $ f(z) = 0 $ be the equation of $ X $.  The composition
+$ f(\ell(t) $ is a polynomial function of one variable.  Its degree
+is a measure of the number of points of intersection.
+-- 
+[env.problem]
+--
+_Consider the variety $ X \subset \CC^n $ defined by the equations
+$ z_1 + \cdots + z_n = 0 $ and $ z_1^2 + \cdots + z_n^2 =1 $ .
+Is it non-empty?  What is its dimension?  Can one define a 
+notion of degree for it?_
+--
+
+[env.problem]
+--
+_Consider the affine cone $ X $ defined by the equation $ z^2 + w^2 = 0 $ in $ \CC^2 $.  Let $ S^3(r) $ be
+the sphere of radius $ r $ centered at the origin  Describe the intersection $ X \cap S^3(r) $.
+Is it independent of the radius, up to homeomorphism?  Let $ X' $ be the variety defined
+by $ z = 0 $  Compare $ X \cap S^3(\epsilon) $ to $ X' \cap S^3(\epsilon) $._
+--
+
+For another class of examples, consider the polynomial equation $ f(z,w) = 0 $,
+where $ f $ has degree $ d $.   The solution set $ X $ is a _plane algebraic curve_.  If $ d =1 $, the solution set is isomorphic
+to $ \CC $.  If $ d = 2 $, there are two cases, the _smooth conics_
+and the _singular conics_.  As an example of the former,
+consider the equation   $ f(z,w) =z^2 +(w-1)^2 - 1 $.
+Fix a point of $ X $, say $ A = (0,0) $.  Given $ P \in X $, let $ L $
+be the line joining $ A $ to $ P $, and note that $ L $ meets $ X $ _only_
+in $ A $ and $ P $.  Let $ \Pi $ be the line tangent to $ X $ at $ B = (0,2) $,
+and let $ Q $ be the intersection of $ L $ and $ \Pi $.  As  $ P $ approaches $ A $, 
+the point $ Q $ approaches infinity.  Let $ \bar \Pi $ be the _Riemann sphere_ --
+the one-point compactification of the complex line:
++++\[     
+  S^2 = \bar \Pi = \Pi \cup \set{\infty}.
+   \]+++
+
+
+
+Then the map 
+$ P \mapsto Q $ is a homeomorphism 
+of $ X $ with its image in $ \bar \Pi $,  It turns out the image is 
+consists of the Riemann sphere minus two points.  Thus 
+$ X \cong \CC^* $.
+
+[env.problem]
+--
+_Verify the details of the argument of the homeomorphism 
+$ X  \map \bar\Pi $
+and show that that homeomorphism is algebraic.._
+--
+
+[env.problem]
+--
+Define the *multiplicity* of a point $ P $ on a plane algebraic curve  
+$ X $ given by $ f(z,w) = 0 $, as follows.  Let $ \lambda(t) $
+be a parametric curve such that  $ \lambda(0) = P $.  Let 
+$ m(P,X) = \min_\lambda \ord_0\, f(\lambda(t) $, where 
+$ \ord_0(g(t)) $ is the order of vanishing of $ g(t) $ at zero. (a) What
+are the possible multiplicities of points on a conic? (b)  What
+are the mutliplicities of the points of the conic $ z^2 - w^2 = 1 $? (c)
+What are the multipliciites of the points of $ z^2 - w^2 = 0 $? (d)
+If $ X $ is a conic with a point of multiplicity two, what can you say 
+about its geometry? 
+--
+
+
+Consider next the plane curve $ C $ with equation
+$ z^3 + w^3 = 1 $. It is an example of
+a so-called  _affine elliptic curve_. These play an especially important role in the development
+of algebraic geometry and also number theory,  e.g., Andrew Wiles' 
+proof of Fermat's last theorem.   Because $ C $ is of degree three, the
+line-drawing argument given earlier does not a apply to conclude 
+that $ C $ is isomorphic to a punctured Riemann sphere.   Nonetheless,
+there is information that we can extract from the line-drawing
+construction. Let $ A $ be any point of $ C $, and let $ \Pi $ be a line not
+containing $ A $.  The line $ L = AP $ generally intersects $ C $ in 
+two additional points,  $ P $ and $ P' $.  Map these to $ Q = L\cap \bar \Pi $.  The
+result is a 2-to-1 map of $ C $ to $ \bar \Pi $.  If the line $ L $ is tangent
+to $ C $ at $ P $, the the map is 1-to-1 at $ P $.  The  point $ P $ is a 
+point of _ramification_ of the map.  We call its image
+in $ \Pi $ a _branch point_.  *Conclusion:* _the cubic curve
+$ z^3 + w^3 = 1 $ is a 2-to-1 branched cover of an open set in $ \bar \Pi $._
+
+[env.problem]
+--
+In the example above of a 2-to-1 projection of a cubic
+curve, how many ramification points are there?
+--
+
+Here is another way of constructing a 2-to-1 branched cover.  Let $ g(z) $
+be a polynomial of degree $ d $, and consider the affine algebraic curve $ X $
+with equation $ w^2 = g(z) $.  Consider the projection of $ \CC^2 $ 
+onto the $ z $-axis.  This map induces a map
+$ X \map \CC $ which is of degree two: the inverse image of a "generic" point
+consist of two distinct points, namely, the square roots of $ f(z) $.  When
+$ f(z) = 0 $, the inverse image consists of a single point.   The  _branch locus_.
+is th eset of roots of $ f $.
+
+When $ g(z) $ is of degree three or four,  the affine curve $ w^2 = g(z) $
+is an elliptic curve. The line-drawing construction still applies, except that
+the point $ A $ is the point at infinity, and so the lines drawn are vertical.
+Nonetheless, the construction applies.
+
+[env.problem]
+--
+_Use the branched cover description of an affine elliptic curve
+to compute its Euler characteristic.  Then (a) generalize your result
+to the case $ w^2 = f(z) $ where $ f(z) $ where $ f(z) $ has no
+multiple roots.
+Consider also the case in which the polynomial $ f(z) $ has 
+one double root._
+--
+
+==== Smooth and singular points
+
+Consider once again a general hypersurface $ X $,
+the variety  defined by a single equation.  
+If the gradient of $ f $
+is nonzero at a point $ a $ of $ X $,  then (by the holomorphic implicit
+function theorem),  there is a neighborhood
+$ U $ of $ a $ in $ X $ and a parametrization 
+$ v: V \map U \subset X $ where (a) $ V $ is a neighborhood
+in $ \CC^{n-1} $, (b) $ v $ is a homeomorphism of $ V $ and $ U $.
+After a suitable re-ordering of coordinates, the map $ v $ has the 
+form
++++\[   
+   v(z_1 \commadots z_n) = (z_1 \commadots z_{n-1}, 
+         g(z_1 \commadots z_{n-1}).
+   \]+++
+That is, $ v $ is given by the graph of the map $ g $.  The function $ g $
+is the solution of the equation
++++\[   
+  f(z_1 \commadots z_n, g(z_1 \commadots z_n)) = 0,
+   \]+++
+and that solution is what is guaranteed by the implicit function theorem.
+
+
+
+Let $ u: U \map V $ be the inverse function. Then  (c),
+$ \nabla u(b) \ne 0 $ for all $ b \in U' $.  The components $ u_i $ of $ u $
+are called  _local coordinates_ on $ U $.  We say that the points of $ U $ are _smooth_.
+If all points of $ X $ are smooth, we say that $ X $ is smooth. This is synonymous
+with being a manifold.   
+
+If all derivatives of $ f $ vanish at $ a $, then there exist
+no local coordinates, and the point in question is said to be _singular_.  The origin in 
+$ \CC^2 $ is  a singular point of the hypersurfaces $ xy = 0 $, $ y^2 =  x^2 + x^3 = 0 $,
+and $ y^2 = x^3 $.  These singularities have names: the first two are _nodes_,
+and the last is a _cusp_.
+
+
+
+There is, by the way, no mystery about how local coordinates are constructed.
+If $ a $ is a point of $ X $, then there is an $ i $ such that $ \partial f/\partial z_i(a) \ne 0 $.
+Consider the projection "deletion of the $ i $-th coordinate",
++++\[   
+  p_i: \CC^n \map \CC^{n-1},
+   \]+++
+given by
++++\[   
+   p_i(z_1, \ldots, z_n) = (z_1,\ldots,z_{i-1},z_{i+1},\ldots z_n),
+   \]+++
+where $ p_1(z) = (z_2, \ldots, z_n) $ and $ p_n(z) = (z_1, \ldots, z_{n-1}) $.
+There is a small neighboorhood $ U $ of $ a $ such that $ p_i $ is  
+a homeomorphism of $ U $ onto its image $ V $. The restriction
+of $ p_{i}^{-1} $ to a $ V' $ is the sought-after local coordinate.
+Local coordinates can always be constructed in this way, namely,
+as the inverses of projections.
+
+==== Tangent space and tangent cone
+
+Let $ a \in X $ be a smooth point of a hypersurface. The orthogonal
+complement to $ \nabla f(a) $ in the space of vectors based at
+$ a $ is by definition the _tangent space_ of $ X $ at $ a $.  
+There is a more general definition which goes as follows.  Given
+$ a \in X $, consider parametric lines $ \ell(t) = a + bt $.  Consider the
+composition $ f(\ell(t)) $.  Let $ a_dt^d $ be the term in the power
+series of $ f(\ell(t)) $ of least degree such that $ a_d \ne 0 $.  For all
+$ b $, we have $ d \ge  1 $.  However, for certain lines, $ d = 2 $.  We may think of these as the limits of secant lines, where the limit is
+taken as two of the ponts tend to $ a $.  The set of vectors $ b $ based at $ a $ for which $ d \ge 2 $ is called the _tangent cone_
+of $ X $ at $ a $.  If $ a $ is a smooth point, the tangent cone is a vector 
+space, namely, orthogonal complement of $ \nabla f(a) $.  In general 
+we may define the _Zariski tangent space_ as the span of the 
+tangent cone.
+
+[env.problem]
+--
+Consider the surface $ S \subset \CC^3 $ defined by
+ $ x^2 + y^2 + z^2 + t(x^3 + y^3 + z^3) = 0 $
+(a) Show that for all values of $ t $, $ S $ is smooth except
+at the origin. (a) What is the multiplicity of the origin in $ S $?
+(b) What is the tangent cone of $ S $ at the origin? (c) What is
+the tangent cone at other points of $ S $?
+--
+
+==== Manifold Structure
+
+Consider a hypersurface $ X \subset \CC^{n+1} $ 
+with equation $ f = 0 $.  Suppose that  the 
+gradient vector is nonzero at every point of $ X $. Then every
+point of $ X $  has a neighborhod $ U $ and a chart 
++++\[   
+  \phi_U: U \map \CC^n.
+   \]+++
+A set of charts whose domains $ U $ cover a given topological
+space is called an _atlas_.
+
+If $ U \cap V \ne \emptyset $, we can form the composed function
++++\[   
+   \phi_{UV} = \phi_U\circ \phi_V^{-1}.
+   \]+++
+The composition maps a domain (open set) in $ \CC^{n-1} $ to
+another domain in $ \CC^{n-1} $.  These are called the _transition
+functions_ .  Transition functions relate one chart to another on 
+overlaps:
++++\[   
+   \phi_U = \phi_{UV} \circ \phi_V.
+   \]+++
+
+In the case of hypersurfaces
+defined by polynomial, or even holomorphic functions, the 
+transition functions are holomorphic.
+
+The transition functions obey the _cocycle conditions_
++++\[   
+  \phi_{VU} = \phi_{UV}^{-1}
+   \]+++
+and
++++\[   
+  \phi_{UW} = \phi_{UV}\phi_{VW}
+   \]+++
+These conditions ensure that one can construct a manifold by 
+"gluing."  Let $ \set {(U, \phi_U)} $ be a collection of sets and 
+functions such that the transition functions (abstractily defined
+by $ \phi_U = \phi_{UV} \circ \phi_V $) satisfy the cocycle conidtions.
+Consider the disjoint union $ \UUU $ of the sets $ U $.  Define a
+a relation by saying that $ a \sim b $ if $ \phi_{VU}(a) = b $, where
+$ a \in U, b \in V $.  The cocycle conditions imply that this relation
+is reflexive and transitive, that is, it is an equivalence relation.
+Let $ X $ be the qutoient of $ \UUU $ by $ \sim $.  It is a manifold.
+
+[env.definition]
+--
+A _differentiable  manifold_ of dimension $ n $ is 
+a topologicial space  endowed with an atlas
+of charts $ \sett{\phi_U}{\phi_U: U \map \RR^n} $
+whose whose transition functions
+are differentiable ($ C^\infty $).  
+A _complex manifold_ of dimension $ n $
+is a topological space endowed with 
+an atlas of charts $ \sett{ \phi_U }{\phi_U \map \CC^n} $ 
+whose transition functions
+are holomorphic.
+--
+
+.Remark
+--
+Note that a complex manifold of dimension $ n $ also has the 
+structure of a differentiable manifold of dimension $ 2n $.
+--
+[env.problem]
+--
+Give a detailed argument showing that the glueing construction 
+results in a manifold.  
+--
+
+[env.problem]
+--
+Give a detailed argument showing that the unit sphere $ S^2 \subset \RR^3 $
+is a two-dimensional real manifold. Then show that it is also a complex
+manifold of dimension oen.
+--
+
+.Comment
+--
+Use stereographic projection
+--
+
+
+==== Double Covers
+
+Consider  the algebraic curve $ X $ with equation 
+$ w^2 = f(z) $, where $ f(z) $
+has distinct roots. The gradient of the defining
+equation $ g(z,w) = w^2 - f(z) $ is $ (f'(z), 2w) $.
+If $ w = 0 $, then $ f(z) = 0 $.  But a root $ a $ of $ f $ is a simple root,
+so $ f'(a) \ne 0 $.  Thus the gradient of $ g $ is nowhere zero on $ X $,
+and so  $ X $ is a complex manifold.  
+
+It is nonetheless useful to find charts on $ X $.  There will be two kinds.  If $ P = (z,w) $ is a point of $ X $ and $ f(z) \ne 0 $, then we 
+claim that $ z $ is a local coordinate.  In this case 
+$ \nabla g = (f'(z),2w) $ with $ w \ne 0 $.  Then projection of the 
+tangent space onto the $ z $-axis is isomorphism, and so 
+$ z $ gives a local coordinate.
+
+If $ p = (z,w) $ is a point of $ X $ and $ f(z) = 0 $ then $ w = 0 $
+and $ \nabla g = (f'(z), 0) $.  But $ z $ is not a multiple root of $ f $,
+so $ f'(z) \ne 0 $.  Now projection onto the $ w $-axis is an
+isomorphism on tangent spaces and so is an isomorphism
+locally.
+
+
+===== The Riemann Sphere
+
+The Riemann Sphere $ \bar \Pi $, which we encountered
+as the one-point compactificaitn of the complex line $ \CC $, carries the structure of a complex manifold.  Define a cover by two open sets $ U $ and $ V $, where $ U = \CC $ and where 
+$ V = \CC - \set{0} \cup \set{\infty} $.  Let $ u $ be the natural coordinate on $ U = \CC $.  Let $ v: \CC - \set{0} \map \CC $ 
+the the function $ v = 1/u $.  As $ u $ tends to $ \infty $, $ v $
+tends to zero, and one finds that it is a homeomorphism
+between $ V $ and $ \CC $. The transition function is
++++\[   
+   g_{VU}(u) = 1/u.
+   \]+++
+This is a holomorphic automorphism of $ \CC^* $.  Thus $ \Pi $
+is a 1-dimensional complex manifold.
+
+
+===== Double covers of the Riemann sphere
+
+Let $ w^2 = f(z) $ define a double cover $ X $ of $ \CC $.  We
+are going to define a double cover $ \bar X $ of the 
+Riemann sphere $ \bar\Pi $ whose restriction to $ \CC $ is
+the given cover.  Consider first the case
+in which $ f $ has even degree $ 2d $, and let $ u = 1/z $ define the 
+transition functions for the standard cover of $ \Pi $ by open
+sets $ U $ and $ V $.  The given double cover should be thought
+of as a double cover $ X_U $ of $ U $.
+
+In the $ (u,w) $ coordinate system we have
++++\[   
+  w^2 = \frac{g(u)}{u^{2d}},
+   \]+++
+where $ g(u) $ is a polynomial of degree $ 2d $ with $ g(0) \ne 0 $.
+Let $ v = wu^d $.  Then $ (v,u) $ is also a coordinate system,
+since we can solve for $ (z,w) $ in terms of $ (v,u) $.  The equation
+for $ X $ over $ U \cap V \cong \CC^* $ is 
++++\[   
+  v^2 = g(u).
+   \]+++
+This relation defines a cover $ X_V $ of $ V $. The Riemann sphere
+is 
++++\[   
+   \bar\Pi = U \cup V,
+   \]+++
+and the relation
++++\[   
+  \bar X = X_U \cup X_V.
+   \]+++
+defines a double cover of $ \bar \Pi $.
+
+[env.problem]
+--
+What is the Euler characteristic of a double cover of the 
+Riemann sphere branched at $ 2d $ points?
+--
+
+[env.problem]
+--
+Work out the details of the construction of a double cover
+of the Riemann sphere branched at $ 2d - 1 $ points.  Then
+compute the Euler characteristic.
+--
+
+
+
+
+
+=== Projective Space
+
+<<The tautological and Hopf bundles>> +
+<<Manifold structure>> +
+<<Cell decomposition>> +
+<<Homology>> +
+<<Abstract chain complexes and homology>> + 
+<<Homology of cell complexes>> +
+<<Functoriality and fundamental class>> +
+<<Chow ring>> +
+
+
+\(\def\CP{\CC\PP}\)
+
+The Riemann sphere is a compacitification of the complex line
++++\[   
+    \bar\Pi = \CC \cup \set{\infty} \cong S^2
+   \]+++
+which in addition to being a topological space, has the structure
+of a complex manifold.  There various ways to compactify
+afine $ n $-space, but of these, one stands out: complex 
+projective $ n $-space, $ \CP^n $, which has the property of
+being a complex manifold of dimension $ n $.
+
+[env.definition]
+--
+Complex projective $ n $-space, written $ \CP^n $, is the 
+space of lines through the origin in $ \CC^{n+1} $.
+--
+
+To understand wha we mean by _space_ of lines, observe that
+a  line though the origin in $ \CC^{n+1} $ is given by a 
+nonzero vector $ Z $.  If $ Z' $  is nonzero scalar multiple
+of $ Z $, then it  defines the same lines as does $ Z $..
+Introduce the equivalence relation  $ Z' \sim Z $
+if and only if $ Z = \lambda Z $ for some $ \lambda \in \CC - \set{0} $.
+Then $ \CP^n $ is the set of equivalance
+classes $ [Z] $ in $ \CC^{n+1} - \set {0}  $.  
+As a topologicial space, it carries the quotient topology. 
+
+==== The tautological and Hopf bundles
+
+Projective space may also be viewed as the quotient under
+a group action.  Consider a space $ Y $ and a group $ G $.  An 
+action of $ G $ on $ Y $ is a map $ G\times Y \map Y $,
+written $ (g,y) \mapsto g.y $, that satisfies $ e.y = y $ for all
+$ y $, where $ e $ is the neutral element, and $ g.(h.y) = (gh).y $
+for all $ g,h \in G $, $ y \in Y $.  The _orbit_ of point $ y \in Y $
+under the action of $ G $ is the set $ G.y = \sett{g.y}{ g \in G} $.
+The quotient of $ Y $ by $ G $, written $ Y/G $, is the set of orbits.
+Note that $ Y/G $ is just the set of equivalence classes of elements
+of $ Y $ under the relation $ y' \sim y $ if there is an element $ g \in G $
+such that $ y'  = g.y $.
+
+Returning to the construction of projective space,
+the map 
+$ (\lambda, Z) \mapsto \lambda Z $
+defines an
+action of the group $ \CC^* $ on 
+$ \CC^{n+1} - \set{0} $, and 
++++\[   
+   \CP^n = (\CC^{n+1} - \set{0})\big/\CC^*
+   \]+++
+is the quotient. If $ p: \CC^{n+1} - \set{0} \map \CP^n $
+is the projection map, then the set 
++++\[   
+  p^{-1}([Z]) = \set{ Z \in [Z]} \cong \CC^*,
+   \]+++
+the so-called
+_fiber_ of $ p $ at $ [Z] $ can be identified with $ \CC^* $.
+This leads to the important diagram 
++++\[   
+   \CC^* \map \CC^{n+1} - \set{0} \mapright{p} \CP^n,
+   \]+++
+which defines a $ \CC^* $ bundle over $ \CP^n $ called the 
+_tautological bundle_.  
+It plays a key role in the theory of projective varieties.
+
+FIG
+
+Consider now the  unit sphere
++++\[   
+  S^{2n+1} = \sett{ Z \in \CC^{n+1} } { ||Z|| = 1 }.
+   \]+++
+It is stable under the action of unit circle subgroup
++++\[   
+  U = \sett{ \lambda \in \CC}{ |\lambda| = 1 }.
+   \]+++
+The natural map 
++++\[   
+  S^{2n+1} \map \CC^{n+1} - \set{0}
+   \]+++ 
+restricts ot a map of quotient spaces
++++\[   
+   S^{2n+1}/U \map (\CC^{n+1} - \set{0})/\CC^*,
+   \]+++
+and it is easy to see that this map is an isomorphism.
+This gives a second presentation of projective space
+as the quotient of a sphere, and it leads to the famous
+_Hopf fibration_,
++++\[   
+    S^1 \map S^{2n+1} \mapright{h} \CP^n.
+   \]+++
+The Hopf map is, by the way, the generator of the homotopy
+group $ \pi_3(S^2) $.
+
+==== Manifold structure
+
+As noted above, a point $ [Z] $ in $ \CP^n $ is an equivalence class of vectors 
+$ Z' \in \CC^{n+1} - \set{0} $ under the relation $ Z' \sim \lambda Z $,
+where $ \lambda \ne 0 $.  Any one these $ Z $'s, including $ Z $ 
+itself, is said to be a _homogeneous coordinate vector_ of the
+point $ [Z] $.  Consider the set 
++++\[   
+  U_i = \sett{ [Z] \in \CP^n }{ Z_i \ne 0}
+   \]+++
+If the condition $ Z_i \ne 0 $ holds for any $ Z \in [Z] $,
+it holds for all $ Z \in [Z] $.  Thus $ U_i $ is a well-defined
+subset of projective space.  Since it is defined by
+the negation of an equation, it is an open set.  These
+sets cover projective space, and constitute its _standard cover_.
+(Why do they cover $ \CP^n $?)
+
+
+
+The open sets $ U_i $ are biholomorphic to $ \CC^n $ via the map
+that sends a homogeneous coordinate vector to the vector
+of ratios $ Z_j/Z_i $ for $ j \ne i $.  The ratios are _affine
+coordinates_ on the $ U_i $.
+
+[env.problem]
+--
+Describe the transition functions for $ \CP^1 $ and 
+$ \CP^2 $  relative to the standard cover.
+--
+
+.Solution
+--
+(a) For $ \CP^1 $ we have homogeneous coordinates $ Z = [Z_0,Z_1] $.
+On $ U_0 $, the local coordinate function is
+$ \phi_{U_0}([Z_0,1Z_1]) = Z_1/Z_0 $.  On 
+ $ U_1 $, the local coordinate function is
+$ \phi_{U_1}([Z_0,1Z_1]) = Z_0/Z_1 $.
+Then
+$ \phi_{U_1U_0}( Z_1/Z_0) = \phi_{U_1}([Z_0,Z_1]) = Z_0/Z_1 $.
+In other words, $ \phi_{U_1U_0}(u) = 1/u $.
+
+(b) For $ \CP^2 $ we proceed in the manner.  
++++\[   
+  \phi_{U_0}([Z_0,Z_1,Z_2]) = (Z_1/Z_0, Z_2/Z_0)
+   \]+++
+and
++++\[   
+  \phi_{U_1}([Z_0,Z_1,Z_2]) = (Z_0/Z_1, Z_2/Z_1)
+   \]+++
+Then
++++\[   
+\phi_{U_1U_0}(Z_1/Z_0, Z_2/Z_0) =
+   (Z_0/Z_1, Z_2/Z_1) = ( (Z_0/Z_1)^{-1},   (Z_2/Z_0)(Z_0/Z_1)^{-1}),
+   \]+++
+so that 
++++\[   
+   \phi_{U_1U_0}(u,v)  = (1/u, v/u).
+   \]+++
+--
+
+
+
+==== Cell decomposition
+
+Consider now the complement of $ U_i $ in $ \CP^n $.  This is
+the closed set $ Z_i $, which we can identify with $ \CP^{n-1} $.
+Thus we have the decompostion
++++\[   
+  \CP^n \cong \CC^n \cup \CP^{n-1}
+   \]+++
+into disjoint  sets, one open and one closed. When $ n = 1 $, this decomposition
+is 
++++\[   
+  \CP^1 \cong \CC \cup \set{\text{point}}.
+   \]+++
+Consequently, $ \CP^1 $ is the same as the one point compactification of $ \RR^2 $.  Using stereographic projection, we identify this compactificaton as the  two-sphere, $ S^2 $, and we call the
+point the "point at infinity".  By analogy, in the decomposition
+$ \CP^2 = \CC^2 \cup \CP^1 $, we call $ \CP^1 $
+the "line at infinity".
+
+
+.
+
+
+
+One can use the above description to present $ \CP^n $
+in another way.  Let $ e^n  = \sett{ x \in \RR^n }{ ||x|| \le 1 } $
+the the $ n $-disk, and let  $ S^{n-1} = \sett{ x \in \RR^n }{ ||x|| = 1 } $
+be its boundary.  Then $ \CP^1 $ can be identified with the space
++++\[   
+  e^2 \cup_h \set{a},
+   \]+++
+where $ \set{a} $ is a one-point  set , and where $ h: S^1 \map \set{a} $ is the "collapsing map", 
+that is, the constant map.  This is a special
+case of the construction 
++++\[   
+   A \cup_h B,
+   \]+++
+where $ h: C \map B $ is a map from a subset $ C $ of $ A $.  It is
+the quotient of the disjoint union of $ A $ and $ B $ by the relation
+that declares $ a $ and $ h(a) $ to be equivalent.  That is, we glue
+$ A $ to $ B $ along $ C $ using $ h $.
+
+We have asserted the existence of an isomorphism 
++++\[   
+   e^2 \cup_h \set{a} \map \CP^1,
+   \]+++
+but we have not exhibited the map defiining it.
+Let us do so in general, for
++++\[   
+  e^{2n} \cup_h \CP^{n-1} \map \CP^n 
+  = \CC^n \cup \CP^{n-1}
+   \]+++
+where $ h $ is the Hopf map.  Identifying $ \RR^{2n} $ with 
+$ \CC^n $,  consider the map
++++\[    
+   f(z) = \left[ 1, \frac{z}{1 - ||z||} \right]
+   \]+++
+for $ ||z|| < 1 $.  This map is a homeomorphism between
+the interior of the unit $ 2n $-cell $ e^{2n} $ and 
+the set $ U_0 \cong \CC^{n} $ in $ \CP^n $.  On the boundary
+of the $ 2n $-cell, map $ z $ to its equivalence class $ [z] $ in 
+$ \CP^{n-1} $.  Finally, map the
+$ \CP^{n-1} $ on the left to the $ \CP^{n-1} $ on
+the right by the identity.  
+
+At this point we have the required map on the level of sets.
+There are, however, things to check in order to have a
+ homeomorphism, foremost being continuity.  Note that
+for vectors with $  0 < ||z|| < 1 $, we have
++++\[   
+  f(z) = \left[ 1 - ||z||, z \right] 
+  =  \left[ \frac{1 - ||z||}{||z||},  \frac{z}{||z||} \right],
+   \]+++
+so that 
++++\[   
+   \lim_{||z||\to 1} f(z) = [0, z] = h(z).
+   \]+++
+This is the statement needed to establish continuity.  With it,
+we have a description of $ \CP^n $ as a $ CW $ complex:
+
+[env.theorem]
+--
+Complex projective $ n $ space has a cell decomposition 
+with one $ 2i $-cell $ e_{2i} $ for each $ i $ in 
+$ \set{0, 1 \commadots n} $.
+The cell $ e_{2i} $ is attached to the $ (2i-1) $-skeleton via the 
+Hopf map.
+--
+
+We have not given a formal definition of a cell complex, although
+there are enough hints in our description of $ \CP^n $ to imagine
+such a definition.  Let's give it ia try.  A cell-complex consists
+of a series of skeleta $ X_n $, where $ X_0 $ is a collection of points
+(0-cells), and $ X_n $ is obtained from $ X_{n-1} $ by attaching
+ a collection of $ n $-cells $ e^n_\alpha $.  By "attaching", we
+mean that there are maps 
++++\[   
+  h_\alpha: \partial e^n_\alpha \map X_{n-1}
+   \]+++
+and that $ X_n $ is the quotient of the disjoint union of $ X_{n-1} $
+and the $ e^n_\alpha $ by the relations imposed by the $ h_\alpha $.
+
+If the highest dimension of a cell of $ X $ is $ n $, we say that $ X $
+is an $ n $-dimensional cell complex.  As a further example, take the 
+$ n $-sphere.  It is obtained by attaching an $ n $-cell to a point, and
+so has one cell of dimension zero and one cell  of dimension $ n $.
+It is another way of describing the one-point compactification of 
+$ \RR^n $.
+
+==== Homology
+
+_This section is best read with a certain familiarity with homology theory.
+For a full  and excellent, treatment see 
+http://www.math.cornell.edu/~hatcher/[Hatcher].  Nonetheless,
+we give a sketch of the theory.
+this http://www.noteshare.io/lessons/841[section]._
+
+There are various ways to compute the homology of 
+a space $ X $ -- singular or simplicial, for example.  Singular homology
+is the gold standard because it is functorial by construction.
+Simplicial homology is geometric and intuitive.  But another
+way is to use _cellular chains_.  This is an efficient yet still
+geometric way  of computing homology if the space under consideration has
+the structure of a regular cell complex.  We first review the purely
+algebraic notion of a chain complex and its homology.
+
+==== Abstract chain complexes and homology
+
+
+The homology groups are computed from an underlying object called
+a _chain complex_. A chain complex is a graded group
++++\[   
+   C_\bullet = \oplus_k C_k
+   \]+++
+endowed with operators
++++\[   
+   \partial: C_k \map C_{k-1}
+   \]+++
+where $   \partial^2 = 0  $.  The operator $ \partial $ is called
+the _boundary operator_.  Define the groups
++++\[   
+   Z_k = \sett{ a \in C_k }{ \partial a = 0 } = \set{ \text{k-cycles} }
+   \]+++
+and 
++++\[   
+     B_k = \sett{ a \in C_k }{ a =  \partial b \ \text{for some}\ b }
+   = \set{ \text{k-boundaries}}
+   \]+++
+Because of the relation $ \partial^2 = 0 $, $ B_k \subset Z_k $,
+and so we can form the quotient group
++++\[   
+  H_k = \frac{Z_k}{B_k}.
+   \]+++
+This is the $ k $-th homology group of the complex $ C_\bullet $.
+
+[env.example]
+--
+Consider the complex
++++\[   
+  C_\bullet= [C_1 \mapright{\partial} C_0] = [\ZZ \mapright{n} \ZZ] 
+   \]+++
+where the map is multiplication by $ n $.  When $ n = 0 $, $ H_k = \ZZ $
+for $ z \in \set{0,1} $.  This is really shorthand for
++++\[   
+  C_\bullet= 
+[ \cdots \mapright{0} 0 \mapright{0} 0 \mapright{0}\ZZ
+ \mapright{n} \ZZ]
+   \]+++
+
+When $ n \ne 0 $, $ H_k = 0 $ for $ k> 0 $, and $ H_0 = \ZZ/n $.
+--
+
+
+The case $ n = 0 $ may seem trivial (it is), but it is also important.  If all
+the boundary of a complex are zero, we say that it is _harmonic_.  In that
+case, one has $ H_\bullet \cong C_\bullet $.
+
+
+[env.example]
+--
+Consider the complex
++++\[   
+  C_\bullet= [C_2 \mapright{\partial} C_1 \mapright{\partial} C_0] 
+ = [\ZZ \mapright{\partial}\ZZ^2 \mapright{\partial} \ZZ] 
+   \]+++
+where the first boundary operator is the diagonal, $ \partial(a) = (a,a) $,
+and where the second is difference, $ \partial(x,y)  = x - y $.
+Then $ \partial^2 = 0 $.  One finds that $ H_k = 0 $ for all $ k \ge 0 $.
+--
+
+==== Homology of cell complexes
+
+We now consider topological spaces $ X $ with the underlying structure
+of a cell complex.  Using that "cellular structure" we define 
+a chain complex and homology groups.  It is true, but beyond
+the scope of these brief notes, that the resulting homology groups
+are independent of the cellular structure used to define them.
+
+Consider first the unit interval $ [0,1] $.  It is
+a cell complex with two 0-cells (points), the sets $ \set{0} $ and $ {1} $,
+and a single $ 1 $-cell $ [0,1] $, which consider to be oriented
+from by arrow with base at $ \set{0} $ and head at $ \set{1} $.
+Let $ C_\bullet $ be the $ \ZZ $-module generated by these cells,
+where the degree of the cell is the dimension the underlying object,
+that is, $ [0,1] $ has degree 1 and the $ \set{i} $ have degree $ 0 $.
+Thus $ C_1 = \ZZ[0,1] $ and $ C_0 = \ZZ\set{0} \oplus \ZZ\set{1} $.
+Define a boundary operator by
++++\[   
+  \partial [0,1] = \set{1} - \set{0}.
+   \]+++
+Note that we use the sens of the arrow to determine the sign of
+the coefficients of the boundary operator.  Let us call this 
+the _complex of simplicial chains_ on $ [0,1] $, written 
+$ C_\bullet([0,1]) $.
+
+[env.problem]
+--
+What is homology of $ C_\bullet([0,1])] $?
+--
+
+[env.problem]
+--
+Consider the real line with the cell structure given by 0-cells
+$ \set{i} $ for any integer $ i $, and 1-cells $ [i, i + 1] $.  Let 
+$ C_\bullet(\RR) $ be the graded group with tese cells as generators.
+What is the homology of the complex $ C_\bullet(\RR) $?
+--
+
+[env.problem]
+--
+Consider the cell decompostion of the circle $ S^1 $ with 1-cells $ [a,b] $,
+$ [b,c] $, and $ [c,a] $, zero-cells $ \set{a} $, $ \set{b} $, $ \set{c} $, 
+and boundary operator such that 
++++\[   
+  \partial[\text{left},  \text{right}] = 
+  \set{\text{right}} - \set{\text{left}}.
+   \]+++
+Compute the homology of $ S^1 $.
+--
+
+FIG
+
+At this point there is a fork in the road.  The one-dimensional
+examples just considered are both simplicial complexes and cell
+complexes.  In dimension two and higher, the notions diverge.
+Consider, for example, the 2-sphere, which is homeomorphic to the
+surface of a tetrahedron.  Viewing it this way gives it the structure
+of a simplicial complex -- a triangulated object with four 2-simplices,
+six 1-simplices, and four 0-simplices.  We can also view the 2-sphere as
+ a cell complex with one 2-cell attached along its boundary to a 0-cell.
+We take the latter route, as it gives an especially powerful and also
+geometric way of computing homology.  
+
+In simplicial homology, there
+is a generator of the chain complex for every simplex, whlle for a cell
+complex it is one generator per cell: the chain complex as a graded group
+ the sum
++++\[   
+   C_\bullet  = \oplus_{e: \text{cells}} \ZZ e.
+   \]+++
+The sum is 
+It  is graded  by the dimension of the cells, so that
++++\[   
+   C_k(X) = \oplus_{\dim e = k} \ZZ e.
+   \]+++
+These groups are related by boundary maps
++++\[   
+  \partial: C_k \map C_{k-1}
+   \]+++
+which we describe in a moment, and it turns out that 
+$ \partial^2 = 0 $, so that the $ C_k $ form a complex, and a homology
+theory is defined.
+
+Let us now define the boundary map on a cell $ e^k_\alpha $.
+Its boundary sphere is attached to the $ (k-1) $-skeleton
+by a map $ h: S^{k-1}_\alpha \map X_{k-1} $.  Let 
+$ c: X_{k-1} \map X_{k-1}/X_{k-2} $ be the map that
+crushes the $ (k-2) $-skeleton to a point.  The target is a bouquet
+of $ (k-1) $-spheres, that is, a collection of spheres attached at one
+point, the collapsed $ (k-2) $-skeleton.  Thus we have
++++\[   
+  X_{k-1}/X_{k-2} = \cup_\beta S^{k-1}_\beta
+   \]+++
+and maps
++++\[   
+  h_{\alpha\beta}: S^{k-1}_\alpha  \map S^{k-1}_\beta
+   \]+++
+obtained by following the attaching map by the map the crushes
+all but one sphere to a point.  A map $ f $ between spheres of the
+same dimension has a _degree_ -- an integer which measures
+how many times the domain sphere wraps around the range sphere.
+Let  $ d_{\alpha\beta} $ be the degree of $ h_{\alpha\beta} $, and set
++++\[   
+    \partial e^k_\alpha = \sum_{\beta} d_{\alpha\beta}e^{k-1}_\beta.
+   \]+++
+This is the boundary map for cellular homology. There is still work
+to be done, of course, e.g, show that $ \partial^2 = 0 $.
+
+We come now to a remarkable property of cellular homology.
+In some cases the cell structure is so simple, that the boundary 
+operator is identically zero. In that case $ Z_k = C_k $ and $ B_k = 0 $,
+so that $ C_k = H_k $.  In other words, each cell is an inpendent
+homology generator!  In such cases, we call the chain 
+complex _harmonic_.
+
+[env.example]
+--
+The chains for the standard cell structure of the sphere (all dimensions)
+are harmonic.  Thus $ H_k(S^n) \cong \ZZ  $ for $ k \in \set{0,n} $,
+and $ H_k(S^n) = 0 $ otherwise.
+--
+
+[env.example]
+--
+There are no chains of odd degree for the standard cell structure
+of $ \CP^n $.  Therefore the chains are harmonic, and 
+$ H^{k}(\CP^n) \cong \ZZ $ for $ k \in \set{0, 2 \commadots 2n} $
+and $ H^k(\CP^n) = 0 $ otherwise.
+--
+
+==== Functoriality and fundamental class
+
+Let $ f: X \map Y $ be a continuous map of topological spaces.
+Assume that both have the structure of cell complexes.  We say
+that $ f $ is _cellular_ if for all $ k $ it maps the $ k $-skeleton of $ X $
+to the $ k $ skeleton of $ Y $.  Most continuous maps are not cellular.
+However,  any continuous map is homotopic, i.e., can be deformed
+to a cellular map.  Cellular maps induce maps on homology, since
+$ k $-cells map to linear combinations of $ k $-cells -- the coefficients
+are degrees, as in the definition of the boundary map.
+
+////
+Todo: discuss the degree of a map.
+////
+
+[env.example]
+--
+Consider the map $ f: S^1 \map S^1 $ defined on the unit circle
+in the complex plane by $ f(z) = z^n $.  Give $ S^1 $ the structure
+of a cell complex with one 1-cell $ e_1 $ and one 0-cell $ e_0 $.
+Then $ f(e_1) = ne_1 $. The map on 1-chains is multiplication by 
+$ n $, as is the map on first homology.
+--
+
+[env.example]
+--
+Let $ X $ be a cell complex  of dimension $ n $ with just $ n $-cell $ e^n $.
+If $ \partial e^n = 0 $, then $ e^n $ generates $ H_n(X) $, and 
+$ H_n(X) \cong \ZZ $.  We call the homology class of $ e^n $ the
+_fundamental homology class_, and we write it as $ [X] $.  This terminology
+applies whenever $ H_n(X) \cong \ZZ $.
+--
+
+[env.example]
+--
+Let $ X $ be a cell complex,  let $ Y $ be an orientable manifold 
+of dimension $ k $, and let $ f: Y \map X $ be a continuous function.  Then
++++\[   
+   f_*[Y] \in H_k(X)
+   \]+++
+defines a homology class which we may think of as given by the
+image of the top cell in $ Y $.  If $ f $ is an inclusion map, we 
+write $ [Y] \in H_k(X) $.
+--
+
+[env.remark]
+--
+If $ X $ is an orientable manifold, it is homotpic to a cell complex 
+with a single $ n $-cell.  That $ n $-cell represents the fundamental 
+class.
+--
+[env.remark]
+--
+Let $ f: X \map Y $ be a map of smooth manifolds of the same
+dimension $ n $.  A _critical point_
+of $ f $ is point $ a \in X $ where $ f'(a) $ has rank less than $ n $.
+A _critical value_ is a point $ b \in Y $ which is the image
+of a critical point.  A theorem of Sard states that the set of critical
+values has measure zero.  A point in $ Y $ is _regular_ if it is not
+critical.  Suppose that $ X $ and $ Y $ are both oriented.  One way
+of defining an orientation is to choose a _volume form_: a nowwhere
+vanishing differential form $ \Omega $ of degree $ n $.  Suppose $ a $
+a regular (non-critical point) of $ f $, and that $ b  = f(a) $.  We say that
+$ f $ is _orientation preserving_ at $ a $ if $ (f^*\Omega_Y/\Omega_X)(a) $
+is a positive number.  If it is negative, we say that $ f $ reverses
+orientations at $ a $.  Let $ \deg_a f = +1 $ in the first case, set
+$ \deg_a f = -1 $ in the second.  Define the degree of $ f $ by
++++\[   
+   \deg f = \sum_{a \in f^{-1}(b)} \deg_a f
+   \]+++
+This is the degree of the map.
+--
+
+[env.problem]
+--
+Let $ f: S^1 \map S^1 $ be the map defined by $ f(z) = z^n $, where
+$ S^1 $ is the set of complex numbers of absolute value 1.  Use
+$ d\theta $ as the volume form and compute the degree of $ f $.  Verify 
+all details. Compare your answer to the integral
++++\[   
+    \int_{S^1} f^* d\theta
+   \]+++
+Finally, investigate the question: are there self-maps 
+of the circle of negative degree?
+--
+
+[env.problem]
+--
+Define a map $ f: \RR^2 \map \RR^2 $ by setting $ f(z) = z^n $, where
+we make the identification $ \RR^2 \cong \CC $ of the Euclidean
+plane with the complex numbers.  Show that this map extends to 
+a smooth map $ f: S^2 \map  S^2  $ of the Riemann sphere.  Find the
+degree of $ f $.  Compare it to the integral
++++\[   
+  \sqrt{-1}\int_\CC f^* dz \wedge d\bar z.
+   \]+++
+Finally, investigate the question: are there self-maps 
+of the Riemann sphere of negative degree?
+--
+
+[env.problem]
+--
+In the previous two problems we are in the context $ f: X \map X $
+where $ X $ is an oriented manifold.  Thus $ f_*[X] = n[X] $
+for some integer $ n $.  What is the relation of that integer
+to the degree?
+--
+
+==== Chow ring
+
+There is yet a another way of constructing the homology 
+of $ \CP^n $.  Let $ L $ and $ L' $ be a linear subspace of codimension
+$ i $ and $ j $ respectively. That is, $ Li $ is the subset of 
+$ \CP^n $ defined by the 
+vanishing of $ i $ independent homogeneous linear forms,
+and $ L' $ defined by $ j $ forms which are independent with 
+respect ot each other and also with respect to the forms
+of $ L $.
+We may, for example, take $ L $ to be defined by $ Z_0  = 0 $,
+$ L'' $ to be defined by $ Z_1 = 0 an Z_2 =0 $.  Note that
+$ L \cong \CP^{n-i} $.  With the choices made,
++++\[   
+  L \cap L'= L'',
+   \]+++
+where $ L'' $ has codimension equal to the sum of the 
+codimensions of $ L $ and $ L' $.   Define the _Chow ring_ of $ \CP^n $  
+to be the graded ring with components
++++\[   
+   Ch^k (\CP^n) = \sett{nL^k}{n \in \ZZ},
+   \]+++
+where 
+$ L^k $ has codimension $ k $.  The ring structure is then given 
+by 
++++\[   
+   mL^i \cdot nL^j = mn L^{i+j}
+   \]+++
+One must in fact be more careful thatn we have been 
+during this dicussion.  There a many choices of linear
+subspaces of codimension $ i $, but we choose to 
+ignore this fact ad view them as essentially the same.
+To do this precisely we use the notion of linear equivalence
+described in the next section.  
+
+
+We can also grade the Chow ring by dimension instead of codimension.  Then
++++\[   
+   Ch_k(\CP^n) = \ZZ L_k,
+   \]+++
+where $ L_k $ is linear space of _dimension_ $ k $.
+If we do this, then we have the following result:
+
+[env.theorem]
+--
+There is an isomorphism of graded modules
++++\[   
+   H_\bullet(\CP^n) \map Ch_\bullet(\CP^n)
+   \]+++
+that sends the class of $ e_{2k} $ to the class of $ L_k $.
+--
+
+==== References
+
+. For CW complexes, see first the 
+http://en.wikipedia.org/wiki/CW_complex[Wikipedia article]
+and then Hatcher's book referenced below.
+
+.  For celluar homology, see the
+http://en.wikipedia.org/wiki/Cellular_homology[Wikipedia
+article] and the excellent book 
+http://www.math.cornell.edu/~hatcher/[Algebraic topology]
+by Andrew Hatcher (available as a PDF file).  
+
+
+
+
+
+
+
+=== Projective Varieties
+
+:latex:
+
+<<Hypersurfaces>> +
+<<Topology of hypersurfaces>> +
+<<General algebraic sets>> +
+<<Famlilies of varieties and degenerations>> + 
+<<Algebraic cycles>> +
+<<Bezout's theorem>> +
+<<A proof of Bezouts theorem>> +
+<<The Chow ring again>> +
+<<Elliptic curves: the addition law>> +
+<<Topology>> +
+<<Singular varieties>> +
+
+\(\def\CP{\CC\PP}\)
+
+Just as affine $ n $-space is the natural home for
+affine algebraic sets, projective $ n $-space is the 
+home for a natural category, the _projective algebraic
+sets_.  These are closed subsets of $ \CP^n $ whose 
+intersection with an affine open set $ U_i $ is an affine
+variety.  Thus a projective variety $ X $ is constructed
+by glueing affine varieties $ X_i = X \cap U_i $ together
+along common parts $ X_{ij} = X_i \cap X_j $.
+If the pieces $ X_i $ are complex manifolds, then so is
+$ X $.  
+
+A projecitive variety can also be defined "directly"
+as the set of common zeroes of a set of _homogeneous_
+polynomials.  On the face of it, a homogeneous polynomial
+$ F(Z_0 \commadots Z_n) $  defines an algebaic set in 
+$ \CC^{n+1} $.  However, because it is homogeneous,
+the group $ \CC^* $ acts on it to produce a quotient.
+Let $ a $ be a point of $ \CC^{n+1} $, and let 
++++\[   
+  \CC^*a= \sett{\lambda a}{\lambda \in \CC^*}
+   \]+++
+be the _orbit_ of $ a $ under the group action.  If $ a \ne 0 $,
+then the orbit is isomorphic to $ \CC^* $.  If $ a = 0 $, then
+the orbit is the origin.  Notice that the origin is in the closure
+of ever nonzero orbit.  As a result the quotient space
+has a strange topology.  Points corresponding to nonzero
+vectors are not closed, and the closure of such a point consists
+of the given point plus the origin.  The origin itself is dense:
+its closure is the entire space!  You now have in front of 
+you a naturally occurring example of one of those pathological
+spaces studied in a first course on general topology.
+
+
+Because of the foregoing pathology, we consider the quotient
+in $ \CC^{n+1} - \set{0} $ of a collection of polynomials.  The
+quotient space is Hausdorff, and is a closed subspace of the 
+projective space studied previously. Let us  look at examples.
+
+
+==== Hypersurfaces
+
+Consider a single homogeneous polynomial $ F(Z) $
+of degree $ d $.  Its zero-set $ \tilde X $ in $ \CC^{n+1} - \set{0} $ is invariant under the $ \CC^* $ action and so defines a closed subset $ X \subset \CP^n $ as discussed above.  To identify 
+the affine sets $ X_i  = X \cap U_i $, recall that  
+the sets $ U_i $ are identified with $ \CC^n $ via the map
+which sends $ (Z_0 \commadots Z_n) $
+to $ (Z_0 \commadots Z_{i-1}, 1, Z_{i+1} \commadots Z_n) $.
+This is because the equivalnece class of a vector $ Z $
+with $ Z_i \ne 0 $ has a unique representative with $ Z_i = 1 $.
+Via this identification, $ X_i $ is mapped to the affine
+hypersurface with equation 
++++\[   
+  F(Z_0 \commadots Z_{i-1}, 1, Z_{i+1} \commadots Z_n) = 0.
+   \]+++
+As an example, consider the surface in $ \CP^3 $ with equation
+$ Z_0^3 + Z_1^3 + Z_2^3  + Z_3^3  = 0 $.  Its equation in 
+$ U_0 \cong \set{ Z_0 = 1} $ is $ F(1,Z_1,Z_2,Z_3) = 0 $, 
+or just
++++\[   
+  1 + Z_1^3 + Z_2^3 + Z_3^3 = 0.
+   \]+++
+The origin is the only zero of the gradient of the 
+function  $ F(1,Z_1,Z_2,Z_3) $.  Since the origin is not a point of $ X_0 = U_0 \cap X $, we
+conclude that $ X_0 $ is smooth.   By symmetry, all the $ X_i $
+are smooth,  Thus $ X $ is a smooth projective hypersurface.
+
+[env.problem]
+--
+Let $ F $ be homogeneous.  Show that 
++++\[   
+  F = (\deg F)\sum_k Z_k \frac{\partial F}{\partial Z_k}
+   \]+++
+This is _Euler's relation_.
+--
+
+[env.problem]
+--
+Let $ F $ be homogeneous.  Show that 
+the projective variety $ F = 0 $ is smooth 
+if and only if the only soluttion
+to $ \nabla F = 0 $ is the zero vector.  Can you generalize
+this result to varieties with more than one defining
+equation?
+--
+
+[env.problem]
+--
+Determine the number of straight lines on the algebraic surface
+$ Z_0^3 + Z_1^3 + Z_2^3  + Z_3^3  = 0 $.  This is the so-caled
+_Fermat cubic surface_.
+--
+
+[env.problem]
+--
+Using the fact that the Fermat cubic surface can be represented
+as a 3-to-1 cover of $ \CP^2 $, compute its Euler characteristic.
+--
+
+[env.problem]
+--
+Determine the automorphism group of $ Z_0^3 + Z_1^3 + Z_2^3  + Z_3^3  = 0 $.
+--
+
+[env.problem]
+--
+Conside the affine algebraic curve $ X \subset \CC^2 $ defined by 
+$ w^2 = z(z-1)(z-2) $.  Make the substitutions $ w = W/U $,
+$ z = Z/U $ to determine the homogeneous equation of the
+closure $ \bar X $ of $ X $ in $ \CP^2 $.  Is $ \bar X $ smooth?
+In how many points does $ \bar X $ intersect the line at infinity --
+the line $ U = 0 $.
+--
+
+
+[env.problem]
+--
+Conside the affine algebraic curve $ X \subset \CC^2 $ defined by 
+$ w^2 = f(z) $ where $ f $ is a polynomial of degree $ d > 3 $.  Find the equation of the projective closure $ \bar X $ 
+of $ X $.
+In how many points does $ \bar X $ meet the line
+at infinity?  Is $ \bar X $ smooth?  Explain.
+--
+
+==== Topology of hypersurfaces
+
+In the last chapter we found a cell decomposition of projective
+space, and from that decomposition we found the homology of
+projective space.  We now investigate the homology of hypersurfaces.
+The main technical result is the following.
+
+[env.theorem]
+--
+Let $ X \subset \CP^{n+1} $ be a projective hypersurface.  Then 
+$ \CP^{n+1} $
+is homotopic to a space obtained from $ X $ by attaching cells  
+of dimension $ n+1 $ and greater.
+--
+The assertion of interest is the following consequence:
+
+[env.corollary]
+--
+Let $ i: X \map \CP^{n+1} $ be the inclusion of a hyperuface in its
+ambient space.  Then
++++\[   
+  i_*: H_i(X) \map H_i(\CP^n)
+   \]+++
+is an isomorphism for $ i < n $ and is a surjection for $ i = n $.
+--
+Note that $ H_n(X) $ is the _middle_ homology group.  The result
+says that below the middle dimension, the homology of a hypersurface
+is the same as the homology of projective space.  In the middle dimension,
+the homology is at least as big as projective space.  By Poincar duality,
+the homology of the hypersurface is the same as 
+that of projective space, modulo torsion.
+
+[env.problem]
+--
+Compute the rank of the second homology group of the Fermat cubic 
+surface.
+--
+
+////
+Blowing up
+////
+
+===== Morse theory
+
+The key to proving the main technical result is _Morse theory_.
+It provides a way of constructing cell decompositions from
+information about the critical points of a function on a manifold.
+Let us illustrate this by two examples, then give a general result.
+Consider first a sphere of unit diameter resting on a plane as 
+in the figure below.  Let $ h(x) $ be the function which measures
+the height of a point $ x $ above this plane.  The critical values
+of $ h $, viewed as a function on the sphere $ X $, are 0 and 1.
+Let $ X_a = \sett{ x \in X}{ h(x) \le a } $ be the _level set_ 
+of level $ a $
+Thus $ X_0 $ is a  point, the "South Pole",  and $ X_1 = S^2 $ is the 
+sphere itself.  For $ 0 < a  < 1 $, $ X_a $ is homeomorphic
+to a 2-cell $ e^2 $   Only at critical values of the height function
+does the topology of the level set change.
+
+
+
+
+For any level $ a $, consider the set of points 
++++\[   
+  X_a(\epsilon) = \sett{x \in X}{ |h(x) - h(a)| \le \epsilon }
+   \]+++
+whose height differs from that of $ a $ by at most $ \epsilon $.  In our case,
++++\[   
+   X = X_{0.5} \cup X_{1.0}(0.5)
+   \]+++
+This is just the decomposition into southern and northern hemispheres.
+But notice that after a homotopy, we can write this as
++++\[   
+   X = \set{\text{South Pole}} \cup_f e^2
+   \]+++
+where we attach the boundary of $ e^2 $ (the equator) to the south pole
+by the collapsing map.  _From the height function, one deduces the 
+cell decomposition._  
+
+.The Torus
+Consider  the torus, as in the next figure. We arrange it
+so that the crtical values of the height function $ h $ are 0, 1, 2, 
+and 3,.  The first thing we notice is that, as before, the topology
+of the level set changes only at critical values of the height
+function.  Indeed, we can make the following observations:
+
+.  For $ X_0 $ is a 0-cell.  For $ a \in (0,1) $, $ X_a $ 
+is a 2-cell.
+
+.  The set $ X_{1 + \epsilon} $ is 
+homotopic to $ X_{1 - \epsilon} $ with a 1-cell attached
+to its boundary. 
+
+. The set $ X_{2 + \epsilon} $ is 
+homotopic to $ X_{2 - \epsilon} $ with a 1-cell attached
+to its boundary. 
+
+. The set $ X_{3} $ is 
+homotopic to $ X_{3 - \epsilon} $ with a 2-cell attached
+to its boundary. 
+
+FIG
+
+To summarize, each critical point corresponds attaching a cell.
+These critcal points correspond to the critical values
+0, 1, 2, 3, and for them we adjoin a cells of dimension 0, 1, 1, and 2.
+The critical value 0 is a local minimum.  It corresponds to a 
+0-cell.  The critical value 3 is a local maximum and corresponds
+to attaching a 2-cell.  The critical values 1 and 2 are saddle points
+and correspond to attaching a 1-cell.
+
+.The General Case
+These observations furnish the key to understanding what happens
+in general.   In general a "nondegenerate" critical  point with criical 
+value $ c $ will be a kind
+of gneraliizd saddle with $ i $ downward-pointing directions
+and $ n-i $ upward pointing directions.  The set 
+$ X_{c + \epsilon} $
+is obtained from $ X_{c-\epsilon} $ by attaching an $ i $-cell.
+
+Let us try to formulate this more precisely.
+Define  a _Morse function_
++++\[   
+  h: X \map \RR,
+   \]+++
+where $ X $ a smooth real manifold of dimension $ n $,
+to be a smooth function whose
+critical points are _non-degenerate_   By this we meant 
+that if  $ a $ ia a point where the gradient of $ h $ is zero, then 
+the Hessian matrix
++++\[   
+    H(a) = \left(\frac{\partial^2 h}{\partial x_i \partial x_j}(a)\right)
+   \]+++
+is of maximal rank.  Here the $ x_i $ are local coordinates on $ X $.
+ If $ a $ is a non-degenerate critical point, the 
+$ H(a) $ has $ i $ negative eigenvalues and $ j = n - i $ positive eigenvalues.
+The number $ i $ is the _Morse index_ of the critical point. 
+At a critical point of Morse index $ i $, there are local coordinates
+$ x_1 \commadots x_n $ such that 
++++\[   
+   h(x_1 \commadots x_n ) = -(x_1^2 + \cdots + x_i^2)
+    \\ + (x_{i+1}^2  + \commadots + x_n^2) 
+   \]+++
+Consider the gradient vector field $ \nabla h $ near the critical point.
+It defines a _flow_ -- a family of diffeomeorphisms $ \phi_t $.  If 
+$ b $ is a point of $ M $, the $ \phi_t(b) $ is the point obtained by 
+releasing the point $ b $ and letting it move for $ t $ seconds
+according to the velocity field $ \nabla h $.  The points $ b $ near
+$ a $ for which 
++++\[   
+   \lim_{t \to \infty} \phi_t(b) = a
+   \]+++
+constitute the _stable manifold_ of the gradient flow near $ a $.  If
+$ h(x,y) = -x^2 + y^2 $, then we are at a saddle point.  If $ y = 0 $,
+then $ \nabla h $  is proportional to $ (-1,0) $, and so the flow
+moves points along the $ x $ axis towards the origin.  The 
+stable manifold is the $ x $-axis.  In the general case, the
+stable manifold is given by the the $ (x_1 \commadots x_i) $-axis.
+
+[env.problem]
+--
+Formulate the notion of *unstable* manifold and describe
+its relation to the stable manifold.
+--
+
+[env.theorem]
+--
+If $ h $ is a Morse function with a critical point of index $ i $, then
+$ X_{c + \epsilon} $ is obtained from $ X_{c - \epsilon} $  by attaching
+the stable manifold times a small $ (n-i) $-disk.
+--
+
+
+[env.theorem]
+--
+Let $ X \subset \CP^{n+1} $ be a projective hypersurface and
+let $ U $ be  tubular neighborhood of $ X $.  There is a Morse 
+function $ h: \CP^{n+1} - U \map \RR $ all of whose critical
+points have index $ i \ge n+1 $.
+--
+
+
+
+http://en.wikipedia.org/wiki/Morse_theory[Wikepedia]
+
+
+FIG
+
+
+
+==== General algebraic sets
+
+
+A projective algebraic set is the set of common zeros of 
+a collection of homogeneous polynomials.  Again by commutative
+algebra, a finite subset of the set of defining polynomials is 
+sufficient.  If a projective algebraic set can be written as the union
+of projective algebraic sets, it is said to be _reducible_.  An example
+is the set $ Z_1Z_2 = 0 $ in $ \CP^2 $ which consists of two
+distinct projective lines meeting at the point $ [1,0,0] $. A projective
+variety which is not reducible is said to be _irreducible_.  An example is the quadric $ Z_0^2 + Z_1^2 + Z_2^2 = 0 $.  It is smooth, and this forces it to be irreducible (why?).  
+
+An irreducible algebraic set is also called a _variety_.  Every 
+algebraic set is a finite union of varieties.  A variety may be smooth,
+as is the quadric of the previous paragraph, or it may have
+singularities, as does the cone in $ \CP^2 $ defined
+by  $ Z_1^2 + Z_2^2 = 0 $.  (Note the absence of the variable
+$ Z_0 $).  
+The vertex of the cone, $ [1,0,0] $, is a singular point, and all other points are smooth.  At smooth points  one has local coordinates,
+and so the notion of dimension is defined.  We define the dimension
+of a variety to be the dimension at a smooth point. 
+
+[env.problem]
+--
+Let $ X \subset \CP^2 $ be the quadric cone 
+with equation  $ Z_1^2 + Z_2^2 = 0 $.  Describe the affine
+set $ X_0 = U_0 \cap X $.  Describe the set $ X_0' = X - X_0 $.
+--
+
+
+.Comment
+--
+The above discussion begs two questions: (a) Does a variety have
+any smooth points? (b) Is the dimension independent of the 
+smooth point taken? Regarding (a), a variety may have no smooth points if
+it is _nonreduced_.  A correct treatment of this notion passes
+through the theory of schemes, but one can say this now.  
+If $ G $ is irreducible and $ F = G^k $, then $ F = 0 $ is a non-reduced
+variety (of multiplicity $ k $). This is basically the only way a variety can fail to have
+smooth points.  By passing to the associated reduced variety, which in this case if $ G = 0 $,
+we find smooth points.  Regarding (b), the codimension of the
+singular set of a variety is at least one.  For complex varieties,
+this means that the real codimension of the singular set is
+at least two.  Therefore the complement of the singular set is
+connected.  This is sufficient to prove that the dimension
+is independent of the smooth point chosen.  In the real case
+it could be otherwise.  Note that the complement of a point in 
+$ \RR^2 $ is connected, but the compement  of a line is not.
+--
+
+
+We define
+the _codimension_ to be the dimension of the ambient projective
+space minus the dimension of the variety.  The conics considered
+have dimension one and codimension one.  Consider the 
+quadric $ Z_0^2 + ... + Z_n^2 = 0 $ in $ \CP^n $.  It has dimesion
+$ n-1 $ and codimension $ 1 $.  Consider its intersection $ X $ with the 
+quadric cone $ Z_1^2 + 2Z_2^2 + 3Z_3^2 + \cdots + nZ_n^2 = 0 $.
+Then $ X $ has dimension $ n-2 $ and codimension $ 2 $.
+
+==== Families of varieties and degenerations
+
+Let $ F $ and $ G $ be homogeneous forms of degree $ d $, for example, $ F = Z_0Z_1Z_2 $ and 
+$ G = Z_0^3 + Z_1^3 + Z_2^3 $.  Consider the polynomial
+$ H(t,Z) = F + tG $.  We may view it as defining an algebraic
+subset $ X $ of $ \CC\times\CP^2 $.  Let $ p $ and $ q $ be
+the projections of $ \CC\times\CP^2 $ onto $ \CC $ 
+and $ \CP^2 $, respectively, and use the same letters
+for the restrictions of these projections to $ X $.  Then
+we have have a map 
++++\[   
+  p: X \map \CC
+   \]+++
+whose fibers $ X_t $ satisfy
++++\[   
+ qp^{-1}(t) = \sett{[Z]}{ F(Z) + tG(Z) = 0}.
+   \]+++
+Thus $ X_t $ is a plane curve of degree three, with $ X_0 $ the union  of three lines in general position.  The fiber
+ $ X_t $, except for possibly finitely many values of $ t $,
+is a smooth plane cubic.  
+
+The family just constructed is an example of a _degeneration_.
+The generic fiber is smooth, whereas the special fiber is singular,
+indeed, singular of a very special form.  We can use this very special form to deduce properties of the general fiber.  In the 
+case at hand, $ X_0 $ is a union of three spheres arranged as in the figure below.  The spheres meet at double points, and near the 
+double points the family is given in suitable analytic coordinates
+by the equation $ xy = t $.
+
+FIGURE
+
+Consider $ X_t $ near a double point for  $ t $ very small.  The fiber
+looks locally like a hyperboloid of revolution.  As $ t $ tends to 
+zero, the fiber tends to a pair of disks (topologically) joined at a point.  
+
+FIGURE
+
+The result of "regenerating" from $ X_0 $ to $ X_t $ can be 
+described as follows.  Cut out a neighboorhood of the node.
+The boundary of the neighborhood thus cut out is a pair of disjoint
+circles.  Glue a cylinder to the cut-out object, pasting the top circle
+of the cylinder to one of the given circles, the bottom circle of the 
+cylinder to the other.  The process can be pictured as in the
+figure below
+
+FIGURE
+
+
+Now consider the effect of doing preceding construction at all the
+nodes.  The result is illustrated below.
+
+FIGURE
+
+We conclude that $ X_t $, for $ t $ general is
+topologically a torus.
+
+
+[env.problem]
+--
+Find the formula for the genus of a smooth plane curve of degree
+$ d $ using degeneration-regeneration.
+--
+
+[env.problem]
+--
+In the example above, can we make sense of $ X_\infty $, 
+the fiber at infinity?  Can we write down its equation?
+--
+
+
+==== Algebraic cycles
+
+Let $ \set{Z_i} $ be a collection of algebraic subvarieties.
+A linear combination $ c_1Z_1 + \cdots + c_nZ_n $
+with coefficients in $ \ZZ $, $ \QQ $, etc., is called an
+_algebraic cycle_.   In the example $ F + tG = 0 $ above,
+$ X_0 $ defines an algebraic cycle $ L_1 + L_2 + L_3 $, namely the 
+sum of its components (with multiplicities, which happen to be
+equal to 1).  The general fiber $ X_t $ also defines a cycle,
+namely a smooth plane cubic.  We say that these cycles
+are _linearly equivalent_, and we write
++++\[     
+   X_0 \sim X_t
+   \]+++
+where in this context $ X_0 $ and $ X_t $ denote the 
+cycle of the fiber, not the fiber itself.
+
+[env.theorem]
+--
+Algebraic cycles which are linearly equivalent are homologous
+--
+
+.Proof
+--
+Let $ \gamma:[0,1] \map \CC $ be a path joining 0 to $ t $.
+Then $ p^{-1}\gamma[0,1] $ can be triangulated to a chain
+whose boundary is $ [X_1] - [X_0] $.
+--
+
+One needs to extend the notion of linear equivalence from 
+those defined by hypersurfaces to the arbitrary case.  Once this
+is done, one defines the Chow groups:
++++\[   
+    Ch_k(X) 
+    = \frac{ \text{algebraic cycles of dimension k } } {\text{linear equivalence}}
+   \]+++
+By the theorem above, there is a map
++++\[   
+  Ch_k(X) \map H_{2k}(X)
+   \]+++
+This map is in general neither injective nor surjective, though it
+is in important special cases.  A great deal of algebraic geometry,
+both classical and modern,
+is  devoted to understanding this map better.
+
+
+==== Bezout's theorem
+
+
+In it simplest form, Bezout's theorem states that varieties $ X_1 $,  $ X_2 $ that are of complementary dimension  and 
+which are in sufficiently general position meet in $ d_1d_2 $ points, counting multiplicities.  For example,
+ a line and a plane cubic curve $ X $ meet in three points counting multipicites.  If the line $ L $ is generic, the intersection is the an
+algebaric cycle $ P + Q + R $, where the three points
+are distinc.  If the line is tangent to $ X $ at $ P $ then
+the intersection cycle takes the form $ 2P + Q $. It thus
+has one point of multiplicity two.  We think of it as the limit
+of two points of multpilicity one.  Finally, if $ L $ is an inflectional
+tangent, then the intersection cycle is $ 3P $ and so consists
+of  on point of multipllicity three.
+
+[env.problem]
+--
+How many points of a cubic curve can be inflectional tangents?
+--
+
+Let  return to Bezout's theorem and  decode the statements that  comprise it.  "Complementary dimension"
+means that the dimensions add up to the dimension of
+the ambient space. A line and a surface have complementary dimensions in $ \CP^3 $, and two surfaces
+in $ \CP^4 $ also have complementary dimenson.
+
+To understand "general position", consider the case where $ X_1 $
+a union of two distiinct lines $ L $ and $ L' $ and $ X_2 $  is a third line.  
+For most choices of $ X_2 $, the variety $ X_1 \cap X_2 $ consists
+of a pair on points.  These are "simple" intersections, each of multiplicity one.  But if $ X_2 $ passes through the point $ P = L \cap L' $ then $ P $ is a point of intersection of multiplicity two.  Think of it as the limit of two simple points of intersection.  There is final, even
+more exceptional case.  $ X_2 $ coould coincide with one of the 
+lines $ L $, $ L' $ wiich make up $ X_1 $.  In that case the dimension 
+of the intersetion is one, not zero.  But for most choices of $ X_2 $,
+that is, a general choice, this does not happen.
+
+The degree of a hypersurface
+is the degree of its defining polynomial.  More generally, the degree
+of a variety is the number of points, with multiplicity of the intersection with a linear space of complementary dimension.
+
+.Comment
+--
+The set of special lines lines, the ones for which the intersection
+cycle is nont a sum fo point of multiplicity one, falls into two pieces.
+The first is the set of lines through the point $ P $. This set of lines
+can be identified with $ \CP^1 $.  Then there are the lines $ L $ and
+$ L' $ themselves. These are points of the the $ \CP^1 $.  The right
+way to think of the set of special lines is that it is an algebraic set
+of dimension one with two "embedded components," namely the 
+points corresponding to $ L $ and $ L' $.  There is a fact worth repeating: _the set of speical lines has the structure of an algebraic set_.  
+
+We might ask: what about the set of all lines in $ \CP^2 $?  Well,
+a line is given by a linear equation $ a_0Z_0 + a_1Z_1 + a_2Z_2 = 0 $.  Map the line to the homogeneous coordinate vector 
+$ [a_0, a_1, a_2] $.  This map is a bijection between the set of
+line in $ \CP^2 $ and the set of points in the _dual projective space_
+$ \check{\CP}^2 $.  Thus the set of all lines is an algebraic variety
+and the set of special lies is a subvariety. The complent of a subvariety is "large: it is open and dense, and its volume
+is the same as the volume of the full space. Consequently,
+ a line chosen at random will, with probability one, be non-special.
+
+This pheonomeon -- parameter spaces having an algebraic
+structure, and special subsets appearing as algebraic subvarieties,
+is quite typical.
+--
+==== A proof of Bezout's theorem.
+
+We will give two proofs of Bezout's theorem for plane curves.
+The first is by degeneration.  Let $ A $ and $ B $ be plane
+curves of degrees $ a $ and $ b $ respectively.   We place the first in generating family of curves $ A_t $ where $ A_1 = A $ and 
+$ A_0 $ is the union of $ a $ distinct lines in general positoin.
+We know that a single line meet $ B $ in $ b $ points.  Therefore
+$ A_0 $ meets $ B $ in $ ab $ points.  Now regenerate $ A_0 $ and 
+follow the points of intersection.  You will see that points of 
+intersection are neither created nor destroyed -- they simply
+wander around.  (You should try to give a more formal proof; 
+nonetheless, this is true, and is one of two key points
+in the proof.  We conclude that $ A $ and $ B $ also meet in 
+$ ab $ points. _Quod erat demonstrandum._
+
+For the second proof, we make the remark that the interesction 
+product of plane curves, which is a zero cycle, is Poincar dual
+to the cup product of the Poincar duals of the curves, considered
+as homology classes.  The Poincar dual of $ A $ is $ a $ times a generator $ x $ of $ H^2(\CP^2) $.  The Poincar dual of $ B $ is
+$ bx $.  Their cup product is $ abx^2 $, or $ ab $ times the fundamental
+class of $ \CP^2 $.  And the dual of this class is $ ab $ times a point, 
+which is in tun cohomologous to 
+"anything".
+
+==== The Chow ring again
+
+Let us expand our definition of the Chow ring of 
+projective space.  Define an algebraic cycle of codimension
+$ k $ to be any linear combination of classes of 
+
+
+==== Elliptic curves: the addition law
+
+Let $ X $ be smooth plane cubic curve, and choose coordinates so that its equation is of the form $ w^2 = z^3 + az + b $.  The projective
+form of the equation is $ UW^2 = Z^3 + aZU^2 + bU^3 $, and the line at infinity, $ U = 0 $, meets $ X $ in the single point 
++++\[   
+  O = [U,Z,W] = [0,0,1].
+   \]+++
+This point will play a special role in what follows.  Note that lines drawn from $ O $ to points on $ X $ are vertical
+with respect to projection onto the $ z $-axis.
+
+By Bezout's theorem,  line a $ L $ intersects $ X $ in three points, counting multiplicity. This fact allows one to define the structure of a group on $ X $.  T.  Given points $ A $ and $ B $, let $ AB $ be the line
+joining them, and let $ C $ be the third point in which $ L $ cuts
+$ \EEE $.  If $ C = (z,w) $, let $ \iota(C) = (z,-w) $.  Then $ A + B = \iota(C') $ 
+defines a composition law.  Commutatiivity is obvious, and one can verify the other group axioms with some work.  Associatiavity
+is the most difficult to prove.
+
+Let us verify some of the axioms  For the zero
+element choose a flex: a point $ O $ at which the tangent line $ L $ meets the curve with multplicity three.  Because  
+$ L\cdot X = 3O $, we have $ O + O = O $.  And because lines $ OA $ are vertical, $ O $,  $ A $, and $ \iota(A) $ are coliinear.  Since $ \iota $
+is an involution, $ \iota^2  = 1 $, this proves that $ O + A = A $.
+Moreover, $ A + \iota(A) = \iota(O) = O $, and so additive inverses
+exist.                                                                                                                                                                                                                                                                                                                                                                             
+
+==== Topology
+As a topological space, an elliptic curve is a torus, as 
+depicted in the figure below.  Its homology is generated by the two cycles
+$ \delta $ and $ \gamma $.  Thus we have
++++\[   
+   H_1(\EEE, \ZZ) \cong \ZZ^2 = \ZZ\set{ \delta, \gamma}.
+   \]+++
+
+FIGURE
+
+
+==== Singular Varieties
+
+Consider an algebraic curve $ M $ given by an equation $ f(z,w) = 0 $.
+In the case of our elliptic curve, $ f(z,w) = w^2 - p(z) $.
+The  construction of charts or holomorphic parameterizations via
+projections onto the axes and their inverses work in a neighborhood
+of a point on $ M $, provide that $ \nabla f \ne 0 $ at the point.
+This is a consequence of the implicit function theorem.  A point
+at which $ \nabla f = 0 $ is called _singular_.  A point at which 
+$ \nabla f \ne 0 $ is called _non-singular_, or _smooth_.  If all 
+points of $ M $ are smooth, then we say that $ M $ is smooth.  In that
+case it is a complex manifold.  
+
+As an example, consider the elliptic curve $ \EEE $
+with equation $ x^2 - y^2 + x^3 = 0 $.  The origin is a singular point.  In 
+suitable analytic coordinates $ u,v $ in a neighborhood of the origin,
+$ \EEE $ is given by the equation
++++\[   
+   u^2 - v^2 = 0
+   \]+++
+Near the origin, $ \EEE $ looks like the union of the lines $ u = v $ and $ u  = -v $.
+This kind of singularity is called a _node_.  The other important type 
+of singularity for elliptic curves is the _cusp_, with equation $ w^2 = z^3 $.
+
+Both the node and the cusp are singularities of multiplicity two.  To define
+multiplicity, consider a polynomial equation $ f(z,w) = 0 $ with $ (0,0) $ as solution.
+The 
++++\[   
+   f(z,w) = f_m(z,w) + f_{m+1}(z,w) + \cdots,
+   \]+++
+where the $ f_\ell(z,w) $ are homogeneous polynomials of degree $ \ell \le d $
+where $ d $ is the degree of $ f $.  The leading term has degree $ m \ge 1 $, and
+that degree is by definition the multiplicity. The variety defined by 
+$ f_m(z,w) $ is the _tangent cone_ of $ f = 0 $ at the given point.  
+Thus the multiplicity is just the degree of the tangent cone.
+
+To understand the significance
+of the tangent cone, consider  a parametric line 
+$ \phi(t) =(\lambda t, \mu t) $, and let 
+ $ f\circ\phi(t) = f(\lambda t , \mu t) $ be the composition with $ f $.  Then
++++\[   
+   f\circ\phi(t) = f_m(\lambda.\mu)t^m + f_{m+1}(\lambda.\mu)t^{m+1} + \cdots
+   \]+++
+If $ (\lambda. \mu) $ is not a solution of $ f_m(\lambda.\mu) = 0 $, the
+$ f\circ\phi(t) $ vanshhes to order $ m $. If $ f_m(\lambda.\mu) = 0 $, then
+the composition vanishes to order greater than $ m $.  In other words,
+the tangent cone, viewed as a _projective_ variety, is the set of lines
+which are "more tangent" to the variety at $ p $ than a generic line through $ p $.
+
+For elliptic curves, the two kinds of tangent cones which appear are those
+of the node and cusp, respectively.  The cones are a pair of distinct lines
+in the first, and a doubled line in the second.
+
+
+
+
+
+
+
+== Homology and Cohomology 
+
+Homology and cohomology are invariants attached to topological
+spaces which detect certain geometric features -- loosely said,
+the number of independent $ k $-dimensional holes.   To say
+that the homology groups are invariants is to say that 
+homeomorphic spaces have 
+isomorphic homology groups.  
+
+
+Since the homology and cohomology of a space are "dual" objects,
+we choose one and study the other later.
+Let us begin with the homology of a space $ X $. It is
+  a _graded abelian group_, $ cX) $ meaning
+that it is a direct sum
++++\[   
+H_\bullet = \oplus_{k \ge 0} H_k,
+   \]+++
+where the  $ H_k $ are abelian groups.
+For the $ n $-sphere $ S^n $, this group is $ \ZZ $ in degrees $ k = 0 $
+and $ k = n $; for all other degrees it is zero.  By contrast, the homology
+groups of $ \RR^n $ are zero for all $ n > 0 $.  Because of what was said about
+invariance, this means that $ S^n $ is never homeomorphic to $ \RR^n $ for 
+$ n > 0 $.
+These observations capture 
+the fact the the $ n $-sphere is an object built around an $ n $-dimensional
+hole; indeed, it is a way of making that notion precise.
+
+
+In the next section we will discuss several ways to define homology.
+For now, we discuss its main properties and show how these properties
+can both be used to prove things and to make computations.  One usually
+uses the properties, not the construction itself, to compute homology.
+
+Homology and and cohomology are _functorial_, meaning loosely
+that they behave well with respect to maps between spaces. If $ f: X \map Y $
+is a continuous map then there is an induced map
++++\[   
+   f_*: H_k(X) \map H_k(Y)
+   \]+++
+for all $ k $.   Consider, for example, the unit circle $ S^1 $, which we may view
+as the set of complex numbers $ z $ with unit absolute value.  Let $ f: S^1 \map S^1 $
+be the map defined by $ f(z) = z^n $.
+
+
+
+
+
+
+=== Homology
+
+blah, blah
+
+==== ggg
+
+==== jjjj
+
+
+
+
+
+=== Classical de Rham Theory
+
+blah, blah
+
+
+
+
+
+
+
+=== Algebraic De Rham Cohomology 
+
+<<The Algebraic de Rham Complex I >> +
+<<Comparison Theorem I>> +
+<<Periods I>> +
+<<The Algebraic de Rham Complex II>> +
+<<The Fundamental Class of Projective Space>> +
+
+As we have seen in XXX, classical de Rham cohomology is computed
+using the complex $ \EEE^\bullet $ of $ \CCC^\infty $ differential forms.
+In the first section below, we will see, 
+following Grothendieck, how to define the
+cohomology of an algebraic variety using a purely algebraic objects,
+the _Algebraic de Rham Complex_.  In the second section, we 
+verify that the definition works by computing the cohomology 
+of $ \PP^1 $.  We will also compare algebraic de Rham and classical
+de Rham cohomology.  Via this comparison, we arrive at the abstract
+notion of period as used by Grothendieck and Deligne, and we
+compute the field of periods for  the punctured
+affine line $ \AA^1- \set{0} $ and for the projective line $ \PP^1 $.
+
+==== The Algebraic de Rham Complex I 
+
+Let $ X $ be a smooth affine variety, e.g, $ \CC $ or $ \CC^* $.
+Let $ A^p(X) $ be the space of algebraic $ p $-forms on 
+$ X $.  If $ X $ is defined over a field $ k $, we may take the $ A^p(X) $
+to be defined over $ k $ as well.  The exterior derivative
+makes the graded $ k $-vector space 
++++\[   
+  A^\bullet = \oplus_k A^k
+   \]+++
+into a complex.  
+
+.Definition {counter:definition}
+[[def:adrcxaffine]]
+--
+_The algebraic de Rham cohomology of an affine variety $ X $
+is the cohomology $ H^\bullet_{DR}(X) $ of $ A^\bullet(X) $._
+--
+
+.Example {counter:example}
+[[ex:affine_line_DR]]
+--
+Let $ X = \AA^1_k $ be the affine line over a field $ k $.  Then
+$ A^0(X) = k[x] $ is the ring of polynomials in $ x $ with coefficients
+in $ k $ and 
++++\[   
+  A^1(X) = \sett{ f(x)dx }{ f(x) \in k[x]}.
+   \]+++
+For $ p > 1 $, 
+$ A^p(X) = 0 $.  One sees directly that $ H^0_{DR} = k $ and
+that $ H^1_{DR}(X) = 0 $.
+--
+
+.Example {counter:example}
+[[ex:punctured_affine_line_DR]]
+--
+Let $ X = \AA^1_k - \set{0} $ be the punctured affine line over a field $ k $.  
+Then
++++\[   
+  A^0(X) = \Sett{ \frac{f(x)}{x^n} }{ f(x) \in k[x] }
+   \]+++
+and 
++++\[   
+  A^1(X) = \Sett{ \frac{f(x)dx}{x^n} }{ f(x) \in k[x] }
+   \]+++
+For $ p > 1 $, 
+$ A^p(X) = 0 $.  One sees directly that $ H^0_{DR}=  k $ and
+that 
++++\[   
+  H^1_{DR}(X) = k\Set{\frac{dx}{x}}.
+   \]+++
+--
+
+====  Comparison Theorem I
+
+Let $ X $ be an algebraic variety defined over a subfield $ k $ of 
+the complex numbers.  An algebraic de Rham form is also a smooth, or
+$ \CCC^\infty $ de Rham form.  In other words, there is an inclusion of
+complexes
++++\[   
+  A_{alg}^\bullet \map A_{smooth},
+   \]+++
+This map of complexes induces a map of cohomology vector spaces,
+and we have the following result.
+
+.Theorem {counter:theorem}
+[[th:comparison_affine]]
+--
+_The natural map $ H^\bullet_{alg,DR} \map H^\bullet_{smooth,DR} $ 
+is an isomorphism._
+--
+
+Recall the classical de Rham theorem:
+
+.Theorem {counter:theorem}
+[[th:classical_DR]]
+--
+_The natural map $ H^\bullet_{smooth,DR} \map H^\bullet_{sing,DR} $ 
+is an isomorphism._
+--
+
+The map is defined as follows.  Let $ \phi $ be a closed form, and let
+$ [\phi] $ be its class in $ H^\bullet_{smooth,DR} $.  Let
++++\[   
+  \iota[\phi](\gamma) = \int_\gamma \phi
+   \]+++
+for all cycles gamma.  This relation associates to a closed form
+a linear functional on homology classes, i.e, a cohomology class.
+_(Exercise: prove that this map is well-defined.)_  Thus we have 
+a map
++++\[   
+  \iota: H^\bullet_{smooth,DR} \map H^\bullet_{sing}.
+   \]+++
+de Rham's theorem states that this map is an isomorphism.
+
+
+==== Periods I
+
+Recall that $ H^p_{DR}(X,k) $ is a $ k $-vector space.  Identifying 
+$ H^p_{DR}(X,k) $ with its image in $ H^p_{sing}(X,\CC) $, we
+have
++++\[   
+  H^p_{DR}(X,k) \otimes_k \CC = H^p_{sing}(X,\CC).
+   \]+++
+In other words, the algebraic de Rham cohomology defines a $ k $-structure
+on the complex vector space $ H^p_{sing} $.  There is another $ k $-structure 
+defined by the inclusion 
++++\[   
+  H^p_{sing}(X,k)  \map H^p_{sing}(X,\CC).
+   \]+++
+   
+To compare the two structures, let $ \phi_1, \ldots \phi_n $ be
+a basis for $ H^p_{DR}(X,k) $, let $ \gamma_1, \ldots, \gamma_n $
+be a basis for $ H_p(X,k) $, and let $ \gamma_1^*, \ldots, \gamma_n^* $
+be the dual basis.  Write
++++\[   
+  \phi_i = \sum_j P_{ij}\gamma_j^*.
+   \]+++
+The matrix $ P = (P_{ij}) $ is the _period matrix_.  Note that
++++\[   
+    P_{ij}  = \int_{\gamma_j} \phi_i,
+   \]+++
+justifying the terminology.
+
+.Example {counter:example}
+[[ex:periods_cstar]]
+--
+For the punctured affine line, the algebraic de Rham cohomology
+is generated by $ dz/z $ and the homology is generated by the path
+$ \theta \mapsto \exp(2\pi i\theta) $ which parameterizes the unit
+circle $ |z|  = 1 $.  Up to multiplication by a scalar in $ k $, there 
+is "just one" period, namely,
++++\[   
+  P  = \int_{|z| = 1} \frac{dz}{z} = 2\pi\sqrt{-1}.
+   \]+++
+--
+
+The example just given leads us to the notion of the _field of periods_.
+This is the $ k $-vector space generated by the $ P_{ij} $.  In the
+case of the punctured affine line with $ k \ \QQ $, we have
++++\[   
+  K_{per}(H^1(\AA^1 - \set{0}) = \QQ(2\pi\sqrt{-1}).
+   \]+++
+
+A fundamental invariant of such a field is its transcendence degree.
+
+.Theorem {counter:theorem}
+[[th:transcendence_punctured_affine_line]]
+--
+_The transcendent degree of the field of periods of the punctured
+affine line is 1._
+--
+
+
+==== The Algebraic de Rham Complex II
+
+To this end, fix an
+algebraic variety $ X $ and an cover $ \UUU $ by Zariski open sets $ U_i $.
+Let $ I = (i_1, \ldots , i_p) $ be a multi-index of degree $ p $ and let
+$ U_I  = U_{i_1} \cap \cdots \cap U_{i_p} $.  Let $ \Omega^q(U_I) $
+be the space of algebraic $ q $-forms on $ U_I $, and let
++++\[   
+    C^p(\UUU, \Omega^q) = \oplus_{|I|=p+1} \Omega^q(U_I),
+   \]+++
+where the sum is taken over all $ (p+1) $-fold intersections.
+This is the space of Cech-deRham cochains of bidegree $ (p,q) $.
+
+The exterior derivative defines an operator
++++\[   
+  d: C^p(\UUU, \Omega^q)  \map C^p(\UUU, \Omega^{q+1}) 
+   \]+++
+It satisfies $ d^2 = 0 $ and is of type $ (0,1) $ in the sense that its
+sends an object of type $ (p,q) $ to one of type $ (p,q+1) $.  Recall
+that the Cech coboundary is an operator defined by the alternating
+sum of restriction maps.  Consider, for example an element
+$ \phi \in C^1(\UUU, \Omega^q) $.  Write $ \phi_{ij} $ for the 
+component of $ \phi $ defined on $ U_i \cap U_j $.  For an element
+$ \psi \in C^2(\UUU, \Omega^q) $.  Write $ \psi_{ijk} $ for the 
+component of $ \psi $ defined on $ U_i \cap U_j \cap U_k $.
+Then the relation 
++++\[   
+   ( \delta \phi )_{ijk} =   \phi_{jk} -  \phi_{ik} +  \phi_{ij}
+   \]+++
+defines an element $ \delta \phi \in  C^2(\UUU, \Omega^q) $.  
+_(Exercise:  give the general definition of $ \delta $.)_
+
+The operator 
++++\[   
+  \delta: C^p(\UUU, \Omega^q) \map C^{p+1}(\UUU, \Omega^q)
+   \]+++
+is the _Cech coboundary_.  It satisfies $ \delta^2 = 0 $, is of type $ (1,0) $, 
+and also commutes with exterior differentiation:  $ \delta d = d\delta  $.
+
+Now consider the operator $ D = d + (-1)p $ on $ C^p(\UUU,\Omega^q) $.
+It is also of square zero (_Exercise_).  
+Let 
++++\[   
+   A^k =  \oplus_{p+q=k} C^p (\UUU, \Omega^q ),
+   \]+++
+and let $ A^\bullet = \oplus_k A^k $ 
+be the singly graded object associated to the double complex 
+$ \CCC^\bullet(\UUU,\Omega^\bullet) $.  It is a complex with respect
+to the operator $ D $.  
+
+.Definition {counter:definition}
+[[def:algDRCX]]
+--
+_The algebraic de Rham cohomology of $ X $, $ H^\bullet_{DR}(X) $
+is the cohomology of the complex $ A^\bullet $._
+--
+
+
+==== The Fundamental Class of Projective Space
+
+Let $ \set{U, V} $ be the "standard" open cover of $ \PP^1 $ with coordinates
+$ u $ and $ v $, where $ uv = 1 $ on $ U \cap V $. Consider the Cech-deRham
+cocycle given by the holomorphic form
++++\[   
+  \omega = \Set{ \frac{du}{u} }_{U \cap V}
+   \]+++
+on $ U \cap V $.
+It has Cech degree one,  de Rham degree one, and total degree two,
+hence defines an element of $ H^2_{DR, alg}(\PP^1,\QQ) $. 
+
+.Theorem {counter:theorem}
+[[th:fundamentalclassp1]]
+--
+_The generator  of $ H^2_{DR, alg}(\PP^1,\QQ) $
+defined above satisfies_
++++\[    
+  \int_{\PP^1} \omega = 2\pi \sqrt{-1}.
+   \]+++
+--
+
+.Proof
+--
+The idea is to compute
+a representative of $ \omega \in H^2_{DR, C^\infty}(\PP^1,\CC) $.  To
+this end, choose a partition of unity $ \set{\rho_U, \rho_V} $ such
+that $ \rho_U $ is identically zero near $ u = 0 $ and is identical one near
+$ v = 0 $.  Consider the cocycle
++++\[   
+  \omega'  = \omega + D\phi, 
+   \]+++
+where
++++\[   
+ \phi = \Set{ \frac{\rho_U du}{u}, \frac{\rho_V dv}{v} }_{U,V} 
+   \]+++
+and where $ D = d  + (-1)^p\delta $ is the total differential.  Since
++++\[   
+\delta \phi = 
+ \frac{\rho_U du}{u}- \frac{\rho_V dv}{v} = \omega ,
+   \]+++
+we have
++++\[   
+  \omega' = d\phi = 
+\Set{ d\rho_U\frac{du}{u},  d\rho_V\frac{dv}{v} }_{U,V}
+   \]+++
+Note that
++++\[   
+  \delta \omega' = 
+\Set{ d\rho_U\wedge \frac{du}{u} - d\rho_V\wedge \frac{dv}{v} }_{U \cap V}\\
+=
+\Set{ d(\rho_U+ \rho_V)\wedge \frac{du}{u} }_{U \cap V} \\= 0,
+   \]+++
+so that $ \omega' $ is a cocycle (as it must be). 
+
+Let us compute the integral
++++\[   
+   \int_{\PP^1} \omega = \int_{\PP^1} \omega' = 
+\int_U d\rho_U\wedge \frac{du}{u}.
+   \]+++
+Suppose that $ \rho_U $ has be chosen to be identically zero for $ |u| < 1 $
+and identically equal to one for $ |u| > 2 $.  Then the integral in question
+is
++++\[   
+  \int_{1 < |u| < 2} d\rho_U \frac{du}{u}.
+   \]+++
+By Stokes' theorem, this surface integral is the same as the line integral
++++\[   
+  \int_{|u|= 2} \rho_U \frac{du}{u} - 
+ \int_{|u|= 1} \rho_U \frac{du}{u}
+   \]+++
+The second term is zero, since $ \rho_U = 0 $ on $ |u| = 1 $.  The first
+integral is the
++++\[   
+   \int_{|u|= 2} \frac{du}{u} = 2\pi\sqrt{-1}.
+   \]+++
+--
+
+
+
+
+
+== Scratch 
+
+
+Let $ X_i $ be the the set of $ i $-cells of $ X $.  Given a closed $ i $-cell
+cell $ \bar e \subset X $, consider the pair $  (X, X - \bar e) $
+and the map
++++\[   
+   X \map (X, X - \bar e)
+   \]+++
+By excision, 
++++\[   
+  H_\bullet(X,X-\bar e) \cong H_\bullet(\bar e, \partial e).
+   \]+++
+This graded group is free abelian with one generator in dimension
+$ i $.  Thus
++++\[   
+  H_\bullet(\bar e, \partial e) \cong \ZZ e,
+   \]+++
+where $ e $ is viewed as an abstract generator of degree $ i $.

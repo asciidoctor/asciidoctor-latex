@@ -1,5 +1,6 @@
 = AsciiDoc to LaTeX Converter for Asciidoctor
 James Carlson
+
 :numbered:
 :toc2:
 :stem:
@@ -9,7 +10,8 @@ James Carlson
 The aim of the LaTeX converter is to transform an AsciiDoc document containing
 mathematical notation into a LaTeX document.
 The converter also adds to Asciidoctor's facilities for handling mathematical
-notation when rendered as HTML.  Among these is the automatic numbering of theorems.
+notation when rendered as HTML.  Among these are the automatic numbering of theorems
+and equations.
 Please see the file [path]_manual.adoc_ in this repository for additional details
 and for technical information.
 
@@ -26,7 +28,7 @@ _asciidoctor-latex has not been released yet_
 
 === From repository
 
-If you'd like to install a development version from the repository, then use:
+If you would like to install a development version from the repository, use:
 
  $ git clone https://github.com/asciidoctor/asciidoctor-latex.git
  $ cd asciidoctor-latex
@@ -69,6 +71,88 @@ Both render as
 _Please note that the formulae above will not render properly
 if you are reading it on GitHub.  It will, however, render properly if you run
 this file through Asciidoctor_.
+
+== Asciidoctor environments
+
+Asciidoctor supports an `env` construct that maps to LaTeX environments.
+Thus
+----
+[env.theorem]
+--
+There exist infinitely many prime numbers.
+--
+----
+renders as an automatically numbered theorem:
+
+[env.theorem]
+--
+There exist infinitely many prime numbers.
+--
+
+Likewise, using `[env.definition]`, we obtain
+[env.definition]
+--
+An integer $n$ is *prime* if (a) it is not $\pm 1$
+and (b) it has no divisors other
+than $\pm 1$ and $\pm n$.
+--
+
+For numbered equations, use `[env.equation]` like this
+
+----
+[env.equation]
+--
+a^{p-1} \equiv 1\ \text{mod}\ p
+--
+----
+
+to obtain the rendered text
+
+[env.equation]
+--
+a^{p-1} \equiv 1\ \text{mod}\ p
+--
+
+
+
+Except for `[env.equation]`, the TeX constructs `$ ... $` and
+`\[ ... \]` can be used in `[env]` blocks.
+For directions on making cross-references and labeling theorems, equations, etc., see
+the `README` file in the `try-out` directory.  For an extensive
+example of the use of Asciidoctor LaTeX, see
+http://www.noteshare.io/section/the-fundamental-class-of-projective-space[this].
+All of these constructs discussed above are translated into native LaTeX when
+the converter is used to produuce tex output.
+
+
+
+== Click blocks
+
+Click blocks are similar to `[env]` blocks excep that the body of
+the block is not displayed until the user clicks on the heading.
+The heading of a click block is displayed in blue.  Once a click
+block is "opened", it can be closed by clicking again on the heading.
+
+[click.comment]
+--
+It is sometimes useful to "hide" a comment in a click block
+so as not to unduly disturb the flow of the prose. Click
+blocks are also useful for problem sets, since one
+can make hints, solutions, etc. clickable.
+--
+
+The source for the above comment is
+
+----
+[click.comment]
+--
+It is sometimes useful to "hide" a comment ...
+--
+----
+
+The default for click blocks is not to number them.
+See the file `click.adoc` in the `try-out` directory
+for more information.
 
 == Commands for rendering
 
@@ -124,6 +208,6 @@ or simply with the wrapper script:
 
 == Switches
 
-Switch `:stem:` processing on by putthng the text `:stem:`
-in your file.  To turn the swtich on and set it to `latexmath`, say
-instaed `stem:latexmth`.
+Switch `:stem:` processing on by puttinng the text `:stem:`
+in your file.  To turn the switch on and set it to `latexmath`, say
+instead of `stem:latexmth`.

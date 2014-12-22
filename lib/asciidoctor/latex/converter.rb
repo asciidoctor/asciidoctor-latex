@@ -107,9 +107,9 @@ module Asciidoctor::LaTeX
         number_part = '<td style="text-align:right">' + "(#{node.attributes['equation_number']}) </td>"
         number_part = ["+++ #{number_part} +++"]
         equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
-        table_style='style="width:100%; border-collapse:collapse"'
+        table_style='style="width:100%; border-collapse:collapse;border:0"'
         # row_style='style="border-collapse: collapse"'
-        row_style='class="zero" style="border-collapse: collapse; font-size: 10pt; "'
+        row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
         if node.attributes['equation_number']
           node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
         else

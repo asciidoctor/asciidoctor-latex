@@ -101,5 +101,10 @@ DocTest::GeneratorTask.new(:generate) do |task|
   task.examples_path.unshift 'test/examples/adoc'
 end
 
+task :build  do
+  system 'gem build asciidoctor-latex.gemspec'
+  system 'gem install *.gem'
+end
+
 # When no task specified, run test.
 task :default => :test

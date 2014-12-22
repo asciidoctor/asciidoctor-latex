@@ -16,7 +16,7 @@ The aim of Asciidoctor's LaTeX converter is
 
 . To add to Asciidoctor's facilities for handling mathematical notation when rendered as HTML
 
-As an exmaple of both features, you can write automatically numbered equations, e.g.,
+As an example of both features, you can write automatically numbered equations, e.g.,
 
 [env.equation]
 --

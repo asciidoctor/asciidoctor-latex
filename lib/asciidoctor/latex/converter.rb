@@ -93,10 +93,15 @@ module Asciidoctor::LaTeX
 
       warn "\n    node: #{node.node_name}".cyan if $VERBOSE
       warn "   attrs: #{node.attributes}".cyan if $VERBOSE
+      warn "   title: #{node.title}".red if $VERBOSE
+      warn "   title: #{node.attributes['title']}".cyan if $VERBOSE
+      warn "   role:  #{node.role}".red if $VERBOSE
       warn "    role: #{node.attributes['role']}".cyan if $VERBOSE
+      warn "   level: #{node.attributes['level']}".cyan if $VERBOSE
       warn " options: #{node.attributes['options']}".cyan if $VERBOSE
-      warn " type: #{node.attributes['type']}".cyan if $VERBOSE
-      warn "    topu: #{node.attributes['topu']}".cyan if $VERBOSE
+      warn " type   : #{node.attributes['type']}".cyan if $VERBOSE
+      warn " caption: #{node.caption}".red if $VERBOSE
+      warn " caption: #{node.caption}".cyan if $VERBOSE
       warn "      id: #{node.attributes['id']}".cyan if $VERBOSE
       warn " content: #{node.content}".blue if $VERBOSE
 

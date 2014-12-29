@@ -1,103 +1,34 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('lib/asciidoctor/latex/version', File.dirname(__FILE__))
-
 require 'rake/clean'
-
-require 'asciidoctor/doctest'
 require 'rake/testtask'
-require 'thread_safe'
-# require 'tilt'
+require 'bundler/gem_tasks'
 
-default_tasks = []
-
-begin
-  require 'bundler/gem_tasks'
-
-  task :commit_release do
-    Bundler::GemHelper.new.send :guard_clean
-    sh %(git commit --allow-empty -a -m 'Release #{Asciidoctor::LaTeX::VERSION}')
-  end
-
-  # Enhance the release task to create an explicit commit for the release
-  Rake::Task[:release].enhance [:commit_release]
-rescue LoadError
+Rake::TestTask.new(:doctest) do |t|
+  t.description = 'Run integration tests (DocTest)'
+  t.pattern = 'test/templates_test.rb'
+  t.libs << 'test'
 end
 
 begin
   require 'yard'
-
-  YARD::Rake::YardocTask.new do |task|
-    # options are defined in .yardopts
-  end
-rescue LoadError
-  warn 'yard is not available'
-end
-
-
-#=begin NOT CURRENTLY IN USE
-begin
-  require 'rake/testtask'
-  Rake::TestTask.new do |t|
-    t.libs << 'test'
-    t.pattern = 'test/**/*_test.rb'
-    t.verbose = true
-    t.warning = true
-    if RUBY_VERSION >= '2'
-      t.options = '--tty=no'
-    end
-  end
-  default_tasks << :test
-rescue LoadError
+  # options are defined in .yardopts
+  YARD::Rake::YardocTask.new
+rescue LoadError => e
+  warn "#{e.path} is not available"
 end
 
 begin
-  require 'cucumber'
-  require 'cucumber/rake/task'
-  CUKE_RESULTS_FILE = 'feature-results.html'
-  ARUBA_TMP_DIR = 'tmp'
-  CLEAN << CUKE_RESULTS_FILE if File.file? CUKE_RESULTS_FILE
-  CLEAN << ARUBA_TMP_DIR if File.directory? ARUBA_TMP_DIR
-  desc 'Run features'
-  Cucumber::Rake::Task.new :features do |t|
-    opts = %(features --format html -o #{CUKE_RESULTS_FILE} --format progress -x --tags ~@pending)
-    opts = %(#{opts} --tags #{ENV['TAGS']}) if ENV['TAGS']
-    t.cucumber_opts = opts
-    t.fork = false
+  require 'asciidoctor-doctest'
+
+  DocTest::GeneratorTask.new(:generate) do |t|
+    t.output_suite = DocTest::HTML::ExamplesSuite.new(examples_path: 'test/examples/tex')
+    t.converter_opts[:backend_name] = :latex
+    t.examples_path.unshift 'test/examples/adoc'
   end
-
-  desc 'Run features tagged as work-in-progress (@wip)'
-  Cucumber::Rake::Task.new 'features:wip'  do |t|
-    #t.cucumber_opts = %(features --format html -o #{CUKE_RESULTS_FILE} --format pretty -x -s --tags @wip)
-    t.cucumber_opts = %(features --format html -o #{CUKE_RESULTS_FILE} --format progress -x --tags @wip)
-    t.fork = false
-  end
-
-  default_tasks << :features
-  task :cucumber => :features
-  task 'cucumber:wip' => 'features:wip'
-  task :wip => 'features:wip'
-rescue LoadError
-end
-# =end
-
-task :default => default_tasks unless default_tasks.empty?
-
-################################################################
-
-Rake::TestTask.new(:test) do |task|
-  task.description = 'Run tests for templates'
-  task.pattern = 'test/templates_test.rb'
-  task.libs << 'test'
+rescue LoadError => e
+  warn "#{e.path} is not available"
 end
 
-DocTest::GeneratorTask.new(:generate) do |task|
-  task.output_suite = DocTest::HTML::ExamplesSuite.new(examples_path: 'test/examples/html')
-  # task.renderer_opts[:template_dirs] = 'data/templates'
-  task.renderer_opts backend_name: :latex
-  #
-  # add extra input examples (optional)
-  task.examples_path.unshift 'test/examples/adoc'
-end
-
-# When no task specified, run test.
+task :test => :doctest
+task :doc => :yard
 task :default => :test

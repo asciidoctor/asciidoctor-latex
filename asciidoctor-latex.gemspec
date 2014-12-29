@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.0'
 
   s.add_runtime_dependency 'asciidoctor', '~> 1.5.0'
+  s.add_runtime_dependency 'htmlentities', '~> 4.3'
 
   s.add_development_dependency 'asciidoctor-doctest', '~> 1.5.0'
   s.add_development_dependency 'rake', '~> 10.0'

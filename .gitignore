@@ -3,7 +3,8 @@
 /pkg/
 /.ruby-gemset
 /.ruby-version
-
+/.yardoc/
+/doc/
 
 samples/*.html
 samples/*.tex

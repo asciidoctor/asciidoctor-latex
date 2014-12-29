@@ -21,9 +21,7 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(/^(test|spec|features)\//)
   s.require_paths = ['lib']
 
-  s.has_rdoc         = true
-  s.rdoc_options     = %(--charset=UTF-8 --title="Asciidoctor LaTeX" --main=README.adoc -ri)
-  s.extra_rdoc_files = %w(LICENSE.adoc manual.adoc README.adoc)
+  s.has_rdoc      = 'yard'
 
   s.required_ruby_version = '>= 2.0'
 
@@ -31,5 +29,5 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'asciidoctor-doctest', '~> 1.5.0'
   s.add_development_dependency 'rake', '~> 10.0'
-  s.add_development_dependency 'rdoc', '~> 4.1'
+  s.add_development_dependency 'yard', '~> 0.8'
 end

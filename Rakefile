@@ -24,16 +24,14 @@ rescue LoadError
 end
 
 begin
-  require 'rdoc/task'
-  Rake::RDocTask.new do |t|
-    t.rdoc_dir = 'rdoc'
-    t.title = %(Asciidoctor EPUB3 #{Asciidoctor::LaTeX::VERSION})
-    t.main = %(README.adoc)
-    t.rdoc_files.include 'README.adoc', 'LICENSE.adoc', 'lib/**/*.rb', 'bin/**/*'
+  require 'yard'
+
+  YARD::Rake::YardocTask.new do |task|
+    # options are defined in .yardopts
   end
 rescue LoadError
+  warn 'yard is not available'
 end
-
 
 
 #=begin NOT CURRENTLY IN USE

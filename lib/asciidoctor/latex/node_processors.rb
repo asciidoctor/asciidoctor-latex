@@ -83,20 +83,14 @@ module Asciidoctor
 
     def tex_process
       warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
-      case self.level
-      when 1
-        "\\section\{#{self.title}\}\n\n#{self.content}\n\n"
-       when 2
-        "\\subsection\{#{self.title}\}\n\n#{self.content}\n\n"
-       when 3
-        "\\subsubsection\{#{self.title}\}\n\n#{self.content}\n\n"
-       when 4
-        "\\paragraph\{#{self.title}\}\n\n#{self.content}\n\n"
-       when 5
-        "\\subparagraph\{#{self.title}\}\n\n#{self.content}\n\n"
-       end
-    end
+      doctype = self.document.doctype
 
+      tags = { 'article' => [ 'part',  'section', 'subsection', 'subsubsection', 'paragraph' ] }
+
+      tagname = tags[doctype][self.level]
+
+      "\\#{tagname}\{#{self.title}\}\n\n#{self.content}\n\n"
+    end
   end
 
   # Write TeX \itemize or \enumerate lists

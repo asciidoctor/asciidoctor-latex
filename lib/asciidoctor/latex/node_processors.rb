@@ -29,7 +29,7 @@ module Asciidoctor
       # warn "Attributes: #{self.attributes}".yellow
       # warn "#{self.methods}".magenta
       doc = "%% Preamble %%\n"
-      doc << File.open(File.join(LaTeX::DATA_DIR, 'preamble.tex'), 'r') { |f| f.read }
+      doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
       doc << "%% Asciidoc TeX Macros %%\n"
       doc << File.open(File.join(LaTeX::DATA_DIR, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
       doc << "%% User Macros %%\n"

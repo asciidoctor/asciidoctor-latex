@@ -85,7 +85,8 @@ module Asciidoctor
       warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
       doctype = self.document.doctype
 
-      tags = { 'article' => [ 'part',  'section', 'subsection', 'subsubsection', 'paragraph' ] }
+      tags = { 'article' => [ 'part',  'section', 'subsection', 'subsubsection', 'paragraph' ],
+               'book' => [ 'part', 'chapter', 'section', 'subsection', 'subsubsection', 'paragraph' ] }
 
       tagname = tags[doctype][self.level]
 

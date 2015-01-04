@@ -171,7 +171,7 @@ module Asciidoctor::LaTeX
 
 
     TOP_TYPES = %w(document section)
-    LIST_TYPES = %w(olist ulist )
+    LIST_TYPES = %w(dlist olist ulist)
     INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)
     BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)
     OTHER_TYPES = %w(environment table)

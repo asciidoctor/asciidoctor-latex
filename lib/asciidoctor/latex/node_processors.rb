@@ -103,6 +103,8 @@ module Asciidoctor
     def tex_process
       warn ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if $VERBOSE
       case self.node_name
+      when 'dlist'
+        dlist_process
       when 'ulist'
         ulist_process
       when 'olist'
@@ -110,6 +112,19 @@ module Asciidoctor
       else
         warn "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" if $VERBOSE
       end
+    end
+
+    def dlist_process
+      list = "\\begin{description}\n\n"
+      self.items.each do |terms, dd|
+        list << "\\item["
+        [*terms].each do |dt|
+        warn ["  --  item: ".blue, "#{dt.text}"].join(" ") if $VERBOSE
+          list << dt.text
+        end
+        list << "]" + dd.text
+      end
+      list << "\\end{description}\n\n"
     end
 
     def ulist_process

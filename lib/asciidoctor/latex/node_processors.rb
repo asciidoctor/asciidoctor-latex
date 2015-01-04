@@ -89,8 +89,9 @@ module Asciidoctor
                'book' => [ 'part', 'chapter', 'section', 'subsection', 'subsubsection', 'paragraph' ] }
 
       tagname = tags[doctype][self.level]
+      tagsuffix = self.numbered ? '' : '*'
 
-      "\\#{tagname}\{#{self.title}\}\n\n#{self.content}\n\n"
+      "\\#{tagname}#{tagsuffix}\{#{self.title}\}\n\n#{self.content}\n\n"
     end
   end
 

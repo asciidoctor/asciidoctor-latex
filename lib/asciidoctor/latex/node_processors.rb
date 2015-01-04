@@ -225,7 +225,14 @@ module Asciidoctor
 
     def quote_process
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      "\\begin\{quote\}\n#{self.content}\\end\{quote\}\n"
+      if self.attr? 'attribution'
+        attribution = self.attr 'attribution'
+        citetitle = (self.attr? 'citetitle') ? (self.attr 'citetitle') : nil
+
+        "\\begin\{aquote\}{#{attribution}#{citetitle ? ' - ' + citetitle : ''}}\n#{self.content}\\end\{aquote\}\n"
+      else
+        "\\begin\{quote\}\n#{self.content}\\end\{quote\}\n"
+      end
     end
 
 

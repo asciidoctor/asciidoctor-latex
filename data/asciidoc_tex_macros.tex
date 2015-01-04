@@ -10,3 +10,16 @@
 \newtheorem{problem}{Problem}
 \newtheorem{definition}{Definition}
 \newtheorem{example}{Example}
+
+
+%%% 
+%  Extended quote environment with author
+\def\signed#1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil\raise-3pt\hbox{(#1)}%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newsavebox\mybox
+\newenvironment{aquote}[1]
+  {\savebox\mybox{#1}\begin{quotation}}
+  {\signed{\usebox\mybox}\end{quotation}}
+%%%

@@ -1,0 +1,18 @@
+== quote environment
+
+This document illustrates the use of quote environments.
+
+=== Normal quote
+
+[quote]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec orci sit amet sem viverra egestas in et tellus. Curabitur tellus tellus, eleifend a nunc sit amet, scelerisque mollis massa. Morbi ut quam mi. Pellentesque cursus hendrerit odio, id imperdiet sapien accumsan a. Cras aliquam, lacus id venenatis imperdiet, est neque tristique est, eu euismod nulla ligula eu nisi. Phasellus non nulla consectetur diam tristique tempor at sed mauris. Duis efficitur placerat dolor, quis egestas leo dapibus non. Sed magna turpis, venenatis et ornare quis, pellentesque vitae nisi. Aenean a neque ante. Sed ultricies aliquet varius. In hac habitasse platea dictumst.
+
+=== Attributed quote
+
+[quote, Lorem Ipsum]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec orci sit amet sem viverra egestas in et tellus. Curabitur tellus tellus, eleifend a nunc sit amet, scelerisque mollis massa. Morbi ut quam mi. Pellentesque cursus hendrerit odio, id imperdiet sapien accumsan a. Cras aliquam, lacus id venenatis imperdiet, est neque tristique est, eu euismod nulla ligula eu nisi. Phasellus non nulla consectetur diam tristique tempor at sed mauris. Duis efficitur placerat dolor, quis egestas leo dapibus non. Sed magna turpis, venenatis et ornare quis, pellentesque vitae nisi. Aenean a neque ante. Sed ultricies aliquet varius. In hac habitasse platea dictumst.
+
+=== Attributed quote with title
+
+[quote, Lorem Ipsum, All the facts]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec orci sit amet sem viverra egestas in et tellus. Curabitur tellus tellus, eleifend a nunc sit amet, scelerisque mollis massa. Morbi ut quam mi. Pellentesque cursus hendrerit odio, id imperdiet sapien accumsan a. Cras aliquam, lacus id venenatis imperdiet, est neque tristique est, eu euismod nulla ligula eu nisi. Phasellus non nulla consectetur diam tristique tempor at sed mauris. Duis efficitur placerat dolor, quis egestas leo dapibus non. Sed magna turpis, venenatis et ornare quis, pellentesque vitae nisi. Aenean a neque ante. Sed ultricies aliquet varius. In hac habitasse platea dictumst.

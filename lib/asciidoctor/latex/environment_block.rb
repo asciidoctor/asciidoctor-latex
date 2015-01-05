@@ -80,60 +80,56 @@ module Asciidoctor::LaTeX
         role = attrs['role']
       end
 
-      # Use the value of the role to determine
-      # whether this is a numbered block
-      numbered = true
-      if attrs['options'] and attrs['options'].include? 'no-number'
-        numbered = false
+      # Determine whether this is a numbered block
+      # FIXME: what if there are several options?
+      if attrs['options'].nil?
+        attrs['options'] = 'numbered'
+      elsif !(attrs['options'].include? 'no-number')
+        # attrs['options'] = 'numbered'
       end
-
-
-      # If the block is numbered, update the counter
-      if numbered
-        env_name = role   ##################'env-'+role
-        if $counter[env_name] == nil
-          $counter[env_name] = 1
-        else
-          $counter[env_name] += 1
-        end
-      end
-
-
-      # Set title
-      if role == 'code'
-        title = 'Listing'
-      else
-        title = role.capitalize
-      end
-      if numbered
-        title = title + ' ' + $counter[env_name].to_s
-      end
-      if attrs['title']
-        title = title + '. ' + attrs['title'].capitalize
-      end
-
-      if role != 'equation'
-        attrs['title']  = title
-      else
-        if numbered
-          attrs['equation_number'] = $counter[env_name].to_s
-        end
-      end
-
-      if numbered and attrs['id']
-        $ref2counter[attrs['id']] = $counter[env_name].to_s
-        puts "$ref2counter: #{attrs['id']} => #{$counter[env_name].to_s}".yellow
-      end
-
 
       warn "env_name: #{env_name}".cyan if $VERBOSE
       warn "end EnvironmentBlock\n".blue if $VERBOSE
 
-      if attrs['role'] == 'code'
-        create_block parent, :listing, reader.lines, attrs
+      env_name = role # roles.first # FIXME: roles.first is probably best
+      env_title = env_name.capitalize
+      if role == 'equation'
+        attrs['title'] = nil
       else
-        create_block parent, :environment, reader.lines, attrs
+        attrs['title'] = env_name.capitalize
       end
+
+      if attrs['role'] == 'code'
+        block = create_block parent, :listing, reader.lines, attrs
+      else
+        block = create_block parent, :environment, reader.lines, attrs
+      end
+
+      warn "document.references".blue + " #{parent.document.references}".cyan
+      warn "id".red + " = #{attrs['id']}".yellow
+
+      if attrs['options']['numbered']
+        caption_num = parent.document.counter_increment("#{env_name}-number", block)
+        caption = "#{caption_num}"
+        attrs['title'] = "#{env_title} #{caption_num}."
+        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta
+      else
+        attrs['title'] = "#{env_title} #{caption_num}."
+        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta
+      end
+
+      if attrs['id'] and caption
+        warn "registering #{caption} for #{attrs['id']}".magenta
+        parent.document.register :ids, [attrs['id'], caption]
+        warn "document.references".red + " #{parent.document.references}".yellow
+      end
+
+
+      block.assign_caption caption
+      if role != 'equation'
+        block.title = attrs['title']
+      end
+      block
 
     end
 

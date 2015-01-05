@@ -91,15 +91,17 @@ module Asciidoctor::LaTeX
 
     def info node
 
+      attrs =  node.attributes
+
       warn "\n    node: #{node.node_name}".cyan
-      warn "   attrs: #{node.attributes}".cyan
-      warn "   title: #{node.attributes['title']}".cyan
-      warn "    role: #{node.attributes['role']}".cyan
-      warn "   level: #{node.attributes['level']}".cyan
-      warn " options: #{node.attributes['options']}".cyan
-      warn " type   : #{node.attributes['type']}".cyan
+      warn "   attrs: #{attrs}".cyan
+      warn "   title: #{attrs['title']}".cyan
+      warn "    role: #{attrs['role']}".cyan
+      warn "   level: #{attrs['level']}".cyan
+      warn " options: #{attrs['options']}".cyan
+      warn " type   : #{attrs['type']}".cyan
       warn " caption: #{node.caption}".red
-      warn "      id: #{node.attributes['id']}".cyan
+      warn "      id: #{attrs['id']}".cyan
       warn " content: #{node.content}".blue
 
     end
@@ -107,23 +109,26 @@ module Asciidoctor::LaTeX
     def environment node
 
       info node if $VERBOSE
+      options = node.attributes['options']
+      attrs = node.attributes
 
-      if node.attributes['role'] == 'equation'
-        puts "hc: role = equation".magenta
-        node.attributes['title'] = nil
-        number_part = '<td style="text-align:right">' + "(#{node.attributes['equation_number']}) </td>"
+      if attrs['role'] == 'equation'
+        attrs['title'] = nil
+        warn "hc: ".cyan + "title = #{attrs['title']}".red + "options = #{options}, caption = #{node.caption}".yellow
+        number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
         number_part = ["+++ #{number_part} +++"]
         equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
         table_style='style="width:100%; border-collapse:collapse;border:0"'
         # row_style='style="border-collapse: collapse"'
         row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
-        if node.attributes['equation_number']
+        if options['numbered']
           node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
         else
           node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + ['+++</tr></table>+++']
         end
         # node.title = "(#{node.attributes['equation_number']})"
       else
+        warn "hc: ".blue + "title = #{attrs['title']}".red + ", options = #{options}, caption = #{node.caption}".yellow
         node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
       end
 

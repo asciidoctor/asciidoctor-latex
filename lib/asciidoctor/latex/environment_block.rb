@@ -66,11 +66,6 @@ module Asciidoctor::LaTeX
     # parse_context_as :complex
     # ^^^ The above line gave me an error.  I'm not sure what do to with it.
 
-    # Hash to count the number of times each environment is encountered
-    # Global variables again.  Is there a better way?
-    $counter = {}
-    $ref2counter = {}
-
     def process parent, reader, attrs
 
       # Ensure that role is defined
@@ -88,8 +83,6 @@ module Asciidoctor::LaTeX
         # attrs['options'] = 'numbered'
       end
 
-      warn "env_name: #{env_name}".cyan if $VERBOSE
-      warn "end EnvironmentBlock\n".blue if $VERBOSE
 
       env_name = role # roles.first # FIXME: roles.first is probably best
       env_title = env_name.capitalize
@@ -121,6 +114,7 @@ module Asciidoctor::LaTeX
       if attrs['id'] and caption
         warn "registering #{caption} for #{attrs['id']}".magenta
         parent.document.register :ids, [attrs['id'], caption]
+        # Asciidoctor::Parser.foo(attrs['id'], caption, parent, attrs, {})
         warn "document.references".red + " #{parent.document.references}".yellow
       end
 
@@ -133,5 +127,19 @@ module Asciidoctor::LaTeX
 
     end
 
+  end
+end
+
+
+module Asciidoctor
+  class Parser
+    class << self
+      alias_method :foo, :next_block
+      def foo(id, caption, reader, parent, attributes = {}, options = {})
+        block = self.next_block(reader, parent, attributes = {}, options = {})
+        parent.document.register :ids, [id, caption]
+        block
+      end
+    end
   end
 end

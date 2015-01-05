@@ -114,7 +114,7 @@ module Asciidoctor::LaTeX
 
       if attrs['role'] == 'equation'
         attrs['title'] = nil
-        warn "hc: ".cyan + "title = #{attrs['title']}".red + "options = #{options}, caption = #{node.caption}".yellow
+        warn "hc: ".cyan + "title = #{attrs['title']}, ".red + "options = #{options}, caption = #{node.caption}".yellow
         number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
         number_part = ["+++ #{number_part} +++"]
         equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
@@ -149,8 +149,6 @@ module Asciidoctor::LaTeX
         refid = node.attributes['refid']
         if refid and refid[0] == '_'
           output = "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
-        elsif $ref2counter[refid]
-          output = "<a href=\##{refid} style='text-decoration:none'>(#{$ref2counter[refid]})</a>"
         end
       when 'link'
         output = "<a href=#{node.target}>#{node.text}</a>"

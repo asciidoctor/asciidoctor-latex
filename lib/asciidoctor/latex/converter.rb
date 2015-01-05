@@ -89,22 +89,24 @@ require 'asciidoctor/latex/tex_preprocessor'
 module Asciidoctor::LaTeX
   module Html5ConverterExtensions
 
+    def info node
+
+      warn "\n    node: #{node.node_name}".cyan
+      warn "   attrs: #{node.attributes}".cyan
+      warn "   title: #{node.attributes['title']}".cyan
+      warn "    role: #{node.attributes['role']}".cyan
+      warn "   level: #{node.attributes['level']}".cyan
+      warn " options: #{node.attributes['options']}".cyan
+      warn " type   : #{node.attributes['type']}".cyan
+      warn " caption: #{node.caption}".red
+      warn "      id: #{node.attributes['id']}".cyan
+      warn " content: #{node.content}".blue
+
+    end
+
     def environment node
 
-      warn "\n    node: #{node.node_name}".cyan if $VERBOSE
-      warn "   attrs: #{node.attributes}".cyan if $VERBOSE
-      warn "   title: #{node.title}".red if $VERBOSE
-      warn "   title: #{node.attributes['title']}".cyan if $VERBOSE
-      warn "   role:  #{node.role}".red if $VERBOSE
-      warn "    role: #{node.attributes['role']}".cyan if $VERBOSE
-      warn "   level: #{node.attributes['level']}".cyan if $VERBOSE
-      warn " options: #{node.attributes['options']}".cyan if $VERBOSE
-      warn " type   : #{node.attributes['type']}".cyan if $VERBOSE
-      warn " caption: #{node.caption}".red if $VERBOSE
-      warn " caption: #{node.caption}".cyan if $VERBOSE
-      warn "      id: #{node.attributes['id']}".cyan if $VERBOSE
-      warn " content: #{node.content}".blue if $VERBOSE
-
+      info node if $VERBOSE
 
       if node.attributes['role'] == 'equation'
         puts "hc: role = equation".magenta
@@ -130,6 +132,7 @@ module Asciidoctor::LaTeX
     end
 
     def click node
+      info node if $VERBOSE
       node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
       self.open node

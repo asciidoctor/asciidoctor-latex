@@ -29,7 +29,7 @@ module Asciidoctor
       # warn "Attributes: #{self.attributes}".yellow
       # warn "#{self.methods}".magenta
       doc = "%% Preamble %%\n"
-      doc << File.open(File.join(LaTeX::DATA_DIR, 'preamble.tex'), 'r') { |f| f.read }
+      doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
       doc << "%% Asciidoc TeX Macros %%\n"
       doc << File.open(File.join(LaTeX::DATA_DIR, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
       doc << "%% User Macros %%\n"
@@ -83,20 +83,16 @@ module Asciidoctor
 
     def tex_process
       warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
-      case self.level
-      when 1
-        "\\section\{#{self.title}\}\n\n#{self.content}\n\n"
-       when 2
-        "\\subsection\{#{self.title}\}\n\n#{self.content}\n\n"
-       when 3
-        "\\subsubsection\{#{self.title}\}\n\n#{self.content}\n\n"
-       when 4
-        "\\paragraph\{#{self.title}\}\n\n#{self.content}\n\n"
-       when 5
-        "\\subparagraph\{#{self.title}\}\n\n#{self.content}\n\n"
-       end
-    end
+      doctype = self.document.doctype
 
+      tags = { 'article' => [ 'part',  'section', 'subsection', 'subsubsection', 'paragraph' ],
+               'book' => [ 'part', 'chapter', 'section', 'subsection', 'subsubsection', 'paragraph' ] }
+
+      tagname = tags[doctype][self.level]
+      tagsuffix = self.numbered ? '' : '*'
+
+      "\\#{tagname}#{tagsuffix}\{#{self.title}\}\n\n#{self.content}\n\n"
+    end
   end
 
   # Write TeX \itemize or \enumerate lists
@@ -107,6 +103,8 @@ module Asciidoctor
     def tex_process
       warn ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if $VERBOSE
       case self.node_name
+      when 'dlist'
+        dlist_process
       when 'ulist'
         ulist_process
       when 'olist'
@@ -114,6 +112,19 @@ module Asciidoctor
       else
         warn "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" if $VERBOSE
       end
+    end
+
+    def dlist_process
+      list = "\\begin{description}\n\n"
+      self.items.each do |terms, dd|
+        list << "\\item["
+        [*terms].each do |dt|
+        warn ["  --  item: ".blue, "#{dt.text}"].join(" ") if $VERBOSE
+          list << dt.text
+        end
+        list << "]" + dd.text
+      end
+      list << "\\end{description}\n\n"
     end
 
     def ulist_process
@@ -214,7 +225,14 @@ module Asciidoctor
 
     def quote_process
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      "\\begin\{quote\}\n#{self.content}\\end\{quote\}\n"
+      if self.attr? 'attribution'
+        attribution = self.attr 'attribution'
+        citetitle = (self.attr? 'citetitle') ? (self.attr 'citetitle') : nil
+
+        "\\begin\{aquote\}{#{attribution}#{citetitle ? ' - ' + citetitle : ''}}\n#{self.content}\\end\{aquote\}\n"
+      else
+        "\\begin\{quote\}\n#{self.content}\\end\{quote\}\n"
+      end
     end
 
 

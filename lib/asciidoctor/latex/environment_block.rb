@@ -85,12 +85,13 @@ module Asciidoctor::LaTeX
 
 
       env_name = role # roles.first # FIXME: roles.first is probably best
-      env_title = env_name.capitalize
       if role == 'equation'
-        attrs['title'] = nil
+        attrs['title'] = env_name
       else
         attrs['title'] = env_name.capitalize
       end
+      env_title = attrs['title']
+
 
       if attrs['role'] == 'code'
         block = create_block parent, :listing, reader.lines, attrs
@@ -98,29 +99,23 @@ module Asciidoctor::LaTeX
         block = create_block parent, :environment, reader.lines, attrs
       end
 
-      warn "document.references".blue + " #{parent.document.references}".cyan
-      warn "id".red + " = #{attrs['id']}".yellow
+      warn "document.references".blue + " #{parent.document.references}".cyan  if $VERBOSE
+      warn "id".red + " = #{attrs['id']}".yellow  if $VERBOSE
 
       if attrs['options']['numbered']
         caption_num = parent.document.counter_increment("#{env_name}-number", block)
         caption = "#{caption_num}"
         attrs['title'] = "#{env_title} #{caption_num}."
-        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta
+        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
       else
-        attrs['title'] = "#{env_title} #{caption_num}."
-        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta
+        attrs['title'] = "#{env_title}"
+        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
       end
-
-      if attrs['id'] and caption
-        warn "registering #{caption} for #{attrs['id']}".magenta
-        parent.document.register :ids, [attrs['id'], caption]
-        # Asciidoctor::Parser.foo(attrs['id'], caption, parent, attrs, {})
-        warn "document.references".red + " #{parent.document.references}".yellow
-      end
-
 
       block.assign_caption caption
-      if role != 'equation'
+      if role == 'equation'
+        block.title = "(#{caption_num})"
+      else
         block.title = attrs['title']
       end
       block
@@ -130,16 +125,3 @@ module Asciidoctor::LaTeX
   end
 end
 
-
-module Asciidoctor
-  class Parser
-    class << self
-      alias_method :foo, :next_block
-      def foo(id, caption, reader, parent, attributes = {}, options = {})
-        block = self.next_block(reader, parent, attributes = {}, options = {})
-        parent.document.register :ids, [id, caption]
-        block
-      end
-    end
-  end
-end

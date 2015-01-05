@@ -89,6 +89,10 @@ require 'asciidoctor/latex/tex_preprocessor'
 module Asciidoctor::LaTeX
   module Html5ConverterExtensions
 
+    ENV_CSS = "+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"
+    DIV_END = '+++</div>+++'
+    TABLE_ROW_END = '+++</tr></table>+++'
+
     def info node
 
       attrs =  node.attributes
@@ -113,23 +117,19 @@ module Asciidoctor::LaTeX
       attrs = node.attributes
 
       if attrs['role'] == 'equation'
-        attrs['title'] = nil
-        warn "hc: ".cyan + "title = #{attrs['title']}, ".red + "options = #{options}, caption = #{node.caption}".yellow
+        node.title = nil
         number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
         number_part = ["+++ #{number_part} +++"]
         equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
         table_style='style="width:100%; border-collapse:collapse;border:0"'
-        # row_style='style="border-collapse: collapse"'
         row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
         if options['numbered']
-          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
+          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
         else
-          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + ['+++</tr></table>+++']
+          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
         end
-        # node.title = "(#{node.attributes['equation_number']})"
       else
-        warn "hc: ".blue + "title = #{attrs['title']}".red + ", options = #{options}, caption = #{node.caption}".yellow
-        node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
+        node.lines = [ENV_CSS] + node.lines + [DIV_END]
       end
 
       node.attributes['roles'] = (node.roles + ['environment']) * ' '
@@ -138,7 +138,7 @@ module Asciidoctor::LaTeX
 
     def click node
       info node if $VERBOSE
-      node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
+      node.lines = [ENV_CSS] + node.lines + [DIV_END]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
       self.open node
     end
@@ -149,11 +149,16 @@ module Asciidoctor::LaTeX
         refid = node.attributes['refid']
         if refid and refid[0] == '_'
           output = "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
+        else
+          refs = node.parent.document.references[:ids]
+          # FIXME: the next line is HACKISH
+          reftext = refs[refid].gsub('.', '')
+          output = "<a href=\##{refid}>#{reftext}</a>"
         end
       when 'link'
         output = "<a href=#{node.target}>#{node.text}</a>"
       else
-        output = "FOOBAR"
+        output = 'FOOBAR'
       end
       output
     end
@@ -203,7 +208,7 @@ module Asciidoctor::LaTeX
       if NODE_TYPES.include? node.node_name
         node.tex_process
       else
-        warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta
+        warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta  if $VERBOSE
         # This warning should not be switched off by $VERBOSE
       end
 

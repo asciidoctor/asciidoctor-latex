@@ -89,35 +89,47 @@ require 'asciidoctor/latex/tex_preprocessor'
 module Asciidoctor::LaTeX
   module Html5ConverterExtensions
 
+    ENV_CSS = "+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"
+    DIV_END = '+++</div>+++'
+    TABLE_ROW_END = '+++</tr></table>+++'
+
+    def info node
+
+      attrs =  node.attributes
+
+      warn "\n    node: #{node.node_name}".cyan
+      warn "   attrs: #{attrs}".cyan
+      warn "   title: #{attrs['title']}".cyan
+      warn "    role: #{attrs['role']}".cyan
+      warn "   level: #{attrs['level']}".cyan
+      warn " options: #{attrs['options']}".cyan
+      warn " type   : #{attrs['type']}".cyan
+      warn " caption: #{node.caption}".red
+      warn "      id: #{attrs['id']}".cyan
+      warn " content: #{node.content}".blue
+
+    end
+
     def environment node
 
-      warn "\n    node: #{node.node_name}".cyan if $VERBOSE
-      warn "   attrs: #{node.attributes}".cyan if $VERBOSE
-      warn "    role: #{node.attributes['role']}".cyan if $VERBOSE
-      warn " options: #{node.attributes['options']}".cyan if $VERBOSE
-      warn " type: #{node.attributes['type']}".cyan if $VERBOSE
-      warn "    topu: #{node.attributes['topu']}".cyan if $VERBOSE
-      warn "      id: #{node.attributes['id']}".cyan if $VERBOSE
-      warn " content: #{node.content}".blue if $VERBOSE
+      info node if $VERBOSE
+      options = node.attributes['options']
+      attrs = node.attributes
 
-
-      if node.attributes['role'] == 'equation'
-        puts "hc: role = equation".magenta
-        node.attributes['title'] = nil
-        number_part = '<td style="text-align:right">' + "(#{node.attributes['equation_number']}) </td>"
+      if attrs['role'] == 'equation'
+        node.title = nil
+        number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
         number_part = ["+++ #{number_part} +++"]
         equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
-        table_style='style="width:100%; border-collapse:collapse"'
-        # row_style='style="border-collapse: collapse"'
-        row_style='class="zero" style="border-collapse: collapse; font-size: 10pt; "'
-        if node.attributes['equation_number']
-          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
+        table_style='style="width:100%; border-collapse:collapse;border:0"'
+        row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
+        if options['numbered']
+          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
         else
-          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + ['+++</tr></table>+++']
+          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
         end
-        # node.title = "(#{node.attributes['equation_number']})"
       else
-        node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
+        node.lines = [ENV_CSS] + node.lines + [DIV_END]
       end
 
       node.attributes['roles'] = (node.roles + ['environment']) * ' '
@@ -125,7 +137,8 @@ module Asciidoctor::LaTeX
     end
 
     def click node
-      node.lines = ["+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"] + node.lines + ["+++</div>+++"]
+      info node if $VERBOSE
+      node.lines = [ENV_CSS] + node.lines + [DIV_END]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
       self.open node
     end
@@ -136,13 +149,16 @@ module Asciidoctor::LaTeX
         refid = node.attributes['refid']
         if refid and refid[0] == '_'
           output = "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
-        elsif $ref2counter[refid]
-          output = "<a href=\##{refid} style='text-decoration:none'>(#{$ref2counter[refid]})</a>"
+        else
+          refs = node.parent.document.references[:ids]
+          # FIXME: the next line is HACKISH
+          reftext = refs[refid].gsub('.', '')
+          output = "<a href=\##{refid}>#{reftext}</a>"
         end
       when 'link'
         output = "<a href=#{node.target}>#{node.text}</a>"
       else
-        output = "FOOBAR"
+        output = 'FOOBAR'
       end
       output
     end
@@ -192,7 +208,7 @@ module Asciidoctor::LaTeX
       if NODE_TYPES.include? node.node_name
         node.tex_process
       else
-        warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta
+        warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta  if $VERBOSE
         # This warning should not be switched off by $VERBOSE
       end
 

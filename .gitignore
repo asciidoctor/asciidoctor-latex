@@ -31,4 +31,19 @@ ud.sh
 
 LOG.adoc
 
+
 try-out/possible/
+
+try-out
+tests
+env-disabled.rb
+
+build
+run.sh
+
+.idea/
+
+asciidoctor-latex-1.5.0.dev.gem
+
+
+lib/asciidoctor-latex/

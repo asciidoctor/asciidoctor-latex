@@ -66,11 +66,6 @@ module Asciidoctor::LaTeX
     # parse_context_as :complex
     # ^^^ The above line gave me an error.  I'm not sure what do to with it.
 
-    # Hash to count the number of times each environment is encountered
-    # Global variables again.  Is there a better way?
-    $counter = {}
-    $ref2counter = {}
-
     def process parent, reader, attrs
 
       # Ensure that role is defined
@@ -80,62 +75,53 @@ module Asciidoctor::LaTeX
         role = attrs['role']
       end
 
-      # Use the value of the role to determine
-      # whether this is a numbered block
-      numbered = true
-      if attrs['options'] and attrs['options'].include? 'no-number'
-        numbered = false
+      # Determine whether this is a numbered block
+      # FIXME: what if there are several options?
+      if attrs['options'].nil?
+        attrs['options'] = 'numbered'
+      elsif !(attrs['options'].include? 'no-number')
+        # attrs['options'] = 'numbered'
       end
 
 
-      # If the block is numbered, update the counter
-      if numbered
-        env_name = role   ##################'env-'+role
-        if $counter[env_name] == nil
-          $counter[env_name] = 1
-        else
-          $counter[env_name] += 1
-        end
-      end
-
-
-      # Set title
-      if role == 'code'
-        title = 'Listing'
+      env_name = role # roles.first # FIXME: roles.first is probably best
+      if role == 'equation'
+        attrs['title'] = env_name
       else
-        title = role.capitalize
+        attrs['title'] = env_name.capitalize
       end
-      if numbered
-        title = title + ' ' + $counter[env_name].to_s
-      end
-      if attrs['title']
-        title = title + '. ' + attrs['title'].capitalize
-      end
+      env_title = attrs['title']
 
-      if role != 'equation'
-        attrs['title']  = title
-      else
-        if numbered
-          attrs['equation_number'] = $counter[env_name].to_s
-        end
-      end
-
-      if numbered and attrs['id']
-        $ref2counter[attrs['id']] = $counter[env_name].to_s
-        puts "$ref2counter: #{attrs['id']} => #{$counter[env_name].to_s}".yellow
-      end
-
-
-      warn "env_name: #{env_name}".cyan if $VERBOSE
-      warn "end EnvironmentBlock\n".blue if $VERBOSE
 
       if attrs['role'] == 'code'
-        create_block parent, :listing, reader.lines, attrs
+        block = create_block parent, :listing, reader.lines, attrs
       else
-        create_block parent, :environment, reader.lines, attrs
+        block = create_block parent, :environment, reader.lines, attrs
       end
+
+      warn "document.references".blue + " #{parent.document.references}".cyan  if $VERBOSE
+      warn "id".red + " = #{attrs['id']}".yellow  if $VERBOSE
+
+      if attrs['options']['numbered']
+        caption_num = parent.document.counter_increment("#{env_name}-number", block)
+        caption = "#{caption_num}"
+        attrs['title'] = "#{env_title} #{caption_num}."
+        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
+      else
+        attrs['title'] = "#{env_title}"
+        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
+      end
+
+      block.assign_caption caption
+      if role == 'equation'
+        block.title = "(#{caption_num})"
+      else
+        block.title = attrs['title']
+      end
+      block
 
     end
 
   end
 end
+

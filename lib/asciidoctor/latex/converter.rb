@@ -97,16 +97,10 @@ module Asciidoctor::LaTeX
 
       attrs =  node.attributes
 
-      warn "\n    node: #{node.node_name}".cyan
-      warn "   attrs: #{attrs}".cyan
+      warn "\n    node: #{node.node_name}".red
       warn "   title: #{attrs['title']}".cyan
       warn "    role: #{attrs['role']}".cyan
-      warn "   level: #{attrs['level']}".cyan
       warn " options: #{attrs['options']}".cyan
-      warn " type   : #{attrs['type']}".cyan
-      warn " caption: #{node.caption}".red
-      warn "      id: #{attrs['id']}".cyan
-      warn " content: #{node.content}".blue
 
     end
 
@@ -150,7 +144,7 @@ module Asciidoctor::LaTeX
         if refid and refid[0] == '_'
           output = "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
         else
-          refs = node.parent.document.references[:ids]
+            refs = node.parent.document.references[:ids]
           # FIXME: the next line is HACKISH
           reftext = refs[refid].gsub('.', '')
           output = "<a href=\##{refid}>#{reftext}</a>"

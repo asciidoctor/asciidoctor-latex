@@ -26,8 +26,6 @@ module Asciidoctor
 
     def tex_process
       warn "Node: #{self.class}".blue if $VERBOSE
-      # warn "Attributes: #{self.attributes}".yellow
-      # warn "#{self.methods}".magenta
       doc = "%% Preamble %%\n"
       doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
       doc << "%% Asciidoc TeX Macros %%\n"
@@ -239,18 +237,10 @@ module Asciidoctor
 
     def environment_process
 
-      warn "begin environment_process".blue if $VERBOSE
-      # construct the LaTeX for this node
-      warn "title = #{self.title}".yellow if $VERBOSE
-      warn self.content.cyan if $VERBOSE
-
+      warn "begin environment_process, ".blue + "title = #{self.title}".yellow if $VERBOSE
       env = self.attributes["role"]
-      warn "\nenv attributes: #{attributes}".cyan if $VERBOSE
-      warn "    role: #{attributes['role']}".cyan if $VERBOSE
-      warn " options: #{attributes['options']}".cyan if $VERBOSE
-      warn "    topu: #{attributes['topu']}".cyan if $VERBOSE
-      warn "      id: #{attributes['id']}".cyan if $VERBOSE
-      # record any environments encounted but not built=in
+
+      # record any environments encountered but not built=in
       if !STANDARD_ENVIRONMENT_NAMES.include? env and !$latex_environment_names.include? env
         warn "env added: [#{env}]".blue if $VERBOSE
         $latex_environment_names << env
@@ -262,18 +252,13 @@ module Asciidoctor
         output = "\\begin\{#{env}\}\n\\label\{#{self.id}\}\n#{self.content}\\end\{#{env}\}\n"
       end
 
-      warn "end environment_process\n".blue if $VERBOSE
-
       output
 
     end
 
     def click_process
 
-      warn "begin click_process".blue if $VERBOSE
-      # construct the LaTeX for this node
-      warn "title = #{self.title}".yellow if $VERBOSE
-      warn self.content.cyan if $VERBOSE
+      warn "begin click_process".blue + "title = #{self.title}".yellow if $VERBOSE
 
       click = self.attributes["role"]
       # record any environments encounted but not built=in
@@ -298,10 +283,6 @@ module Asciidoctor
       warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ") if $VERBOSE
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if $VERBOSE
-      warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ") if $VERBOSE
-      warn ["Content:".magenta, "#{self.content}".yellow].join(" ") if $VERBOSE
-      warn ["Style:".green, "#{self.style}".red].join(" ") if $VERBOSE
-      warn ["METHODS:".red, "#{self.methods}".yellow].join(" ") if $VERBOSE
     end
 
 
@@ -344,7 +325,6 @@ module Asciidoctor
     def listing_process
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       warn "atributes: #{self.attributes}".cyan if $VERBOSE
-      warn self.content.yellow if $VERBOSE
       "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
     end
 

@@ -122,7 +122,11 @@ module Asciidoctor
         warn ["  --  item: ".blue, "#{dt.text}"].join(" ") if $VERBOSE
           list << dt.text
         end
-        list << "]" + dd.text
+        list << "]"
+        if dd
+          list << dd.text if dd.text?
+          list << dd.content if dd.blocks?
+        end
       end
       list << "\\end{description}\n\n"
     end

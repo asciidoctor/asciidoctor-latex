@@ -26,55 +26,59 @@ module Asciidoctor
 
     def tex_process
       warn "Node: #{self.class}".blue if $VERBOSE
-      # warn "Attributes: #{self.attributes}".yellow
-      # warn "#{self.methods}".magenta
-      doc = "%% Preamble %%\n"
-      doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
-      doc << "%% Asciidoc TeX Macros %%\n"
-      doc << File.open(File.join(LaTeX::DATA_DIR, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
-      doc << "%% User Macros %%\n"
-      doc << File.open(File.join(LaTeX::DATA_DIR, 'macros.tex'), 'r') { |f| f.read }
+      doc = ''
 
-      if File.exist?('myEnvironments.tex')
-        warn "I will take input from myEnvironments.tex".blue
-        doc << "\\input myEnvironments.tex\n"
-      else
-        warn "I will take input from newEnvironments.tex".blue
-        doc << "\\input newEnvironments.tex\n"
+      unless embedded?
+        doc << "%% Preamble %%\n"
+        doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
+        doc << "%% Asciidoc TeX Macros %%\n"
+        doc << File.open(File.join(LaTeX::DATA_DIR, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
+        doc << "%% User Macros %%\n"
+        doc << File.open(File.join(LaTeX::DATA_DIR, 'macros.tex'), 'r') { |f| f.read }
+
+        if File.exist?('myEnvironments.tex')
+          warn "I will take input from myEnvironments.tex".blue
+          doc << "\\input myEnvironments.tex\n"
+        else
+          warn "I will take input from newEnvironments.tex".blue
+          doc << "\\input newEnvironments.tex\n"
+        end
+
+
+        doc << "%% Front Matter %%"
+        doc << "\n\n\\title\{#{self.doctitle}\}\n"
+        doc << "\\author\{#{self.author}\}\n"
+        doc << "\\date\{#{self.revdate}\}\n\n\n"
+        doc << "%% Begin Document %%"
+        doc << "\n\n\\begin\{document\}\n"
+        doc << "\\maketitle\n"
+        if self.attributes["toc"]
+          doc << "\\tableofcontents\n"
+        end
+        doc << "%% Begin Document Text %%\n"
       end
-
-
-      doc << "%% Front Matter %%"
-      doc << "\n\n\\title\{#{self.doctitle}\}\n"
-      doc << "\\author\{#{self.author}\}\n"
-      doc << "\\date\{#{self.revdate}\}\n\n\n"
-      doc << "%% Begin Document %%"
-      doc << "\n\n\\begin\{document\}\n"
-      doc << "\\maketitle\n"
-      if self.attributes["toc"]
-        doc << "\\tableofcontents\n"
-      end
-      doc << "%% Begin Document Text %%\n"
 
       processed_content = LaTeX::TeXBlock.process_environments self.content
       doc << processed_content
 
-      # Now write the defnitions of the new environments
-      # discovered to file
-      warn "Writing environment definitions to file: newEnvironments.tex" if $VERBOSE
-      definitions = ""
-      $latex_environment_names.each do |name|
-        warn name if $VERBOSE
-        definitions << "\\newtheorem\{#{name}\}\{#{name.capitalize}\}" << "\n"
+      unless embedded?
+        # Now write the defnitions of the new environments
+        # discovered to file
+        warn "Writing environment definitions to file: newEnvironments.tex" if $VERBOSE
+        definitions = ""
+        $latex_environment_names.each do |name|
+          warn name if $VERBOSE
+          definitions << "\\newtheorem\{#{name}\}\{#{name.capitalize}\}" << "\n"
+        end
+
+        File.open('newEnvironments.tex', 'w') { |f| f.write(definitions) }
+
+        # Output
+        doc << "\n\n\\end{document}\n"
       end
 
-      File.open('newEnvironments.tex', 'w') { |f| f.write(definitions) }
-
-      # Output
-      doc << "\n\n\\end{document}\n\n"
-
+      doc << "\n"
     end
-
   end
 
   # Write TeX for each of five levels of Ascidoc section,

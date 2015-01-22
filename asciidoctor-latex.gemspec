@@ -28,7 +28,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'asciidoctor', '~> 1.5.0'
   s.add_runtime_dependency 'htmlentities', '~> 4.3'
 
-  s.add_development_dependency 'asciidoctor-doctest', '~> 1.5.1.dev'
+  # specified in the Gemfile for now
+  #s.add_development_dependency 'asciidoctor-doctest', '~> 1.5.2.dev'
+
   s.add_development_dependency 'rake', '~> 10.0'
   s.add_development_dependency 'yard', '~> 0.8'
 end

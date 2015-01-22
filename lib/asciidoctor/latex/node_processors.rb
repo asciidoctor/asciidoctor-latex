@@ -417,16 +417,6 @@ module Asciidoctor
 
     def tex_process
       warn "This is Asciidoctor::Table, tex_process.  I don't know how to do that".yellow +  " (#{self.node_name})".magenta if $VERBOSE
-      warn ["-- Node:".blue, "#{self.node_name}".cyan, "Methods: #{self.methods}".yellow ].join(" ") if $VERBOSE
-      a = self.rows.body.pop
-      warn "#{a[0].content} - #{a[1].content}" if $VERBOSE
-      b = self.rows.body.pop
-      warn "#{b[0].content} - #{b[1].content}" if $VERBOSE
-      c = self.rows.body.pop
-      warn "#{c[0].content} - #{c[1].content}" if $VERBOSE
-      n = 0
-      warn self.rows.class  if $VERBOSE
-
     end
 
   end

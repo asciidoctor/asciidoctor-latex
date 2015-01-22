@@ -120,7 +120,11 @@ module Asciidoctor
         warn ["  --  item: ".blue, "#{dt.text}"].join(" ") if $VERBOSE
           list << dt.text
         end
-        list << "]" + dd.text
+        list << "]"
+        if dd
+          list << dd.text if dd.text?
+          list << dd.content if dd.blocks?
+        end
       end
       list << "\\end{description}\n\n"
     end
@@ -280,9 +284,13 @@ module Asciidoctor
 
     def report
       # Report on this node
-      warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ") if $VERBOSE
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ") if $VERBOSE
+      warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ")
+      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ")
+      warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ")
+      warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ") if title
+      warn ["Content:".magenta, "#{self.content}".yellow].join(" ")
+      warn ["Style:".green, "#{self.style}".red].join(" ")
+      warn ["METHODS:".red, "#{self.methods}".yellow].join(" ")
     end
 
 
@@ -307,7 +315,7 @@ module Asciidoctor
     #
     def open_process
 
-      report
+      report unless $VERBOSE
 
       # Get title !- nil or make a dummy one
       title = self.attributes["title"]

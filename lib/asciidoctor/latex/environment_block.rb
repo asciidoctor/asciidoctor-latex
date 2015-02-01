@@ -87,6 +87,8 @@ module Asciidoctor::LaTeX
       env_name = role # roles.first # FIXME: roles.first is probably best
       if role == 'equation'
         attrs['title'] = env_name
+      elsif role == 'code'
+        attrs['title'] = 'Listing'
       else
         attrs['title'] = env_name.capitalize
       end

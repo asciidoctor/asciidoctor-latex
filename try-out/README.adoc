@@ -32,24 +32,97 @@ by writing this in Asciidoc
 --
 ----
 
-To render your document as HTML, type the
-command `asciidoctor -a stem=latexmath foo.adoc`.
+
 To render your document as tex, type the commmand
 `asciidoctor-latex foo.adoc`.
+To render your document as HTML, use the `html`
+backend: type the
+command `asciidoctor-latex -b html foo.adoc`.
+
+
+Automatically numbered theorems, definitions, etc., are
+written in the same way
+
+----
+
+[env.theorem#th-pythag#integral]
+--
+For a right triangle, the square on the hypotenuse is equal to the summ
+of the squares of the two remaining sides, i.e.,
+\[
+     c^2 = a^2 + b^2.
+\]
+-
+----
+
+[env.theorem#th-pythag]
+--
+For a right triangle, the square on the hypotenuse is equal to the summ
+of the squares of the two remaining sides, i.e.,
+\[
+     c^2 = a^2 + b^2.
+\]
+--
+
+The optional string `#th-pythag` is a label for purposes of cross-referencing:
+----
+   <<th-pythag>>
+----
+Using the above code, we may later refer to <<th-pythag>>.
+The cross-referencing style applies to env-blocks in general,
+e.g., to
+
+[env.equation#eq-pythag]
+--
+c^2 = a^2 + b^2
+--
+Cross-references are made like this:
+----
+  <eq-pythag>>
+----
+but the rendered
+cross-reference is different: we refer to equation <<eq-pythag>>,
+formula <<eq-pythag>>, etc.  The ``[env.code]`` block also receives
+special treatment. The source text
+----
+[env.code#iter]
+--
+def iter(f, a, n)
+  n.times do
+    a = f.call(a)
+    puts a
+  end
+  return  a
+end
+--
+----
+is rendered as
+
+[env.code#iter]
+--
+def iter(f, a, n)
+  n.times do
+    a = f.call(a)
+    puts a
+  end
+  return  a
+end
+--
+
+
 
 
 == First tests
 
+
+
 Below are some examples you can run through Asciidoctor to see what you can do with it.
 We assume that you've already installed asciidoctor-latex (see README for instructions).
+Now try this
 
 ```
-  $ asciidoctor -r asciidoctor-latex -a stem=latexmath eq-latex.adoc
+  $ asciidoctor -b html eq-latex.adoc
 ```
-
-Here the `-r asciidoctor-latex` says _require the rubygem asciidoctor-latex_, and the
-`-a stem=latexmath` says _use the_ `stem` notation processor
-with the `latexmath` _option_.
 
 After running the above command, you should find the file `eq-latex.html`
 next to the source file `eq-latex.adoc`. View it in your browser.
@@ -78,6 +151,7 @@ or simply with the wrapper script
 If all was successful, there will be a file `eq-latex.tex` alongside
 your source file `eq-latex.adoc`.  You can process it as you
 would any LaTeX file.
+
 
 
 

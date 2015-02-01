@@ -144,10 +144,15 @@ module Asciidoctor::LaTeX
         if refid and refid[0] == '_'
           output = "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
         else
-            refs = node.parent.document.references[:ids]
-          # FIXME: the next line is HACKISH
-          reftext = refs[refid].gsub('.', '')
-          output = "<a href=\##{refid}>#{reftext}</a>"
+          refs = node.parent.document.references[:ids]
+          # FIXME: the next line is HACKISH (and it crashes the app when refs[refid]) is nil)
+          # FIXME: and with the fix for nil results is even more hackish
+          if refs[refid]
+            reftext = refs[refid].gsub('.', '')
+            output = "<a href=\##{refid}>#{reftext}</a>"
+          else
+            output = 'ERROR: refs[refid] was nil'
+          end
         end
       when 'link'
         output = "<a href=#{node.target}>#{node.text}</a>"

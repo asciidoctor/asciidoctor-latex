@@ -97,7 +97,7 @@ module Asciidoctor::LaTeX
 
       attrs =  node.attributes
 
-      warn "\n    node: #{node.node_name}".red
+      warn "\n  --node: #{node.node_name}".red
       warn "   title: #{attrs['title']}".cyan
       warn "    role: #{attrs['role']}".cyan
       warn " options: #{attrs['options']}".cyan
@@ -109,6 +109,8 @@ module Asciidoctor::LaTeX
       info node if $VERBOSE
       options = node.attributes['options']
       attrs = node.attributes
+
+      warn "In Html5ConverterExtensions, environment: role = #{attrs['role']}".magenta  if $VERBOSE
 
       if attrs['role'] == 'equation'
         node.title = nil
@@ -131,6 +133,9 @@ module Asciidoctor::LaTeX
     end
 
     def click node
+
+      warn "\nIn Html5ConverterExtensions, click".magenta  if $VERBOSE
+
       info node if $VERBOSE
       node.lines = [ENV_CSS] + node.lines + [DIV_END]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
@@ -138,6 +143,9 @@ module Asciidoctor::LaTeX
     end
 
     def inline_anchor node
+
+      warn "\nIn Html5ConverterExtensions, inline_anchor".magenta if $VERBOSE
+
       case node.type.to_s
       when 'xref'
         refid = node.attributes['refid']
@@ -175,7 +183,7 @@ module Asciidoctor::LaTeX
       preprocessor TeXPreprocessor
       block EnvironmentBlock
       block ClickBlock
-      preprocessor PrependProcessor if document.basebackend? 'html'
+      # preprocessor PrependProcessor if document.basebackend? 'html'
       postprocessor EntToUni if document.basebackend? 'tex'
     end
 

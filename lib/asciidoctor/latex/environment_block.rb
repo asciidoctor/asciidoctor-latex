@@ -102,6 +102,7 @@ module Asciidoctor::LaTeX
       end
 
       warn "document.references".blue + " #{parent.document.references}".cyan  if $VERBOSE
+      warn "attrs['role'] = #{attrs['role']} and role = #{role}".red if $VERBOSE
       warn "id".red + " = #{attrs['id']}".yellow  if $VERBOSE
 
       if attrs['options']['numbered']

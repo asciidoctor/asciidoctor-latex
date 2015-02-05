@@ -193,7 +193,7 @@ module Asciidoctor::LaTeX
       block EnvironmentBlock
       block ClickBlock
       warn "document.attributes['click'] = #{document.attributes['click']}".yellow if $VERBOSE
-      preprocessor PrependProcessor if document.attributes['click_extras'] == 'include'
+      # preprocessor PrependProcessor if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'
     end
 

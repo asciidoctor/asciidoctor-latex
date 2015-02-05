@@ -85,7 +85,7 @@ module Asciidoctor::LaTeX
 
 
       env_name = role # roles.first # FIXME: roles.first is probably best
-      if role == 'equation'
+      if role == 'equation' or role == 'chem'
         attrs['title'] = env_name
       elsif role == 'code'
         attrs['title'] = 'Listing'
@@ -117,7 +117,7 @@ module Asciidoctor::LaTeX
 
 
       block.assign_caption caption
-      if role == 'equation'
+      if role == 'equation' or role == 'chem'
         block.title = "#{caption_num}"
       else
         block.title = attrs['title']

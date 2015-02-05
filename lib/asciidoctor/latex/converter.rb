@@ -130,6 +130,15 @@ module Asciidoctor::LaTeX
         else
           node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
         end
+      elsif node.attributes['role'] == 'chem'
+        node.title = nil
+        number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
+        number_part = ["+++ #{number_part} +++"]
+        equation_part = ['+++<td style="width:100%;">+++'] + [' \\[\\ce{' + node.lines[0] + '}\\] '] + ['+++</td>+++']
+        puts "NXX, equation_part = #{equation_part}"
+        table_style='class="zero" style="width:100%; border-collapse:collapse; border:0"'
+        row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
+        node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
       else
         node.lines = [ENV_CSS] + node.lines + [DIV_END]
       end
@@ -152,6 +161,7 @@ module Asciidoctor::LaTeX
 
       warn "\nIn Html5ConverterExtensions, inline_anchor".magenta if $VERBOSE
       warn "node.type = #{node.type.to_s}".magenta if $VERBOSE
+      warn "node.attributes = #{node.attributes.to_s}".magenta if $VERBOSE
 
       case node.type.to_s
       when 'xref'
@@ -164,9 +174,15 @@ module Asciidoctor::LaTeX
           # FIXME: and with the fix for nil results is even more hackish
           if refs[refid]
             reftext = refs[refid].gsub('.', '')
-            # output = "<span><a href=\##{refid} style='text-decoration:none'>#{reftext}</a></span>"
-            # output = "<span><a href=\##{refid} style='text-decoration:none'>equation #{reftext}</a></span>"
-            output = "<span><a href=\##{refid}>equation #{reftext}</a></span>"
+            if refid =~ /\Aeq-/
+              output = "<span><a href=\##{refid}>equation #{reftext}</a></span>"
+            elsif refid =~ /\Aformula-/
+              output = "<span><a href=\##{refid}>formula #{reftext}</a></span>"
+            elsif refid =~ /\Areaction-/
+              output = "<span><a href=\##{refid}>reaction #{reftext}</a></span>"
+            else
+              output = "<span><a href=\##{refid} style='text-decoration:none'>#{reftext}</a></span>"
+            end
           else
             output = 'ERROR: refs[refid] was nil'
           end

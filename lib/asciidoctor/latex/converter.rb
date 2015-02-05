@@ -83,6 +83,8 @@ require 'asciidoctor/latex/tex_block'
 require 'asciidoctor/latex/tex_preprocessor'
 # require 'asciidoctor/latex/preamble_processor'
 
+$VERBOSE = true
+
 
 # code for Html5ConverterExtension & its insertion
 # template by @mojavelinux

@@ -102,6 +102,10 @@ module Asciidoctor::LaTeX
       warn "    role: #{attrs['role']}".cyan
       warn " options: #{attrs['options']}".cyan
 
+      warn "AAAAAA".yellow
+      warn "foo = #{node.parent.document.attributes['foo']}".yellow
+      warn "BBBBBB".yellow
+
     end
 
     def environment node
@@ -186,7 +190,8 @@ module Asciidoctor::LaTeX
       preprocessor TeXPreprocessor
       block EnvironmentBlock
       block ClickBlock
-      # preprocessor PrependProcessor if document.basebackend? 'html'
+      warn "document.attributes['click'] = #{document.attributes['click']}".yellow if $VERBOSE
+      preprocessor PrependProcessor if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'
     end
 

@@ -104,10 +104,6 @@ module Asciidoctor::LaTeX
       warn "    role: #{attrs['role']}".cyan
       warn " options: #{attrs['options']}".cyan
 
-      warn "AAAAAA".yellow
-      warn "foo = #{node.parent.document.attributes['foo']}".yellow
-      warn "BBBBBB".yellow
-
     end
 
     def environment node
@@ -135,7 +131,6 @@ module Asciidoctor::LaTeX
         number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
         number_part = ["+++ #{number_part} +++"]
         equation_part = ['+++<td style="width:100%;">+++'] + [' \\[\\ce{' + node.lines[0] + '}\\] '] + ['+++</td>+++']
-        puts "NXX, equation_part = #{equation_part}"
         table_style='class="zero" style="width:100%; border-collapse:collapse; border:0"'
         row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
@@ -149,8 +144,6 @@ module Asciidoctor::LaTeX
 
     def click node
 
-      warn "\nIn Html5ConverterExtensions, click".magenta  if $VERBOSE
-
       info node if $VERBOSE
       node.lines = [ENV_CSS] + node.lines + [DIV_END]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
@@ -158,10 +151,6 @@ module Asciidoctor::LaTeX
     end
 
     def inline_anchor node
-
-      warn "\nIn Html5ConverterExtensions, inline_anchor".magenta if $VERBOSE
-      warn "node.type = #{node.type.to_s}".magenta if $VERBOSE
-      warn "node.attributes = #{node.attributes.to_s}".magenta if $VERBOSE
 
       case node.type.to_s
       when 'xref'

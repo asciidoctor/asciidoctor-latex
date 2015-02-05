@@ -115,6 +115,11 @@ module Asciidoctor::LaTeX
         warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
       end
 
+      if attrs['role'] == 'code'
+        caption = nil
+      end
+      
+
 
       block.assign_caption caption
       if role == 'equation' or role == 'chem'

@@ -115,9 +115,10 @@ module Asciidoctor::LaTeX
         warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
       end
 
+
       block.assign_caption caption
       if role == 'equation'
-        block.title = "(#{caption_num})"
+        block.title = "#{caption_num}"
       else
         block.title = attrs['title']
       end

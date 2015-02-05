@@ -116,7 +116,7 @@ module Asciidoctor::LaTeX
         node.title = nil
         number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
         number_part = ["+++ #{number_part} +++"]
-        equation_part = ['+++<td>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
+        equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
         table_style='style="width:100%; border-collapse:collapse;border:0"'
         row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
         if options['numbered']
@@ -145,6 +145,7 @@ module Asciidoctor::LaTeX
     def inline_anchor node
 
       warn "\nIn Html5ConverterExtensions, inline_anchor".magenta if $VERBOSE
+      warn "node.type = #{node.type.to_s}".magenta if $VERBOSE
 
       case node.type.to_s
       when 'xref'
@@ -157,7 +158,9 @@ module Asciidoctor::LaTeX
           # FIXME: and with the fix for nil results is even more hackish
           if refs[refid]
             reftext = refs[refid].gsub('.', '')
-            output = "<a href=\##{refid}>#{reftext}</a>"
+            # output = "<span><a href=\##{refid} style='text-decoration:none'>#{reftext}</a></span>"
+            # output = "<span><a href=\##{refid} style='text-decoration:none'>equation #{reftext}</a></span>"
+            output = "<span><a href=\##{refid}>equation #{reftext}</a></span>"
           else
             output = 'ERROR: refs[refid] was nil'
           end

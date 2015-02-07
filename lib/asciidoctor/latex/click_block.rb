@@ -98,12 +98,12 @@ module Asciidoctor::LaTeX
       warn "click_name: #{click_name}".cyan if $VERBOSE
       warn "end Clicklock\n".blue if $VERBOSE
 
-      warn "role = #{role}".red
+      warn "role = #{role}".red if $VERBOSE
       if role == 'listing'
-        warn "creating listing block".red
+        warn "creating listing block".red if $VERBOSE
         create_block parent, :listing, reader.lines, attrs
       else
-        warn "creating click block".red
+        warn "creating click block".red if $VERBOSE
         create_block parent, :click, reader.lines, attrs
       end
 
@@ -111,3 +111,46 @@ module Asciidoctor::LaTeX
 
   end
 end
+
+
+
+require 'asciidoctor/extensions'
+
+module Asciidoctor::LaTeX
+
+  class ClickInsertion < Asciidoctor::Extensions::Postprocessor
+
+    def process document, output
+      warn "Entering ClickInsertion, process".magenta if $VERBOSE
+      output = output.gsub('</head>', $click_insertion)
+    end
+
+  end
+
+  $click_insertion = <<EOF
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+<script>
+
+  $(document).ready(function(){
+    $('.openblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )
+    $('.openblock.click').find('.content').hide()
+  });
+
+</script>
+
+<script>
+
+  $(document).ready(function(){
+    $('.listingblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )
+    $('.listingblock.click').find('.content').hide()
+  });
+
+</script>
+</head>
+
+EOF
+
+end
+

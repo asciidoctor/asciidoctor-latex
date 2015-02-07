@@ -8,7 +8,7 @@ module Asciidoctor::LaTeX
   class Chem < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
-      warn "CXX: Chem _process".magenta
+      warn "Chem _process".magenta if $VERBOSE
       output = output.gsub($tex_snippet, $chem_snippet)
     end
 

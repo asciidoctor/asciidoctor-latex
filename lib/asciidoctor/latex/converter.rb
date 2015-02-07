@@ -126,7 +126,7 @@ module Asciidoctor::LaTeX
         number_part = ["+++ #{number_part} +++"]
         equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
         table_style='style="width:100%; border-collapse:collapse;border:0"'
-        row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
+        row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 12pt; "'
         if options['numbered']
           node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
         else
@@ -204,7 +204,8 @@ module Asciidoctor::LaTeX
       block EnvironmentBlock
       block ClickBlock
       warn "document.attributes['click'] = #{document.attributes['click']}".yellow if $VERBOSE
-      # preprocessor PrependProcessor if document.attributes['click_extras'] == 'include'
+      preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include'
+      postprocessor ClickInsertion if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'
       postprocessor Dollar if document.basebackend? 'html'
       postprocessor Chem if document.basebackend? 'html'

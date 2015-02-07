@@ -81,6 +81,8 @@ require 'asciidoctor/latex/node_processors'
 require 'asciidoctor/latex/prepend_processor'
 require 'asciidoctor/latex/tex_block'
 require 'asciidoctor/latex/tex_preprocessor'
+require 'asciidoctor/latex/dollar'
+require 'asciidoctor/latex/escape_dollar'
 # require 'asciidoctor/latex/preamble_processor'
 
 $VERBOSE = true
@@ -200,6 +202,8 @@ module Asciidoctor::LaTeX
       warn "document.attributes['click'] = #{document.attributes['click']}".yellow if $VERBOSE
       # preprocessor PrependProcessor if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'
+      postprocessor Dollar if document.basebackend? 'html'
+      postprocessor EscapeDollar if document.basebackend? 'tex'
     end
 
 

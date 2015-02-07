@@ -118,7 +118,7 @@ module Asciidoctor::LaTeX
       if attrs['role'] == 'code'
         caption = nil
       end
-      
+
 
 
       block.assign_caption caption

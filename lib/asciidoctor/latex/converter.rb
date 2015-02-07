@@ -83,6 +83,10 @@ require 'asciidoctor/latex/tex_block'
 require 'asciidoctor/latex/tex_preprocessor'
 require 'asciidoctor/latex/dollar'
 require 'asciidoctor/latex/escape_dollar'
+require 'asciidoctor/latex/chem'
+
+
+
 # require 'asciidoctor/latex/preamble_processor'
 
 $VERBOSE = true
@@ -203,6 +207,7 @@ module Asciidoctor::LaTeX
       # preprocessor PrependProcessor if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'
       postprocessor Dollar if document.basebackend? 'html'
+      postprocessor Chem if document.basebackend? 'html'
       postprocessor EscapeDollar if document.basebackend? 'tex'
     end
 
@@ -210,6 +215,7 @@ module Asciidoctor::LaTeX
     Asciidoctor::Extensions.register :latex do
       # EnvironmentBlock
     end
+
 
 
     TOP_TYPES = %w(document section)

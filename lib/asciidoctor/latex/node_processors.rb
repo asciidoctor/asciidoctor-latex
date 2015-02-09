@@ -29,7 +29,7 @@ module Asciidoctor
 
       doc = ''
 
-      unless embedded? # or document.attributes[:foo] == 'bar'
+      unless embedded? or document.attributes['noheader']
         doc << "%% Preamble %%\n"
         doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
         doc << "%% Asciidoc TeX Macros %%\n"
@@ -55,8 +55,10 @@ module Asciidoctor
         if self.attributes["toc"]
           doc << "\\tableofcontents\n"
         end
-        doc << "%% Begin Document Text %%\n"
+        doc << "\n\n\\begin\{document\}\n"
       end
+
+      doc << "\n\n\\begin\{document\}\n\n" if document.attributes['noheader']
 
       processed_content = LaTeX::TeXBlock.process_environments self.content
       doc << processed_content
@@ -74,7 +76,7 @@ module Asciidoctor
         File.open('newEnvironments.tex', 'w') { |f| f.write(definitions) }
 
         # Output
-        doc << "\n\n\\end{document}\n"
+        doc << "\n\\end{document}\n"
       end
 
       doc << "\n"
@@ -82,7 +84,7 @@ module Asciidoctor
   end
 
   # Write TeX for each of five levels of Ascidoc section,
-  # .e.g. \section{Introction} for == Introduction
+  # .e.g. \section{Introduction} for == Introduction
   class Section
 
     def tex_process
@@ -128,8 +130,8 @@ module Asciidoctor
         end
         list << "]"
         if dd
-          list << dd.text if dd.text?
-          list << dd.content if dd.blocks?
+          list << dd.text << "\n\n" if dd.text?
+          list << dd.content << "\n" if dd.blocks?
         end
       end
       list << "\\end{description}\n\n"

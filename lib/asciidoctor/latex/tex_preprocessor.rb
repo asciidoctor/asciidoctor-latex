@@ -16,9 +16,6 @@ module Asciidoctor::LaTeX
       return reader if reader.eof?
       replacement_lines = reader.read_lines.map do |line|
         # (line.include? '$') ? (line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB) : line
-        if line.include? '\$'
-          line = line.gsub '\$', 'DOLLOD'
-        end
         if line.include? '$'
           line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB
         end

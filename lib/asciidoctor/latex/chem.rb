@@ -8,7 +8,6 @@ module Asciidoctor::LaTeX
   class Chem < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
-      warn "Chem _process".magenta if $VERBOSE
       output = output.gsub($tex_snippet, $chem_snippet)
     end
 
@@ -17,4 +16,3 @@ end
 
 $tex_snippet = 'TeX: { equationNumbers: { autoNumber: "none" } }'
 $chem_snippet = 'TeX: { extensions: ["mhchem.js"] }'
-

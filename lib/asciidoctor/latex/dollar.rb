@@ -2,7 +2,7 @@ require 'asciidoctor'
 require 'asciidoctor/extensions'
 
 module Asciidoctor::LaTeX
-  # Map @@DOLLAR: to $
+  # Map DOLLOD to $
   class Dollar < Asciidoctor::Extensions::Postprocessor
 
     def process document, output

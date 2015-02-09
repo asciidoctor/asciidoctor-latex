@@ -1,5 +1,7 @@
 == Click blocks
 
+{set:click_extras:include}
+
 
 Click blocks are like `env`-blocks, except that
 when you open a document, only the title,

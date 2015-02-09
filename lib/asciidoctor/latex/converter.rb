@@ -105,20 +105,18 @@ module Asciidoctor::LaTeX
 
       attrs =  node.attributes
 
-      warn "\n  --node: #{node.node_name}".red
-      warn "   title: #{attrs['title']}".cyan
-      warn "    role: #{attrs['role']}".cyan
-      warn " options: #{attrs['options']}".cyan
+      warn "\n   HTMLConverter, node: #{node.node_name}".red
+      # warn "   title: #{attrs['title']}".cyan
+      # warn "    role: #{attrs['role']}".cyan
+      # warn " options: #{attrs['options']}".cyan
 
     end
 
     def environment node
 
-      info node if $VERBOSE
+      # info node if $VERBOSE
       options = node.attributes['options']
       attrs = node.attributes
-
-      warn "In Html5ConverterExtensions, environment: role = #{attrs['role']}".magenta  if $VERBOSE
 
       if attrs['role'] == 'equation'
         node.title = nil
@@ -150,7 +148,7 @@ module Asciidoctor::LaTeX
 
     def click node
 
-      info node if $VERBOSE
+      # info node if $VERBOSE
       node.lines = [ENV_CSS] + node.lines + [DIV_END]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
       self.open node
@@ -203,7 +201,6 @@ module Asciidoctor::LaTeX
       preprocessor TeXPreprocessor
       block EnvironmentBlock
       block ClickBlock
-      warn "document.attributes['click'] = #{document.attributes['click']}".yellow if $VERBOSE
       preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include'
       postprocessor ClickInsertion if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'
@@ -227,7 +224,6 @@ module Asciidoctor::LaTeX
     NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
 
     def initialize backend, opts
-      warn "initialize converter".magenta if $VERBOSE
       super
       basebackend 'tex'
       outfilesuffix '.tex'

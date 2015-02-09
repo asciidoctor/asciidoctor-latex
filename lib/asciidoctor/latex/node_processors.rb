@@ -29,7 +29,7 @@ module Asciidoctor
 
       doc = ''
 
-      unless embedded?
+      unless embedded? # or document.attributes[:foo] == 'bar'
         doc << "%% Preamble %%\n"
         doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
         doc << "%% Asciidoc TeX Macros %%\n"

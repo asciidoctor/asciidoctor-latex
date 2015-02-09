@@ -29,7 +29,6 @@ module Asciidoctor::LaTeX
 
     def process parent, reader, attrs
 
-      warn "begin ClickBlock".blue if $VERBOSE
       click_name = attrs["role"]
 
       # Ensure that role is defined
@@ -94,16 +93,9 @@ module Asciidoctor::LaTeX
       end
       attrs['role'] = 'click'
 
-
-      warn "click_name: #{click_name}".cyan if $VERBOSE
-      warn "end Clicklock\n".blue if $VERBOSE
-
-      warn "role = #{role}".red if $VERBOSE
       if role == 'listing'
-        warn "creating listing block".red if $VERBOSE
         create_block parent, :listing, reader.lines, attrs
       else
-        warn "creating click block".red if $VERBOSE
         create_block parent, :click, reader.lines, attrs
       end
 
@@ -121,7 +113,6 @@ module Asciidoctor::LaTeX
   class ClickInsertion < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
-      warn "Entering ClickInsertion, process".magenta if $VERBOSE
       output = output.gsub('</head>', $click_insertion)
     end
 
@@ -153,4 +144,3 @@ module Asciidoctor::LaTeX
 EOF
 
 end
-

@@ -29,7 +29,9 @@ module Asciidoctor
 
       doc = ''
 
-      unless embedded? or document.attributes['noheader']
+      warn "document.attributes['header'] = #{document.attributes['header']}".magenta
+
+      unless embedded? or document.attributes['header']=='no'
         doc << "%% Preamble %%\n"
         doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
         doc << "%% Asciidoc TeX Macros %%\n"
@@ -50,15 +52,14 @@ module Asciidoctor
         doc << "\\author\{#{self.author}\}\n"
         doc << "\\date\{#{self.revdate}\}\n\n\n"
         doc << "%% Begin Document %%"
-        doc << "\n\n\\begin\{document\}\n"
+        # doc << "\n\n\\begin\{document\}\n"
         doc << "\\maketitle\n"
         if self.attributes["toc"]
           doc << "\\tableofcontents\n"
         end
-        doc << "\n\n\\begin\{document\}\n"
       end
 
-      doc << "\n\n\\begin\{document\}\n\n" if document.attributes['noheader']
+      doc << "\n\n\\begin\{document\}\n" unless embedded?
 
       processed_content = LaTeX::TeXBlock.process_environments self.content
       doc << processed_content

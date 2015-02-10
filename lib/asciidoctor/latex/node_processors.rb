@@ -251,6 +251,8 @@ module Asciidoctor
     def environment_process
 
       warn "begin environment_process, ".blue + "title = #{self.title}".yellow if $VERBOSE
+      warn "role = #{self.attributes["role"]}"
+
       env = self.attributes["role"]
 
       # record any environments encountered but not built=in
@@ -259,10 +261,16 @@ module Asciidoctor
         $latex_environment_names << env
       end
 
-      if self.id == nil # No label
-        output = "\\begin\{#{env}\}\n#{self.content}\n\\end\{#{env}\}\n"
+      if self.id
+        label = "\n\\label\{#{self.id}\}"
       else
-        output = "\\begin\{#{env}\}\n\\label\{#{self.id}\}\n#{self.content}\\end\{#{env}\}\n"
+        label = ""
+      end
+
+      if env == 'listing'
+        output = "\\begin\{#{env}\}#{label}\\begin{verbatim}\n\n#{self.content}\\end{verbatim}\n\\end\{#{env}\}\n"
+      else
+        output = "\\begin\{#{env}\}#{label}\n#{self.content}\n\\end\{#{env}\}\n"
       end
 
       output
@@ -394,15 +402,30 @@ module Asciidoctor
     def inline_anchor_process
 
       warn ["Node:".blue, "#{self.node_name}".magenta,  "type[#{self.type}], ".green + " text: #{self.text} target: #{self.target}".cyan].join(" ") if $VERBOSE
-      warn "Attributes: #{self.attributes}".yellow
-      # warn "self.class = #{class}".yellow if $VERBOSE
+
+      refid = self.attributes['refid']
+      refs = self.parent.document.references[:ids]
+      # FIXME: the next line is HACKISH (and it crashes the app when refs[refid]) is nil)
+      # FIXME: and with the fix for nil results is even more hackish
+      # if refs[refid]
+      if refs[refid]
+        reftext = refs[refid].gsub('.', '')
+        m = reftext.match /(\d*)/
+        if m[1] == reftext
+          reftext = "(#{reftext})"
+        end
+      else
+        reftext = ""
+      end
       case self.type
       when :link
         "\\href\{#{self.target}\}\{#{self.text}\}"
       when :ref
         "\\label\{#{self.text.gsub(/\[(.*?)\]/, "\\1")}\}"
       when :xref
-        "\\ref\{#{self.target.gsub('#','')}\}"
+        #"\\ref\{#{self.target.gsub('#','')}\}"
+        # warn "\\hyperlink\{#{refid}\}\{#{reftext}\}".yellow
+        "\\hyperlink\{#{refid}\}\{#{reftext}\}"
       else
         warn "!!  : undefined inline anchor -----------".magenta if $VERBOSE
       end

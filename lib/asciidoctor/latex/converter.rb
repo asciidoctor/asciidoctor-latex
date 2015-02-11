@@ -219,7 +219,7 @@ module Asciidoctor::LaTeX
     TOP_TYPES = %w(document section)
     LIST_TYPES = %w(dlist olist ulist)
     INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)
-    BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote)
+    BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote example floating_title, image)
     OTHER_TYPES = %w(environment table)
     NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
 

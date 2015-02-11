@@ -1,0 +1,15 @@
+:numbered:
+== Test Discrete
+
+=== Setting up the workshop
+
+[discrete]
+=== Advice to toolsmiths
+
+[float]
+=== Safety procedures
+
+
+
+
+=== Accounting procedures

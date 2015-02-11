@@ -29,7 +29,7 @@ module Asciidoctor
 
       doc = ''
 
-      warn "document.attributes['header'] = #{document.attributes['header']}".magenta
+      # warn "document.attributes['header'] = #{document.attributes['header']}".magenta if $VERBOSE
 
       unless embedded? or document.attributes['header']=='no'
         doc << "%% Preamble %%\n"
@@ -101,6 +101,7 @@ module Asciidoctor
       "\\#{tagname}#{tagsuffix}\{#{self.title}\}\n\n#{self.content}\n\n"
     end
   end
+
 
   # Write TeX \itemize or \enumerate lists
   # for ulist and olist.  Recurses for
@@ -191,6 +192,12 @@ module Asciidoctor
         self.click_process
       when :listing
         self.listing_process
+      when :example
+        self.example_process
+      when :floating_title
+        self.floating_title_process
+      when :image
+        self.image_process
       else
         warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" if $VERBOSE if $VERBOSE
         ""
@@ -349,9 +356,72 @@ module Asciidoctor
 
     def listing_process
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn "atributes: #{self.attributes}".cyan if $VERBOSE
+      warn "attributes: #{self.attributes}".cyan if $VERBOSE
       "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
     end
+
+    def example_process
+      warn "exAmple_process".yellow
+      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      warn "self.content_model = #{self.content_model}".yellow
+      warn "&^^!!**!".yellow
+      # self.content_model = :verbatim
+      warn "content: #{self.content}".cyan if $VERBOSE
+      "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
+    end
+
+
+    def floating_title_process
+      warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
+      doctype = self.document.doctype
+
+      tags = { 'article' => [ 'part',  'section', 'subsection', 'subsubsection', 'paragraph' ],
+               'book' => [ 'part', 'chapter', 'section', 'subsection', 'subsubsection', 'paragraph' ] }
+
+      tagname = tags[doctype][self.level]
+
+      "\\#{tagname}*\{#{self.title}\}\n\n#{self.content}\n\n"
+    end
+
+    def image_process
+      warn "image_process".yellow
+      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      if self.attributes['width']
+        width = "#{self.attributes['width'].to_f/100.0}truein"
+      else
+        width = '2.5truein'
+      end
+      image = self.attributes['target']
+      caption =   "\\caption\{#{self.attributes['title']}\}"
+      refs = self.parent.document.references  # [:ids]
+      if self.attributes['align'] == 'center'
+        align = '\\centering'
+      else
+        align = ''
+      end
+      float = self.attributes['float']
+      if float
+        figure_type = 'wrapfigure'
+        ftext_width = width # '0.45\\textwidth'
+        caption=''
+      else
+        figure_type = 'figure'
+        text_width = ''
+      end
+      case float
+      when 'left'
+        position = '{l}'
+      when 'right'
+        position = '{r}'
+      else
+        position = '[h]'
+      end
+      warn "refs = #{refs}".cyan
+      "\\begin{#{figure_type}}#{position}\{#{ftext_width}\}\n\\includegraphics[width=#{width}]{#{image}}\n#{caption}\n#{align}\n\\end{#{figure_type}}\n"
+    end
+
 
   end
 

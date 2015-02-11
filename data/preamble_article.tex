@@ -6,6 +6,8 @@
 %\geometry{landscape}                % Activate for for rotated page geometry
 %\usepackage[parfill]{parskip}       % Activate to begin paragraphs with an empty line rather than an indent
 \usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{wrapfig}
 \usepackage{amssymb}
 \usepackage{epstopdf}
 \usepackage{color}
@@ -24,4 +26,4 @@
 }
 
 
-\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%% \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}

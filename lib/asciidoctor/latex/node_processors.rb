@@ -198,6 +198,10 @@ module Asciidoctor
         self.floating_title_process
       when :image
         self.image_process
+      when :preamble
+        self.preamble_process
+      when :sidebar
+        self.sidebar_process
       else
         warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" if $VERBOSE if $VERBOSE
         ""
@@ -422,8 +426,22 @@ module Asciidoctor
       "\\begin{#{figure_type}}#{position}\{#{ftext_width}\}\n\\includegraphics[width=#{width}]{#{image}}\n#{caption}\n#{align}\n\\end{#{figure_type}}\n"
     end
 
+    def preamble_process
+      warn "image_process".yellow
+      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      "\\begin\{preamble\}\n#{self.content}\n\\end\{preamble\}\n"
+    end
 
-  end
+
+    def sidebar_process
+      warn "image_process".yellow
+      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      "\\begin\{sidebar\}\n#{self.content}\n\\end\{sidebar\}\n"
+    end
+
+  end # class Block
 
   # Process inline elements
   class Inline

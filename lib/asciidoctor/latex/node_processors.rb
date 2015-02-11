@@ -202,6 +202,8 @@ module Asciidoctor
         self.preamble_process
       when :sidebar
         self.sidebar_process
+      when :verse
+        self.verse_process
       else
         warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" if $VERBOSE if $VERBOSE
         ""
@@ -435,10 +437,17 @@ module Asciidoctor
 
 
     def sidebar_process
-      warn "image_process".yellow
+      warn "sidebar_process".yellow
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       warn "attributes: #{self.attributes}".cyan if $VERBOSE
       "\\begin\{sidebar\}\n#{self.content}\n\\end\{sidebar\}\n"
+    end
+
+    def verse_process
+      warn "verse_process".yellow
+      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      "\\begin\{alltt\}\n#{self.content}\n\\end\{alltt\}\n"
     end
 
   end # class Block

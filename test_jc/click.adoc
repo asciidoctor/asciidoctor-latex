@@ -1,0 +1,7 @@
+== Test: click
+
+[click.comment]
+--
+Be serious.
+--
+

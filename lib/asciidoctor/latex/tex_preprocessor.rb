@@ -7,9 +7,12 @@ module Asciidoctor::LaTeX
   class TeXPreprocessor < Asciidoctor::Extensions::Preprocessor
 
     # Map $...$ to stem:[...]
-    TEX_DOLLAR_RX = /(^|\s|\()\$(.*?)\$($|\s|\)|,|\.)/
+    # TEX_DOLLAR_RX = /(^|\s|\()\$(.*?)\$($|\s|\)|,|\.)/
     # TEX_DOLLAR_SUB = '\1latexmath:[\2]\3'
-    TEX_DOLLAR_SUB = '\1\\\(\2\\\)\3'
+    # TEX_DOLLAR_SUB = '\1\\\(\2\\\)\3'
+
+    TEX_DOLLAR_RX = /\$(.*?)\$/
+    TEX_DOLLAR_SUB = '\\\(\1\\\)'
 
 
     def process document, reader

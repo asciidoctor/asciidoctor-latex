@@ -68,6 +68,15 @@ module Asciidoctor::LaTeX
 
     def process parent, reader, attrs
 
+      warn "env: attributes = #{attrs}".yellow if $VERBOSE
+
+      # Get orginal title if there is one
+      if attrs['title']
+        original_title =  attrs['title']
+      else
+        original_title = nil
+      end
+
       # Ensure that role is defined
       if attrs['role'] == nil
         role = 'item'
@@ -108,7 +117,11 @@ module Asciidoctor::LaTeX
       if attrs['options']['numbered']
         caption_num = parent.document.counter_increment("#{env_name}-number", block)
         caption = "#{caption_num}"
-        attrs['title'] = "#{env_title} #{caption_num}."
+        if original_title
+          attrs['title'] = "#{env_title} #{caption_num}: #{original_title}"
+        else
+          attrs['title'] = "#{env_title} #{caption_num}."
+        end
         warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
       else
         attrs['title'] = "#{env_title}"

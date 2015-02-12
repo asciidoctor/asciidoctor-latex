@@ -29,9 +29,13 @@ module Asciidoctor::LaTeX
 
     def process parent, reader, attrs
 
+      warn "env: attributes = #{attrs}".yellow if $VERBOSE
+
       click_name = attrs["role"]
+      original_title = attrs['title']
 
       # Ensure that role is defined
+       original_role = attrs['role']
        if attrs['role'] == nil
          role = 'item'
        else
@@ -73,6 +77,10 @@ module Asciidoctor::LaTeX
            title = title + ': ' + attrs['title'].capitalize
          end
        end
+
+      if original_role == nil
+        title = original_title
+      end
 
        if role != 'equation'
          attrs['title']  = title

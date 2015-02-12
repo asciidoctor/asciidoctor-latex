@@ -123,8 +123,8 @@ module Asciidoctor::LaTeX
         number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
         number_part = ["+++ #{number_part} +++"]
         equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
-        table_style='style="width:100%; border-collapse:collapse;border:0"'
-        row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 12pt; "'
+        table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
+        row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
         if options['numbered']
           node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
         else

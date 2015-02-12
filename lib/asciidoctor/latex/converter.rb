@@ -167,6 +167,7 @@ module Asciidoctor::LaTeX
           # FIXME: and with the fix for nil results is even more hackish
           if refs[refid]
             reftext = refs[refid].gsub('.', '')
+            reftext = reftext.gsub(/:.*/,'')
             if refid =~ /\Aeq-/
               output = "<span><a href=\##{refid}>equation #{reftext}</a></span>"
             elsif refid =~ /\Aformula-/

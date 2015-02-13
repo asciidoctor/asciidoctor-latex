@@ -37,8 +37,14 @@ module Asciidoctor
         doc << "%% Asciidoc TeX Macros %%\n"
         doc << File.open(File.join(LaTeX::DATA_DIR, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
         doc << "%% User Macros %%\n"
-        doc << File.open(File.join(LaTeX::DATA_DIR, 'macros.tex'), 'r') { |f| f.read }
-
+        # doc << File.open(File.join(LaTeX::DATA_DIR, 'macros.tex'), 'r') { |f| f.read }
+        if File.exist? 'macros.tex'
+          macros = IO.read('macros.tex')
+          warn "macros: #{macros.length} chars".yellow
+          doc << macros
+        else
+          warn "Could not find file macros.tex".yellow
+        end
         if File.exist?('myEnvironments.tex')
           warn "I will take input from myEnvironments.tex".blue
           doc << "\\input myEnvironments.tex\n"

@@ -200,7 +200,7 @@ module Asciidoctor::LaTeX
 
     Asciidoctor::Extensions.register do
       preprocessor TeXPreprocessor
-      preprocessor FileInsert if File.exist? 'macros.tex' and document.basebackend? 'html'
+      preprocessor MacroInsert if File.exist? 'macros.tex' and document.basebackend? 'html'
       block EnvironmentBlock
       block ClickBlock
       preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include'

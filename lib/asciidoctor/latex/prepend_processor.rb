@@ -29,7 +29,7 @@ module Asciidoctor::LaTeX
 
   end
 
-  class FileInsert < Asciidoctor::Extensions::Preprocessor
+  class MacroInsert < Asciidoctor::Extensions::Preprocessor
 
     def putline line
       @@line_array += [line, ""]
@@ -49,12 +49,15 @@ module Asciidoctor::LaTeX
       return reader if reader.eof?
 
       putline '++++'
+      putline "<div class='hide'>"
       putline '\('
       lines = file_contents.split("\n")
       lines.each do |line|
         putline line
       end
+
       putline '\)'
+      putline '</div'
       putline '++++'
 
       reader.unshift_lines @@line_array

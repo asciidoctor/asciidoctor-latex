@@ -1,7 +1,6 @@
 require 'asciidoctor'
 require 'asciidoctor/latex/core_ext/colored_string'
 
-$VERBOSE=true
 
 module Asciidoctor
   class Document
@@ -33,7 +32,13 @@ module Asciidoctor
 
       unless embedded? or document.attributes['header']=='no'
         doc << "%% Preamble %%\n"
-        doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
+        if File.exist? 'preamble.tex'
+          preamble = IO.read('preamble.tex')
+          warn "preamble: #{preamble.length} chars".yellow
+          doc << preamble << "\n "
+        else
+          doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
+        end
         doc << "%% Asciidoc TeX Macros %%\n"
         doc << File.open(File.join(LaTeX::DATA_DIR, 'asciidoc_tex_macros.tex'), 'r') { |f| f.read }
         doc << "%% User Macros %%\n"
@@ -272,7 +277,7 @@ module Asciidoctor
     def environment_process
 
       warn "begin environment_process, ".blue + "title = #{self.title}".yellow if $VERBOSE
-      warn "role = #{self.attributes["role"]}"
+      warn "role = #{self.attributes["role"]}" if $VERBOSE
 
       env = self.attributes["role"]
 

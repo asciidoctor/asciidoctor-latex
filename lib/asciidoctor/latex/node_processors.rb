@@ -204,6 +204,8 @@ module Asciidoctor
         self.sidebar_process
       when :verse
         self.verse_process
+      # when :table
+        # self.table_process
       else
         warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" if $VERBOSE if $VERBOSE
         ""
@@ -450,6 +452,16 @@ module Asciidoctor
       "\\begin\{alltt\}\n#{self.content}\n\\end\{alltt\}\n"
     end
 
+=begin
+    def table_process
+      warn "table_process".yellow
+      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+
+      "TABLE"
+    end
+=end
+
   end # class Block
 
   # Process inline elements
@@ -545,8 +557,29 @@ module Asciidoctor
   class Table
 
     def tex_process
-      warn "This is Asciidoctor::Table, tex_process.  I don't know how to do that".yellow +  " (#{self.node_name})".magenta if $VERBOSE
-    end
+      # warn "This is Asciidoctor::Table, tex_process.  I don't know how to do that".yellow +  " (#{self.node_name})".magenta if $VERBOSE
+      # table = Table.new self.parent, self.attributes
+      n_rows = self.rows.body.count
+      n_columns = self.columns.count
+      alignment = (['c']*n_columns).join('|')
+      output = "\\begin\{center\}\n"
+      output << "\\begin\{tabular\}\{|#{alignment}|\}\n"
+      output << "\\hline\n"
+      self.rows.body.each_with_index do |row, index|
+        row_array = []
+        row.each do |cell|
+          row_array << cell.content[0]
+        end
+        output << row_array.join(' & ')
+        output << " \\\\ \n"
+      end
+      output << "\\hline\n"
+      output << "\\end{tabular}\n"
+      output << "\\end{center}\n"
+      warn "#{output}".yellow
+      "#{output}"
+  end
+
 
   end
 

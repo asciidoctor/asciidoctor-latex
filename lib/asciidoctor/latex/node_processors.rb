@@ -80,7 +80,8 @@ module Asciidoctor
         # discovered to file
         warn "Writing environment definitions to file: newEnvironments.tex" if $VERBOSE
         definitions = ""
-        $latex_environment_names.each do |name|
+
+        $latex_environment_names.uniq.each do |name|
           warn name if $VERBOSE
           definitions << "\\newtheorem\{#{name}\}\{#{name.capitalize}\}" << "\n"
         end

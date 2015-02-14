@@ -57,7 +57,7 @@ module Asciidoctor::LaTeX
       end
 
       putline '\)'
-      putline '</div'
+      putline '</div>'
       putline '++++'
 
       reader.unshift_lines @@line_array

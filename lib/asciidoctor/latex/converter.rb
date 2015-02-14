@@ -118,11 +118,26 @@ module Asciidoctor::LaTeX
       options = node.attributes['options']
       attrs = node.attributes
 
+      warn "env role = #{attrs['role']}".yellow if $VERBOSE
+
       if attrs['role'] == 'equation'
         node.title = nil
         number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
         number_part = ["+++ #{number_part} +++"]
         equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
+        table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
+        row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
+        if options['numbered']
+          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
+        else
+          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
+        end
+      elsif attrs['role'] == 'equationalign'
+        warn "execting env role = #{attrs['role']}".yellow if $VERBOSE
+        node.title = nil
+        number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
+        number_part = ["+++ #{number_part} +++"]
+        equation_part = ['+++<td style="width:100%";>+++'] + ['\\[\\begin{split}'] + node.lines + ['\\end{split}\\]'] + ['+++</td>+++']
         table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
         row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
         if options['numbered']
@@ -137,7 +152,7 @@ module Asciidoctor::LaTeX
         equation_part = ['+++<td style="width:100%;">+++'] + [' \\[\\ce{' + node.lines[0] + '}\\] '] + ['+++</td>+++']
         table_style='class="zero" style="width:100%; border-collapse:collapse; border:0"'
         row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
-        node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + ['+++</tr></table>+++']
+        node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"]  + equation_part + number_part +['+++</tr></table>+++']
       else
         node.lines = [ENV_CSS] + node.lines + [DIV_END]
       end

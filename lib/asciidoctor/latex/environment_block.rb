@@ -94,7 +94,7 @@ module Asciidoctor::LaTeX
 
 
       env_name = role # roles.first # FIXME: roles.first is probably best
-      if role == 'equation' or role == 'chem'
+      if %w(equation equationalign chem).include? role
         attrs['title'] = env_name
       elsif role == 'code'
         attrs['title'] = 'Listing'
@@ -115,7 +115,12 @@ module Asciidoctor::LaTeX
       warn "id".red + " = #{attrs['id']}".yellow  if $VERBOSE
 
       if attrs['options']['numbered']
-        caption_num = parent.document.counter_increment("#{env_name}-number", block)
+        if env_name == 'equationalign'
+          env_ref_prefix = 'equation'
+        else
+          env_ref_prefix = env_name
+        end
+        caption_num = parent.document.counter_increment("#{env_ref_prefix}-number", block)
         caption = "#{caption_num}"
         if original_title
           attrs['title'] = "#{env_title} #{caption_num}: #{original_title}"
@@ -135,7 +140,7 @@ module Asciidoctor::LaTeX
 
 
       block.assign_caption caption
-      if role == 'equation' or role == 'chem'
+      if %w(equation equationalign chem).include? role
         block.title = "#{caption_num}"
       else
         block.title = attrs['title']

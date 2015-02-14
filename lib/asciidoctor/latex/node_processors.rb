@@ -64,13 +64,14 @@ module Asciidoctor
         doc << "\\date\{#{self.revdate}\}\n\n\n"
         doc << "%% Begin Document %%"
         # doc << "\n\n\\begin\{document\}\n"
+        doc << "\n\n\\begin\{document\}\n"
         doc << "\\maketitle\n"
         if self.attributes["toc"]
           doc << "\\tableofcontents\n"
         end
       end
 
-      doc << "\n\n\\begin\{document\}\n" unless embedded?
+
 
       processed_content = LaTeX::TeXBlock.process_environments self.content
       doc << processed_content
@@ -177,7 +178,7 @@ module Asciidoctor
   class Block
 
     # STANDARD_ENVIRONMENT_NAMES = %w(theorem proposition lemma definition example problem equation)
-    STANDARD_ENVIRONMENT_NAMES = %w(equation theorem)
+    STANDARD_ENVIRONMENT_NAMES = %w(equation)
 
     def tex_process
       warn ["Node:".blue , "#{self.blockname}".blue].join(" ") if $VERBOSE
@@ -284,6 +285,7 @@ module Asciidoctor
 
       # record any environments encountered but not built=in
       if !STANDARD_ENVIRONMENT_NAMES.include? env and !$latex_environment_names.include? env
+      # if  !($latex_environment_names.include? env)
         warn "env added: [#{env}]".blue if $VERBOSE
         $latex_environment_names << env
       end
@@ -359,7 +361,7 @@ module Asciidoctor
     #
     def open_process
 
-      report unless $VERBOSE
+      report if $VERBOSE
 
       # Get title !- nil or make a dummy one
       title = self.attributes["title"]
@@ -384,8 +386,6 @@ module Asciidoctor
       warn "exAmple_process".yellow
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       warn "attributes: #{self.attributes}".cyan if $VERBOSE
-      warn "self.content_model = #{self.content_model}".yellow
-      warn "&^^!!**!".yellow
       # self.content_model = :verbatim
       warn "content: #{self.content}".cyan if $VERBOSE
       "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
@@ -405,7 +405,6 @@ module Asciidoctor
     end
 
     def image_process
-      warn "image_process".yellow
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       warn "attributes: #{self.attributes}".cyan if $VERBOSE
       if self.attributes['width']
@@ -438,41 +437,27 @@ module Asciidoctor
       else
         position = '[h]'
       end
-      warn "refs = #{refs}".cyan
       "\\begin{#{figure_type}}#{position}\{#{ftext_width}\}\n\\includegraphics[width=#{width}]{#{image}}\n#{caption}\n#{align}\n\\end{#{figure_type}}\n"
     end
 
     def preamble_process
-      warn "image_process".yellow
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn "attributes: #{self.attributes}".cyan if $VERBOSE
       "\\begin\{preamble\}\n#{self.content}\n\\end\{preamble\}\n"
     end
 
 
     def sidebar_process
-      warn "sidebar_process".yellow
+      warn "sidebar_process".yellow if $VERBOSE
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       warn "attributes: #{self.attributes}".cyan if $VERBOSE
       "\\begin\{sidebar\}\n#{self.content}\n\\end\{sidebar\}\n"
     end
 
     def verse_process
-      warn "verse_process".yellow
+      warn "verse_process".yellow if $VERBOSE
       warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       warn "attributes: #{self.attributes}".cyan if $VERBOSE
       "\\begin\{alltt\}\n#{self.content}\n\\end\{alltt\}\n"
     end
-
-=begin
-    def table_process
-      warn "table_process".yellow
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn "attributes: #{self.attributes}".cyan if $VERBOSE
-
-      "TABLE"
-    end
-=end
 
   end # class Block
 
@@ -588,7 +573,6 @@ module Asciidoctor
       output << "\\hline\n"
       output << "\\end{tabular}\n"
       output << "\\end{center}\n"
-      warn "#{output}".yellow
       "#{output}"
   end
 

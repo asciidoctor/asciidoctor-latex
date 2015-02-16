@@ -57,6 +57,8 @@ require 'asciidoctor/latex/core_ext/colored_string'
 
 
 module Asciidoctor::LaTeX
+
+
   class EnvironmentBlock < Asciidoctor::Extensions::BlockProcessor
 
     use_dsl

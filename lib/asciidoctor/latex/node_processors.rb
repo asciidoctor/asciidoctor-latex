@@ -298,9 +298,15 @@ module Asciidoctor
 
       if env == 'listing'
         output = "\\begin\{#{env}\}#{label}\\begin{verbatim}\n\n#{self.content}\\end{verbatim}\n\\end\{#{env}\}\n"
+      elsif env == 'equationalign'
+        output = "\\begin\{equation\}#{label}\n\\begin\{split\}\n#{self.content}\n\\end\{split\}\n\\end\{equation\}\n"
+      elsif env == 'chem'
+        output = "\\begin\{equation\}#{label}\n\\ce\{#{self.content}\}\n\\end\{equation\}\n"
       else
         output = "\\begin\{#{env}\}#{label}\n#{self.content}\n\\end\{#{env}\}\n"
       end
+
+
 
       output
 
@@ -363,6 +369,10 @@ module Asciidoctor
 
       report if $VERBOSE
 
+      attr = self.attributes
+
+      warn "attributes (open block): #{self.attributes}" if $VERBOSE
+
       # Get title !- nil or make a dummy one
       title = self.attributes["title"]
       if title == nil
@@ -370,9 +380,18 @@ module Asciidoctor
       end
 
 
+
+
        # strip constructs like {counter:theorem} from the title
        title = title.gsub /\{.*?\}/, ""
        title = title.strip
+
+      if attr['role'] == 'text-center'
+        "\\begin\{center\}\n#{self.content}\\end\{center\}"
+      else
+        self.content
+      end
+
 
     end
 

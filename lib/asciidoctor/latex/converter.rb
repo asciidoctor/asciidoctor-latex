@@ -73,6 +73,7 @@
 
 require 'asciidoctor'
 require 'asciidoctor/converter/html5'
+require 'asciidoctor/latex/inline_macros'
 require 'asciidoctor/latex/core_ext/colored_string'
 require 'asciidoctor/latex/click_block'
 require 'asciidoctor/latex/ent_to_uni'
@@ -218,6 +219,7 @@ module Asciidoctor::LaTeX
       preprocessor MacroInsert if File.exist? 'macros.tex' and document.basebackend? 'html'
       block EnvironmentBlock
       block ClickBlock
+      inline_macro ChemInlineMacro
       preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include'
       postprocessor ClickInsertion if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'

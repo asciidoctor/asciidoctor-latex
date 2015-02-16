@@ -19,7 +19,19 @@ module Asciidoctor::LaTeX
       return reader if reader.eof?
       replacement_lines = reader.read_lines.map do |line|
         # (line.include? '$') ? (line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB) : line
-        if line.include? '$'
+        if line.include? '<-->' and document.basebackend? 'tex'
+          line = line.gsub('<-->', 'CHEMLEFTRIGHTARROW')
+        end
+        if line.include? '->' and document.basebackend? 'tex'
+          line = line.gsub('->', 'CHEMRIGHTARROW')
+        end
+        if line.include? '<-' and document.basebackend? 'tex'
+          line = line.gsub('<-', 'CHEMLEFTARROW')
+        end
+        if line.include? '\$' and document.basebackend? 'html'
+          line = line.gsub '\$', 'DOLLOD'
+        end
+        if line.include? '$' and document.basebackend? 'html'
           line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB
         end
         line

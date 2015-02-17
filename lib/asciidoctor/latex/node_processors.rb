@@ -373,6 +373,7 @@ module Asciidoctor
 
       warn "attributes (open block): #{self.attributes}" if $VERBOSE
 
+
       # Get title !- nil or make a dummy one
       title = self.attributes["title"]
       if title == nil

@@ -141,7 +141,8 @@ module Asciidoctor::LaTeX
     $('.openblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )
     $('.openblock.click').find('.content').hide()
   });
-
+  $(document).ready(ready);
+  $(document).on('page:load', ready);
 </script>
 
 <script>

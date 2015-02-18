@@ -220,7 +220,7 @@ module Asciidoctor::LaTeX
       block EnvironmentBlock
       block ClickBlock
       inline_macro ChemInlineMacro
-      preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include'
+      preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
       postprocessor ClickInsertion if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'
       postprocessor Dollar if document.basebackend? 'html'

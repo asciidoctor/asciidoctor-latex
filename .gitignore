@@ -47,3 +47,8 @@ asciidoctor-latex-1.5.0.dev.gem
 
 
 lib/asciidoctor-latex/
+
+text/
+test_jc/
+boo/
+dt

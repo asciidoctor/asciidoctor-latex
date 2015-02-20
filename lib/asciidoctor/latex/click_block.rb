@@ -138,12 +138,12 @@ module Asciidoctor::LaTeX
 <script>
 
   $(document).ready(function(){
-    $('.openblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )
+    $('.openblock.click').click( function()  { $(this).find('.content').slideToggle('200');
+      $.reloadMathJax() }  )
     $('.openblock.click').find('.content').hide()
   });
   $(document).ready(ready);
   $(document).on('page:load', ready);
-  $.reloadMathJax()
 </script>
 
 <script>

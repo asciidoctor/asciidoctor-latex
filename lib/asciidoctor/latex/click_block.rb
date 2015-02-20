@@ -1,12 +1,19 @@
 # Test doc: work/click.adoc
 
 
-# ClickBlock is a first draft for
-
-# Note to self: when done with this, eliminate
-# the puts lines with DEVELOPMENT
-# or toggle them with $VERBOSE
-
+# ClickBlock implements the construct
+#
+#  [click.answer]
+#  --
+#  73
+#  --
+#
+# See http://epsilon.my.noteshare.io/lessons/click-blocks-jc
+#
+# Documents containing click-blocks must be rendered with
+#
+# asciidoctor-latex -b html -a click_extras=include
+#
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 require 'asciidoctor/latex/core_ext/colored_string'
@@ -112,49 +119,3 @@ module Asciidoctor::LaTeX
   end
 end
 
-
-
-require 'asciidoctor/extensions'
-
-module Asciidoctor::LaTeX
-
-  class InjectHTMLHead < Asciidoctor::Extensions::Postprocessor
-
-    def process document, output
-      output = output.gsub('</head>', $click_insertion)
-    end
-
-  end
-
-  $click_insertion = <<EOF
-
-<style>
-  .click .title { color: blue; }'
-</style>
-
-
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-
-<script>
-
-  $(document).ready(function(){
-    $('.openblock.click').click( function()  { $(this).find('.content').slideToggle('200');
-      $.reloadMathJax() }  )
-    $('.openblock.click').find('.content').hide()
-  });
-
-  $(document).ready(function(){
-    $('.listingblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )
-    $('.listingblock.click').find('.content').hide()
-  });
-
-
-  $(document).ready(ready);
-  $(document).on('page:load', ready);
-</script>
-
-</head>
-
-EOF
-
-end

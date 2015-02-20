@@ -3,6 +3,12 @@
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 
+# Modify the default mathJax script to run mhchem instead
+# of autonumbuering of equations -- which is taken care of
+# by [env.equation], [env.equationalign]
+#
+# See http://www.noteshare.io/section/the-chem-environment
+#
 module Asciidoctor::LaTeX
   # Map @@DOLLAR: to $
   class Chem < Asciidoctor::Extensions::Postprocessor

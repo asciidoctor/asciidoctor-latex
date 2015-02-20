@@ -1,3 +1,8 @@
+# DEFUNCT CODE?
+#
+# I think this is defunct code -- will investigate
+#
+
 # For trying things out
 # Call the input file foo.in
 # Then execute

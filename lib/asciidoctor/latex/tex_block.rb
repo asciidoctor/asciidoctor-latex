@@ -1,6 +1,17 @@
+# This is for the latex backend
+# I have to review what the f the function
+# of this code is -- still used??
+#
+# I believe the point here is that
+# usage of [env.equation] etc
+# obviates the need for this code.
+#
+# To be continued @jxxcarlson
+
+
 #
 # The purpose of the module TeXBlock is to
-# transform structure of the form
+# transform structures of the form
 # \[ ... \], either by passing them on unchanged
 # or by stripping away the escaped braces.
 #

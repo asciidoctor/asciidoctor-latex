@@ -1,8 +1,19 @@
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 
-# Map $ ... $ to latexmath:[ ... ] before
-# running Asciidoctor
+# Map $ ... $ to \(..\) before
+# running Asciidoctor, and map
+# '\$' to 'DOLLOD'.  The latter
+# will be mapped back to '$'
+# for the HTML backend by the
+# postprocessor in 'dollar.rb' and
+# to '\$' by the postprocessor
+# in 'escape_dollar.rb'
+#
+# The remaining substitutions will
+# be eliminated when I edit the
+# relevant source files on noteshare.
+
 module Asciidoctor::LaTeX
   class TeXPreprocessor < Asciidoctor::Extensions::Preprocessor
 

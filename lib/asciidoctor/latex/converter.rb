@@ -2,7 +2,58 @@
 #
 # File: latex-converter.rb
 # Author: J. Carlson (jxxcarlson@gmail.com)
-# Date: 9/26/2014
+# First commit: 9/26/2014
+# Date: 2/20/1015
+#
+# OVERVIEW
+#
+# Asciidoctor-latex does two things:
+#
+#   -- provides an HTML backend which adds latex-like features to asciidoctor
+#      asciidoc(tor) with these additional features will be called 'asciidoctor-latex'
+#
+#  -- provides a converter from asciidoctor-latex to asciidoctor.  This converter
+#     is 'usable' but has limited coverage of asciidoctor-latex
+#
+# See http://www.noteshare.io/section/asciidoctor-latex-manual-intro
+# for a description (with examples) of asciidoctor-latex.
+#
+# INSTALLATION
+#
+# Run 'rake install' to install the asciidoctor-latex gem locally.
+#
+# USAGE (1: html)
+#
+# Run
+#
+#     'asciidoctor-latex -b html foo.adoc'
+#
+# to render an asciidoctor-latex document to html
+#
+# Some documents (those with 'click blocks', see http://www.noteshare.io/section/homework-problems)
+# For these, run
+#
+#     'asciidoctor-latex -b html -a click_extras=include foo.adoc'
+#
+# In both cases the output is 'foo.html'
+#
+# USAGE (2: latex)
+#
+# Run
+#
+#      'asciidoctor-latex foo.adoc'
+#
+# to convert foo.adoc to foo.tex.  This feature
+# needs a lot of work.
+#
+# to convert foo.tex to the latex file foo.latex
+# You can put files 'macros.tex' and 'preamble.tex' to
+# replace the default preamble and set of macros.
+# Define your own 'newEnvironments.tex' to use yours
+# as opposed to the default definitons of environments
+# in tex mapping to [tex.ENVIRNOMENT] in asciidoctor-latex.
+#
+# TECHNICAL NOTES
 #
 # This is a first step towards writing a LaTeX backend
 # for Asciidoctor. It is based on the
@@ -76,10 +127,12 @@ require 'asciidoctor/converter/html5'
 require 'asciidoctor/latex/inline_macros'
 require 'asciidoctor/latex/core_ext/colored_string'
 require 'asciidoctor/latex/click_block'
+require 'asciidoctor/latex/inject_html'
 require 'asciidoctor/latex/ent_to_uni'
 require 'asciidoctor/latex/environment_block'
 require 'asciidoctor/latex/node_processors'
 require 'asciidoctor/latex/prepend_processor'
+require 'asciidoctor/latex/macro_insert'
 require 'asciidoctor/latex/tex_block'
 require 'asciidoctor/latex/tex_preprocessor'
 require 'asciidoctor/latex/dollar'
@@ -221,10 +274,10 @@ module Asciidoctor::LaTeX
       block ClickBlock
       inline_macro ChemInlineMacro
       preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
-      postprocessor InjectHTMLHead if document.attributes['click_extras'] == 'include'
+      postprocessor InjectHTML if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'
-      postprocessor Dollar if document.basebackend? 'html'
       postprocessor Chem if document.basebackend? 'html'
+      postprocessor Dollar if document.basebackend? 'html'
       postprocessor EscapeDollar if document.basebackend? 'tex'
     end
 

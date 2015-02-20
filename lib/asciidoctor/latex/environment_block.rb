@@ -1,6 +1,31 @@
 # Test doc: samples/env.adoc
 
+# EnvironmentBlock implements constructs of the form
+#
+# [env.TYPE]
+# --
+# foo, bar, etc.
+# --
+#
+# e.g.,
+#
+# [env.theorem]
+# --
+# $2 + 2  = 4$. Cool!
+# --
+#
+# TYPE can be anything, but certain values, e.g.,
+# 'equation', 'equationalign', 'code' receive
+# special handling.
+#
+# See  http://www.noteshare.io/section/environments
+#
+#
+#
 
+
+# OLD NOTES
+#
 # EnvironmentBlock is a first draft for a better
 # way of handing a construct in Asciidoc that
 # will map to LaTeX environments.  See

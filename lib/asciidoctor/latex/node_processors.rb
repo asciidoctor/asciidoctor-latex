@@ -2,6 +2,10 @@ require 'asciidoctor'
 require 'asciidoctor/latex/core_ext/colored_string'
 
 
+# The classes in node_processor implement the
+# latex backend for Asciidoctor-latex.  This
+# module is far from complete.
+
 module Asciidoctor
   class Document
 

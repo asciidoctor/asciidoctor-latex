@@ -118,7 +118,7 @@ require 'asciidoctor/extensions'
 
 module Asciidoctor::LaTeX
 
-  class ClickInsertion < Asciidoctor::Extensions::Postprocessor
+  class InjectHTMLHead < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
       output = output.gsub('</head>', $click_insertion)
@@ -142,18 +142,17 @@ module Asciidoctor::LaTeX
       $.reloadMathJax() }  )
     $('.openblock.click').find('.content').hide()
   });
-  $(document).ready(ready);
-  $(document).on('page:load', ready);
-</script>
-
-<script>
 
   $(document).ready(function(){
     $('.listingblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )
     $('.listingblock.click').find('.content').hide()
   });
 
+
+  $(document).ready(ready);
+  $(document).on('page:load', ready);
 </script>
+
 </head>
 
 EOF

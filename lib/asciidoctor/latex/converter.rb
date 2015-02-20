@@ -221,7 +221,7 @@ module Asciidoctor::LaTeX
       block ClickBlock
       inline_macro ChemInlineMacro
       preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
-      postprocessor ClickInsertion if document.attributes['click_extras'] == 'include'
+      postprocessor InjectHTMLHead if document.attributes['click_extras'] == 'include'
       postprocessor EntToUni if document.basebackend? 'tex'
       postprocessor Dollar if document.basebackend? 'html'
       postprocessor Chem if document.basebackend? 'html'

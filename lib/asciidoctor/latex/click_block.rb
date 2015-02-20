@@ -143,6 +143,7 @@ module Asciidoctor::LaTeX
   });
   $(document).ready(ready);
   $(document).on('page:load', ready);
+  $.reloadMathJax()
 </script>
 
 <script>

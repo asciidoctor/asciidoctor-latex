@@ -16,6 +16,9 @@ module Asciidoctor::LaTeX
     def process document, reader
 
       file_contents = IO.read('macros.tex')
+      if file_contents == nil
+        file_contents = IO.read('public/macros.tex')
+      end
       if file_contents
         warn "In MacroInsert, file_contents: #{file_contents.length} chars read".yellow if $VERBOSE
       else

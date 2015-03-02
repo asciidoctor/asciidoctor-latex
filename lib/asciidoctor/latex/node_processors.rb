@@ -94,7 +94,7 @@ module Asciidoctor
         File.open('newEnvironments.tex', 'w') { |f| f.write(definitions) }
 
         # Output
-        doc << "\n\\end{document}\n"
+        doc << "\n\\end{document}\n" unless document.attributes['header']=='no'
       end
 
       doc << "\n"

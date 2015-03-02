@@ -18,7 +18,7 @@ require 'asciidoctor/extensions'
 #
 module Asciidoctor::LaTeX
   # Map @@DOLLAR: to \$
-  class EscapeDollar < Asciidoctor::Extensions::Postprocessor
+  class TexPostprocessor < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
       output = output.gsub('\DOLLOD', '\$') if document.basebackend? 'html'

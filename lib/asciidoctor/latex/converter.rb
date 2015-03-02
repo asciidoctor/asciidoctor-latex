@@ -136,7 +136,7 @@ require 'asciidoctor/latex/macro_insert'
 require 'asciidoctor/latex/tex_block'
 require 'asciidoctor/latex/tex_preprocessor'
 require 'asciidoctor/latex/dollar'
-require 'asciidoctor/latex/escape_dollar'
+require 'asciidoctor/latex/tex_postprocessor'
 require 'asciidoctor/latex/chem'
 
 
@@ -275,10 +275,10 @@ module Asciidoctor::LaTeX
       inline_macro ChemInlineMacro
       preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
       postprocessor InjectHTML if document.attributes['click_extras'] == 'include'
-      postprocessor EntToUni if document.basebackend? 'tex'
+      postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'
       postprocessor Chem if document.basebackend? 'html'
       postprocessor Dollar if document.basebackend? 'html'
-      postprocessor EscapeDollar if document.basebackend? 'tex'
+      postprocessor TexPostprocessor if document.basebackend? 'tex'
     end
 
 

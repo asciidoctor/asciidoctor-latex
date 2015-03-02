@@ -59,7 +59,7 @@ module Asciidoctor
           doc << "\\input myEnvironments.tex\n"
         else
           warn "I will take input from newEnvironments.tex".blue
-          doc << "\\input newEnvironments.tex\n"
+          # doc << "\\input newEnvironments.tex\n"
         end
 
         doc << "%% Front Matter %%"

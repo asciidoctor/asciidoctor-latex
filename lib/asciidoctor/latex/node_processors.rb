@@ -326,6 +326,9 @@ module Asciidoctor
         $latex_environment_names << click
       end
 
+      ### XXX fixme:
+      click = 'note'
+
       if self.id == nil # No label
         output = "\\begin\{#{click}\}\n#{self.content}\n\\end\{#{click}\}\n"
       else

@@ -429,14 +429,27 @@ module Asciidoctor
     end
 
     def image_process
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      warn ["IXX: Node:".magenta, "#{self.blockname}".cyan].join(" ")  if $VERBOSE
+      warn "IXX: attributes: #{self.attributes}".cyan  if $VERBOSE
       if self.attributes['width']
         width = "#{self.attributes['width'].to_f/100.0}truein"
       else
         width = '2.5truein'
       end
-      image = self.attributes['target']
+      raw_image = self.attributes['target']
+      if document.attributes['noteshare'] == 'yes'
+        warn "IXX: extracting image name".red if $VERBOSE
+        image_rx = /image.*original\/(.*)\?/
+        match_data = raw_image.match image_rx
+        if match_data
+          image = match_data[1]
+          warn "IXX: image name: #{image}".red if $VERBOSE
+        else
+          image = "undefined"
+        end
+      else
+        image = raw_image
+      end
       caption =   "\\caption\{#{self.attributes['title']}\}"
       refs = self.parent.document.references  # [:ids]
       if self.attributes['align'] == 'center'

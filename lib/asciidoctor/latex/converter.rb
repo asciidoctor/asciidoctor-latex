@@ -273,8 +273,8 @@ module Asciidoctor::LaTeX
       block EnvironmentBlock
       block ClickBlock
       inline_macro ChemInlineMacro
-      preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
-      postprocessor InjectHTML if document.attributes['click_extras'] == 'include'
+      # preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
+      postprocessor InjectHTML unless document.attributes['noteshare'] == 'yes'
       postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'
       postprocessor Chem if document.basebackend? 'html'
       postprocessor Dollar if document.basebackend? 'html'

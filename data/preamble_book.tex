@@ -17,6 +17,16 @@
 \usepackage[version=3]{mhchem}
 \usepackage{amsmath}
 
+% Needed to properly typeset
+% standard unicode charaters:
+%
+\RequirePackage{fix-cm}
+\usepackage{fontspec}
+\usepackage[Latin,Greek]{ucharclasses}
+%
+% NOTE: you must also use xelatex
+% as the typesetting engine
+
 
 % \usepackage{fontspec}
 %\usepackage{polyglossia}

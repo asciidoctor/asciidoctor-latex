@@ -229,8 +229,14 @@ module Asciidoctor
       end
     end
 
+
     def paragraph_process
-      LaTeX::TeXPostProcess.make_substitutions(self.content) << "\n\n"
+      warn "pargraph attributes: #{self.attributes}".red
+      out = ""
+      if self.attributes['title']
+        out << "\{\\bf #{self.attributes['title']}\.}" << "\n"
+      end
+      out << LaTeX::TeXPostProcess.make_substitutions(self.content) << "\n\n"
     end
 
     def stem_process

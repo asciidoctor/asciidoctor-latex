@@ -9,8 +9,8 @@ module Asciidoctor::LaTeX
   class EntToUni < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
-      decoder = HTMLEntities.new
-      output = decoder.decode output
+      coder = HTMLEntities.new
+      coder.decode output
     end
 
   end

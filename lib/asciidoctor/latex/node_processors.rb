@@ -231,7 +231,7 @@ module Asciidoctor
 
 
     def paragraph_process
-      warn "pargraph attributes: #{self.attributes}".red
+      warn "paragraph attributes: #{self.attributes}".red if $VERBOSE
       out = ""
       if self.attributes['title']
         out << "\{\\bf #{self.attributes['title']}\.}" << "\n"

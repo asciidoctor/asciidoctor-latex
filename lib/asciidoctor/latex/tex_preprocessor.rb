@@ -24,7 +24,7 @@ module Asciidoctor::LaTeX
 
     TEX_DOLLAR_RX = /\$(.*?)\$/
     TEX_DOLLAR_SUB = '\\\(\1\\\)'
-    # TEX_DOLLAR_SUB = '+\\\(\1\\\)+'
+    TEX_DOLLAR_SUB2 = '+\\\(\1\\\)+'
 
 
     def process document, reader
@@ -45,6 +45,15 @@ module Asciidoctor::LaTeX
         end
         if line.include? '$' and document.basebackend? 'html'
           line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB
+        end
+        if line.include? '$' and document.basebackend? 'tex'
+          line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB2
+        end
+        if line.include? '\\[' and document.basebackend? 'tex'
+          line = line.gsub '\\[', '+\\['
+        end
+        if line.include? '\\]' and document.basebackend? 'tex'
+          line = line.gsub '\\]', '\\]+'
         end
         line
       end

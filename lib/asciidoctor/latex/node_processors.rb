@@ -289,6 +289,7 @@ module Asciidoctor
     def environment_process
 
       warn "begin environment_process, ".blue + "title = #{self.title}".yellow if $VERBOSE
+      warn "environment attributes = #{self.attributes}".red if $VERBOSE
       warn "role = #{self.attributes["role"]}" if $VERBOSE
 
       env = self.attributes["role"]
@@ -306,6 +307,14 @@ module Asciidoctor
         label = ""
       end
 
+      warn "self.attributes['original_title'] = #{self.attributes['original_title']}".cyan if $VERBOSE
+
+      if self.attributes['original_title']
+        title = "\{\\rm (#{self.attributes['original_title']}) \}"
+      else
+        title = ''
+      end
+
       if env == 'listing'
         output = "\\begin\{#{env}\}#{label}\\begin{verbatim}\n\n#{self.content}\\end{verbatim}\n\\end\{#{env}\}\n"
       elsif env == 'equationalign'
@@ -313,7 +322,7 @@ module Asciidoctor
       elsif env == 'chem'
         output = "\\begin\{equation\}#{label}\n\\ce\{#{self.content}\}\n\\end\{equation\}\n"
       else
-        output = "\\begin\{#{env}\}#{label}\n#{self.content}\n\\end\{#{env}\}\n"
+        output = "\\begin\{#{env}\}#{title}#{label}\n#{self.content}\n\\end\{#{env}\}\n"
       end
 
 

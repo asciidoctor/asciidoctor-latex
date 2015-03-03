@@ -100,9 +100,11 @@ module Asciidoctor::LaTeX
       # Get orginal title if there is one
       if attrs['title']
         original_title =  attrs['title']
+        attrs['original_title'] = original_title
       else
         original_title = nil
       end
+
 
       # Ensure that role is defined
       if attrs['role'] == nil
@@ -148,6 +150,7 @@ module Asciidoctor::LaTeX
           env_ref_prefix = env_name
         end
         caption_num = parent.document.counter_increment("#{env_ref_prefix}-number", block)
+        attrs['caption-num'] = caption_num
         caption = "#{caption_num}"
         if original_title
           attrs['title'] = "#{env_title} #{caption_num}: #{original_title}"

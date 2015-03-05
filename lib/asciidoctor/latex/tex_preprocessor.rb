@@ -43,16 +43,13 @@ module Asciidoctor::LaTeX
         if line.include? '\$' and document.basebackend? 'html'
           line = line.gsub '\$', 'DOLLOD'
         end
-        if line.include? '$' and document.basebackend? 'html'
-          line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB
-        end
-        if line.include? '$' and document.basebackend? 'tex'
+        if line.include? '$'
           line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB2
         end
-        if line.include? '\\[' and document.basebackend? 'tex'
+        if line.include? '\\['
           line = line.gsub '\\[', '+\\['
         end
-        if line.include? '\\]' and document.basebackend? 'tex'
+        if line.include? '\\]'
           line = line.gsub '\\]', '\\]+'
         end
         line

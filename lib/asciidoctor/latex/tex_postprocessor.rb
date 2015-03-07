@@ -21,9 +21,23 @@ module Asciidoctor::LaTeX
   class TexPostprocessor < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
-      output = output.gsub('\DOLLOD', '\$') if document.basebackend? 'html'
-      output = output.gsub('CHEMRIGHTARROW','->').gsub('CHEMLEFTARROW','<-').gsub('CHEMLEFTRIGHTARROW','<-->') if document.basebackend? 'tex'
-      output
+      output = output.gsub('DOLLOD', '\$')
+      output = output.gsub('CHEMRIGHTARROW','->').gsub('CHEMLEFTARROW','<-').gsub('CHEMLEFTRIGHTARROW','<-->')
+      output.gsub('!!!BACKSLASH', '\\')
+    end
+
+  end
+
+  class HTMLPostprocessor < Asciidoctor::Extensions::Postprocessor
+
+    def process document, output
+      output = output.gsub('\DOLLOD', '\$')
+      # match_data = output.match /%%(.*)%%/
+      # if match_data
+      #  output = output.gsub(match_data[0], match_data[1])
+      # end
+      output = output.gsub('DOLLOD', '$')
+      output.gsub('!!!BACKSLASH', '\\')
     end
 
   end

@@ -277,7 +277,7 @@ module Asciidoctor::LaTeX
       postprocessor InjectHTML unless document.attributes['noteshare'] == 'yes'
       postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'
       postprocessor Chem if document.basebackend? 'html'
-      postprocessor Dollar if document.basebackend? 'html'
+      postprocessor HTMLPostprocessor if document.basebackend? 'html'
       postprocessor TexPostprocessor if document.basebackend? 'tex'
     end
 

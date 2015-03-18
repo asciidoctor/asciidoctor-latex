@@ -127,6 +127,8 @@ module Asciidoctor::LaTeX
         attrs['title'] = env_name
       elsif role == 'code'
         attrs['title'] = 'Listing'
+      elsif role == 'jsxgraph'
+        attrs['title'] = 'JSXGraph'
       else
         attrs['title'] = env_name.capitalize
       end

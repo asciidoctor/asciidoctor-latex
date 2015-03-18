@@ -207,6 +207,26 @@ module Asciidoctor::LaTeX
         table_style='class="zero" style="width:100%; border-collapse:collapse; border:0"'
         row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"]  + equation_part + number_part +['+++</tr></table>+++']
+      elsif node.attributes['role'] == 'jsxgraph' or  node.attributes['role'] == 'sxgraph'
+        line_array = ["\n++++\n"]
+        # line_array += ["<link rel='stylesheet' type='text/css'  href='jsxgraph.css' />"]
+
+        line_array += ["<link rel='stylesheet' type='text/css'  href='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css' />"]
+        line_array += ['<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>']
+        line_array += ["<script src='http://jsxgraph.uni-bayreuth.de/distrib/GeonextReader.js' type='text/javascript'></script>"]
+        line_array += ['<div id="box" class="jxgbox" style="width:500px; height:500px;"></div>']
+        line_array += ['<script type="text/javascript">']
+
+        # line_array += ["<link rel='stylesheet' type='text/css' href='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css' />"]
+        # line_array += ["<script src='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js' type='text/javascript'></script>"]
+        # line_array += ["<script src='http://jsxgraph.uni-bayreuth.de/distrib/GeonextReader.js' type='text/javascript'></script>"]
+        # line_array += ["<div id='jxgbox' class='jxgbox' style='width:500px; height:500px;'></div>"]
+       #  line_array += ["<script type='text/javascript'>"]
+
+        line_array += node.lines
+        line_array += ['</script>']
+        line_array += ["\n++++\n"]
+        node.lines = line_array
       else
         node.lines = [ENV_CSS] + node.lines + [DIV_END]
       end

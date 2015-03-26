@@ -113,6 +113,11 @@ module Asciidoctor::LaTeX
         role = attrs['role']
       end
 
+      warn "First occurence of role, role = #{role}".red
+      if attrs['role'] =~ /\\/
+        attrs['role'] = attrs['role'].gsub(/\\/, '')
+      end
+
       # Determine whether this is a numbered block
       # FIXME: what if there are several options?
       if attrs['options'].nil?

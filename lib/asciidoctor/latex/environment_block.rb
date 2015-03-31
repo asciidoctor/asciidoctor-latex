@@ -114,6 +114,7 @@ module Asciidoctor::LaTeX
       end
 
       warn "First occurence of role, role = #{role}".red
+      # fixme: this should not be necessary
       if attrs['role'] =~ /\\/
         attrs['role'] = attrs['role'].gsub(/\\/, '')
       end
@@ -174,7 +175,7 @@ module Asciidoctor::LaTeX
         caption = nil
       end
 
-
+      warn "attributes are now #{attrs}" if $VERBOSE
 
       block.assign_caption caption
       if %w(equation equationalign chem).include? role

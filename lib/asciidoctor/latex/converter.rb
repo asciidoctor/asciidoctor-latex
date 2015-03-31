@@ -208,20 +208,24 @@ module Asciidoctor::LaTeX
         row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"]  + equation_part + number_part +['+++</tr></table>+++']
       elsif attrs['role'] == 'jsxgraph'
+        if attrs['box'] == nil
+          attrs['box'] = 'box'
+        end
         if attrs['width'] == nil
           attrs['width'] = 450
         end
         if attrs['height'] == nil
           attrs['height'] = 450
         end
-        line_array = ["\n++++\n"]
+        warn "jxxgraph attributes: #{attrs}".cyan if $VERBOSE
+        line_array = ["\n+++\n"]
         # line_array += ["<link rel='stylesheet' type='text/css'  href='jsxgraph.css' />"]
 
         line_array += ["<link rel='stylesheet' type='text/css'  href='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css' />"]
         line_array += ['<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>']
         line_array += ["<script src='http://jsxgraph.uni-bayreuth.de/distrib/GeonextReader.js' type='text/javascript'></script>"]
         # line_array += ['<div id="box" class="jxgbox" style="width:500px; height:500px;"></div>']
-        line_array += ["<div id='box' class='jxgbox' style='width:" + "#{attrs['width']}" + "px; height:" + "#{attrs['height']}" +"px;'></div>"]
+        line_array += ["<div id='#{attrs['box']}' class='jxgbox' style='width:" + "#{attrs['width']}" + "px; height:" + "#{attrs['height']}" +"px;'></div>"]
         line_array += ['<script type="text/javascript">']
 
         # line_array += ["<link rel='stylesheet' type='text/css' href='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css' />"]
@@ -232,7 +236,8 @@ module Asciidoctor::LaTeX
 
         line_array += node.lines
         line_array += ['</script>']
-        line_array += ["\n++++\n"]
+        line_array += ['<br/>']
+        line_array += ["\n+++\n"]
         node.lines = line_array
       else
         node.lines = [ENV_CSS] + node.lines + [DIV_END]

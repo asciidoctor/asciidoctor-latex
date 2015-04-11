@@ -113,7 +113,6 @@ module Asciidoctor::LaTeX
         role = attrs['role']
       end
 
-      warn "First occurence of role, role = #{role}".red
       # fixme: this should not be necessary
       if attrs['role'] =~ /\\/
         attrs['role'] = attrs['role'].gsub(/\\/, '')
@@ -189,4 +188,3 @@ module Asciidoctor::LaTeX
 
   end
 end
-

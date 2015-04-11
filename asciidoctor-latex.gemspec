@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.homepage      = 'https://github.com/asciidoctor/asciidoctor-latex'
   s.license       = 'MIT'
 
-  s.summary       = 'Converts AsciiDoc documents to LaTeX'
-  s.description   = 'An extension for Asciidoctor that converts AsciiDoc documents to LaTeX.'
+  s.summary       = 'Converts AsciiDoc documents to LaTeX, provides LaTeX extensions to Asciidoc'
+  s.description   = 'An extension for Asciidoctor that converts AsciiDoc documents to LaTeX and provides LaTeX extensions to Asciidoc.'
 
   begin
     s.files       = `git ls-files -z -- */* {CHANGELOG,LICENSE,manual,Rakefile,README}*`.split "\0"

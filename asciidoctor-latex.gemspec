@@ -25,7 +25,8 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.0'
 
-  s.add_runtime_dependency 'asciidoctor', '~> 1.5.0'
+  s.add_runtime_dependency 'asciidoctor', '~> 1.5.2'
+  s.add_runtime_dependency 'opal', '~> 0.6.3'
   s.add_runtime_dependency 'htmlentities', '~> 4.3'
 
   # specified in the Gemfile for now

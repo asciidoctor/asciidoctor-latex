@@ -1,4 +1,4 @@
-= AsciiDoc to LaTeX Converter for Asciidoctor
+= AsciiDoc-LaTeX Converter for Asciidoctor
 James Carlson
 
 :numbered:
@@ -7,24 +7,34 @@ James Carlson
 
 == Purpose
 
-The aim of the LaTeX converter is to transform an AsciiDoc document containing
-mathematical notation into a LaTeX document.
-The converter also adds to Asciidoctor's facilities for handling mathematical
-notation when rendered as HTML.  Among these are the automatic numbering of theorems
-and equations.
+Asciidoc-LaTeX defines an extended mathematical syntax
+for Asciidoc that closely parallels LaTeX.  The
+Asciidoctor-LaTeX converter renders documents written
+in this extended markup language into both HTML
+and LaTeX.footnote:[Many, but not all Asciidoc language
+features are covered by this release.]
+
 Please see the file [path]_manual.adoc_ in this repository for additional details
 and for technical information.
-
-For examples and a quick start guide, see <<Getting started>>.
+The directory `try-out` in this repository contains a set of examples which
+show what Asciidoctor-LaTeX can do.  Consult the `README` file
+in `try-out` for directions on how to render the examples as
+HTML or LaTeX. By comparing the source and rendered files,
+you will quickly see how to write Asciidoc LaTeX.
 Below, we describe the <<Document format,document formats>> used
-for mathematics and the <<Command for rendering,commands>> for rendering a document into HTML or LaTeX.
+for mathematics and the <<Commands for rendering>> into HTML or LaTeX.
+
+Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.
+_In progress: Cross-compilation to Asciidoctor.js by Guillaume Grosettie makes
+possible other uses, among which will be inclusion in the Chrome
+Live Preview Extension._
 
 
 == Installation
 
 === Using Rubygems
 
-_asciidoctor-latex has not been released yet_
+There is a development release.  Beta alert!
 
 === From repository
 
@@ -36,45 +46,44 @@ If you would like to install a development version from the repository, use:
  $ gem install *.gem
 
 
-== Getting started
-
-The directory `try-out` contains a set of examples which
-show what Asciidoctor LateX can do.  Consult the `README` file
-for directions on how to render an examples as
-HTML or LaTeX. By comparing the source and rendered files,
-you will quickly see how to write Asciidoc LaTeX.
-
-
-
 == Document format
 
-Asciidoctor supports two closely-related math formats, [blue]#AsciiMath# and [blue]#LaTeX#.
-For in-line mathematics, the first looks like `+++stem:[ a^2 + b^2 = c^2 ]+++`, while the
-second looks like `$ a^2 + b^2 = c^2 $`.  Both render as stem:[ a^2 + b^2 = c^2 ].
-For displayed text, one can use
+Asciidoctor supports two closely-related math formats, [blue]#Asciidoc-LaTeX#
+and [blue]#AsciiMath#.  They are available in both in-line and display forms,
+as in the examples $a^2 + b^2 = c^2$ and
+$$
+   e^{2\pi \sqrt{-1}} = 1.
+$$
+In Asciidoc-LaTeX
+the source text for these is `\$ a^2 + b^2 = c^2 \$` and
+----
+ \[
+    e^{2\pi \sqrt{-1}} = 1,
+ \]
+----
+respectively.  One can also write
+----
+\$\$
+   e^{2\pi \sqrt{-1}} = 1.
+\$\$
+----
+You will need to express dollar-denominated currency using
+escaped dollar signs: "He paid \$100 for that theorem" is
+rendered from "He paid \\$100 for that theorem."
+In AsciiMath, one writes `+++stem:[ a^2 + b^2 = c^2 ]+++`,
+and
 ----
   [stem]
   ++++
-    e^{2\pi \sqrt{-1}} = 1
+    e^{2\pi \sqrt{-1}} = 1.
   ++++
 ----
-or
-----
-  \[
-     e^{2\pi \sqrt{-1}} = 1
-  \]
-----
-Both render as
-  \[
-     e^{2\pi \sqrt{-1}} = 1
-  \]
-_Please note that the formulae above will not render properly
-if you are reading it on GitHub.  It will, however, render properly if you run
-this file through Asciidoctor_.
+The syntax of Asciidoc-LaTeX follows that of LaTeX as closely as possible.
 
-== Asciidoctor environments
 
-Asciidoctor supports an `env` construct that maps to LaTeX environments.
+== Asciidoc-LaTeX environments
+
+Asciidoc-LaTeX supports an `env` construct that maps to LaTeX environments.
 Thus
 ----
 [env.theorem]
@@ -87,6 +96,16 @@ renders as an automatically numbered theorem:
 [env.theorem]
 --
 There exist infinitely many prime numbers.
+--
+Environments can contain in-line and display mathematics, e.g.,
+[env.theorem]
+--
+A two-by-two matrix is invertible if its determinant is
+nonzero, i.e., if
+\[
+  \left|\begin{matrix} a & b \\ c & d \\ \end{matrix}\right| \ne 0
+\]
+This result extends to $n\times n$ matrices.
 --
 
 Likewise, using `[env.definition]`, we obtain
@@ -112,11 +131,9 @@ to obtain the rendered text
 --
 a^{p-1} \equiv 1\ \text{mod}\ p
 --
-
-
-
-Except for `[env.equation]`, the TeX constructs `$ ... $` and
-`\[ ... \]` can be used in `[env]` blocks.
+In the equation environment you do not need (nor should you have)
+the delimiters  `\$ ... \$` and
+`\[ ... \]`.
 For directions on making cross-references and labeling theorems, equations, etc., see
 the `README` file in the `try-out` directory.  For an extensive
 example of the use of Asciidoctor LaTeX, see
@@ -158,52 +175,10 @@ for more information.
 
 Asciidoc math files can be rendered
 
-. as HTML (the default)
-. with the LaTeX converter additions such as automatic theorem numbering
-. as LaTeX
-+
-*Note.* Forthcoming releases will make it possible to render
-+
-. as PDF
-. as EPUB3 (Electronic book)
-
-
-=== HTML output
-
-To render a file into HTML, the Asciidoctor default,
-use the usual `asciidoctor` command with this option:
-```
-  $ asciidoctor -a stem foo.adoc
-```
-or with this
-```
-  $ asciidoctor -a stem=latexmath foo.adoc
-```
-depending on the format.
-
-
-=== LaTeX converter additions
-
-To employ the converter additions such as automatic theorem numbering, use
-```
-  $ asciidoctor -r asciidoctor-latex -a stem=latexmath -b html foo.adoc
-```
-or
-```
-  $ asciidoctor-latex -b html foo.adoc
-```
-
-
-=== LaTeX output
-
-To render a file into LaTeX, use the `-r` (require rubygem) and `-b` (backend) option, e.g.:
-```
-  $ asciidoctor -r asciidoctor-latex -a stem=latexmath -b latex foo.adoc
-```
-or simply with the wrapper script:
-```
-  $ asciidoctor-latex foo.adoc
-```
+* as HTML.  Use `$ Asciidoc-LaTeX -b html foo.adoc` to produce `foo.html`.
+With this command the Asciidoc-LaTeX syntax and extensions will be rendered.
+* as LaTeX.  Use `$ asciidoctor-latex foo.adoc` to produce `foo.tex`
+as described below.
 
 
 == Switches

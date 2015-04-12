@@ -49,10 +49,10 @@ module Asciidoctor::LaTeX
         if line.include? '$'
           line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB2
         end
-        if line.include? '\\['
+        if line.include? '^\\['
           line = line.gsub '\\[', '+\\['
         end
-        if line.include? '\\]'
+        if line.include? '^\\]'
           line = line.gsub '\\]', '\\]+'
         end
         line

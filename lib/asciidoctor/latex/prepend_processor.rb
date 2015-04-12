@@ -14,7 +14,7 @@ module Asciidoctor::LaTeX
 
     def process document, reader
 
-      warn "Entering ClickStyleInsert".magenta
+      warn "Entering ClickStyleInsert".magenta if $VERBOSE
 
       @@line_array = []
 

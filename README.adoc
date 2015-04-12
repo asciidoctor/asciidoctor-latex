@@ -25,7 +25,7 @@ Below, we describe the <<Document format,document formats>> used
 for mathematics and the <<Commands for rendering>> into HTML or LaTeX.
 
 Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.
-_In progress: Cross-compilation to Asciidoctor.js by Guillaume Grosettie makes
+_In progress: Cross-compilation to Asciidoctor.js by Guillaume Grossetie makes
 possible other uses, among which will be inclusion in the Chrome
 Live Preview Extension._
 

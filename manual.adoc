@@ -17,7 +17,7 @@ As a demonstration of the current state of this
 project, the file you are looking at, `manual.adoc`,
 can be rendered into HTML by
 ----
-  $ asciidoctor manual.adoc
+  $ asciidoctor-latex -b html manual.adoc
 ----
 or can be rendered as a LaTeX file via
 ----
@@ -25,7 +25,7 @@ or can be rendered as a LaTeX file via
   # => manual.tex
 ----
 The `.tex` file can in turn be rendred into pdf via
-`pdflatex`.
+`pdflatex` or `xelatex`.  We recommend the latter.
 
 
 Mathematical text in Asciidoc can be written as

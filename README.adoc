@@ -14,15 +14,29 @@ in this extended markup language into both HTML
 and LaTeX.footnote:[Many, but not all Asciidoc language
 features are covered by this release.]
 
-Please see the file [path]_manual.adoc_ in this repository for additional details
-and for technical information.
-The directory `try-out` in this repository contains a set of examples which
-show what Asciidoctor-LaTeX can do.  Consult the `README` file
-in `try-out` for directions on how to render the examples as
-HTML or LaTeX. By comparing the source and rendered files,
-you will quickly see how to write Asciidoc LaTeX.
-Below, we describe the <<Document format,document formats>> used
-for mathematics and the <<Commands for rendering>> into HTML or LaTeX.
+This README is very brief because mathematical
+markup in Asciidoc-LaTeX will not render in GitHub.
+For a better view of what Asciidoc-LaTeX does, follow the
+installation instructions and then run
+
+----
+ $ asciidoctor-latex -b html start.adoc
+----
+on the files `start.adoc`, etc found
+in the directory `examples` of this repository.
+This command produces the file `start.html`.
+It can be viewed with any browser.  You will
+need an internet connection , since the browser
+ must load he MathJax fonts.
+
+NOTE: Consult the
+http://noteshare.io/book/asciidoctor-latex-manual[Asciidoctor-LaTeX manual]
+for more information and for a view of both
+source and rendered text for
+Asciidoc-LaTeX.  For more information on conversion
+of Asciidoc-LaTeX documents to LaTeX, see
+`manual.adoc` _(needs update)_.
+
 
 Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.
 _In progress: Cross-compilation to Asciidoctor.js by Guillaume Grossetie makes
@@ -48,29 +62,23 @@ If you would like to install a development version from the repository, use:
 
 == Document format
 
-Asciidoctor supports two closely-related math formats, [blue]#Asciidoc-LaTeX#
-and [blue]#AsciiMath#.  They are available in both in-line and display forms,
-as in the examples $a^2 + b^2 = c^2$ and
-$$
-   e^{2\pi \sqrt{-1}} = 1.
-$$
-In Asciidoc-LaTeX
-the source text for these is `\$ a^2 + b^2 = c^2 \$` and
+Asciidoctor supports two closely-related
+math formats, [blue]#Asciidoc-LaTeX#
+and [blue]#AsciiMath#.
+In Asciidoc-LaTeX,
+one can write `$ a^2 + b^2 = c^2 $` and
 ----
  \[
     e^{2\pi \sqrt{-1}} = 1,
  \]
 ----
-respectively.  One can also write
-----
-\$\$
-   e^{2\pi \sqrt{-1}} = 1.
-\$\$
-----
-You will need to express dollar-denominated currency using
-escaped dollar signs: "He paid \$100 for that theorem" is
-rendered from "He paid \\$100 for that theorem."
-In AsciiMath, one writes `+++stem:[ a^2 + b^2 = c^2 ]+++`,
+for in-line and dipplay mathematial
+text, respectively.
+You will need to express dollar-denominated
+currency using
+escaped dollar signs: "He paid \$100 for that
+theore.m"  In AsciiMath, one writes
+`+++stem:[ a^2 + b^2 = c^2 ]+++`
 and
 ----
   [stem]
@@ -78,7 +86,6 @@ and
     e^{2\pi \sqrt{-1}} = 1.
   ++++
 ----
-The syntax of Asciidoc-LaTeX follows that of LaTeX as closely as possible.
 
 
 == Asciidoc-LaTeX environments
@@ -91,32 +98,57 @@ Thus
 There exist infinitely many prime numbers.
 --
 ----
-renders as an automatically numbered theorem:
-
-[env.theorem]
---
-There exist infinitely many prime numbers.
---
+renders as an automatically numbered theorem.
 Environments can contain in-line and display mathematics, e.g.,
+----
 [env.theorem]
 --
-A two-by-two matrix is invertible if its determinant is
-nonzero, i.e., if
+A two-by-two matrix is invertible if
+its determinant is nonzero, i.e., if
 \[
-  \left|\begin{matrix} a & b \\ c & d \\ \end{matrix}\right| \ne 0
+  \left|\begin{matrix}
+    a & b \\
+    c & d
+  \end{matrix}\right| \ne 0
 \]
 This result extends to $n\times n$ matrices.
 --
+----
 
-Likewise, using `[env.definition]`, we obtain
+There is complete freedom in parameter `NAME`
+of `[env.NAME]`, Thus,one can write
+----
 [env.definition]
 --
-An integer $n$ is *prime* if (a) it is not $\pm 1$
-and (b) it has no divisors other
+An integer $n$ is *prime* if (a) it is not
+$\pm 1$ and (b) it has no divisors other
 than $\pm 1$ and $\pm n$.
 --
+----
+or
+----
+[env.joke]
+--
+A mathematician, a philosopher, and
+a lawyer met at the local bar
+for a drink.  The lawyer said ...
+--
+----
+One can make cross references by labeling
+the environment as in
+----
+[env.joke#mathjoke1]
+--
+A mathematician, a philosopher, and
+a lawyer met at the local bar
+for a drink.  The lawyer said ...
+--
+----
+then referencing it later as `<<mathjoke1>>`.
 
-For numbered equations, use `[env.equation]` like this
+Certain environments receive special treatment.
+For numbered equations, use `[env.equation]`
+like this
 
 ----
 [env.equation]
@@ -125,21 +157,15 @@ a^{p-1} \equiv 1\ \text{mod}\ p
 --
 ----
 
-to obtain the rendered text
+For sets of equations, use `[env,equationalign]`:
+----
+[env.equationalign]
+--
+A & = 4\pi r^2 \\
+V & = \frac{4}{3} \pi r^3
+--
+----
 
-[env.equation]
---
-a^{p-1} \equiv 1\ \text{mod}\ p
---
-In the equation environment you do not need (nor should you have)
-the delimiters  `\$ ... \$` and
-`\[ ... \]`.
-For directions on making cross-references and labeling theorems, equations, etc., see
-the `README` file in the `try-out` directory.  For an extensive
-example of the use of Asciidoctor LaTeX, see
-http://www.noteshare.io/section/the-fundamental-class-of-projective-space[this].
-All of these constructs discussed above are translated into native LaTeX when
-the converter is used to produuce tex output.
 
 
 
@@ -150,35 +176,30 @@ the block is not displayed until the user clicks on the heading.
 The heading of a click block is displayed in blue.  Once a click
 block is "opened", it can be closed by clicking again on the heading.
 
-[click.comment]
---
-It is sometimes useful to "hide" a comment in a click block
-so as not to unduly disturb the flow of the prose. Click
-blocks are also useful for problem sets, since one
-can make hints, solutions, etc. clickable.
---
-
-The source for the above comment is
-
 ----
 [click.comment]
 --
-It is sometimes useful to "hide" a comment ...
---
+It is sometimes useful to "hide" a comment
+in a click block so as not to unduly
+disturb the flow of the prose. Click
+blocks are also useful for problem sets,
+since one can make hints, solutions, etc.
+clickable.
 ----
+
 
 The default for click blocks is not to number them.
-See the file `click.adoc` in the `try-out` directory
+See the file `click.adoc` in the `exampless` directory
 for more information.
 
 == Commands for rendering
 
 Asciidoc math files can be rendered
 
-* as HTML.  Use `$ Asciidoc-LaTeX -b html foo.adoc` to produce `foo.html`.
+* as HTML.  Use `$ asciidoctor-latex -b html foo.adoc` to produce `foo.html`.
 With this command the Asciidoc-LaTeX syntax and extensions will be rendered.
-* as LaTeX.  Use `$ asciidoctor-latex foo.adoc` to produce `foo.tex`
-as described below.
+* as LaTeX.  Use `$ asciidoctor-latex foo.adoc`
+to produce `foo.tex`.
 
 
 == Switches

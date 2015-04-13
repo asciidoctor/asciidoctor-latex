@@ -10,11 +10,15 @@
 
 
 
-The aim of Asciidoctor's LaTeX converter is
+The aim of the Asciidoc-LaTeX converter is
 
-. To render AsciiDoc documents as LaTeX.
 
-. To add to Asciidoctor's facilities for handling mathematical notation when rendered as HTML
+. To add LaTeX-like facilities
+to  Asciidoc for handling mathematical notation when rendered as HTML.
+We refer to the extended Asciidoc markup language as Asciidoc-LaTeX.
+
+. To render AsciiDoc-LaTeX documents into LaTeX.
+
 
 As an example of both features, you can write automatically numbered equations, e.g.,
 
@@ -23,7 +27,7 @@ As an example of both features, you can write automatically numbered equations, 
 \int_{|z| = 1} \frac{dz}{z} = 2\pi \sqrt{-1}
 --
 
-by writing this in Asciidoc
+by writing this
 
 ----
 [env.equation]

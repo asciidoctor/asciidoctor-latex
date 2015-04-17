@@ -95,16 +95,8 @@ module Asciidoctor::LaTeX
 
     def process parent, reader, attrs
 
-      warn "env: attributes = #{attrs}".yellow if $VERBOSE
-
-      # Get orginal title if there is one
-      if attrs['title']
-        original_title =  attrs['title']
-        attrs['original_title'] = original_title
-      else
-        original_title = nil
-      end
-
+      original_title = attrs['title']
+      attrs['original_title'] = attrs['title']
 
       # Ensure that role is defined
       if attrs['role'] == nil
@@ -113,30 +105,24 @@ module Asciidoctor::LaTeX
         role = attrs['role']
       end
 
-      if role.nil?
-        puts 'role is NIL'.red
-      else
-        puts "role = #{role}".yellow
-      end
-
       # fixme: this should not be necessary
       if attrs['role'] =~ /\\/
         attrs['role'] = attrs['role'].gsub(/\\/, '')
       end
 
-      # Determine whether this is a numbered block
-      # FIXME: what if there are several options?
-      # Force the default for environments to be either numbered or not
-      # e.g. 'box' not numbered, the others are numbered
-      if attrs['options'].nil?
+      # Determine whether the block is numbered
+      # Use the option set if present (numbered, no+_number) otherwise
+      # use a default value, e.g. 'box' is not numbered, the others are numbered
+      if !(attrs['options'] =~ /no_number|numbered/)
         if %w(box).include? role
-          attrs['options'] = 'no-number'
+          attrs['options'] = 'no_number'
         else
           attrs['options'] = 'numbered'
         end
       end
 
 
+      # Adjust title according to environment name
       env_name = role # roles.first # FIXME: roles.first is probably best
       if %w(equation equationalign chem).include? role
         attrs['title'] = env_name
@@ -152,47 +138,59 @@ module Asciidoctor::LaTeX
       env_title = attrs['title']
 
 
+      # Creat the block
       if attrs['role'] == 'code'
         block = create_block parent, :listing, reader.lines, attrs
       else
         block = create_block parent, :environment, reader.lines, attrs
       end
 
-      warn "document.references".blue + " #{parent.document.references}".cyan  if $VERBOSE
-      warn "attrs['role'] = #{attrs['role']} and role = #{role}".red if $VERBOSE
-      warn "id".red + " = #{attrs['id']}".yellow  if $VERBOSE
-
-      if attrs['options']['numbered']
-        warn "OPTIONS NUMBERED}".yellow  if $VERBOSE
+      if attrs['options'] =~ /numbered/
+        # THE NUMBERED OPTION
+        # Use same prefix for cross referencing for the
+        # equation_align environment as for the equation
+        # environment so as not to have separate numbering
+        # sequences
         if env_name == 'equationalign'
           env_ref_prefix = 'equation'
         else
           env_ref_prefix = env_name
         end
+        # Define caption_num so that we can make references
+        # that display as "(17)", for example
+        # This is where we can set the caption number by hand
+        # once I figure out how to do so.
         caption_num = parent.document.counter_increment("#{env_ref_prefix}-number", block)
         attrs['caption-num'] = caption_num
         caption = "#{caption_num}"
+        # Set the title, e.g., "Theorem 3: Pythagoras" or just "Theorem 3"
+        # depending on whether the user sets a title, .e.g, ".Pythgoras"
+        # in the line preceding "[env.theorem]"
         if original_title
           attrs['title'] = "#{env_title} #{caption_num}: #{original_title}"
         else
           attrs['title'] = "#{env_title} #{caption_num}."
         end
-        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
       else
-        warn "OPTIONS NOT NUMBERED".yellow  if $VERBOSE
-        if %w(box).include? role
-          attrs['title'] = original_title
+        # THE NON-NUMBERED OPTION
+        # Set the title, e.g., "Pythagoras" or just "Theorem"
+        # depending on whether the user sets a title, .e.g, ".Pythgoras"
+        # in the line preceding "[env.theorem]"
+        # FIXME: this code is a tad spaghetti-like
+        if original_title
+          if  %w(box).include? role
+            attrs['title'] = "#{original_title}"
+          else
+            attrs['title'] = "#{env_title}: #{original_title}"
+          end
         else
           attrs['title'] = "#{env_title}"
         end
-        warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
       end
 
       if attrs['role'] == 'code'
         caption = nil
       end
-
-      warn "attributes are now #{attrs}" if $VERBOSE
 
       block.assign_caption caption
       if %w(equation equationalign chem).include? role

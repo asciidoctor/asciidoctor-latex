@@ -1,4 +1,4 @@
-== Equation test
+//.eq
 
 The Pythagorean theorem, $a^2 + b^2 = c^2$,
 relates the hypotenuse to the altitude

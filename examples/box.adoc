@@ -1,0 +1,16 @@
+Ho hum, said the professor:
+
+.Foobar
+[env.box]
+--
+The curve $M'$ was compactified by adding $d$ points "at infnity".
+The locus "infinity" is the locus $Z = 0$.  Tha locus is la di dah di dah ..
+--
+
+.Laak Boribuul
+[env.box%numbered]
+--
+The curve $M'$ was compactified by adding $d$ points "at infnity".
+The locus "infinity" is the locus $Z = 0$.  Tha locus is la di dah di dah ..
+--
+

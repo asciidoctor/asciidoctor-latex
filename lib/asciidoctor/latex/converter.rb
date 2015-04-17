@@ -157,92 +157,27 @@ module Asciidoctor::LaTeX
 
     def info node
 
-      attrs =  node.attributes
-
-      warn "\n   HTMLConverter, node: #{node.node_name}".red
-      # warn "   title: #{attrs['title']}".cyan
-      # warn "    role: #{attrs['role']}".cyan
-      # warn " options: #{attrs['options']}".cyan
+      warn "\n   HTMLConverter, node: #{node.node_name}".red if $VERBOSE
 
     end
 
     def environment node
 
-      # info node if $VERBOSE
-      options = node.attributes['options']
       attrs = node.attributes
 
-      warn "env role = #{attrs['role']}".yellow if $VERBOSE
-
-      if attrs['role'] == 'box'
-        # node.title = ''
-      elsif attrs['role'] == 'equation'
-        node.title = nil
-        number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
-        number_part = ["+++ #{number_part} +++"]
-        equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
-        table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
-        row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
-        if options['numbered']
-          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
+      case attrs['role']
+        when 'box'
+          handle_null(node)
+        when 'equation'
+          handle_equation(node)
+        when 'equationalign'
+          handle_equation_align(node)
+        when 'chem'
+          handle_chem(node)
+        when 'jsxgraph'
+          handle_jsxgraph(node)
         else
-          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
-        end
-      elsif attrs['role'] == 'equationalign'
-        warn "execting env role = #{attrs['role']}".yellow if $VERBOSE
-        node.title = nil
-        number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
-        number_part = ["+++ #{number_part} +++"]
-        equation_part = ['+++<td style="width:100%";>+++'] + ['\\[\\begin{split}'] + node.lines + ['\\end{split}\\]'] + ['+++</td>+++']
-        table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
-        row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
-        if options['numbered']
-          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
-        else
-          node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
-        end
-      elsif node.attributes['role'] == 'chem'
-        node.title = nil
-        number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
-        number_part = ["+++ #{number_part} +++"]
-        equation_part = ['+++<td style="width:100%;">+++'] + [' \\[\\ce{' + node.lines[0] + '}\\] '] + ['+++</td>+++']
-        table_style='class="zero" style="width:100%; border-collapse:collapse; border:0"'
-        row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
-        node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"]  + equation_part + number_part +['+++</tr></table>+++']
-      elsif attrs['role'] == 'jsxgraph'
-        if attrs['box'] == nil
-          attrs['box'] = 'box'
-        end
-        if attrs['width'] == nil
-          attrs['width'] = 450
-        end
-        if attrs['height'] == nil
-          attrs['height'] = 450
-        end
-        warn "jxxgraph attributes: #{attrs}".cyan if $VERBOSE
-        line_array = ["\n+++\n"]
-        # line_array += ["<link rel='stylesheet' type='text/css'  href='jsxgraph.css' />"]
-
-        line_array += ["<link rel='stylesheet' type='text/css'  href='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css' />"]
-        line_array += ['<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>']
-        line_array += ["<script src='http://jsxgraph.uni-bayreuth.de/distrib/GeonextReader.js' type='text/javascript'></script>"]
-        # line_array += ['<div id="box" class="jxgbox" style="width:500px; height:500px;"></div>']
-        line_array += ["<div id='#{attrs['box']}' class='jxgbox' style='width:" + "#{attrs['width']}" + "px; height:" + "#{attrs['height']}" +"px;'></div>"]
-        line_array += ['<script type="text/javascript">']
-
-        # line_array += ["<link rel='stylesheet' type='text/css' href='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css' />"]
-        # line_array += ["<script src='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js' type='text/javascript'></script>"]
-        # line_array += ["<script src='http://jsxgraph.uni-bayreuth.de/distrib/GeonextReader.js' type='text/javascript'></script>"]
-        # line_array += ["<div id='jxgbox' class='jxgbox' style='width:500px; height:500px;'></div>"]
-       #  line_array += ["<script type='text/javascript'>"]
-
-        line_array += node.lines
-        line_array += ['</script>']
-        line_array += ['<br/>']
-        line_array += ["\n+++\n"]
-        node.lines = line_array
-      else
-        node.lines = [ENV_CSS] + node.lines + [DIV_END]
+          handle_default(node)
       end
 
       node.attributes['roles'] = (node.roles + ['environment']) * ' '
@@ -251,7 +186,6 @@ module Asciidoctor::LaTeX
 
     def click node
 
-      # info node if $VERBOSE
       node.lines = [ENV_CSS] + node.lines + [DIV_END]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
       self.open node
@@ -290,6 +224,83 @@ module Asciidoctor::LaTeX
         output = 'FOOBAR'
       end
       output
+    end
+
+    def handle_equation(node)
+      options = node.attributes['options']
+      node.title = nil
+      number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
+      number_part = ["+++ #{number_part} +++"]
+      equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
+      table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
+      row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
+      if options['numbered']
+        node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
+      else
+        node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
+      end
+    end
+
+    def handle_equation_align(node)
+      options = node.attributes['options']
+      attrs = node.attributes
+      node.title = nil
+      number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
+      number_part = ["+++ #{number_part} +++"]
+      equation_part = ['+++<td style="width:100%";>+++'] + ['\\[\\begin{split}'] + node.lines + ['\\end{split}\\]'] + ['+++</td>+++']
+      table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
+      row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
+      if options['numbered']
+        node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
+      else
+        node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
+      end
+    end
+
+    def handle_chem(node)
+      node.title = nil
+      number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
+      number_part = ["+++ #{number_part} +++"]
+      equation_part = ['+++<td style="width:100%;">+++'] + [' \\[\\ce{' + node.lines[0] + '}\\] '] + ['+++</td>+++']
+      table_style='class="zero" style="width:100%; border-collapse:collapse; border:0"'
+      row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
+      node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"]  + equation_part + number_part +['+++</tr></table>+++']
+    end
+
+    def handle_jsxgraph(node)
+      attrs = node.attributes
+      if attrs['box'] == nil
+        attrs['box'] = 'box'
+      end
+      if attrs['width'] == nil
+        attrs['width'] = 450
+      end
+      if attrs['height'] == nil
+        attrs['height'] = 450
+      end
+      line_array = ["\n+++\n"]
+      # line_array += ["<link rel='stylesheet' type='text/css'  href='jsxgraph.css' />"]
+
+      line_array += ["<link rel='stylesheet' type='text/css'  href='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css' />"]
+      line_array += ['<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>']
+      line_array += ["<script src='http://jsxgraph.uni-bayreuth.de/distrib/GeonextReader.js' type='text/javascript'></script>"]
+      # line_array += ['<div id="box" class="jxgbox" style="width:500px; height:500px;"></div>']
+      line_array += ["<div id='#{attrs['box']}' class='jxgbox' style='width:" + "#{attrs['width']}" + "px; height:" + "#{attrs['height']}" +"px;'></div>"]
+      line_array += ['<script type="text/javascript">']
+
+      line_array += node.lines
+      line_array += ['</script>']
+      line_array += ['<br/>']
+      line_array += ["\n+++\n"]
+      node.lines = line_array
+    end
+
+    def handle_null(node)
+
+    end
+
+    def handle_default(node)
+      node.lines = [ENV_CSS] + node.lines + [DIV_END]
     end
 
   end

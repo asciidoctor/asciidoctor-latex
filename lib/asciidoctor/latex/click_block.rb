@@ -36,8 +36,6 @@ module Asciidoctor::LaTeX
 
     def process parent, reader, attrs
 
-      warn "env: attributes = #{attrs}".yellow if $VERBOSE
-
       click_name = attrs["role"]
       original_title = attrs['title']
 

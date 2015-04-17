@@ -22,16 +22,8 @@ output_file = base_name + "out"
 
 input = File.open(input_file, 'r') { |f| f.read }
 
-puts "input:"
-puts "-----------------"
-puts input
-puts "-----------------\n\n"
 
 output = Asciidoctor::LaTeX::TeXBlock.process_environments input
 
-puts "output:"
-puts "-----------------"
-puts output
-puts "-----------------\n\n"
 
 # File.open(output_file, 'w') {|f| f.write(output) }

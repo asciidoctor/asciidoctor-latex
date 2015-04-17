@@ -1,0 +1,17 @@
+== Test
+
+[env.code]
+--
+for k in foo:
+ do bar
+--
+
+[env.chem]
+--
+H2O
+--
+
+[env.equation]
+--
+a^7 = 1
+--

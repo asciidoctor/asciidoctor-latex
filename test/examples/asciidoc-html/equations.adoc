@@ -1,0 +1,15 @@
+
+
+
+
+//.equation1
+$(a^2)^3 = a^6$
+
+//.equation2
+$a^2 + b^2 = c^2$
+
+//.display1
+\[
+   e^{2\pi\sqrt{-1}} = 1
+\]
+

@@ -174,7 +174,9 @@ module Asciidoctor::LaTeX
 
       warn "env role = #{attrs['role']}".yellow if $VERBOSE
 
-      if attrs['role'] == 'equation'
+      if attrs['role'] == 'box'
+        # node.title = ''
+      elsif attrs['role'] == 'equation'
         node.title = nil
         number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
         number_part = ["+++ #{number_part} +++"]

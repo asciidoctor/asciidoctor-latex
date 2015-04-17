@@ -113,6 +113,12 @@ module Asciidoctor::LaTeX
         role = attrs['role']
       end
 
+      if role.nil?
+        puts 'role is NIL'.red
+      else
+        puts "role = #{role}".yellow
+      end
+
       # fixme: this should not be necessary
       if attrs['role'] =~ /\\/
         attrs['role'] = attrs['role'].gsub(/\\/, '')
@@ -120,10 +126,14 @@ module Asciidoctor::LaTeX
 
       # Determine whether this is a numbered block
       # FIXME: what if there are several options?
+      # Force the default for environments to be either numbered or not
+      # e.g. 'box' not numbered, the others are numbered
       if attrs['options'].nil?
-        attrs['options'] = 'numbered'
-      elsif !(attrs['options'].include? 'no-number')
-        # attrs['options'] = 'numbered'
+        if %w(box).include? role
+          attrs['options'] = 'no-number'
+        else
+          attrs['options'] = 'numbered'
+        end
       end
 
 
@@ -134,6 +144,8 @@ module Asciidoctor::LaTeX
         attrs['title'] = 'Listing'
       elsif role == 'jsxgraph'
         attrs['title'] = 'JSXGraph'
+      elsif role == 'box'
+        attrs['title'] = ''
       else
         attrs['title'] = env_name.capitalize
       end
@@ -151,6 +163,7 @@ module Asciidoctor::LaTeX
       warn "id".red + " = #{attrs['id']}".yellow  if $VERBOSE
 
       if attrs['options']['numbered']
+        warn "OPTIONS NUMBERED}".yellow  if $VERBOSE
         if env_name == 'equationalign'
           env_ref_prefix = 'equation'
         else
@@ -166,7 +179,12 @@ module Asciidoctor::LaTeX
         end
         warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
       else
-        attrs['title'] = "#{env_title}"
+        warn "OPTIONS NOT NUMBERED".yellow  if $VERBOSE
+        if %w(box).include? role
+          attrs['title'] = original_title
+        else
+          attrs['title'] = "#{env_title}"
+        end
         warn "eb: ".blue + "caption: #{caption}, title = #{attrs['title']}".magenta  if $VERBOSE
       end
 
@@ -179,6 +197,8 @@ module Asciidoctor::LaTeX
       block.assign_caption caption
       if %w(equation equationalign chem).include? role
         block.title = "#{caption_num}"
+      elsif %w(box).include? role
+          block.title =  attrs['title']
       else
         block.title = attrs['title']
       end

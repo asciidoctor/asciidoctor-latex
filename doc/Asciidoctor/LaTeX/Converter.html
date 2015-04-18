@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Asciidoctor::LaTeX::Converter
+  
+    &mdash; Asciidoctor LaTeX Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!Asciidoctor/LaTeX/Converter.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Asciidoctor.html" title="Asciidoctor (module)">Asciidoctor</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../LaTeX.html" title="Asciidoctor::LaTeX (module)">LaTeX</a></span></span>
+     &raquo; 
+    <span class="title">Converter</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Asciidoctor::LaTeX::Converter
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Asciidoctor::LaTeX::Converter</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2">Converter</dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/asciidoctor/latex/converter.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="TOP_TYPES-constant" class="">TOP_TYPES =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>document</span><span class='words_sep'> </span><span class='tstring_content'>section</span><span class='words_sep'>)</span></pre></dd>
+      
+        <dt id="LIST_TYPES-constant" class="">LIST_TYPES =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>dlist</span><span class='words_sep'> </span><span class='tstring_content'>olist</span><span class='words_sep'> </span><span class='tstring_content'>ulist</span><span class='words_sep'> </span><span class='tstring_content'>colist</span><span class='words_sep'>)</span></pre></dd>
+      
+        <dt id="INLINE_TYPES-constant" class="">INLINE_TYPES =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>inline_anchor</span><span class='words_sep'> </span><span class='tstring_content'>inline_break</span><span class='words_sep'> </span><span class='tstring_content'>inline_footnote</span><span class='words_sep'> </span><span class='tstring_content'>inline_quoted</span><span class='words_sep'> </span><span class='tstring_content'>inline_callout</span><span class='words_sep'>)</span></pre></dd>
+      
+        <dt id="BLOCK_TYPES-constant" class="">BLOCK_TYPES =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>admonition</span><span class='words_sep'> </span><span class='tstring_content'>listing</span><span class='words_sep'> </span><span class='tstring_content'>literal</span><span class='words_sep'> </span><span class='tstring_content'>page_break</span><span class='words_sep'> </span><span class='tstring_content'>paragraph</span><span class='words_sep'> </span><span class='tstring_content'>stem</span><span class='words_sep'> </span><span class='tstring_content'>pass</span><span class='words_sep'> </span><span class='tstring_content'>open</span><span class='words_sep'> </span><span class='tstring_content'>quote</span><span class='words_sep'> </span><span class='tstring_content'>\
+example</span><span class='words_sep'> </span><span class='tstring_content'>floating_title</span><span class='words_sep'> </span><span class='tstring_content'>image</span><span class='words_sep'> </span><span class='tstring_content'>click</span><span class='words_sep'> </span><span class='tstring_content'>preamble</span><span class='words_sep'> </span><span class='tstring_content'>sidebar</span><span class='words_sep'> </span><span class='tstring_content'>verse</span><span class='words_sep'> </span><span class='tstring_content'>toc</span><span class='words_sep'>)</span></pre></dd>
+      
+        <dt id="OTHER_TYPES-constant" class="">OTHER_TYPES =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>environment</span><span class='words_sep'> </span><span class='tstring_content'>table</span><span class='words_sep'>)</span></pre></dd>
+      
+        <dt id="NODE_TYPES-constant" class="">NODE_TYPES =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>TOP_TYPES</span> <span class='op'>+</span> <span class='const'>LIST_TYPES</span> <span class='op'>+</span> <span class='const'>INLINE_TYPES</span> <span class='op'>+</span> <span class='const'>BLOCK_TYPES</span> <span class='op'>+</span> <span class='const'>OTHER_TYPES</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#convert-instance_method" title="#convert (instance method)">- (Object) <strong>convert</strong>(node, transform = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Converter) <strong>initialize</strong>(backend, opts) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Converter.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Asciidoctor::LaTeX::Converter (class)">Converter</a></span></tt>) <strong>initialize</strong>(backend, opts) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Converter</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+348
+349
+350
+351
+352</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 348</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_backend'>backend</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span>
+  <span class='kw'>super</span>
+  <span class='id identifier rubyid_basebackend'>basebackend</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>tex</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_outfilesuffix'>outfilesuffix</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.tex</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="convert-instance_method">
+  
+    - (<tt>Object</tt>) <strong>convert</strong>(node, transform = nil) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 357</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_convert'>convert</span> <span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_transform'>transform</span> <span class='op'>=</span> <span class='kw'>nil</span>
+
+  <span class='kw'>if</span> <span class='const'>NODE_TYPES</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_node_name'>node_name</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_tex_process'>tex_process</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>Node to implement: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_node_name'>node_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>, class = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_end'>)</span></span><span class='period'>.</span><span class='id identifier rubyid_magenta'>magenta</span>  <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+    <span class='comment'># This warning should not be switched off by $VERBOSE
+</span>  <span class='kw'>end</span>
+
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Apr 19 18:37:45 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.2).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,12 @@
+//.listing
+
+[listing]
+....
+sum = 0
+k = 1
+100.times do
+  sum += 1.0/k
+  k += 1
+end
+puts sum
+....

@@ -1,0 +1,20 @@
+//.literal
+
+[literal]
+This
+  is 
+    a test of
+      whether
+    it realy
+  works!
+  
+.... 
+This
+  is also
+  
+    a test of
+      whether
+	  
+    it realy
+  works!
+....

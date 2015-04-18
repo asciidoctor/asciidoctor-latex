@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Asciidoctor::LaTeX::ClickBlock
+  
+    &mdash; Asciidoctor LaTeX Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!Asciidoctor/LaTeX/ClickBlock.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Asciidoctor.html" title="Asciidoctor (module)">Asciidoctor</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../LaTeX.html" title="Asciidoctor::LaTeX (module)">LaTeX</a></span></span>
+     &raquo; 
+    <span class="title">ClickBlock</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Asciidoctor::LaTeX::ClickBlock
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Extensions::BlockProcessor</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Extensions::BlockProcessor</li>
+          
+            <li class="next">Asciidoctor::LaTeX::ClickBlock</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/asciidoctor/latex/click_block.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process-instance_method" title="#process (instance method)">- (Object) <strong>process</strong>(parent, reader, attrs) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>process</strong>(parent, reader, attrs) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/click_block.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span> <span class='id identifier rubyid_parent'>parent</span><span class='comma'>,</span> <span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span> <span class='id identifier rubyid_attrs'>attrs</span>
+
+  <span class='id identifier rubyid_click_name'>click_name</span> <span class='op'>=</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>role</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_original_title'>original_title</span> <span class='op'>=</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+
+  <span class='comment'># Ensure that role is defined
+</span>   <span class='id identifier rubyid_original_role'>original_role</span> <span class='op'>=</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>role</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+   <span class='kw'>if</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>role</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>nil</span>
+     <span class='id identifier rubyid_role'>role</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>item</span><span class='tstring_end'>&#39;</span></span>
+   <span class='kw'>else</span>
+     <span class='id identifier rubyid_role'>role</span> <span class='op'>=</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>role</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+   <span class='kw'>end</span>
+
+   <span class='comment'># Use the value of the role to determine
+</span>   <span class='comment'># whether this is a numbered block
+</span>   <span class='id identifier rubyid_numbered'>numbered</span> <span class='op'>=</span> <span class='kw'>false</span>
+   <span class='kw'>if</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>options</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='kw'>and</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>options</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>number</span><span class='tstring_end'>&#39;</span></span>
+     <span class='id identifier rubyid_numbered'>numbered</span> <span class='op'>=</span> <span class='kw'>true</span>
+   <span class='kw'>end</span>
+
+
+   <span class='comment'># If the block is numbered, update the counter
+</span>   <span class='kw'>if</span> <span class='id identifier rubyid_numbered'>numbered</span>
+     <span class='id identifier rubyid_env_name'>env_name</span> <span class='op'>=</span> <span class='id identifier rubyid_role'>role</span>     <span class='comment'>##############  &#39;click-&#39;+role
+</span>     <span class='kw'>if</span> <span class='gvar'>$counter</span><span class='lbracket'>[</span><span class='id identifier rubyid_env_name'>env_name</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>nil</span>
+       <span class='gvar'>$counter</span><span class='lbracket'>[</span><span class='id identifier rubyid_env_name'>env_name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>1</span>
+     <span class='kw'>else</span>
+       <span class='gvar'>$counter</span><span class='lbracket'>[</span><span class='id identifier rubyid_env_name'>env_name</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='int'>1</span>
+     <span class='kw'>end</span>
+   <span class='kw'>end</span>
+
+
+   <span class='comment'># Set title
+</span>   <span class='kw'>if</span> <span class='id identifier rubyid_role'>role</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>code</span><span class='tstring_end'>&#39;</span></span>
+     <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Listing</span><span class='tstring_end'>&#39;</span></span>
+   <span class='kw'>else</span>
+     <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_role'>role</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
+   <span class='kw'>end</span>
+   <span class='kw'>if</span> <span class='id identifier rubyid_numbered'>numbered</span>
+     <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='gvar'>$counter</span><span class='lbracket'>[</span><span class='id identifier rubyid_env_name'>env_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+   <span class='kw'>end</span>
+   <span class='kw'>if</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+     <span class='kw'>if</span> <span class='id identifier rubyid_numbered'>numbered</span>
+       <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>. </span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
+     <span class='kw'>else</span>
+       <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>: </span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
+     <span class='kw'>end</span>
+   <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_original_role'>original_role</span> <span class='op'>==</span> <span class='kw'>nil</span>
+    <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_original_title'>original_title</span>
+  <span class='kw'>end</span>
+
+   <span class='kw'>if</span> <span class='id identifier rubyid_role'>role</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>equation</span><span class='tstring_end'>&#39;</span></span>
+     <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>  <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span>
+   <span class='kw'>else</span>
+     <span class='kw'>if</span> <span class='id identifier rubyid_numbered'>numbered</span>
+       <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>equation_number</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='gvar'>$counter</span><span class='lbracket'>[</span><span class='id identifier rubyid_env_name'>env_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+     <span class='kw'>end</span>
+   <span class='kw'>end</span>
+
+
+  <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span>
+
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>role</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>code</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_role'>role</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>listing</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_role'>role</span>  <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>click</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>role</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>click</span><span class='tstring_end'>&#39;</span></span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_role'>role</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>listing</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_create_block'>create_block</span> <span class='id identifier rubyid_parent'>parent</span><span class='comma'>,</span> <span class='symbol'>:listing</span><span class='comma'>,</span> <span class='id identifier rubyid_reader'>reader</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='comma'>,</span> <span class='id identifier rubyid_attrs'>attrs</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_create_block'>create_block</span> <span class='id identifier rubyid_parent'>parent</span><span class='comma'>,</span> <span class='symbol'>:click</span><span class='comma'>,</span> <span class='id identifier rubyid_reader'>reader</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='comma'>,</span> <span class='id identifier rubyid_attrs'>attrs</span>
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Apr 19 18:37:45 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.2).
+</div>
+
+  </body>
+</html>

@@ -146,9 +146,11 @@ require 'asciidoctor/latex/chem'
 $VERBOSE = true
 
 
-# code for Html5ConverterExtension & its insertion
-# template by @mojavelinux
+
 module Asciidoctor::LaTeX
+
+  # code for Html5ConverterExtension & its insertion
+  # template by @mojavelinux
   module Html5ConverterExtensions
 
     ENV_CSS = "+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"
@@ -161,6 +163,8 @@ module Asciidoctor::LaTeX
 
     end
 
+    # Dispatches a handler for the _node_ (`NODE`)
+    # based on its role.
     def environment node
 
       attrs = node.attributes
@@ -185,7 +189,6 @@ module Asciidoctor::LaTeX
     end
 
     def click node
-
       node.lines = [ENV_CSS] + node.lines + [DIV_END]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
       self.open node
@@ -332,7 +335,6 @@ module Asciidoctor::LaTeX
     end
 
 
-
     TOP_TYPES = %w(document section)
     LIST_TYPES = %w(dlist olist ulist colist)
     INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted inline_callout)
@@ -361,8 +363,8 @@ module Asciidoctor::LaTeX
 
     end
 
-  end
-end
+  end # class Converter
+end # module Asciidoctor::LaTeX
 
 
 class Asciidoctor::Converter::Html5Converter

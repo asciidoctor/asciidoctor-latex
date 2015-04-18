@@ -1,0 +1,1700 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Asciidoctor::Block
+  
+    &mdash; Asciidoctor LaTeX Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Asciidoctor/Block.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (B)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Asciidoctor.html" title="Asciidoctor (module)">Asciidoctor</a></span></span>
+     &raquo; 
+    <span class="title">Block</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Asciidoctor::Block
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Asciidoctor::Block</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/asciidoctor/latex/node_processors.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Proces block elements of varios kinds</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="STANDARD_ENVIRONMENT_NAMES-constant" class="">STANDARD_ENVIRONMENT_NAMES =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>STANDARD_ENVIRONMENT_NAMES = %w(theorem proposition lemma definition
+example problem equation)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>equation</span><span class='words_sep'>)</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#admonition_process-instance_method" title="#admonition_process (instance method)">- (Object) <strong>admonition_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#click_process-instance_method" title="#click_process (instance method)">- (Object) <strong>click_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#environment_process-instance_method" title="#environment_process (instance method)">- (Object) <strong>environment_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#example_process-instance_method" title="#example_process (instance method)">- (Object) <strong>example_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#floating_title_process-instance_method" title="#floating_title_process (instance method)">- (Object) <strong>floating_title_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#image_process-instance_method" title="#image_process (instance method)">- (Object) <strong>image_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#listing_process-instance_method" title="#listing_process (instance method)">- (Object) <strong>listing_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#literal_process-instance_method" title="#literal_process (instance method)">- (Object) <strong>literal_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#open_process-instance_method" title="#open_process (instance method)">- (Object) <strong>open_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Process open blocks.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#page_break_process-instance_method" title="#page_break_process (instance method)">- (Object) <strong>page_break_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#paragraph_process-instance_method" title="#paragraph_process (instance method)">- (Object) <strong>paragraph_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pass_process-instance_method" title="#pass_process (instance method)">- (Object) <strong>pass_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#preamble_process-instance_method" title="#preamble_process (instance method)">- (Object) <strong>preamble_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#quote_process-instance_method" title="#quote_process (instance method)">- (Object) <strong>quote_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#report-instance_method" title="#report (instance method)">- (Object) <strong>report</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sidebar_process-instance_method" title="#sidebar_process (instance method)">- (Object) <strong>sidebar_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#stem_process-instance_method" title="#stem_process (instance method)">- (Object) <strong>stem_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tex_process-instance_method" title="#tex_process (instance method)">- (Object) <strong>tex_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#toc_process-instance_method" title="#toc_process (instance method)">- (Object) <strong>toc_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#verse_process-instance_method" title="#verse_process (instance method)">- (Object) <strong>verse_process</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="admonition_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>admonition_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+264
+265
+266
+267</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 264</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_admonition_process'>admonition_process</span>
+  <span class='comment'># warn [&quot;Node:&quot;.blue, &quot;#{self.blockname}&quot;.cyan, &quot;#{self.style}:&quot;.magenta, &quot;#{self.lines[0]}&quot;].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\admonition\{</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_style'>style</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\{</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="click_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>click_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 341</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_click_process'>click_process</span>
+
+  <span class='comment'># warn &quot;begin click_process&quot;.blue + &quot;title = #{self.title}&quot;.yellow if $VERBOSE
+</span>
+  <span class='id identifier rubyid_click'>click</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>role</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='comment'># record any environments encounted but not built=in
+</span>  <span class='kw'>if</span> <span class='op'>!</span><span class='const'>STANDARD_ENVIRONMENT_NAMES</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_click'>click</span>
+    <span class='gvar'>$latex_environment_names</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_click'>click</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'>### XXX fixme:
+</span>  <span class='id identifier rubyid_click'>click</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>note</span><span class='tstring_end'>&#39;</span></span>
+
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='comment'># No label
+</span>    <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_click'>click</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end\{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_click'>click</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_click'>click</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n\\label\{</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\\end\{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_click'>click</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># warn &quot;end click_process\n&quot;.blue if $VERBOSE
+</span>
+  <span class='id identifier rubyid_output'>output</span>
+
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="environment_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>environment_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 296</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_environment_process'>environment_process</span>
+
+  <span class='comment'># warn &quot;begin environment_process, &quot;.blue + &quot;title = #{self.title}&quot;.yellow if $VERBOSE
+</span>  <span class='comment'># warn &quot;environment attributes = #{self.attributes}&quot;.red if $VERBOSE
+</span>  <span class='comment'># warn &quot;role = #{self.attributes[&quot;role&quot;]}&quot; if $VERBOSE
+</span>
+  <span class='id identifier rubyid_env'>env</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>role</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='comment'># record any environments encountered but not built=in
+</span>  <span class='kw'>if</span> <span class='op'>!</span><span class='const'>STANDARD_ENVIRONMENT_NAMES</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_env'>env</span> <span class='kw'>and</span> <span class='op'>!</span><span class='gvar'>$latex_environment_names</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_env'>env</span>
+  <span class='comment'># if  !($latex_environment_names.include? env)
+</span>    <span class='comment'># warn &quot;env added: [#{env}]&quot;.blue if $VERBOSE
+</span>    <span class='gvar'>$latex_environment_names</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_env'>env</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
+    <span class='id identifier rubyid_label'>label</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\\label\{</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_label'>label</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># warn &quot;self.attributes[&#39;original_title&#39;] = #{self.attributes[&#39;original_title&#39;]}&quot;.cyan if $VERBOSE
+</span>
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>original_title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\{\\rm (</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>original_title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>) \}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_env'>env</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>listing</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_env'>env</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_label'>label</span><span class='embexpr_end'>}</span><span class='tstring_content'>\\begin{verbatim}\n\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\\end{verbatim}\n\\end\{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_env'>env</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_env'>env</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>equationalign</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{equation\}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_label'>label</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\begin\{split\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end\{split\}\n\\end\{equation\}\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_env'>env</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>chem</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{equation\}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_label'>label</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\ce\{</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n\\end\{equation\}\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_env'>env</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_label'>label</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end\{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_env'>env</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+
+
+  <span class='id identifier rubyid_output'>output</span>
+
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="example_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>example_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+438
+439
+440
+441
+442
+443
+444
+445</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 438</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_example_process'>example_process</span>
+  <span class='comment'># warn &quot;exAmple_process&quot;.yellow
+</span>  <span class='comment'># warn [&quot;Node:&quot;.magenta, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='comment'># warn &quot;attributes: #{self.attributes}&quot;.cyan if $VERBOSE
+</span>  <span class='comment'># self.content_model = :verbatim
+</span>  <span class='comment'># warn &quot;content: #{self.content}&quot;.cyan if $VERBOSE
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{verbatim\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end\{verbatim\}\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="floating_title_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>floating_title_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 448</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_floating_title_process'>floating_title_process</span>
+  <span class='comment'># warn [&quot;Node:&quot;.blue, &quot;section[#{self.level}]:&quot;.cyan, &quot;#{self.title}&quot;].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='id identifier rubyid_doctype'>doctype</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_document'>document</span><span class='period'>.</span><span class='id identifier rubyid_doctype'>doctype</span>
+
+  <span class='id identifier rubyid_tags'>tags</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>article</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>part</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>section</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>subsection</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>subsubsection</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>paragraph</span><span class='tstring_end'>&#39;</span></span> <span class='rbracket'>]</span><span class='comma'>,</span>
+           <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>book</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>part</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>chapter</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>section</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>subsection</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>subsubsection</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>paragraph</span><span class='tstring_end'>&#39;</span></span> <span class='rbracket'>]</span> <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_tagname'>tagname</span> <span class='op'>=</span> <span class='id identifier rubyid_tags'>tags</span><span class='lbracket'>[</span><span class='id identifier rubyid_doctype'>doctype</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span><span class='rbracket'>]</span>
+
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tagname'>tagname</span><span class='embexpr_end'>}</span><span class='tstring_content'>*\{</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="image_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>image_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 460</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_image_process'>image_process</span>
+  <span class='comment'># warn [&quot;IXX: Node:&quot;.magenta, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;)  if $VERBOSE
+</span>  <span class='comment'># warn &quot;IXX: attributes: #{self.attributes}&quot;.cyan  if $VERBOSE
+</span>  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>width</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_width'>width</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>width</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='op'>/</span><span class='float'>100.0</span><span class='embexpr_end'>}</span><span class='tstring_content'>truein</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_width'>width</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2.5truein</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_raw_image'>raw_image</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>target</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_document'>document</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>noteshare</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>yes</span><span class='tstring_end'>&#39;</span></span>
+    <span class='comment'># warn &quot;IXX: extracting image name&quot;.red if $VERBOSE
+</span>    <span class='id identifier rubyid_image_rx'>image_rx</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>image.*original\/(.*)\?</span><span class='regexp_end'>/</span></span>
+    <span class='id identifier rubyid_match_data'>match_data</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_image'>raw_image</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span> <span class='id identifier rubyid_image_rx'>image_rx</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_match_data'>match_data</span>
+      <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='id identifier rubyid_match_data'>match_data</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
+      <span class='comment'># warn &quot;IXX: image name: #{image}&quot;.red if $VERBOSE
+</span>    <span class='kw'>else</span>
+      <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>undefined</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_image'>raw_image</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_caption'>caption</span> <span class='op'>=</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\caption\{</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_refs'>refs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_document'>document</span><span class='period'>.</span><span class='id identifier rubyid_references'>references</span>  <span class='comment'># [:ids]
+</span>  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>align</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>center</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_align'>align</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\centering</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_align'>align</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_float'>float</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>float</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_float'>float</span>
+    <span class='id identifier rubyid_figure_type'>figure_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>wrapfigure</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_ftext_width'>ftext_width</span> <span class='op'>=</span> <span class='id identifier rubyid_width'>width</span> <span class='comment'># &#39;0.45\\textwidth&#39;
+</span>    <span class='id identifier rubyid_caption'>caption</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_figure_type'>figure_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>figure</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_text_width'>text_width</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_float'>float</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>left</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>{l}</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>right</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>{r}</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>[h]</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_figure_type'>figure_type</span><span class='embexpr_end'>}</span><span class='tstring_content'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_position'>position</span><span class='embexpr_end'>}</span><span class='tstring_content'>\{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ftext_width'>ftext_width</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}\n\\includegraphics[width=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_width'>width</span><span class='embexpr_end'>}</span><span class='tstring_content'>]{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_image'>image</span><span class='embexpr_end'>}</span><span class='tstring_content'>}\n</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_caption'>caption</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_align'>align</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_figure_type'>figure_type</span><span class='embexpr_end'>}</span><span class='tstring_content'>}\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="listing_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>listing_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+432
+433
+434
+435
+436</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 432</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_listing_process'>listing_process</span>
+  <span class='comment'># warn [&quot;Node:&quot;.magenta, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='comment'># warn &quot;attributes: #{self.attributes}&quot;.cyan if $VERBOSE
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{verbatim\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end\{verbatim\}\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="literal_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>literal_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+274
+275
+276
+277</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 274</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_literal_process'>literal_process</span>
+  <span class='comment'># warn [&quot;Node:&quot;.magenta, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{verbatim\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end\{verbatim\}\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="open_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>open_process</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Process open blocks.  Map a block of the form</p>
+
+<p>.Foo</p>
+<dl class="rdoc-list label-list"><dt>[hocus_pocus]
+<dd>
+<p>– La di dah –</p>
+
+<p>to</p>
+
+<p>beginFoo labelhocus_pocus La di dah endFoo</p>
+
+<p>This scheme enables one to map Asciidoc blocks to LaTeX environments with
+essentally no knoweldge of either other than their form.</p>
+</dd></dl>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 401</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_open_process'>open_process</span>
+
+  <span class='id identifier rubyid_report'>report</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+
+  <span class='id identifier rubyid_attr'>attr</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
+
+  <span class='comment'># warn &quot;attributes (open block): #{self.attributes}&quot; if $VERBOSE
+</span>
+
+  <span class='comment'># Get title !- nil or make a dummy one
+</span>  <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>title</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>==</span> <span class='kw'>nil</span>
+    <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dummy</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+
+
+
+   <span class='comment'># strip constructs like {counter:theorem} from the title
+</span>   <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\{.*?\}</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+   <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_attr'>attr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>role</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text-center</span><span class='tstring_end'>&#39;</span></span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{center\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\\end\{center\}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span>
+  <span class='kw'>end</span>
+
+
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="page_break_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>page_break_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+269
+270
+271
+272</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 269</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_page_break_process'>page_break_process</span>
+  <span class='comment'># warn [&quot;Node:&quot;.blue, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\\vfill\\eject\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="paragraph_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>paragraph_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+242
+243
+244
+245
+246
+247
+248
+249</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 242</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_paragraph_process'>paragraph_process</span>
+  <span class='comment'># warn &quot;paragraph attributes: #{self.attributes}&quot;.red if $VERBOSE
+</span>  <span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_out'>out</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\{\\bf </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>\.}</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_out'>out</span> <span class='op'>&lt;&lt;</span> <span class='const'>LaTeX</span><span class='op'>::</span><span class='const'>TeXPostProcess</span><span class='period'>.</span><span class='id identifier rubyid_make_substitutions'>make_substitutions</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pass_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>pass_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+279
+280
+281
+282</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 279</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pass_process'>pass_process</span>
+  <span class='comment'># warn [&quot;Node:&quot;.magenta, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="preamble_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>preamble_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+509
+510
+511</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 509</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_preamble_process'>preamble_process</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{preamble\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end\{preamble\}\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="quote_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>quote_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 284</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_quote_process'>quote_process</span>
+  <span class='comment'># warn [&quot;Node:&quot;.magenta, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attr?'>attr?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>attribution</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_attribution'>attribution</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attr'>attr</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>attribution</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_citetitle'>citetitle</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attr?'>attr?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>citetitle</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attr'>attr</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>citetitle</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>:</span> <span class='kw'>nil</span>
+
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{aquote\}{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attribution'>attribution</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_citetitle'>citetitle</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> - </span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_citetitle'>citetitle</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\\end\{aquote\}\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{quote\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\\end\{quote\}\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="report-instance_method">
+  
+    - (<tt>Object</tt>) <strong>report</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 370</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_report'>report</span>
+  <span class='comment'># Report on this node
+</span>  <span class='comment'># warn [&quot;OPEN BLOCK:&quot;.magenta, &quot;id: #{self.id}&quot;].join(&quot; &quot;)
+</span>  <span class='comment'># warn [&quot;Node:&quot;.magenta, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;)
+</span>  <span class='comment'># warn [&quot;Attributes:&quot;.magenta, &quot;#{self.attributes}&quot;.cyan].join(&quot; &quot;)
+</span>  <span class='comment'># warn [&quot;Title: &quot;.magenta, title.cyan, &quot;style:&quot;, self.style].join(&quot; &quot;) if title
+</span>  <span class='comment'># warn [&quot;Content:&quot;.magenta, &quot;#{self.content}&quot;.yellow].join(&quot; &quot;)
+</span>  <span class='comment'># warn [&quot;Style:&quot;.green, &quot;#{self.style}&quot;.red].join(&quot; &quot;)
+</span>  <span class='comment'># warn [&quot;METHODS:&quot;.red, &quot;#{self.methods}&quot;.yellow].join(&quot; &quot;)
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sidebar_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>sidebar_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+514
+515
+516
+517
+518
+519</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 514</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sidebar_process'>sidebar_process</span>
+  <span class='comment'># warn &quot;sidebar_process&quot;.yellow if $VERBOSE
+</span>  <span class='comment'># warn [&quot;Node:&quot;.magenta, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='comment'># warn &quot;attributes: #{self.attributes}&quot;.cyan if $VERBOSE
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{sidebar\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end\{sidebar\}\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="stem_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>stem_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 251</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_stem_process'>stem_process</span>
+  <span class='comment'># warn [&quot;Node:&quot;.blue, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='comment'># warn self.content.cyan if $VERBOSE
+</span>  <span class='id identifier rubyid_environment'>environment</span> <span class='op'>=</span> <span class='const'>LaTeX</span><span class='op'>::</span><span class='const'>TeXBlock</span><span class='period'>.</span><span class='id identifier rubyid_environment_type'>environment_type</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span>
+  <span class='kw'>if</span> <span class='const'>LaTeX</span><span class='op'>::</span><span class='const'>TeXBlock</span><span class='op'>::</span><span class='const'>INNER_TYPES</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_environment'>environment</span>
+    <span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\\[\n</span><span class='embexpr_beg'>#{</span><span class='const'>LaTeX</span><span class='op'>::</span><span class='const'>TeXPostProcess</span><span class='period'>.</span><span class='id identifier rubyid_stem_substitutions'>stem_substitutions</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\\]\n</span><span class='tstring_end'>&quot;</span></span>
+    <span class='comment'># warn out.yellow if $VERBOSE
+</span>    <span class='id identifier rubyid_out'>out</span>
+  <span class='kw'>else</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tex_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>tex_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 194</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tex_process'>tex_process</span>
+  <span class='comment'># warn [&quot;Node:&quot;.blue , &quot;#{self.blockname}&quot;.blue].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='kw'>case</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_blockname'>blockname</span>
+  <span class='kw'>when</span> <span class='symbol'>:paragraph</span>
+    <span class='id identifier rubyid_paragraph_process'>paragraph_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:stem</span>
+    <span class='id identifier rubyid_stem_process'>stem_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:admonition</span>
+    <span class='id identifier rubyid_admonition_process'>admonition_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:page_break</span>
+    <span class='id identifier rubyid_page_break_process'>page_break_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:literal</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_literal_process'>literal_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:pass</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pass_process'>pass_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:quote</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_quote_process'>quote_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:open</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open_process'>open_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:environment</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_environment_process'>environment_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:click</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_click_process'>click_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:listing</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_listing_process'>listing_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:example</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_example_process'>example_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:floating_title</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_floating_title_process'>floating_title_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:image</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_image_process'>image_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:preamble</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_preamble_process'>preamble_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:sidebar</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sidebar_process'>sidebar_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:verse</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_verse_process'>verse_process</span>
+  <span class='kw'>when</span> <span class='symbol'>:toc</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_toc_process'>toc_process</span>
+  <span class='comment'># when :table
+</span>    <span class='comment'># self.table_process
+</span>  <span class='kw'>else</span>
+    <span class='comment'># warn &quot;This is Asciidoctor::Block, tex_process.  I don&#39;t know how to do that (#{self.blockname})&quot; if $VERBOSE if $VERBOSE
+</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="toc_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>toc_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+366
+367
+368</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 366</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_toc_process'>toc_process</span>
+  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Please implement me! (toc_process)</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_red'>red</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="verse_process-instance_method">
+  
+    - (<tt>Object</tt>) <strong>verse_process</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+521
+522
+523
+524
+525
+526</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 521</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_verse_process'>verse_process</span>
+  <span class='comment'># warn &quot;verse_process&quot;.yellow if $VERBOSE
+</span>  <span class='comment'># warn [&quot;Node:&quot;.magenta, &quot;#{self.blockname}&quot;.cyan].join(&quot; &quot;) if $VERBOSE
+</span>  <span class='comment'># warn &quot;attributes: #{self.attributes}&quot;.cyan if $VERBOSE
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\begin\{alltt\}\n</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n\\end\{alltt\}\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Apr 19 18:37:45 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.2).
+</div>
+
+  </body>
+</html>

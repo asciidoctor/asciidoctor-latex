@@ -23,6 +23,7 @@ module Asciidoctor::LaTeX
     def process document, output
       output = output.gsub('DOLLOD', '\$')
       output = output.gsub('CHEMRIGHTARROW','->').gsub('CHEMLEFTARROW','<-').gsub('CHEMLEFTRIGHTARROW','<-->')
+      output = output.gsub('\\(','$').gsub('\\)','$')
       output.gsub('!!!BACKSLASH', '\\')
     end
 

@@ -1,3 +1,5 @@
+.gitignore
+
 */_*/
 /Gemfile.lock
 /pkg/
@@ -52,3 +54,10 @@ text/
 test_jc/
 boo/
 dt
+
+samples/
+*.sh
+*/possible/*
+*/yuuk/*
+js/
+jsxgraph/

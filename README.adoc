@@ -1,56 +1,55 @@
 = AsciiDoc-LaTeX Converter for Asciidoctor
 James Carlson
-
+2015-04-19
 :numbered:
+:pagenums:
 :toc2:
 :stem:
 
 == Purpose
 
+:adl: Asciidoc-LaTeX
+:adlp: Asciidoctor-LaTeX
+:ad: Asciidoc
+:adp: http://asciidoctor.org[Asciidoctor]
+:adoc: http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[Asciidoc]
+:adlm: http://www.noteshare.io/section/asciidoctor-latex-manual-intro[Asciidoctor-LaTeX Manual]
+:tex: https://www.sharelatex.com/[LaTeX]
+:article: http://noteshare.io/book/transcendental-numbers-and-periods[article]
+:ns: http://www.noteshare.io[Noteshare.io]
+
+
 Asciidoc-LaTeX defines an extended mathematical syntax
-for Asciidoc that closely parallels LaTeX.  The
+for the Asciidoc markup language
+that closely parallels LaTeX.  The
 Asciidoctor-LaTeX converter renders documents written
 in this extended markup language into both HTML
 and LaTeX.footnote:[Many, but not all Asciidoc language
 features are covered by this release.]
 
-This README is very brief because mathematical
-markup in Asciidoc-LaTeX will not render in GitHub.
-For a better view of what Asciidoc-LaTeX does, follow the
-installation instructions and then run
-
-----
- $ asciidoctor-latex -b html start.adoc
-----
-on the files `start.adoc`, etc found
-in the directory `examples` of this repository.
-This command produces the file `start.html`.
-It can be viewed with any browser.  You will
-need an internet connection , since the browser
- must load he MathJax fonts.
-
-NOTE: Consult the
-http://noteshare.io/book/asciidoctor-latex-manual[Asciidoctor-LaTeX manual]
-for more information and for a view of both
-source and rendered text for
-Asciidoc-LaTeX.  For more information on conversion
-of Asciidoc-LaTeX documents to LaTeX, see
-`manual.adoc` _(needs update)_.
-
+Below, we descibe the main
+features of {adl}.  However, since
+Asciidoc-LaTeX will not render in GitHub, you
+are encouraged to view this write-up:
+https://vschool.s3.amazonaws.com/manuscripts/372.html[Asciidoc-LaTeX].
+For more information on using , please consult the
+http://www.noteshare.io/book/asciidoctor-latex-manual[Asciidoctor-LaTeX manual].
+For more information on conversion of {adl}
+documents to {tex}, see the file `tech-report.adoc` in
+this repository.
 
 Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.
-_In progress: Cross-compilation to Asciidoctor.js by Guillaume Grossetie makes
-possible other uses, among which will be inclusion in the Chrome
-Live Preview Extension._
 
 
 == Installation
 
 === Using Rubygems
 
-There is a development release.  Beta alert!
+There is a development release at
+https://rubygems.org/gems/asciidoctor-latex[RubyGems.org]
+  Beta alert!
 
-=== From repository
+=== From GitHub
 
 If you would like to install a development version from the repository, use:
 
@@ -72,11 +71,12 @@ one can write `$ a^2 + b^2 = c^2 $` and
     e^{2\pi \sqrt{-1}} = 1,
  \]
 ----
-for in-line and dipplay mathematial
+for in-line and display mathematial
 text, respectively.
 You will need to express dollar-denominated
 currency using
-escaped dollar signs: "He paid \$100 for that
+escaped dollar signs, as
+ in the sentence, "He paid \$100 for that
 theore.m"  In AsciiMath, one writes
 `+++stem:[ a^2 + b^2 = c^2 ]+++`
 and
@@ -171,7 +171,7 @@ V & = \frac{4}{3} \pi r^3
 
 == Click blocks
 
-Click blocks are similar to `[env]` blocks excep that the body of
+Click blocks are similar to `[env]` blocks exceptiipoo that the body of
 the block is not displayed until the user clicks on the heading.
 The heading of a click block is displayed in blue.  Once a click
 block is "opened", it can be closed by clicking again on the heading.

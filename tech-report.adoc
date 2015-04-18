@@ -1,0 +1,1134 @@
+= Asciidoctor-LaTeX Technical Report
+James Carlson
+2015-04-19
+:toc2:
+:numbered:
+:stem: latexmath
+
+== Introduction
+
+:adl: Asciidoc-LaTeX
+:adlp: Asciidoctor-LaTeX
+:ad: Asciidoc
+:adp: http://asciidoctor.org[Asciidoctor]
+:adoc: http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[Asciidoc]
+:adlm: http://www.noteshare.io/section/asciidoctor-latex-manual-intro[Asciidoctor-LaTeX Manual]
+:tex: https://www.sharelatex.com/[LaTeX]
+:article: http://noteshare.io/book/transcendental-numbers-and-periods[article]
+:ns: http://www.noteshare.io[Noteshare.io]
+
+{adl} defines an extended mathematical syntax
+for the Asciidoc markup language
+that closely parallels LaTeX.  To render
+documents written in {adl} into HTML or LaTeX,
+one uses the {adlp} processor.
+It is used in the same way that
+ the {adp} processor is used to render
+{ad} documents into HTML.
+
+You will find an on-line
+copy of this report at XX.footnote:[Will
+post this as soon
+as I can make a proper connection.  I am
+presently in Beijing behind the Great Firewall].
+The report has several parts, in
+roughly increasing order of size
+and technical complexity.
+
+* A guide to the <<Installation, installation>> and use of
+{adlp}.
+
+* An <<Asciidoc-LaTeX,introduction>> to the {adl} markup language.
+Here we give a few examples and principles.
+For more examples and more detail, see the
+{adlm}.
+
+* A <<Converting to LaTeX, description>> of the
+mapping given by {adlp}.
++
+At this writing, the mapping
+is (quite) incomplete.  It is nonetheless
+suffcient to translate most of the
+material on {ns} into LaTeX, e.g,
+this {article}.
+
+
+
+* Overviews of the design
+of the <<Design of the Asciidoctor-LaTeX processor>>.
+This will be helpful
+to anyone who wishes to fork or maintain
+the code.
+
+This report is a work-in-progress.  I will
+extend its coverage of the above topics
+as time permits.
+
+
+Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.
+
+
+== Installation
+
+=== Using Rubygems
+
+There is a development release at
+https://rubygems.org/gems/asciidoctor-latex[RubyGems.org]
+  Beta alert!
+
+=== From GitHub
+
+If you would like to install a development version from the repository, use:
+
+ $ git clone https://github.com/asciidoctor/asciidoctor-latex.git
+ $ cd asciidoctor-latex
+ $ gem build asciidoctor-latex.gemspec
+ $ gem install *.gem
+
+=== Commands for rendering
+
+Asciidoc math files can be rendered
+
+* as HTML.  Use `$ asciidoctor-latex -b html foo.adoc` to produce `foo.html`.
+With this command the Asciidoc-LaTeX syntax and extensions will be rendered.
+* as LaTeX.  Use `$ asciidoctor-latex foo.adoc`
+to produce `foo.tex`.
+
+
+=== Switches
+
+Switch `:stem:` processing on by puttinng the text `:stem:`
+in your file.  To turn the switch on and set it to `latexmath`, say
+instead of `stem:latexmth`.
+
+
+== {adl}
+
+{adlp} supports two closely-related
+math formats, [blue]#Asciidoc-LaTeX#
+and [blue]#AsciiMath#.
+In Asciidoc-LaTeX,
+one can write `$ a^2 + b^2 = c^2 $` and
+----
+ \[
+    e^{2\pi \sqrt{-1}} = 1,
+ \]
+----
+for in-line and display mathematial
+text, respectively.
+You will need to express dollar-denominated
+currency using
+escaped dollar signs, as
+ in the sentence, "He paid \$100 for that
+theore.m"  In AsciiMath, one writes
+`+++stem:[ a^2 + b^2 = c^2 ]+++`
+and
+----
+  [stem]
+  ++++
+    e^{2\pi \sqrt{-1}} = 1.
+  ++++
+----
+
+
+
+=== Asciidoc-LaTeX environments
+
+Asciidoc-LaTeX supports an `env` construct that maps to LaTeX environments.
+Thus
+----
+[env.theorem]
+--
+There exist infinitely many prime numbers.
+--
+----
+renders as an automatically numbered theorem.
+Environments can contain in-line and display mathematics, e.g.,
+----
+[env.theorem]
+--
+A two-by-two matrix is invertible if
+its determinant is nonzero, i.e., if
+\[
+  \left|\begin{matrix}
+    a & b \\
+    c & d
+  \end{matrix}\right| \ne 0
+\]
+This result extends to $n\times n$ matrices.
+--
+----
+
+There is complete freedom in parameter `NAME`
+of `[env.NAME]`, Thus,one can write
+----
+[env.definition]
+--
+An integer $n$ is *prime* if (a) it is not
+$\pm 1$ and (b) it has no divisors other
+than $\pm 1$ and $\pm n$.
+--
+----
+or
+----
+[env.joke]
+--
+A mathematician, a philosopher, and
+a lawyer met at the local bar
+for a drink.  The lawyer said ...
+--
+----
+One can make cross references by labeling
+the environment as in
+----
+[env.joke#mathjoke1]
+--
+A mathematician, a philosopher, and
+a lawyer met at the local bar
+for a drink.  The lawyer said ...
+--
+----
+then referencing it later as `<<mathjoke1>>`.
+
+Certain environments receive special treatment.
+For numbered equations, use `[env.equation]`
+like this
+
+----
+[env.equation]
+--
+a^{p-1} \equiv 1\ \text{mod}\ p
+--
+----
+
+For sets of equations, use `[env,equationalign]`:
+----
+[env.equationalign]
+--
+A & = 4\pi r^2 \\
+V & = \frac{4}{3} \pi r^3
+--
+----
+
+
+
+
+=== Click blocks
+
+Click blocks are similar to `[env]` blocks exceptiipoo that the body of
+the block is not displayed until the user clicks on the heading.
+The heading of a click block is displayed in blue.  Once a click
+block is "opened", it can be closed by clicking again on the heading.
+
+----
+[click.comment]
+--
+It is sometimes useful to "hide" a comment
+in a click block so as not to unduly
+disturb the flow of the prose. Click
+blocks are also useful for problem sets,
+since one can make hints, solutions, etc.
+clickable.
+----
+
+
+The default for click blocks is not to number them.
+See the file `click.adoc` in the `exampless` directory
+for more information.
+
+
+
+== Converting to LaTeX
+
+=== Inline mathematics
+
+The text
+----
+  $a^2 + b^2 = c^2$
+----
+is rendered as
+----
+  $a^2 + b^2 = c^2$
+----
+
+=== Display mathematics
+
+The text
+----
+ \[
+   \int_0^1 x^n dx = \frac{1}{n+1}
+ \]
+----
+is rendered as
+----
+ \[
+   \int_0^1 x^n dx = \frac{1}{n+1}
+ \]
+----
+
+=== Currency
+
+The source text
+
+----
+Some finance: that theorem costs \$100!
+----
+
+maps to
+
+----
+Some finance: that theorem costs \$100!
+----
+
+=== Environments
+
+The `[env.FOO]` construct in {adl} gives us
+a way to mimic the
+----
+\begin{FOO}
+ ... whatever ...
+\end{FOO}
+----
+construct in {tex}.  The variable FOO can
+be something familiar -- `theorem`, `lemma`,
+`definition`, etc. {adlp} provides
+default {tex} definitions for the
+most common of these. You can override
+them with your own defintions and you
+can you can define environments for special
+needs, e.g., `[env.joke]`, `[env.objection]`,
+etc.
+
+This said, there are special environments
+built in to {adl} which receive special
+treatment.  We thus distinguish two
+classes of environments, _Vanilla_
+and _Special_.
+
+=== Vanilla environments
+
+
+The `[env.theorem]` environment
+is a typical vanilla environemet.
+Thus, the source text
+
+----
+[env.theorem]
+--
+The equation $a^2 + b^2  = c^2$
+has infinitely many non-proportional
+integer solutions.
+--
+----
+
+renders as
+
+----
+\begin{theorem}
+The equation $a^2 + b^2  = c^2$
+has infinitely many non-proportional
+integer solutions.
+\end{theorem}
+----
+
+
+Vanilla environments can contain
+display as well as inline mathematics.
+Thus, the source text
+----
+[env.theorem]
+--
+\[
+   e^{2\pi\sqrt{-1}} = 1
+\]
+--
+----
+
+renders as
+
+----
+\begin{theorem}
+\[
+   e^{2\pi\sqrt{-1}} = 1
+\]
+\end{theorem}
+----
+
+Vanilla environments can take a title,
+as in this example.
+----
+.Euler
+[env.theorem]
+--
+\[
+   e^{2\pi\sqrt{-1}} = 1
+\]
+--
+----
+
+It renders as
+
+
+----
+\begin{theorem}{\rm (Euler) }
+\[
+   e^{2\pi\sqrt{-1}} = 1
+\]
+\end{theorem}
+----
+
+To label a vanilla environment for
+cross-referencing, do this:
+
+----
+[env.theorem#euler]
+--
+\[
+   e^{2\pi\sqrt{-1}} = 1
+\]
+--
+----
+
+To refer to this theorem, say
+`<<euler>>`.
+
+=== Special environments
+
+For equations we have the special
+environment `[env.equation]`.  The
+source text
+
+----
+[env.equation]
+--
+\sum_{k=1}^\infty \frac{1}{n}
+--
+----
+
+renders as
+
+
+----
+\begin{equation}
+\sum_{k=1}^\infty \frac{1}{n}
+\end{equation}
+----
+
+The fictitious derivation
+
+----
+[env.equationalign]
+--
+  a &= b + c        \\
+  a &= (c + d) + d  \\
+    &= c + 2d
+--
+----
+
+renders as
+
+
+----
+\begin{equation}
+\begin{split}
+  a &= b + c        \\
+  a &= (c + d) + d  \\
+    &= c + 2d
+\end{split}
+\end{equation}
+----
+
+=== Sections
+
+
+
+The source text
+
+----
+== Section
+
+=== Going down farther -- subsection
+
+==== And farther still ...
+
+===== Yikes! We have hit bottom!!
+
+----
+
+
+is rendered as
+
+----
+\section*{Section}
+
+\subsection*{Going down farther — subsection}
+
+\subsubsection*{And farther still …​}
+
+\paragraph*{Yikes! We have hit bottom!!}
+----
+
+If we precede the source text by the code
+
+----
+:numbered:
+----
+
+we turn on automatic numbering and get this instead:
+
+----
+\section{Section}
+
+\subsection{Going down farther — subsection}
+
+\subsubsection{And farther still …​}
+
+\paragraph{Yikes! We have hit bottom!!}
+----
+
+To turn automatic numbering off, insert
+this code:
+
+----
+:!numbered:
+----
+
+=== Ordered and unordered lists
+
+In Asciidoc, an unordered list like
+
+* Pay Bills
+* Get Groceries
+** Milk
+** Bread
+** Orange Juice
+* Change Oil Filter on Car
+
+is written like this
+
+----
+    * Pay Bills
+    * Get Groceries
+    ** Milk
+    ** Bread
+    ** Orange Juice
+    * Change Oil Filter on Car
+----
+
+Its translation into LaTeX is
+
+----
+   \begin{itemize}
+   \item Pay Bills
+   \item Get Groceries
+   \begin{itemize}
+       \item Milk
+       \item Bread
+       \item Orange Juice
+   \end{itemize}
+   \item Change Oil Filter on Car
+   \end{itemize}
+----
+
+The corresponding ordered list,
+
+. Pay Bills
+. Get Groceries
+.. Milk
+.. Bread
+.. Orange Juice
+. Change Oil Filter on Car
+
+is written as
+
+----
+   . Pay Bills
+   . Get Groceries
+   .. Milk
+   .. Bread
+   .. Orange Juice
+   . Change Oil Filter on Car
+----
+
+with the following source in LaTex:
+
+----
+	\begin{enumerate}
+	\item Pay Bills
+	\item Get Groceries
+    \begin{enumerate}
+	    \item Milk
+	    \item Bread
+	    \item Orange Juice
+	\end{enumerate}
+	\item Change Oil Filter on Car
+	\end{enumerate}
+----
+
+=== Bold, italic, and monospaced text
+
+The text "She said _potatoes_ but he said *potaatoes*", written
+in Asciidoc as
+
+----
+    She said _potatoes_ but he said *potaatoes*
+----
+is mapped to
+
+----
+    She said \emph{potatoes} but he said \textbf{potaatoes}
+----
+
+The text
+
+----
+    `monospaced`
+----
+
+is mapped to
+
+----
+    {\tt monospaced}
+----
+
+
+=== Quotations
+
+The text
+
+----
+    [quote, Abraham Lincoln, Soldiers' National Cemetery Dedication]
+    ____
+    Four score and seven years ago our fathers brought forth
+    on this continent a new nation
+    ____
+----
+is mapped to
+
+----
+    \begin{quote}
+      Four score and seven years ago our fathers brought forth
+      on this continent a new nation
+    \end{quote}
+----
+
+=== Footnotes
+
+Text like this
+----
+    Ho hum.footnote:[An epression of boredem]
+----
+is mapped to
+
+----
+    Ho hum\footnote{An epression of boredem}
+----
+
+=== References and labels
+
+The label
+
+----
+    Ho hum[[foo]]
+----
+
+is mapped to
+
+----
+    Ho hum\label{foo}
+----
+
+The cross-reference
+
+----
+    Please see <<foo>>
+----
+
+is mapped to
+
+----
+   Please see \ref{foo}
+----
+
+Labels can also be constructed
+directly in {adl} environments.
+Consider the source text below.
+
+----
+[env.theorem#pythagoras]
+--
+Let $a$ an $b$ denote the
+altitue and base of a right
+triangle.  Let $c$ denote
+its hypotenuse.  Then
+$c^2= a + b$.
+--
+----
+
+The code `#pythagoras` creates
+a label `pythagoras`.
+
+
+=== Hyperlinks
+
+The hyperlink
+
+----
+    http://nytimes.com[All the news that is fit to print]
+----
+
+is mapped to
+
+----
+   \href{http://nytimes.com}{All the news that is fit to print}
+----
+
+=== Line breaks
+
+The source text
+
+----
+Roses are red, +
+Daisies are white, +
+But all need the light.
+----
+
+is mapped to
+
+----
+Roses are red, \\
+Daisies are white, \\
+But all need the light.
+----
+
+
+
+=== Listing
+
+The source text
+
+----
+[listing]
+....
+sum = 0
+k = 1
+100.times do
+  sum += 1.0/k
+  k += 1
+end
+puts sum
+....
+----
+
+is mapped to
+
+----
+\begin{verbatim}
+sum = 0
+k = 1
+100.times do
+  sum += 1.0/k
+  k += 1
+end
+puts sum
+\end{verbatim}
+----
+
+=== Open blocks
+
+Here is an open block:
+
+----
+--
+This is an anonymous
+open block.
+
+
+End of story.
+--
+----
+
+It is rendered as-is in LaTeX:
+
+----
+This is an anonymous
+open block.
+
+
+End of story.
+----
+
+Here is an open block masquerading
+as a listing block:
+
+----
+[listing]
+--
+This is an anonymous
+open block masquerading
+a listing block.
+
+End of story.
+--
+----
+
+And here is how it is rendered
+in LaTeX:
+
+----
+\begin{verbatim}
+This is an anonymous
+open block masquerading
+a listing block.
+
+End of story.
+\end{verbatim
+----
+
+
+=== Literal
+
+The text
+
+----
+[literal]
+This
+  is
+    a test of
+      whether
+    it realy
+  works!
+----
+
+is rendered as
+
+----
+\begin{verbatim}
+This
+  is
+    a test of
+      whether
+    it realy
+  works!
+\end{verbatim}
+----
+
+Note that in the source
+text there are no blank
+lines.  If there are blank
+lines, there is an alternate
+construction:
+
+----
+....
+This
+  is also
+
+    a test of
+      whether
+
+    it realy
+  works!
+....
+----
+
+It is rendered as
+
+----
+\begin{verbatim}
+This
+  is also
+
+    a test of
+      whether
+
+    it realy
+  works!
+\end{verbatim}
+----
+
+=== Page break
+
+The text
+
+----
+  Fee, fie
+
+  <<<
+
+  fo, fum!
+----
+
+will render in TeX las
+
+----
+  Fee, fie
+
+  \vfill\eject
+
+  fo, fum!
+----
+
+=== Pass
+
+The source text
+
+----
+pass:[<<<] is normally a page break.
+But now it isn't.
+----
+
+is rendered as
+
+----
+<<< is normally a page break.
+But now it isn’t.
+----
+
+NOTE: More attention needed here
+
+
+
+== Design of the Asciidoctor-LaTeX processor
+
+{adlp} adds new behavior to the
+existing Html5Converter for {adp}.  It does
+this via Ruby 2.0's `prepend` method:
+
+[code, Ruby]
+----
+class Asciidoctor::Converter::Html5Converter
+  # inject our custom code into the
+  # existing Html5Converter class
+  prepend Asciidoctor::LaTeX::Html5ConverterExtensions
+end
+----
+
+This code ensures that methods of module
+`Asciidoctor::LaTeX:Html5ConverterExtensions` are executed
+in preference to methods  of module
+`Asciidoctor::LaTeX:`.
+
+The new behavior itself is defined
+in the module
+`Asciidoctor::LaTeX:Html5ConverterExtensions`.
+There we find, for example, a new method,
+`environment(node)` which handles a new
+type of block, the _environment block._
+One also finds the method `inline_anchor(node)`,
+which already exists in
+`Asciidoctor::LaTeX:Html5Converter` and which
+processes inline anchors such as
+
+----
+  http://asciidoctor.org[Asciidoctor]
+----
+
+=== Outline
+
+At its highest level, `module Asciidoctor::LaTeX`
+has two components, `module Html5ConverterExtensions`
+and `class Converter`.  Let us examine these
+in ever greater detail.
+
+[code, ruby]
+----
+
+module Asciidoctor::LaTeX
+
+  module Html5ConverterExtensions
+  end
+
+  class Converter
+  end
+
+end
+----
+
+=== module Html5ConverterExtensions
+
+The `Html5ConverterExtensions` module
+contains handlers for nodes, e.g, the
+`environment_block` node, which is new,
+and the `inline_anchor` node, which
+has new behavior.
+
+[code, ruby]
+----
+
+module Asciidoctor::LaTeX
+  module Html5ConverterExtensions
+    #
+    # Node handlers ...
+    #
+  end
+end
+----
+
+==== Html5ConverterExtensions in more detail
+
+[code, ruby]
+----
+module Html5ConverterExtensions
+
+  def environment node
+
+      attrs = node.attributes
+
+      case attrs['role']
+        when 'equation'
+          handle_equation(node)
+        when 'equationalign'
+          handle_equation_align(node)
+        ###### etc ######
+      end
+
+      node.attributes['roles'] = (node.roles + ['environment']) * ' '
+      self.open node
+    end
+
+  def click node
+    node.lines = [ENV_CSS] + node.lines + [DIV_END]
+    node.attributes['roles'] = (node.roles + ['click']) * ' '
+    self.open node
+  end
+
+  def handle_equation(node)
+  end
+
+  ###### etc ######
+
+end
+----
+
+==== A typical node handler
+
+[code, ruby]
+----
+def handle_equation(node)
+  options = node.attributes['options']
+  node.title = nil
+  number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
+  number_part = ["+++ #{number_part} +++"]
+  equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
+  table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
+  row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
+  if options['numbered']
+    node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
+  else
+    node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
+  end
+end
+----
+
+
+=== class Converter
+
+In the `Converter` class, preprocessors,
+postprocessors, etc., are registered, the backend
+is initialized, and converter method is defined.
+{adlp} calls the converter on AST (abstract syntax
+tree) that the parser has produced, and proceeds
+to walk through it node by node.  The converter
+dispatches each node to its processor. The handler
+is determined by the node, e.g., by its name
+ and role.  In so doing, the converter looks in
+ an array of node types to
+ see if it knows about that kind of node. If
+ it does, the node is dispatched to its processor.
+ If it does not, it issues a warning which can be used
+ to add the needed behavior to the converter.
+
+
+[code, ruby]
+----
+
+class Converter
+
+  include Asciidoctor::Converter
+
+  # Register processors ...
+
+  # def initialize backend, opts ...
+
+  # def convert node, transform = nil ...
+
+end
+
+----
+
+
+==== Registration
+
+[code, ruby]
+----
+
+  class Converter
+    include Asciidoctor::Converter
+
+   register_for 'latex'
+
+
+   Asciidoctor::Extensions.register do
+     preprocessor TeXPreprocessor
+     preprocessor MacroInsert if File.exist? 'macros.tex' and document.basebackend? 'html'
+     block EnvironmentBlock
+     block ClickBlock
+     inline_macro ChemInlineMacro
+     # preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
+     postprocessor InjectHTML unless document.attributes['noteshare'] == 'yes'
+     postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'
+     postprocessor Chem if document.basebackend? 'html'
+     postprocessor HTMLPostprocessor if document.basebackend? 'html'
+     postprocessor TexPostprocessor if document.basebackend? 'tex'
+   end
+
+
+   Asciidoctor::Extensions.register :latex do
+     # EnvironmentBlock
+   end
+
+  # TYPES ...
+
+  # def initialize
+
+  # def convert
+
+  end
+----
+
+==== Converter code
+
+[code, ruby]
+----
+class Converter
+
+  # Registration
+
+  # TYPES ...
+
+  def initialize backend, opts
+    super
+    basebackend 'tex'
+    outfilesuffix '.tex'
+  end
+
+  def convert node, transform = nil
+    if NODE_TYPES.include? node.node_name
+      node.tex_process
+    else
+      warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta  if $VERBOSE
+      # This warning should not be switched off by $VERBOSE
+    end
+  end
+
+end
+----
+
+== Design of the HTML Backend
+
+=== Environment Blocks
+
+== Design of the LaTeX Backend
+
+La di dah: content needed here.

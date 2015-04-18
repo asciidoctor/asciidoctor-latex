@@ -1,0 +1,32 @@
+//.sections
+
+
+== Section
+
+=== Going down farther -- subsection
+
+==== And farther still ...
+
+===== Yikes! We have hit bottom!!
+
+:numbered:
+
+== Section
+
+=== Going down farther -- subsection
+
+==== And farther still ...
+
+===== Yikes! We have hit bottom!!
+
+:!numbered:
+
+== Section
+
+=== Going down farther -- subsection
+
+==== And farther still ...
+
+===== Yikes! We have hit bottom!!
+
+

@@ -1,0 +1,479 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: manual
+  
+    &mdash; Asciidoctor LaTeX Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.manual.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: manual</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><div class="sect1">
+<h2 id="_introduction">1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TexConverter translates a file written
+in a subset of Asciidoc to LaTeX.  The
+subset is described below.  While not
+complete, it is adequate for the preparation
+of a wide range of mathematical documents,
+from one-page handouts to articles to entire books.</p>
+</div>
+<div class="paragraph">
+<p>As a demonstration of the current state of this
+project, the file you are looking at, <code>manual.adoc</code>,
+can be rendered into HTML by</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">  </code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or can be rendered as a LaTeX file via</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">  </code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>.tex</code> file can in turn be rendred into pdf via
+<code>pdflatex</code> or <code>xelatex</code>.  We recommend the latter.</p>
+</div>
+<div class="paragraph">
+<p>Mathematical text in Asciidoc can be written as
+one usually does in LaTeX if one invokes the
+latex option.<span class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</span>.  You do this via  <code>asciidoctor -latex foo.adoc</code>.
+Thus for the Pythagorean
+theorem $a^2  + b^2 = c^2$, one writes</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    </code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the famous formula of Euler,
+\[
+  e^\sqrt{-1} = 1
+\]
+one writes</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">\[
+  e^{2\pi \sqrt{-1}} = 1
+\]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_asciidoc_latex_subset">2. The Asciidoc-LaTeX subset</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_sections_levels_1_through_5">2.1. Sections, levels 1 through 5</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_ordered_and_unordered_lists">2.2. Ordered and unordered lists</h3>
+<div class="paragraph">
+<p>In Asciidoc, an unordered list like</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pay Bills</p>
+</li>
+<li>
+<p>Get Groceries</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Milk</p>
+</li>
+<li>
+<p>Bread</p>
+</li>
+<li>
+<p>Orange Juice</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Change Oil Filter on Car</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>is written like this</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    * Pay Bills
+    * Get Groceries
+    ** Milk
+    ** Bread
+    ** Orange Juice
+    * Change Oil Filter on Car</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Its translation into LaTeX is</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">   \begin{itemize}
+   \item Pay Bills
+   \item Get Groceries
+   \begin{itemize}
+       \item Milk
+       \item Bread
+       \item Orange Juice
+   \end{itemize}
+   \item Change Oil Filter on Car
+   \end{itemize}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The corresponding ordered list,</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pay Bills</p>
+</li>
+<li>
+<p>Get Groceries</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Milk</p>
+</li>
+<li>
+<p>Bread</p>
+</li>
+<li>
+<p>Orange Juice</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Change Oil Filter on Car</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>is written as</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">   . Pay Bills
+   . Get Groceries
+   .. Milk
+   .. Bread
+   .. Orange Juice
+   . Change Oil Filter on Car</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with the following source in LaTex:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">	\begin{enumerate}
+	\item Pay Bills
+	\item Get Groceries
+    \begin{enumerate}
+	    \item Milk
+	    \item Bread
+	    \item Orange Juice
+	\end{enumerate}
+	\item Change Oil Filter on Car
+	\end{enumerate}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bold_italic_and_monospaced_text">2.3. Bold, italic, and monospaced text</h3>
+<div class="paragraph">
+<p>The text "She said <em>potatoes</em> but he said <strong>potaatoes</strong>", written
+in Asciidoc as</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    She said _potatoes_ but he said *potaatoes*</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is mapped to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    She said \emph{potatoes} but he said \textbf{potaatoes}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The text</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    <span class='backtick'>`</span><span class='tstring_content'>monospaced</span><span class='tstring_end'>`</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is mapped to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    {\tt monospaced}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quotations">2.4. Quotations</h3>
+<div class="paragraph">
+<p>The text</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    [quote, Abraham Lincoln, Soldiers&#39; National Cemetery Dedication]
+    ____
+    Four score and seven years ago our fathers brought forth
+    on this continent a new nation
+    ____</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is mapped to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    \begin{quote}
+      Four score and seven years ago our fathers brought forth
+      on this continent a new nation
+    \end{quote}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_footnotes">2.5. Footnotes</h3>
+<div class="paragraph">
+<p>Text like this</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    Ho hum.footnote:[An epression of boredem]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is mapped to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    Ho hum\footnote{An epression of boredem}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_references_and_labels">2.6. References and labels</h3>
+<div class="paragraph">
+<p>The label</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    <span class='const'>Ho</span> <span class='id identifier rubyid_hum'>hum</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='id identifier rubyid_foo'>foo</span><span class='rbracket'>]</span><span class='rbracket'>]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is mapped to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    Ho hum\label{foo}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The cross-reference</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    Please see &lt;&lt;foo&gt;&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is mapped to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">   Please see \ref{foo}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hyperlinks">2.7. Hyperlinks</h3>
+<div class="paragraph">
+<p>The hyperlink</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">    <span class='id identifier rubyid_http'>http</span><span class='symbol'>:/</span><span class='op'>/</span><span class='id identifier rubyid_nytimes'>nytimes</span><span class='period'>.</span><span class='id identifier rubyid_com'>com</span><span class='lbracket'>[</span><span class='const'>All</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_news'>news</span> <span class='id identifier rubyid_that'>that</span> <span class='id identifier rubyid_is'>is</span> <span class='id identifier rubyid_fit'>fit</span> <span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_print'>print</span><span class='rbracket'>]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is mapped to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">   \href{http://nytimes.com}{All the news that is fit to print}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_line_breaks_code_code">2.8. Line breaks <code>+</code></h3>
+
+</div>
+<div class="sect2">
+<h3 id="_listing">2.9. Listing</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_open_blocks">2.10. Open blocks</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_literal">2.11. Literal</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_page_break">2.12. Page break</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_pass">2.13. Pass</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mathematical_text">3. Mathematical text</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We distinguish between <em>inner text</em> amd <em>outer text</em>.  the first
+appears between math delimiters, while the second does not.</p>
+</div>
+<div class="sect2">
+<h3 id="_inner_text">3.1. Inner text</h3>
+<div class="paragraph">
+<p>As noted in the introduction, mathematical text is enclosed in the
+standard delimiters and is written in the normal way.  Environments
+supported in display math mode are</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>matrix</p>
+</li>
+<li>
+<p>equation, including the label macro</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_outer_text">3.2. Outer text</h3>
+<div class="paragraph">
+<p>To write a theorem, do this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">.Theorem {counter:theorem}
+--
+For all $a$, $b$, $c$, the relation $a(b+c) = ab + ac$ holds.
+--</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will render in Asciidoc as</p>
+</div>
+<div class="openblock">
+<div class="title">Theorem 1</div><div class="content">
+<div class="paragraph">
+<p><em>For all $a$, $b$, $c$, the relation $a(b+c) = ab + ac$ holds.</em></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a> This option exists but has not yet been released.  To use 	the option at <a href="http://noteshare.io">noteshare.io</a>, include the code <code>:latex:</code> in 	your document
+</div>
+</div></div></div>
+
+    <div id="footer">
+  Generated on Sun Apr 19 09:57:30 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.2).
+</div>
+
+  </body>
+</html>

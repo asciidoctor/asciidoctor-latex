@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Asciidoctor::LaTeX
+  
+    &mdash; Asciidoctor LaTeX Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Asciidoctor/LaTeX.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (L)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Asciidoctor.html" title="Asciidoctor (module)">Asciidoctor</a></span></span>
+     &raquo; 
+    <span class="title">LaTeX</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Asciidoctor::LaTeX
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/asciidoctor/latex/dollar.rb<span class="defines">,<br />
+  lib/asciidoctor/latex.rb,<br /> lib/asciidoctor/latex/chem.rb,<br /> lib/asciidoctor/latex/version.rb,<br /> lib/asciidoctor/latex/tex_block.rb,<br /> lib/asciidoctor/latex/converter.rb,<br /> lib/asciidoctor/latex/ent_to_uni.rb,<br /> lib/asciidoctor/latex/inject_html.rb,<br /> lib/asciidoctor/latex/click_block.rb,<br /> lib/asciidoctor/latex/macro_insert.rb,<br /> lib/asciidoctor/latex/inline_macros.rb,<br /> lib/asciidoctor/latex/node_processors.rb,<br /> lib/asciidoctor/latex/tex_preprocessor.rb,<br /> lib/asciidoctor/latex/tex_postprocessor.rb,<br /> lib/asciidoctor/latex/environment_block.rb,<br /> lib/asciidoctor/latex/prepend_processor.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>a postprocessor to map the nonsense string &#39;DOLLOD&#39; back to
+&#39;$&#39;</p>
+
+<p>This is used in for the LaTeX backend in conjunction with the code in
+&#39;tex_preprocessor&#39; which maps &#39;$&#39; to &#39;DOLLOD&#39;</p>
+
+<p>There should be a better solution to the vexing proble of dealing with both
+$ … $ for mathematics and &#39;$&#39; for currency. But this works and wil
+have to do for now.</p>
+
+<p>@jirutka: Advice?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="LaTeX/Html5ConverterExtensions.html" title="Asciidoctor::LaTeX::Html5ConverterExtensions (module)">Html5ConverterExtensions</a></span>, <span class='object_link'><a href="LaTeX/TeXBlock.html" title="Asciidoctor::LaTeX::TeXBlock (module)">TeXBlock</a></span>, <span class='object_link'><a href="LaTeX/TeXPostProcess.html" title="Asciidoctor::LaTeX::TeXPostProcess (module)">TeXPostProcess</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="LaTeX/Chem.html" title="Asciidoctor::LaTeX::Chem (class)">Chem</a></span>, <span class='object_link'><a href="LaTeX/ChemInlineMacro.html" title="Asciidoctor::LaTeX::ChemInlineMacro (class)">ChemInlineMacro</a></span>, <span class='object_link'><a href="LaTeX/ClickBlock.html" title="Asciidoctor::LaTeX::ClickBlock (class)">ClickBlock</a></span>, <span class='object_link'><a href="LaTeX/ClickStyleInsert.html" title="Asciidoctor::LaTeX::ClickStyleInsert (class)">ClickStyleInsert</a></span>, <span class='object_link'><a href="LaTeX/Converter.html" title="Asciidoctor::LaTeX::Converter (class)">Converter</a></span>, <span class='object_link'><a href="LaTeX/Dollar.html" title="Asciidoctor::LaTeX::Dollar (class)">Dollar</a></span>, <span class='object_link'><a href="LaTeX/EntToUni.html" title="Asciidoctor::LaTeX::EntToUni (class)">EntToUni</a></span>, <span class='object_link'><a href="LaTeX/EnvironmentBlock.html" title="Asciidoctor::LaTeX::EnvironmentBlock (class)">EnvironmentBlock</a></span>, <span class='object_link'><a href="LaTeX/HTMLPostprocessor.html" title="Asciidoctor::LaTeX::HTMLPostprocessor (class)">HTMLPostprocessor</a></span>, <span class='object_link'><a href="LaTeX/InjectHTML.html" title="Asciidoctor::LaTeX::InjectHTML (class)">InjectHTML</a></span>, <span class='object_link'><a href="LaTeX/MacroInsert.html" title="Asciidoctor::LaTeX::MacroInsert (class)">MacroInsert</a></span>, <span class='object_link'><a href="LaTeX/TeXPreprocessor.html" title="Asciidoctor::LaTeX::TeXPreprocessor (class)">TeXPreprocessor</a></span>, <span class='object_link'><a href="LaTeX/TexPostprocessor.html" title="Asciidoctor::LaTeX::TexPostprocessor (class)">TexPostprocessor</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="DATA_DIR-constant" class="">DATA_DIR =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>../../data</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid___dir__'>__dir__</span></pre></dd>
+      
+        <dt id="TEX_SNIPPET-constant" class="">TEX_SNIPPET =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>TeX: { equationNumbers: { autoNumber: &quot;none&quot; } }</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="CHEM_SNIPPET-constant" class="">CHEM_SNIPPET =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>TeX: { extensions: [&quot;mhchem.js&quot;] }</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.5.0.2.dev</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Apr 19 18:37:45 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.2).
+</div>
+
+  </body>
+</html>

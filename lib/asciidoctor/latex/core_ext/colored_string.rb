@@ -1,5 +1,10 @@
+
+# Utility methods to display
+# colored strings, e.g.,
+# "foo".cyan, "bar".red, etc.
 class String
 
+  # @return [String]
   def blue
     "\e[1;34m#{self}\e[0m"
   end

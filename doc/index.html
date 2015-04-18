@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Asciidoctor LaTeX Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><div class="sect1">
+<h2 id="_purpose">1. Purpose</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Asciidoc-LaTeX defines an extended mathematical syntax
+for the Asciidoc markup language
+that closely parallels LaTeX.  The
+Asciidoctor-LaTeX converter renders documents written
+in this extended markup language into both HTML
+and LaTeX.<span class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</span></p>
+</div>
+<div class="paragraph">
+<p>Below, we descibe the main
+features of Asciidoc-LaTeX.  However, since
+Asciidoc-LaTeX will not render in GitHub, you
+are encouraged to view this write-up:
+<a href=https://vschool.s3.amazonaws.com/manuscripts/372.html>Asciidoc-LaTeX</a>.
+For more information on using , please consult the
+<a href=http://www.noteshare.io/book/asciidoctor-latex-manual>Asciidoctor-LaTeX manual</a>.
+For more information on conversion of Asciidoc-LaTeX
+documents to <a href=https://www.sharelatex.com/>LaTeX</a>, see the file <code>tech-report.adoc</code> in
+this repository.</p>
+</div>
+<div class="paragraph">
+<p>Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">2. Installation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_using_rubygems">2.1. Using Rubygems</h3>
+<div class="paragraph">
+<p>There is a development release at
+<a href=https://rubygems.org/gems/asciidoctor-latex>RubyGems.org</a>
+  Beta alert!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_from_github">2.2. From GitHub</h3>
+<div class="paragraph">
+<p>If you would like to install a development version from the repository, use:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">$ git clone https://github.com/asciidoctor/asciidoctor-latex.git
+$ cd asciidoctor-latex
+$ gem build asciidoctor-latex.gemspec
+$ gem install *.gem</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_format">3. Document format</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Asciidoctor supports two closely-related
+math formats, <span class="blue">Asciidoc-LaTeX</span>
+and <span class="blue">AsciiMath</span>.
+In Asciidoc-LaTeX,
+one can write <code>\( a^2 + b^2 = c^2 \)</code> and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby"> \[
+    e^{2\pi \sqrt{-1}} = 1,
+ \]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>for in-line and display mathematial
+text, respectively.
+You will need to express dollar-denominated
+currency using
+escaped dollar signs, as
+ in the sentence, "He paid $100 for that
+theore.m"  In AsciiMath, one writes
+<code>stem:[ a^2 + b^2 = c^2 ]</code>
+and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">  [stem]
+  ++++
+    e^{2\pi \sqrt{-1}} = 1.
+  ++++</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_asciidoc_latex_environments">4. Asciidoc-LaTeX environments</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Asciidoc-LaTeX supports an <code>env</code> construct that maps to LaTeX environments.
+Thus</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">[env.theorem]
+--
+There exist infinitely many prime numbers.
+--</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>renders as an automatically numbered theorem.
+Environments can contain in-line and display mathematics, e.g.,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">[env.theorem]
+--
+A two-by-two matrix is invertible if
+its determinant is nonzero, i.e., if
+\[
+  \left|\begin{matrix}
+    a &amp; b \\
+    c &amp; d
+  \end{matrix}\right| \ne 0
+\]
+This result extends to +\(n\times n\)+ matrices.
+--</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There is complete freedom in parameter <code>NAME</code>
+of <code>[env.NAME]</code>, Thus,one can write</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">[env.definition]
+--
+An integer +\(n\)+ is *prime* if (a) it is not
++\(\pm 1\)+ and (b) it has no divisors other
+than +\(\pm 1\)+ and +\(\pm n\)+.
+--</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">[env.joke]
+--
+A mathematician, a philosopher, and
+a lawyer met at the local bar
+for a drink.  The lawyer said ...
+--</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One can make cross references by labeling
+the environment as in</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">[env.joke#mathjoke1]
+--
+A mathematician, a philosopher, and
+a lawyer met at the local bar
+for a drink.  The lawyer said ...
+--</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>then referencing it later as <code>ERROR: refs[refid] was nil</code>.</p>
+</div>
+<div class="paragraph">
+<p>Certain environments receive special treatment.
+For numbered equations, use <code>[env.equation]</code>
+like this</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">[env.equation]
+--
+a^{p-1} \equiv 1\ \text{mod}\ p
+--</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For sets of equations, use <code>[env,equationalign]</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">[env.equationalign]
+--
+A &amp; = 4\pi r^2 \\
+V &amp; = \frac{4}{3} \pi r^3
+--</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_click_blocks">5. Click blocks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Click blocks are similar to <code>[env]</code> blocks exceptiipoo that the body of
+the block is not displayed until the user clicks on the heading.
+The heading of a click block is displayed in blue.  Once a click
+block is "opened", it can be closed by clicking again on the heading.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code ruby"><code class="ruby">[click.comment]
+--
+It is sometimes useful to &quot;hide&quot; a comment
+in a click block so as not to unduly
+disturb the flow of the prose. Click
+blocks are also useful for problem sets,
+since one can make hints, solutions, etc.
+clickable.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The default for click blocks is not to number them.
+See the file <code>click.adoc</code> in the <code>exampless</code> directory
+for more information.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_commands_for_rendering">6. Commands for rendering</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Asciidoc math files can be rendered</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>as HTML.  Use <code>$ asciidoctor-latex -b html foo.adoc</code> to produce <code>foo.html</code>.
+With this command the Asciidoc-LaTeX syntax and extensions will be rendered.</p>
+</li>
+<li>
+<p>as LaTeX.  Use <code>$ asciidoctor-latex foo.adoc</code>
+to produce <code>foo.tex</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_switches">7. Switches</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Switch <code>:stem:</code> processing on by puttinng the text <code>:stem:</code>
+in your file.  To turn the switch on and set it to <code>latexmath</code>, say
+instead of <code>stem:latexmth</code>.</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a> Many, but not all Asciidoc language features are covered by this release.
+</div>
+</div></div></div>
+
+    <div id="footer">
+  Generated on Sun Apr 19 18:37:45 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.2).
+</div>
+
+  </body>
+</html>

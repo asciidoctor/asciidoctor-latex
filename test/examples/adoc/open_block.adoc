@@ -1,0 +1,17 @@
+//.open_block
+
+--
+This is an anonymous
+open block.
+
+End of story.
+--
+
+[listing]
+--
+This is an anonymous
+open block masquerading
+a listing block.
+
+End of story.
+--

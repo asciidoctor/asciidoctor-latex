@@ -28,17 +28,17 @@ module Asciidoctor
 
 
     def tex_process
-      warn "Node: #{self.class}".blue if $VERBOSE
+      # warn "Node: #{self.class}".blue if $VERBOSE
 
       doc = ''
 
-      # warn "document.attributes['header'] = #{document.attributes['header']}".magenta if $VERBOSE
+      # # warn "document.attributes['header'] = #{document.attributes['header']}".magenta if $VERBOSE
 
       unless embedded? or document.attributes['header']=='no'
         doc << "%% Preamble %%\n"
         if File.exist? 'preamble.tex'
           preamble = IO.read('preamble.tex')
-          warn "preamble: #{preamble.length} chars".yellow
+          # warn "preamble: #{preamble.length} chars".yellow
           doc << preamble << "\n "
         else
           doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
@@ -49,16 +49,16 @@ module Asciidoctor
         # doc << File.open(File.join(LaTeX::DATA_DIR, 'macros.tex'), 'r') { |f| f.read }
         if File.exist? 'macros.tex'
           macros = IO.read('macros.tex')
-          warn "macros: #{macros.length} chars".yellow
+          # warn "macros: #{macros.length} chars".yellow
           doc << macros
         else
-          warn "Could not find file macros.tex".yellow
+          # warn "Could not find file macros.tex".yellow
         end
         if File.exist?('myEnvironments.tex')
-          warn "I will take input from myEnvironments.tex".blue
+          # warn "I will take input from myEnvironments.tex".blue
           doc << "\\input myEnvironments.tex\n"
         else
-          warn "I will take input from newEnvironments.tex".blue
+          # warn "I will take input from newEnvironments.tex".blue
           # doc << "\\input newEnvironments.tex\n"
         end
 
@@ -83,11 +83,11 @@ module Asciidoctor
       unless embedded?
         # Now write the defnitions of the new environments
         # discovered to file
-        warn "Writing environment definitions to file: newEnvironments.tex" if $VERBOSE
+        # warn "Writing environment definitions to file: newEnvironments.tex" if $VERBOSE
         definitions = ""
 
         $latex_environment_names.uniq.each do |name|
-          warn name if $VERBOSE
+          # warn name if $VERBOSE
           definitions << "\\newtheorem\{#{name}\}\{#{name.capitalize}\}" << "\n"
         end
 
@@ -106,7 +106,7 @@ module Asciidoctor
   class Section
 
     def tex_process
-      warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
+      # warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
       doctype = self.document.doctype
 
       tags = { 'article' => [ 'part',  'section', 'subsection', 'subsubsection', 'paragraph' ],
@@ -126,7 +126,7 @@ module Asciidoctor
   class List
 
     def tex_process
-      warn ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if $VERBOSE
+      # warn ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if $VERBOSE
       case self.node_name
       when 'dlist'
         dlist_process
@@ -134,8 +134,10 @@ module Asciidoctor
         ulist_process
       when 'olist'
         olist_process
+      when 'colist'
+        colist_process
       else
-        warn "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" if $VERBOSE
+        # warn "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" if $VERBOSE
       end
     end
 
@@ -144,7 +146,7 @@ module Asciidoctor
       self.items.each do |terms, dd|
         list << "\\item["
         [*terms].each do |dt|
-        warn ["  --  item: ".blue, "#{dt.text}"].join(" ") if $VERBOSE
+        # warn ["  --  item: ".blue, "#{dt.text}"].join(" ") if $VERBOSE
           list << dt.text
         end
         list << "]"
@@ -159,7 +161,7 @@ module Asciidoctor
     def ulist_process
       list = "\\begin{itemize}\n\n"
       self.content.each do |item|
-        warn ["  --  item: ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
+        # warn ["  --  item: ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
         list << "\\item #{item.text}\n\n"
         list << item.content
       end
@@ -169,11 +171,15 @@ module Asciidoctor
     def olist_process
       list = "\\begin{enumerate}\n\n"
       self.content.each do |item|
-        warn ["  --  item:  ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
+        # warn ["  --  item:  ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
         list << "\\item #{item.text}\n\n"
         list << item.content
       end
       list << "\\end{enumerate}\n\n"
+    end
+
+    def colist_process
+      warn "Please implement me! (colist_process)".red if $VERBOSE
     end
 
   end
@@ -185,7 +191,7 @@ module Asciidoctor
     STANDARD_ENVIRONMENT_NAMES = %w(equation)
 
     def tex_process
-      warn ["Node:".blue , "#{self.blockname}".blue].join(" ") if $VERBOSE
+      # warn ["Node:".blue , "#{self.blockname}".blue].join(" ") if $VERBOSE
       case self.blockname
       when :paragraph
         paragraph_process
@@ -221,17 +227,19 @@ module Asciidoctor
         self.sidebar_process
       when :verse
         self.verse_process
+      when :toc
+        self.toc_process
       # when :table
         # self.table_process
       else
-        warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" if $VERBOSE if $VERBOSE
+        # warn "This is Asciidoctor::Block, tex_process.  I don't know how to do that (#{self.blockname})" if $VERBOSE if $VERBOSE
         ""
       end
     end
 
 
     def paragraph_process
-      warn "paragraph attributes: #{self.attributes}".red if $VERBOSE
+      # warn "paragraph attributes: #{self.attributes}".red if $VERBOSE
       out = ""
       if self.attributes['title']
         out << "\{\\bf #{self.attributes['title']}\.}" << "\n"
@@ -240,12 +248,12 @@ module Asciidoctor
     end
 
     def stem_process
-      warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn self.content.cyan if $VERBOSE
+      # warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      # warn self.content.cyan if $VERBOSE
       environment = LaTeX::TeXBlock.environment_type self.content
       if LaTeX::TeXBlock::INNER_TYPES.include? environment
         out = "\\\[\n#{LaTeX::TeXPostProcess.stem_substitutions self.content}\n\\\]\n"
-        warn out.yellow if $VERBOSE
+        # warn out.yellow if $VERBOSE
         out
       else
         self.content
@@ -253,27 +261,27 @@ module Asciidoctor
     end
 
     def admonition_process
-      warn ["Node:".blue, "#{self.blockname}".cyan, "#{self.style}:".magenta, "#{self.lines[0]}"].join(" ") if $VERBOSE
+      # warn ["Node:".blue, "#{self.blockname}".cyan, "#{self.style}:".magenta, "#{self.lines[0]}"].join(" ") if $VERBOSE
       "\\admonition\{#{self.style}\}\{#{self.content}\}\n"
     end
 
     def page_break_process
-      warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      # warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       "\n\\vfill\\eject\n"
     end
 
     def literal_process
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
     end
 
     def pass_process
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       self.content
     end
 
     def quote_process
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       if self.attr? 'attribution'
         attribution = self.attr 'attribution'
         citetitle = (self.attr? 'citetitle') ? (self.attr 'citetitle') : nil
@@ -284,20 +292,18 @@ module Asciidoctor
       end
     end
 
-
-
     def environment_process
 
-      warn "begin environment_process, ".blue + "title = #{self.title}".yellow if $VERBOSE
-      warn "environment attributes = #{self.attributes}".red if $VERBOSE
-      warn "role = #{self.attributes["role"]}" if $VERBOSE
+      # warn "begin environment_process, ".blue + "title = #{self.title}".yellow if $VERBOSE
+      # warn "environment attributes = #{self.attributes}".red if $VERBOSE
+      # warn "role = #{self.attributes["role"]}" if $VERBOSE
 
       env = self.attributes["role"]
 
       # record any environments encountered but not built=in
       if !STANDARD_ENVIRONMENT_NAMES.include? env and !$latex_environment_names.include? env
       # if  !($latex_environment_names.include? env)
-        warn "env added: [#{env}]".blue if $VERBOSE
+        # warn "env added: [#{env}]".blue if $VERBOSE
         $latex_environment_names << env
       end
 
@@ -307,7 +313,7 @@ module Asciidoctor
         label = ""
       end
 
-      warn "self.attributes['original_title'] = #{self.attributes['original_title']}".cyan if $VERBOSE
+      # warn "self.attributes['original_title'] = #{self.attributes['original_title']}".cyan if $VERBOSE
 
       if self.attributes['original_title']
         title = "\{\\rm (#{self.attributes['original_title']}) \}"
@@ -333,7 +339,7 @@ module Asciidoctor
 
     def click_process
 
-      warn "begin click_process".blue + "title = #{self.title}".yellow if $VERBOSE
+      # warn "begin click_process".blue + "title = #{self.title}".yellow if $VERBOSE
 
       click = self.attributes["role"]
       # record any environments encounted but not built=in
@@ -350,21 +356,25 @@ module Asciidoctor
         output = "\\begin\{#{click}\}\n\\label\{#{self.id}\}\n#{self.content}\\end\{#{click}\}\n"
       end
 
-      warn "end click_process\n".blue if $VERBOSE
+      # warn "end click_process\n".blue if $VERBOSE
 
       output
 
     end
 
+    def toc_process
+      warn "Please implement me! (toc_process)".red if $VERBOSE
+    end
+
     def report
       # Report on this node
-      warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ")
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ")
-      warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ")
-      warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ") if title
-      warn ["Content:".magenta, "#{self.content}".yellow].join(" ")
-      warn ["Style:".green, "#{self.style}".red].join(" ")
-      warn ["METHODS:".red, "#{self.methods}".yellow].join(" ")
+      # warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ")
+      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ")
+      # warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ")
+      # warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ") if title
+      # warn ["Content:".magenta, "#{self.content}".yellow].join(" ")
+      # warn ["Style:".green, "#{self.style}".red].join(" ")
+      # warn ["METHODS:".red, "#{self.methods}".yellow].join(" ")
     end
 
 
@@ -393,7 +403,7 @@ module Asciidoctor
 
       attr = self.attributes
 
-      warn "attributes (open block): #{self.attributes}" if $VERBOSE
+      # warn "attributes (open block): #{self.attributes}" if $VERBOSE
 
 
       # Get title !- nil or make a dummy one
@@ -419,23 +429,23 @@ module Asciidoctor
     end
 
     def listing_process
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      # warn "attributes: #{self.attributes}".cyan if $VERBOSE
       "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
     end
 
     def example_process
-      warn "exAmple_process".yellow
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      # warn "exAmple_process".yellow
+      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      # warn "attributes: #{self.attributes}".cyan if $VERBOSE
       # self.content_model = :verbatim
-      warn "content: #{self.content}".cyan if $VERBOSE
+      # warn "content: #{self.content}".cyan if $VERBOSE
       "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
     end
 
 
     def floating_title_process
-      warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
+      # warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
       doctype = self.document.doctype
 
       tags = { 'article' => [ 'part',  'section', 'subsection', 'subsubsection', 'paragraph' ],
@@ -447,8 +457,8 @@ module Asciidoctor
     end
 
     def image_process
-      warn ["IXX: Node:".magenta, "#{self.blockname}".cyan].join(" ")  if $VERBOSE
-      warn "IXX: attributes: #{self.attributes}".cyan  if $VERBOSE
+      # warn ["IXX: Node:".magenta, "#{self.blockname}".cyan].join(" ")  if $VERBOSE
+      # warn "IXX: attributes: #{self.attributes}".cyan  if $VERBOSE
       if self.attributes['width']
         width = "#{self.attributes['width'].to_f/100.0}truein"
       else
@@ -456,12 +466,12 @@ module Asciidoctor
       end
       raw_image = self.attributes['target']
       if document.attributes['noteshare'] == 'yes'
-        warn "IXX: extracting image name".red if $VERBOSE
+        # warn "IXX: extracting image name".red if $VERBOSE
         image_rx = /image.*original\/(.*)\?/
         match_data = raw_image.match image_rx
         if match_data
           image = match_data[1]
-          warn "IXX: image name: #{image}".red if $VERBOSE
+          # warn "IXX: image name: #{image}".red if $VERBOSE
         else
           image = "undefined"
         end
@@ -501,16 +511,16 @@ module Asciidoctor
 
 
     def sidebar_process
-      warn "sidebar_process".yellow if $VERBOSE
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      # warn "sidebar_process".yellow if $VERBOSE
+      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      # warn "attributes: #{self.attributes}".cyan if $VERBOSE
       "\\begin\{sidebar\}\n#{self.content}\n\\end\{sidebar\}\n"
     end
 
     def verse_process
-      warn "verse_process".yellow if $VERBOSE
-      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn "attributes: #{self.attributes}".cyan if $VERBOSE
+      # warn "verse_process".yellow if $VERBOSE
+      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      # warn "attributes: #{self.attributes}".cyan if $VERBOSE
       "\\begin\{alltt\}\n#{self.content}\n\\end\{alltt\}\n"
     end
 
@@ -529,14 +539,16 @@ module Asciidoctor
         self.inline_break_process
       when 'inline_footnote'
         self.inline_footnote_process
+      when 'inline_callout'
+        self.inline_callout_process
       else
-        warn "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})".yellow if $VERBOSE
+        # warn "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})".yellow if $VERBOSE
         ""
       end
     end
 
     def inline_quoted_process
-      warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
+      # warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
       case self.type
       when :strong
         #"\\textbf\{#{self.text}\}"
@@ -549,11 +561,11 @@ module Asciidoctor
         "\{\\tt #{self.text}\}"
       when :unquoted
         role = self.attributes["role"]
-        warn "  --  role = #{role}".yellow if $VERBOSE
+        # warn "  --  role = #{role}".yellow if $VERBOSE
         if role == "red"
           "\\rolered\{ #{self.text}\}"
         else
-          warn "This is inline_quoted_process.  I don't understand role = #{role}" if $VERBOSE
+          # warn "This is inline_quoted_process.  I don't understand role = #{role}" if $VERBOSE
         end
       else
         "\\unknown\\{#{self.text}\\}"
@@ -562,7 +574,7 @@ module Asciidoctor
 
     def inline_anchor_process
 
-      warn ["Node:".blue, "#{self.node_name}".magenta,  "type[#{self.type}], ".green + " text: #{self.text} target: #{self.target}".cyan].join(" ") if $VERBOSE
+      # warn ["Node:".blue, "#{self.node_name}".magenta,  "type[#{self.type}], ".green + " text: #{self.text} target: #{self.target}".cyan].join(" ") if $VERBOSE
 
       refid = self.attributes['refid']
       refs = self.parent.document.references[:ids]
@@ -585,23 +597,27 @@ module Asciidoctor
         "\\label\{#{self.text.gsub(/\[(.*?)\]/, "\\1")}\}"
       when :xref
         #"\\ref\{#{self.target.gsub('#','')}\}"
-        # warn "\\hyperlink\{#{refid}\}\{#{reftext}\}".yellow
+        # # warn "\\hyperlink\{#{refid}\}\{#{reftext}\}".yellow
         "\\hyperlink\{#{refid}\}\{#{reftext}\}"
       else
-        warn "!!  : undefined inline anchor -----------".magenta if $VERBOSE
+        # warn "!!  : undefined inline anchor -----------".magenta if $VERBOSE
       end
     end
 
     def inline_break_process
-      warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
+      # warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
       "#{self.text} \\\\"
     end
 
     def inline_footnote_process
-      warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
-      # warn self.content.yellow
-      # warn self.style.magenta
+      # warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
+      # # warn self.content.yellow
+      # # warn self.style.magenta
       "\\footnote\{#{self.text}\}"
+    end
+
+    def inline_callout_process
+      warn "Please implement me! (inline_callout_process)".red if $VERBOSE
     end
 
   end
@@ -609,7 +625,7 @@ module Asciidoctor
   class Table
 
     def tex_process
-      # warn "This is Asciidoctor::Table, tex_process.  I don't know how to do that".yellow +  " (#{self.node_name})".magenta if $VERBOSE
+      # # warn "This is Asciidoctor::Table, tex_process.  I don't know how to do that".yellow +  " (#{self.node_name})".magenta if $VERBOSE
       # table = Table.new self.parent, self.attributes
       n_rows = self.rows.body.count
       n_columns = self.columns.count

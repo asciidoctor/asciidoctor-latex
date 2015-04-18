@@ -334,10 +334,10 @@ module Asciidoctor::LaTeX
 
 
     TOP_TYPES = %w(document section)
-    LIST_TYPES = %w(dlist olist ulist)
-    INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted)
+    LIST_TYPES = %w(dlist olist ulist colist)
+    INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted inline_callout)
     BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote \
-     example floating_title image click preamble sidebar verse)
+     example floating_title image click preamble sidebar verse toc)
     OTHER_TYPES = %w(environment table)
     NODE_TYPES = TOP_TYPES + LIST_TYPES + INLINE_TYPES + BLOCK_TYPES + OTHER_TYPES
 

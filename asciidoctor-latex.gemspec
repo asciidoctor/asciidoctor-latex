@@ -4,7 +4,7 @@ require File.expand_path('../lib/asciidoctor/latex/version', __FILE__)
 Gem::Specification.new do |s|
   s.name          = 'asciidoctor-latex'
   s.version       = Asciidoctor::LaTeX::VERSION
-  s.authors       = ['James Carlson', 'Dan Allen']
+  s.authors       = ['James Carlson', 'Jakub Jirutka', 'Dan Allen']
   s.email         = 'jxxcarlson@mac.com'
   s.homepage      = 'https://github.com/asciidoctor/asciidoctor-latex'
   s.license       = 'MIT'

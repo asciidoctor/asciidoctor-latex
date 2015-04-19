@@ -135,8 +135,6 @@ module Asciidoctor
         ulist_process
       when 'olist'
         olist_process
-      when 'colist'
-        colist_process
       else
         # warn "This Asciidoctor::List, tex_process.  I don't know how to do that (#{self.node_name})" if $VERBOSE
       end
@@ -177,10 +175,6 @@ module Asciidoctor
         list << item.content
       end
       list << "\\end{enumerate}\n\n"
-    end
-
-    def colist_process
-      warn "Please implement me! (colist_process)".red if $VERBOSE
     end
 
   end

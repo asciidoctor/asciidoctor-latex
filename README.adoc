@@ -38,7 +38,9 @@ For more information on using , please consult the
 http://www.noteshare.io/book/asciidoctor-latex-manual[Asciidoctor-LaTeX manual].
 For more information on conversion of {adl}
 documents to {tex}, see the file `tech-report.adoc` in
-this repository.
+this repository or consult the
+https://vschool.s3.amazonaws.com/manuscripts/389.html[online version],
+which has a table of contents.
 
 Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.
 
@@ -206,6 +208,15 @@ to produce `foo.tex`.
 
 == Switches
 
-Switch `:stem:` processing on by puttinng the text `:stem:`
+=== Command-line switces
+
+asciidoctor-latex -a header=no foo.adoc::
+Use a minimal header for the generated tex file.
+
+
+
+=== Text switches
+
+{adlp}'s default form at is `:latexmath`.  To use `:stem`, put the text `:stem:`
 in your file.  To turn the switch on and set it to `latexmath`, say
 instead of `stem:latexmth`.

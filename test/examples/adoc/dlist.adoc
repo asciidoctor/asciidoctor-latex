@@ -1,0 +1,3 @@
+//.dlist
+Foo:: a lambda expession of the first kind
+Bar:: a lambda expressi of the second kind

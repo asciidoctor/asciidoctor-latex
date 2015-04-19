@@ -1,0 +1,2 @@
+//.image
+image::foo.png[width=200]

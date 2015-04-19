@@ -49,12 +49,27 @@ module Asciidoctor::LaTeX
         if line.include? '$'
           line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB2
         end
-        if line.include? '^\\['
-          line = line.gsub '\\[', '+\\['
+        # protect math, e.g., (a^2)^3 from Asciidoc subsitutions:
+        if line =~ /^\\\[/
+          line = line.gsub /^\\\[/, '+\\['
         end
-        if line.include? '^\\]'
-          line = line.gsub '\\]', '\\]+'
+        if line =~ /^\\\]/
+          line = line.gsub /^\\\]/, '\\]+'
         end
+        # We would like to ensure that underscores in names,
+        # e.g., MACRO_NAME, do not cause LaTeX bugs. However,
+        # the code below introduces a more serious bug: expressons
+        # lik4 $\int_0^1 x^n dx$ are mapped to  $\int\_0^1 x^n dx$.
+        # I'm not sure this problem can be solved using regex's:
+        # we need to apply a substitution to a line when there is a match
+        # with '_' AND the word containing the '_' IS NOT in any enclosng
+        # $ ... $ or \[ ... \].  If we had a parser that would recognize
+        # $ ... $ and \[ ... \] and build them into the AST as nodes,
+        # then there would be an easy solution.  This issue may
+        # have to wait.
+        # if line =~ /_/
+        #  line = line.gsub /_/, '\_'
+        # end
         line
       end
       reader.unshift_lines replacement_lines

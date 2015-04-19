@@ -6,6 +6,8 @@ James Carlson
 :toc2:
 :stem:
 
+NOTE: CHANGELOG.adoc has been added to this repo.
+
 == Purpose
 
 :adl: Asciidoc-LaTeX

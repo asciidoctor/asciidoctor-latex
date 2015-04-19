@@ -1,0 +1,18 @@
+== Change Log
+
+NOTE: View with Asciidoctor for best results.
+
+1.5.0.3dev::
+Double exponents in display math are 
+now handled properly, and the source dsiplay math 
+expression is passed unchanged to the rendered .tex. 
+(We replace \[ by +\[ in the preprocessor when it occurs
+at the beginnng of a line and likewise for the other bracket). 
+
+
+1.5.0.2dev::
+Map \( .. \) back to $ ... $ in the postprocessor when converting to LaTeX.
+Thus $ .. $ in the source is passed unchanged to the rendered .tex.
+
+1.5.0de::
+Initial release

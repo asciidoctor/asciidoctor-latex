@@ -1,5 +1,5 @@
 module Asciidoctor
   module LaTeX
-    VERSION = '1.5.0.2.dev'
+    VERSION = '1.5.0.3.dev'
   end
 end

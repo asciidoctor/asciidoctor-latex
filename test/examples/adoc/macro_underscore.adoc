@@ -1,0 +1,5 @@
+//.macro_underscore
+=== Underscore use bug
+
+[quote]
+This is a quote which uses a MACRO_NAME to trigger a bug

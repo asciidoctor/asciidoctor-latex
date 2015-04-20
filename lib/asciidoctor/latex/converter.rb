@@ -153,7 +153,13 @@ module Asciidoctor::LaTeX
   # template by @mojavelinux
   module Html5ConverterExtensions
 
-    ENV_CSS = "+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"
+
+    # ENV_CSS_OBLIQUE = "+++<div class='env_oblique'>+++"
+    # ENV_CSS_NOBLIQUE = "+++<div class='env_noblique'>+++"
+
+    ENV_CSS_OBLIQUE = "+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"
+    ENV_CSS_PLAIN = "+++<div style='line-height:1.5em;font-size:1.05em;;margin-bottom:1.5em'>+++"
+
     DIV_END = '+++</div>+++'
     TABLE_ROW_END = '+++</tr></table>+++'
 
@@ -189,7 +195,12 @@ module Asciidoctor::LaTeX
     end
 
     def click node
-      node.lines = [ENV_CSS] + node.lines + [DIV_END]
+      if node.attributes['plain-option']
+        node.lines = [ENV_CSS_PLAIN] + node.lines + [DIV_END]
+      else
+        node.lines = [ENV_CSS_OBLIQUE] + node.lines + [DIV_END]
+      end
+      # node.lines = [ENV_CSS] + node.lines + [DIV_END]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
       self.open node
     end
@@ -303,7 +314,11 @@ module Asciidoctor::LaTeX
     end
 
     def handle_default(node)
-      node.lines = [ENV_CSS] + node.lines + [DIV_END]
+        if node.attributes['plain-option']
+          node.lines = [ENV_CSS_PLAIN] + node.lines + [DIV_END]
+        else
+          node.lines = [ENV_CSS_OBLIQUE] + node.lines + [DIV_END]
+        end
     end
 
   end

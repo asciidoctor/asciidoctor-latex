@@ -2,6 +2,11 @@
 
 NOTE: View with Asciidoctor for best results.
 
+Next release::
+Introduce option as in [env.remark%plain] --
+Use normal (non-italic) text in the body
+of the environment.
+
 1.5.0.3dev::
 Double exponents in display math are
 now handled properly, and the source display math

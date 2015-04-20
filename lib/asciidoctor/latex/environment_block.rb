@@ -164,7 +164,7 @@ module Asciidoctor::LaTeX
         attrs['caption-num'] = caption_num
         caption = "#{caption_num}"
         # Set the title, e.g., "Theorem 3: Pythagoras" or just "Theorem 3"
-        # depending on whether the user sets a title, .e.g, ".Pythgoras"
+        # depending on whether the user sets a title, .e.g, ".Pythagoras"
         # in the line preceding "[env.theorem]"
         if original_title
           attrs['title'] = "#{env_title} #{caption_num}: #{original_title}"

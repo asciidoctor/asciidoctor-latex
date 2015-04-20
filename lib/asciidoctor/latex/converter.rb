@@ -317,7 +317,7 @@ module Asciidoctor::LaTeX
 
     Asciidoctor::Extensions.register do
       preprocessor TeXPreprocessor
-      preprocessor MacroInsert if File.exist? 'macros.tex' and document.basebackend? 'html'
+      preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html') and !(document.attributes['noteshare'] == 'yes')
       block EnvironmentBlock
       block ClickBlock
       inline_macro ChemInlineMacro

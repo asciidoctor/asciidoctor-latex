@@ -323,13 +323,13 @@ module Asciidoctor
         if options.include? 'numbered'
           output = "\\begin\{equation\}#{label}\n\\begin\{split\}\n#{self.content}\n\\end\{split\}\n\\end\{equation\}\n"
         else
-          output = "\\begin\{equation*\}#{label}\n\\begin\{split\}\n#{self.content}\n\\end\{split\}\n\\end\{equation\}\n"
+          output = "\\begin\{equation*\}#{label}\n\\begin\{split\}\n#{self.content}\n\\end\{split\}\n\\end\{equation*\}\n"
         end
       elsif env == 'equation'
         if options.include? 'numbered'
           output = "\\begin\{equation\}#{label}\n#{self.content}\n\\end\{equation\}\n"
         else
-          output = "\\begin\{equation*\}#{label}\n#{self.content}\n\\end\{equation\}\n"
+          output = "\\begin\{equation*\}#{label}\n#{self.content}\n\\end\{equation*\}\n"
         end
       elsif env == 'chem'
         output = "\\begin\{equation\}#{label}\n\\ce\{#{self.content}\}\n\\end\{equation\}\n"

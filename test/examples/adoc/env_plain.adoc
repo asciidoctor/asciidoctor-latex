@@ -1,0 +1,10 @@
+//.env_plain
+[env.remark]
+--
+This is a normal remark.
+--
+
+[env.remark%plain]
+--
+This is a plain remark.
+--

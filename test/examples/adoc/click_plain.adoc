@@ -1,0 +1,10 @@
+//.env_plain
+[click.remark]
+--
+This is a normal remark.
+--
+
+[click.remark%plain]
+--
+This is a plain remark.
+--

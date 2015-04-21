@@ -31,10 +31,10 @@ features are covered by this release.]
 
 Below, we descibe the main
 features of {adl}.  However, since
-Asciidoc-LaTeX will not render in GitHub, you
+it will not render in GitHub, you
 are encouraged to view this write-up:
 https://vschool.s3.amazonaws.com/manuscripts/372.html[Asciidoc-LaTeX].
-For more information on using , please consult the
+For more information on using {adl}, please consult the
 http://www.noteshare.io/book/asciidoctor-latex-manual[Asciidoctor-LaTeX manual].
 For more information on conversion of {adl}
 documents to {tex}, see the file `tech-report.adoc` in
@@ -47,11 +47,11 @@ Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.
 
 == Installation
 
-=== Using Rubygems
+=== From Rubygems
 
-There is a development release at
+The development release, currenty 1.5.0.3.dev, is at
 https://rubygems.org/gems/asciidoctor-latex[RubyGems.org]
-  Beta alert!
+Beta alert!
 
 === From GitHub
 
@@ -81,7 +81,7 @@ You will need to express dollar-denominated
 currency using
 escaped dollar signs, as
  in the sentence, "He paid \$100 for that
-theore.m"  In AsciiMath, one writes
+theorem."  In AsciiMath, one writes
 `+++stem:[ a^2 + b^2 = c^2 ]+++`
 and
 ----

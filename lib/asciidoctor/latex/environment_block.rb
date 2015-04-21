@@ -114,7 +114,7 @@ module Asciidoctor::LaTeX
       # Use the option set if present (numbered, no+_number) otherwise
       # use a default value, e.g. 'box' is not numbered, the others are numbered
       if !(attrs['options'] =~ /no_number|numbered/)
-        if %w(box).include? role
+        if %w(box equation equationalign).include? role
           attrs['options'] = 'no_number'
         else
           attrs['options'] = 'numbered'

@@ -1,17 +1,25 @@
 == Change Log
 
-NOTE: View with Asciidoctor for best results.
+NOTE: Released on RubyGems.org, plan to 
+release on GitHub in a few days to bring
+into sync.
 
 Next release::
-(1) Introduce option as in [env.remark%plain]
+. Introduce option as in [env.remark%plain]
 to use normal (non-italic) text in the body
-of the environment. (2) Equations and equation
+of the environment.
+. Equations and equation
 alignments are now *not* numbered by default.
 To number an equation, do this:
 `[eq.equation%numbered]`. For equation
 alignments, do
 `[eq.equationalign%numbered]`.  Better for
-better style!
+better style! 
+. Moreover, if an equation
+or equation alignment environment is labeled
+for cross-referencing, e.g.,
+`[env.equation#hohoho]`, then it is numbered.
+
 
 1.5.0.3dev::
 Double exponents in display math are

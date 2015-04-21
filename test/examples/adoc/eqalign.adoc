@@ -1,13 +1,26 @@
 //.eqalign
 
-[env.equation]
---
-\sum_{k=1}^\infty \frac{1}{n}
---
+
 
 [env.equationalign]
 --
   a &= b + c   \\
-  a &= (c + d) + d  \\
-    &= c + 2d
+  b &= x + y  \\
+  a &= x + y + c
+--
+
+
+[env.equationalign#foo]
+--
+  A &= B + C   \\
+  B &= X + Y  \\
+  Z &= X + Y + C
+--
+
+
+[env.equationalign%numbered]
+--
+  a &= b + c   \\
+  b &= x + y  \\
+  a &= x + y + c
 --

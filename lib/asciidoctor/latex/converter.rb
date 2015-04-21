@@ -242,6 +242,7 @@ module Asciidoctor::LaTeX
 
     def handle_equation(node)
       attrs = node.attributes
+      options = attrs['options']
       node.title = nil
       warn "node.attributes (EQUATION): #{node.attributes}".cyan if $VERBOSE
       number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
@@ -249,7 +250,7 @@ module Asciidoctor::LaTeX
       equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
       table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
       row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
-      if attrs['numbered-option']
+      if options.include? 'numbered'
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
       else
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
@@ -258,6 +259,7 @@ module Asciidoctor::LaTeX
 
     def handle_equation_align(node)
       attrs = node.attributes
+      options = attrs['options']
       warn "node.attributes (EQUATION ALIGN): #{node.attributes}".cyan if $VERBOSE
       node.title = nil
       number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
@@ -265,7 +267,7 @@ module Asciidoctor::LaTeX
       equation_part = ['+++<td style="width:100%";>+++'] + ['\\[\\begin{split}'] + node.lines + ['\\end{split}\\]'] + ['+++</td>+++']
       table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
       row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
-      if attrs['numbered-option']
+      if options.include? 'numbered'
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
       else
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]

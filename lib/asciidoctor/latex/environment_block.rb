@@ -120,6 +120,9 @@ module Asciidoctor::LaTeX
           attrs['options'] = 'numbered'
         end
       end
+      if attrs['id']
+        attrs['options'] = 'numbered'
+      end
 
 
       # Adjust title according to environment name

@@ -4,6 +4,8 @@ The Pythagorean theorem, $a^2 + b^2 = c^2$,
 relates the hypotenuse to the altitude
 and base of a right triangle.
 
+
+
 Euler's formula states that
 \[
   e^{2\pi \sqrt{-1}} = 1
@@ -13,24 +15,16 @@ Ain't that great!
 
 [env.equation]
 --
-a = b = c
+\sum_{k=1}^\infty \frac{1}{n}
+--
+
+[env.equation#hoho]
+--
+\sum_{k=1}^\infty \frac{1}{n^2}
 --
 
 
 [env.equation%numbered]
 --
-A = B = C
---
-
-[env.equationalign]
---
-a &= b = c \\
-x^2 &= 1
---
-
-
-[env.equationalign%numbered]
---
-A &= B = C \\
-Y^2 &= 2
---
+\sum_{k=1}^\infty \frac{1}{n^3}
+-

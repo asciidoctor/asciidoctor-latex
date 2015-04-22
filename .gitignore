@@ -1,60 +1,25 @@
 .gitignore
 
-*/_*/
+# Jakub, could you review this paragraph?
 /Gemfile.lock
 /pkg/
 /.ruby-gemset
 /.ruby-version
 /.yardoc/
 /doc/
+.idea
 
+# My work
 MYNOTES.adoc
+test_jc/
+tmp/
 
-# working directories jc
-samples2
-xx
-work
-tests/templates
-tests/foo
-
-# workng & test files
+# Workng & test files
 *.pdf
 *.aux
 *.log
 *.out
 *.toc
-*.html
-tmp
-
-ud.sh
-
-LOG.adoc
 
 
-try-out/possible/
 
-try-out
-tests
-env-disabled.rb
-
-build
-run.sh
-
-.idea/
-
-asciidoctor-latex-1.5.0.dev.gem
-
-
-lib/asciidoctor-latex/
-
-text/
-test_jc/
-boo/
-dt
-
-samples/
-*.sh
-*/possible/*
-*/yuuk/*
-js/
-jsxgraph/

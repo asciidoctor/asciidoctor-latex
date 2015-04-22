@@ -8,8 +8,6 @@
 /.yardoc/
 /doc/
 
-samples/*.html
-samples/*.tex
 MYNOTES.adoc
 
 # working directories jc
@@ -20,7 +18,6 @@ tests/templates
 tests/foo
 
 # workng & test files
-*.tex
 *.pdf
 *.aux
 *.log

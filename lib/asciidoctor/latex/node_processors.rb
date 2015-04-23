@@ -115,8 +115,10 @@ module Asciidoctor
 
       tagname = tags[doctype][self.level]
       tagsuffix = self.numbered ? '' : '*'
+      id ="_#{self.title.downcase.gsub(' ', '_')}"
 
-      "\\#{tagname}#{tagsuffix}\{#{self.title}\}\n\n#{self.content}\n\n"
+      # "\\#{tagname}#{tagsuffix}\{#{self.title}\}\n\n#{self.content}\n\n"
+      "\\#{tagname}#{tagsuffix}\{\\hypertarget\{#{id}\}\{#{self.title}\}\}\n\n#{self.content}\n\n"
     end
   end
 

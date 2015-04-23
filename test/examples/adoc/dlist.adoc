@@ -1,3 +1,15 @@
 //.dlist
-Foo:: a lambda expession of the first kind
-Bar:: a lambda expressi of the second kind
+Foo:: A lambda expession of the first kind
+Bar:: A lambda expressi of the second kind.  A lambda expressi of the second kind. 
+A lambda expressi of the second kind. 
+A lambda expressi of the second kind. 
+A lambda expressi of the second kind. 
+A lambda expressi of the second kind. 
+A lambda expressi of the second kind. 
+A lambda expressi of the second kind.  
+Baababababbababa:: A very long word. A very long word. 
+A very long word. A very long word. 
+A very long word. A very long word. 
+A very long word. A very long word. 
+A very long word. A very long word. 
+X:: A short word.

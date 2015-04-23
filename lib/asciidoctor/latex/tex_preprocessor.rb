@@ -56,6 +56,9 @@ module Asciidoctor::LaTeX
         if line =~ /^\\\]/
           line = line.gsub /^\\\]/, '\\]+'
         end
+        if line =~ /\&/
+          line = line.gsub('&', '\\\&')
+        end
         # We would like to ensure that underscores in names,
         # e.g., MACRO_NAME, do not cause LaTeX bugs. However,
         # the code below introduces a more serious bug: expressons

@@ -1,9 +1,0 @@
-
-== Test: listing
-
-[listing]
---
-abc
-  def
-    gi
---

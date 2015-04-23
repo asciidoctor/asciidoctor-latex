@@ -1,4 +1,0 @@
-== Test: admonition
-
-NOTE: This is a note
-  

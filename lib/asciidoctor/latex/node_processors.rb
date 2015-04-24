@@ -336,7 +336,12 @@ module Asciidoctor
       elsif env == 'chem'
         output = "\\begin\{equation\}#{label}\n\\ce\{#{self.content}\}\n\\end\{equation\}\n"
       else
-        output = "\\begin\{#{env}\}#{title}#{label}\n#{self.content}\n\\end\{#{env}\}\n"
+        if self.attributes['plain-option']
+          output = "\\begin\{#{env}\}#{title}#{label}\n#{self.content}\n\\end\{#{env}\}\n"
+        else
+          output = "\\begin\{#{env}\}#{title}#{label}\\rm\n#{self.content}\n\\end\{#{env}\}\n"
+        end
+
       end
 
 
@@ -371,7 +376,7 @@ module Asciidoctor
     end
 
     def toc_process
-      warn "Please implement me! (toc_process)".red if $VERBOSE
+      # warn "Please implement me! (toc_process)".red if $VERBOSE
     end
 
     def report
@@ -519,10 +524,19 @@ module Asciidoctor
 
 
     def sidebar_process
-      # warn "sidebar_process".yellow if $VERBOSE
-      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      # warn "attributes: #{self.attributes}".cyan if $VERBOSE
-      "\\begin\{sidebar\}\n#{self.content}\n\\end\{sidebar\}\n"
+      title = self.title
+      attr = self.attributes
+      id = attr['id']
+      if id
+        content = "\\hypertarget\{#{id}\}\{#{self.content}\}"
+      else
+        content = self.content
+      end
+      if title
+        "\\begin\{sidebar\}\n\{\\bf #{title}\}\n\\\\\n#{content}\n\\end\{sidebar\}\n"
+      else
+        "\\begin\{sidebar\}\n#{content}\n\\end\{sidebar\}\n"
+      end
     end
 
     def verse_process
@@ -558,25 +572,41 @@ module Asciidoctor
     def inline_quoted_process
       # warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
       case self.type
-      when :strong
-        #"\\textbf\{#{self.text}\}"
-        self.text
-      when :emphasis
-        "\\emph\{#{self.text}\}"
-      when :asciimath
-        "\$#{LaTeX::TeXPostProcess.stem_substitutions self.text}\$"
-      when :monospaced
-        "\{\\tt #{self.text}\}"
-      when :unquoted
-        role = self.attributes["role"]
-        # warn "  --  role = #{role}".yellow if $VERBOSE
-        if role == "red"
-          "\\rolered\{ #{self.text}\}"
+        when :strong
+          #"\\textbf\{#{self.text}\}"
+          self.text
+        when :emphasis
+          "\\emph\{#{self.text}\}"
+        when :asciimath
+          #"\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\)"
+          self.text
+        when :monospaced
+          "\{\\tt #{self.text}\}"
+        when :superscript
+          # warn "SUPER: #{self.attributes}"
+          "$\{\}^{#{self.text}}$"
+        when :subscript
+          # warn "SUB: #{self.attributes}"
+          "$\{\}_{#{self.text}}$"
+        when :mark
+          "\\colorbox\{yellow\}\{ #{self.text}\}"
+        when :double
+          "``#{self.text}''"
+        when :single
+          "`#{self.text}'"
+        when :latexmath
+          # "\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\)"
+          self.text
+        when :unquoted
+          role = self.attributes["role"]
+          # warn "  --  role = #{role}".yellow if $VERBOSE
+          if role == "red"
+            "\\rolered\{ #{self.text}\}"
+          else
+            # warn "This is inline_quoted_process.  I don't understand role = #{role}" if $VERBOSE
+          end
         else
-          # warn "This is inline_quoted_process.  I don't understand role = #{role}" if $VERBOSE
-        end
-      else
-        "\\unknown\\{#{self.text}\\}"
+          "\\unknown\\{#{self.text}\\}"
       end
     end
 
@@ -625,7 +655,7 @@ module Asciidoctor
     end
 
     def inline_callout_process
-      warn "Please implement me! (inline_callout_process)".red if $VERBOSE
+      # warn "Please implement me! (inline_callout_process)".red if $VERBOSE
     end
 
   end

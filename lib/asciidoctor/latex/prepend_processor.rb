@@ -4,6 +4,7 @@ require 'asciidoctor/extensions'
 module Asciidoctor::LaTeX
 
   # THIS CLASS IS NO LONGER USED
+  # See 'inject_html.rb'
   # Prepend lines to a document
 
   class ClickStyleInsert < Asciidoctor::Extensions::Preprocessor

@@ -233,24 +233,31 @@ module Asciidoctor
         ""
       end
     end
-
+    
 
     def paragraph_process
-      # warn "paragraph attributes: #{self.attributes}".red if $VERBOSE
       out = ""
       if self.attributes['title']
         out << "\{\\bf #{self.attributes['title']}\.}" << "\n"
       end
-      out << LaTeX::TeXPostProcess.make_substitutions(self.content) << "\n\n"
+      content =  LaTeX::TeXPostProcess.make_substitutions(self.content)
+      if role == "red"
+        content = "\\rolered\{ #{content}\}"
+      elsif role == "blue"
+        content = "\\roleblue\{ #{content}\}"
+      else
+        content = self.content
+      end
+      out << content << "\n\n"
     end
 
     def stem_process
-      # warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      # warn self.content.cyan if $VERBOSE
+      warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      warn self.content.cyan if $VERBOSE
       environment = LaTeX::TeXBlock.environment_type self.content
       if LaTeX::TeXBlock::INNER_TYPES.include? environment
         out = "\\\[\n#{LaTeX::TeXPostProcess.stem_substitutions self.content}\n\\\]\n"
-        # warn out.yellow if $VERBOSE
+        warn out.yellow if $VERBOSE
         out
       else
         self.content
@@ -602,6 +609,8 @@ module Asciidoctor
           # warn "  --  role = #{role}".yellow if $VERBOSE
           if role == "red"
             "\\rolered\{ #{self.text}\}"
+          elsif role == "blue"
+            "\\roleblue\{ #{self.text}\}"
           else
             # warn "This is inline_quoted_process.  I don't understand role = #{role}" if $VERBOSE
           end

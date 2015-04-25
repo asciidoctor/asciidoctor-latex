@@ -18,7 +18,8 @@ module Asciidoctor::LaTeX
   $click_insertion = <<EOF
 
 <style>
-  .click .title { color: blue; }'
+  .click .title { color: blue; }
+  .openblock>.box>.content { margin-top:1em;margin-bottom: 1em;margin-left:3em;margin-right:4em; }
 </style>
 
 

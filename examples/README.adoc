@@ -1,0 +1,344 @@
+:numbered:
+:toc2:
+:max-width: 900px;
+
+:stem: latexmath
+
+:adl: Asciidoc-LaTeX
+:adlp: https://github.com/asciidoctor/asciidoctor-latex[Asciidoctor-LaTeX]
+:ad: Asciidoc
+:adp: http://asciidoctor.org[Asciidoctor]
+:adlc: asciidoctor-latex
+:tex: LaTeX
+:html: HTML
+
+== Introduction
+
+{adp} is a processor for the {ad} markup language.
+The aim of {adlp} is
+
+. To render AsciiDoc documents as LaTeX.
+
+. To add {tex}-like facilities  to Asciidoctor
+for handling mathematical notation when rendered as HTML
+
+To begin, you can write inline mathematics
+in the usual way, so that $a^2 + b^2 = c^2$
+is rendered from `\$a^2 + b^2 = c^2\$`, and
+the displayed formula
+\[
+   \int_0^\infty e^{-x} dx = 1
+\]
+is rendered from
+----
+ \[
+   \int_0^\infty e^{-x} dx = 1
+ \]
+----
+
+.Environments
+{adl}  has the `[env.FOO]` construct
+ which closely parallels
+ the LaTeX environment
+ construct `\begin{FOO}`.
+ Thus, the equation
+[env.equation#euler]
+--
+\int_{|z| = 1} \frac{dz}{z} = 2\pi \sqrt{-1}
+--
+
+is written in {adl} as
+
+----
+[env.equation#euler]
+--
+\int_{|z| = 1} \frac{dz}{z} = 2\pi \sqrt{-1}
+--
+----
+The text `#euler` is optional.  If present,
+it creates a label for cross-referencing
+and it causes the equaton to be numbered.
+If it is not present, the equation is not
+numbered unless one says
+`[env.equation%numbered]`. One could
+refer to this equation as (<<euler>>)
+or as equation <<euler>>, etc. by saying
+----
+  (<<euler>>) or equation <<euler>>
+----
+
+
+Automatically numbered theorems, definitions, etc., are
+written in the same way.  Thus, the source
+text
+
+----
+
+[env.theorem#th-pythag]
+--
+For a right triangle, the square on the hypotenuse is equal to the summ
+of the squares of the two remaining sides, i.e.,
+ \[
+     c^2 = a^2 + b^2.
+ \]
+--
+----
+
+renders as
+
+[env.theorem#th-pythag]
+--
+For a right triangle, the square on the hypotenuse is equal to the summ
+of the squares of the two remaining sides, i.e.,
+\[
+     c^2 = a^2 + b^2.
+\]
+--
+
+As with `[env.equation]`,
+the optional string `#th-pythag` is a label for
+purposes of cross-referencing:
+----
+   <<th-pythag>>
+----
+Using the above code, we may later refer to <<th-pythag>>.
+This mechanism applies in general to {ad}
+text: `#foobar` defnes a label and `%baz`
+sets an option.  Thus `[env.theorem%no-number]`
+results in an un-numbered theorem.
+
+The `[env.code]` environment is another {adl}
+environment that, like `[env.equation]`,
+receives
+special treatment. The source text
+----
+[env.code#iter]
+--
+def iter(f, a, n)
+  n.times do
+    a = f.call(a)
+    puts a
+  end
+  return  a
+end
+--
+----
+is rendered as
+
+[env.code#iter]
+--
+def iter(f, a, n)
+  n.times do
+    a = f.call(a)
+    puts a
+  end
+  return  a
+end
+--
+
+
+
+
+== First tests
+
+
+
+Below are some examples
+that you can run through
+`asciidoctor-latex` at the command line.
+We assume that you've already installed
+{adlc} (see README for instructions).
+Now try this
+
+```
+  $ asciidoctor-latex -b html eq-latex.adoc
+```
+
+After running the above command, you should find the file `eq-latex.html`
+next to the source file `eq-latex.adoc`. View it in your browser.
+You will need to be connected to the internet so that your browser
+can load the MathJax fonts used to render mathematical
+notation.footnote:[You can also install the fonts on your system.
+See http://www.mathjax.org/help/fonts/[mathjax-fonts]. this will give you faster reponse.
+Turning off your internet connection makes it better still:-(]
+
+To test the analogous file written in `stem` format,
+do this:
+
+```
+  $ asciidoctor-latex -b html -a stem eq-stem.adoc
+```
+The `-a` flag is used to set options,
+just as the `-b` flag is used to set the
+backend ({tex}, {html}, more in the future,
+with {tex} the default).
+Now convert the first file into {tex} by running the command
+
+```
+  $ asciidoctor-latex eq-latex.adoc
+```
+
+
+If all was successful, there will be a file `eq-latex.tex` alongside
+your source file `eq-latex.adoc`.  You can process it as you
+would any LaTeX file.
+
+
+
+
+
+== Examples
+
+Below is a list of files which demsonstrate various features
+of the converter.  In some cases there are two versions, e.g.
+`eq-latex.adoc` and `eq-stem.adoc`, each written in the
+indicated format.footnote:[A missing entry in the table
+may mean that a feature has not yet been implemented,
+or that the file demonstrating it has not yet been
+written and/or tested.]  In other cases,
+the same file appears in both the LaTeX
+and the STEM columns.
+
+One of the best ways
+of learning how to use the features of
+Asciidotor LaTeX is to use your
+natural talent for reverse-engineering:
+run the example, the compare the rendered
+file and its source.
+
+[options=header, width=80%, align=center]
+|===
+| LaTeX | STEM | Comments
+| `eq-latex.adoc` | `eq-stem.adoc` | Basic equations
+| `eqno-latex.adoc` | --  | Numbered equations
+| `theorem-latex.adoc` | -- | Numbered theorems
+| `env.adoc` | `env.adoc` | Env blocks
+| `click.adoc` | `click.adoc`  | Click blocks
+| `code.adoc` | code.adoc` | Code blocks
+|===
+
+
+
+== Comments on the examples
+
+Just a few words about what is in each
+test file.
+
+=== eq-latex.adoc
+
+Basic equations, both in-line
+and displayed, as described
+in the introduction.
+
+=== theorem-latex.adoc
+
+Theorems, definitions, etc., as described
+in the introduction.
+
+
+=== env.adoc
+
+The file `env.adoc`,
+illustrates general usage of the `env`-block.  It gives
+an automatically numbered and titled block.  Thus repeated use
+of `[env.objection]` gives this.
+
+[env.objection]
+--
+This is hearsay.
+--
+
+[env.objection]
+--
+That evidence has not been admitted before the court.
+--
+
+The first objection was written like this:
+
+----
+[env.objection]
+--
+This is hearsay.
+--
+----
+
+=== click.adoc
+
+
+Click blocks are like `env`-blocks, except that
+when you open a document, only the title,
+not the body of the block, is displayed.
+Click on the title to reveal the body;
+clicking again will return the body
+to its hidden sate.  Click blocks
+signal their presence by the blue
+color of the title.
+
+.Secret message
+[click.message]
+--
+The path to wisdom is written on no
+secret map.
+--
+
+Click blocks are useful in making up problem sets,
+homework assignments, study guides, etc.
+
+NOTE: There is bug which prevents click blocks
+loaded as files from working properly --
+they do work when laoded from a web server.
+We are working on this.  See
+http://epsilon.my.noteshare.io/section/click-blocks[this document]
+for an example.
+
+
+=== code.adoc
+
+Use `[code.adoc]` for code listings.
+
+
+////
+
+[env.code#iter]
+--
+def iter(f, a, n)
+  n.times do
+    a = f.call(a)
+    puts a
+  end
+  return  a
+end
+--
+
+.Results
+[click.code%numbered]
+--
+irb> iter $g, 1.0, 6
+1.5
+1.4166666666666665
+1.4142156862745097
+1.4142135623746899
+1.414213562373095
+1.414213562373095
+=> 1.414213562373095
+--
+////
+
+== Issues
+
+One should be able to tex this document wihout error
+and obtain the desired output.  This is very much a work
+in progress.  In particaulr, the following have not yet been resolved.
+
+. Dollars signs used to illustrated command cause LaTeX to choke.
+  We need to map dollar sign to escaped dollar sig in
+  post-processing for tex.  Or is there a better solution?
+
+. The table block in Asciidoc is not implmented -- or rather,
+  is partially implemnted.
+
+. The Click block is not implented in teh TeX output.
+
+. The matrix environment in `eq-stem.adoc` does not render correctly.
+
+. Fix title in latex mode

@@ -23,6 +23,7 @@ tmp/
 
 # junk from my test, to remove
 test/examples/tex/*.adoc
+test/examples/tex/*.html
 test/examples/tex/*.txt
 test/examples/tex/*.rb
 test/examples/tex/*.jpg

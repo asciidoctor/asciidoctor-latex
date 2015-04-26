@@ -1,5 +1,7 @@
 require 'asciidoctor'
 require 'asciidoctor/latex/core_ext/colored_string'
+require 'asciidoctor/latex/core_ext/utility'
+
 
 
 # Yuuk!, The classes in node_processor implement the
@@ -244,9 +246,9 @@ module Asciidoctor
       end
       content =  LaTeX::TeXPostProcess.make_substitutions(self.content)
       if role == "red"
-        content = "\\rolered\{ #{content}\}"
+        content = content.macro('rolered')
       elsif role == "blue"
-        content = "\\roleblue\{ #{content}\}"
+        content = content.macro('roleblue')
       end
       if options and options.include? 'hardbreaks'
         # content =  "\\obeylines\{#{content}\}"
@@ -289,7 +291,7 @@ module Asciidoctor
     end
 
     def quote_process
-      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
+      warn "node quote: #{self.attributes}".yellow if $VERBOSE
       if self.attr? 'attribution'
         attribution = self.attr 'attribution'
         citetitle = (self.attr? 'citetitle') ? (self.attr 'citetitle') : nil

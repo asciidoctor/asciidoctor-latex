@@ -37,7 +37,7 @@ module TexUtilities
   def self.env(env, *args)
     case args.count
       when 1
-        "#{self.begin(env)}\n#{args[0]}\n#{self.end(env)}\n\n"
+        "#{self.begin(env)}\n#{args[0].strip}\n#{self.end(env)}\n\n"
       when 2
         "#{self.begin(env)}\{#{args[0]}\}\n#{args[1]}\n#{self.end(env)}\n\n"
       when 3
@@ -174,7 +174,11 @@ module Asciidoctor
       id ="_#{self.title.downcase.gsub(' ', '_')}"
 
       # "\\#{tagname}#{tagsuffix}\{#{self.title}\}\n\n#{self.content}\n\n"
-      "\\#{tagname}#{tagsuffix}\{\\hypertarget\{#{id}\}\{#{self.title}\}\}\n\n#{self.content}\n\n"
+
+      heading = "\\#{tagname}#{tagsuffix}\{#{self.title}\}"
+      hypertarget = $tex.hypertarget id, self.content.split("\n")[0]
+      "#{heading}\n#{hypertarget}\n#{self.content}"
+
     end
   end
 
@@ -506,28 +510,22 @@ module Asciidoctor
 
       attr = self.attributes
 
-      # warn "attributes (open block): #{self.attributes}" if $VERBOSE
-
-
       # Get title !- nil or make a dummy one
       title = self.attributes["title"]
       if title == nil
         title = "Dummy"
       end
 
-
-
-
        # strip constructs like {counter:theorem} from the title
        title = title.gsub /\{.*?\}/, ""
        title = title.strip
 
       if attr['role'] == 'text-center'
+        # $tex.env 'center', self.content
         "\\begin\{center\}\n#{self.content}\\end\{center\}"
       else
         self.content
       end
-
 
     end
 

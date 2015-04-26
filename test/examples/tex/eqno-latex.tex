@@ -1,0 +1,237 @@
+%% Preamble %%
+%% A minimal LaTeX preamble
+
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}               % ... or a4paper or a5paper or ...
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}       % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{wrapfig}
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{alltt}
+\usepackage[version=3]{mhchem}
+\usepackage{amsmath}
+
+% Needed to properly typeset
+% standard unicode characters:
+%
+\RequirePackage{fix-cm}
+\usepackage{fontspec}
+\usepackage[Latin,Greek]{ucharclasses}
+%
+% NOTE: you must also use xelatex
+% as the typesetting engine
+
+
+% \usepackage{fontspec}
+% \usepackage{polyglossia}
+% \setmainlanguage{en}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+\DeclareGraphicsExtensions{.png, .jpg, jpeg, .pdf}
+
+%% \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%% Asciidoc TeX Macros %%
+
+% Needed for Asciidoc
+
+\newcommand{\admonition}[2]{\textbf{#1}: {#2}}
+\newcommand{\rolered}[1]{ \textcolor{red}{#1} }
+\newcommand{\roleblue}[1]{ \textcolor{blue}{#1} }
+\newcommand{\rolehighlight}[1]{ \backgroundcolor{yellow}{#1} }
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+
+
+%%%
+%  Extended quote environment with author
+\def\signed#1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil\raise-3pt\hbox{(#1)}%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newsavebox\mybox
+\newenvironment{aquote}[1]
+  {\savebox\mybox{#1}\begin{quotation}}
+  {\signed{\usebox\mybox}\end{quotation}}
+%%%
+
+\newenvironment{preamble}
+  {}
+  {}
+
+%% http://tex.stackexchange.com/questions/99809/box-or-sidebar-for-additional-text
+\newenvironment{sidebar}[1][r]
+  {\wrapfigure{#1}{0.5\textwidth}\tcolorbox}
+  {\endtcolorbox\endwrapfigure}
+
+%% Style
+\parindent0pt
+\parskip8pt
+%% User Macros %%
+%% Front Matter %%
+
+\title{Numbered Equations}
+\author{}
+\date{}
+
+
+%% Begin Document %%
+
+\begin{document}
+\maketitle
+\section*{\hypertarget{_numbered_equations}{Numbered Equations}}
+
+The environment {\tt [env.equation]} is automatically
+numbered by default, as in the examples below.
+
+
+\begin{equation*}
+a^3 + b^3 = c^3
+\end{equation*}
+
+
+\begin{equation*}
+\int_0^1 x^n dx = \frac{1}{n}
+\end{equation*}
+
+
+Here is how the first equation is done:
+
+
+\begin{verbatim}
+[env.equation]
+--
+  a^3 + b^3 = c^3
+--
+\end{verbatim}
+
+\subsection*{\hypertarget{_some_more_equations}{Some more equations}}
+
+\begin{equation}
+\label{pyth}a^2  + b^2 = c^2
+\end{equation}
+
+
+A Fourier series:
+
+
+\begin{equation}
+\label{fourier}f(z)  = \sum_{n=-\infty}^\infty e^{2\pi i n z }.
+\end{equation}
+
+
+A matrix:
+
+
+\begin{equation}
+\label{eq-matrix}M = \left(
+\begin{matrix}
+1 & 2 \\
+3 & 4
+\end{matrix}
+\right)
+\end{equation}
+
+
+
+
+\subsection*{\hypertarget{_titles}{Titles}}
+
+Equations can take a title:
+
+
+\begin{equation*}
+\frac{d}{dx} \int_a^x f(t) dt = f(x)
+\end{equation*}
+
+
+We wrote this:
+
+
+\begin{verbatim}
+.Fundamental theorem of calculus
+[env.equation]
+--
+   \frac{d}{dx} \int_a^x f(t) dt = f(x)
+--
+\end{verbatim}
+
+
+
+\subsection*{\hypertarget{_suppressing_numbering}{Suppressing numbering}}
+
+Numbering can be suppresed on a per-item basis.
+This gives a "bare" equation.
+
+
+\begin{equation*}
+M = \left[
+  \begin{array}{ c c }
+	 1 & 2 \\
+	 3 & 4
+  \end{array} \right]
+\end{equation*}
+
+
+We wrote {\tt [env.equation%no-number]}.
+If numbering is suppressed but a title is present,
+the title is displayed.
+
+
+\begin{equation*}
+M = \left[
+  \begin{array}{ c c }
+	 1 & 2 \\
+	 -2 & 5
+  \end{array} \right]
+\end{equation*}
+
+
+Here is the source:
+
+
+\begin{verbatim}
+.Symmetric matrix
+[env.equation%no-number]
+--
+M = \left[
+  \begin{array}{ c c }
+	 1 & 2 \\
+	 -2 & 5
+  \end{array} \right]
+--
+\end{verbatim}
+
+Note:  In \hyperlink{eq-matrix}{(3)} we defined a matrix.
+
+
+
+
+
+
+\end{document}
+

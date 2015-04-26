@@ -1,0 +1,12 @@
+//.joke
+[env.joke]
+--
+Three men, a mathematician, a lawyer,
+and a doctor ...
+--
+
+[env.joke%plain]
+--
+Three men, a mathematician, a lawyer,
+and a doctor ...
+--

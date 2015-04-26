@@ -3,12 +3,54 @@ require 'asciidoctor/latex/core_ext/colored_string'
 require 'asciidoctor/latex/core_ext/utility'
 
 
+module TexUtilities
+
+  def self.macro(name, arg)
+    "\\#{name}\{#{arg}\}"
+  end
+
+  def self.apply_macros(macro_list, arg)
+    val = arg
+    macro_list.reverse.each do |macro_name|
+      val = self.macro(macro_name, val)
+    end
+    val
+  end
+
+  def self.begin(arg)
+    macro('begin', arg)
+  end
+
+  def self.end(arg)
+    macro('end', arg)
+  end
+
+  def self.env(env, *args)
+    case args.count
+      when 1
+        "#{self.begin(env)}\n#{args[0]}\n#{self.end(env)}\n"
+      when 2
+        "#{self.begin(env)}\{#{args[0]}\}\n#{args[1]}\n#{self.end(env)}\n"
+      when 3
+        "#{self.begin(env)}\{#{args[0]}\}\{#{args[1]}\}\n#{args[2]}\n#{self.end(env)}\n"
+      else
+        ''
+    end
+
+  end
+
+
+end
+
 
 # Yuuk!, The classes in node_processor implement the
 # latex backend for Asciidoctor-latex.  This
 # module is far from complete.
 module Asciidoctor
 
+
+  include TexUtilities
+  $tex = TexUtilities
 
   class Document
 
@@ -175,7 +217,8 @@ module Asciidoctor
       list = "\\begin{enumerate}\n\n"
       self.content.each do |item|
         # warn ["  --  item:  ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
-        list << "\\item #{item.text}\n\n"
+        # list << "\\item #{item.text}\n\n"
+        list << item.text.macro('item') << "\n\n"
         list << item.content
       end
       list << "\\end{enumerate}\n\n"
@@ -242,7 +285,9 @@ module Asciidoctor
       options = self.attributes['options']
       out = ""
       if self.attributes['title']
-        out << "\{\\bf #{self.attributes['title']}\.}" << "\n"
+        title = "#{self.attributes['title']}\."
+        out << title.macro('bf')
+        # out << "\{\\bf #{self.attributes['title']}\.}" << "\n"
       end
       content =  LaTeX::TeXPostProcess.make_substitutions(self.content)
       if role == "red"
@@ -251,7 +296,7 @@ module Asciidoctor
         content = content.macro('roleblue')
       end
       if options and options.include? 'hardbreaks'
-        # content =  "\\obeylines\{#{content}\}"
+        # content =  content.macro('obeylines')
       end
 
       out << content << "\n\n"
@@ -295,10 +340,11 @@ module Asciidoctor
       if self.attr? 'attribution'
         attribution = self.attr 'attribution'
         citetitle = (self.attr? 'citetitle') ? (self.attr 'citetitle') : nil
-
-        "\\begin\{aquote\}{#{attribution}#{citetitle ? ' - ' + citetitle : ''}}\n#{self.content}\\end\{aquote\}\n"
+        citetitle = citetitle ? ' - ' + citetitle : ''
+        #  "\\begin\{aquote\}{#{attribution}#{citetitle ? ' - ' + citetitle : ''}}\n#{self.content}\\end\{aquote\}\n"
+        $tex.env 'aquote', attribution, citetitle, self.content
       else
-        "\\begin\{quote\}\n#{self.content}\\end\{quote\}\n"
+        $tex.env 'quote', self.content
       end
     end
 

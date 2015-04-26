@@ -38,7 +38,8 @@ module Asciidoctor::LaTeX
       #  output = output.gsub(match_data[0], match_data[1])
       # end
       output = output.gsub('DOLLOD', '$')
-      output.gsub('!!!BACKSLASH', '\\')
+      output = output.gsub('!!!BACKSLASH', '\\')
+      output.gsub('%', '\%')
     end
 
   end

@@ -21,5 +21,20 @@ tmp/
 *.out
 *.toc
 
+# junk from my test, to remove
+test/examples/tex/*.adoc
+test/examples/tex/*.txt
+test/examples/tex/*.rb
+test/examples/tex/*.jpg
+test/examples/tex/*.sh
+test/examples/tex/_*
+test/examples/tex/x*
+test/examples/tex/foo*
+test/examples/adoc/x*
+test/examples/tex/newEnvironments.tex
+test/examples/tex/asciidoc_tex_macros.tex
+jc/
+buildit
+
 
 

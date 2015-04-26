@@ -233,9 +233,11 @@ module Asciidoctor
         ""
       end
     end
-    
+
 
     def paragraph_process
+      warn "ATTR (para): #{self.attributes}".cyan if $VERBOSE
+      options = self.attributes['options']
       out = ""
       if self.attributes['title']
         out << "\{\\bf #{self.attributes['title']}\.}" << "\n"
@@ -245,9 +247,11 @@ module Asciidoctor
         content = "\\rolered\{ #{content}\}"
       elsif role == "blue"
         content = "\\roleblue\{ #{content}\}"
-      else
-        content = self.content
       end
+      if options and options.include? 'hardbreaks'
+        # content =  "\\obeylines\{#{content}\}"
+      end
+
       out << content << "\n\n"
     end
 
@@ -652,7 +656,7 @@ module Asciidoctor
     end
 
     def inline_break_process
-      # warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
+      warn "ATTR (break): #{self.attributes}".cyan if $VERBOSE
       "#{self.text} \\\\"
     end
 

@@ -18,6 +18,20 @@ module TexUtilities
     end
   end
 
+
+  def self.macro_opt(name, opt, args)
+    case args.count
+      when 1
+        "\\#{name}[#{opt}]\{#{args[0]}\}"
+      when 2
+        "\\#{name}[#{opt}]\{#{args[0]}\}\{#{args[1]}\}"
+      when 3
+        "\\#{name}[#{opt}]\{#{args[0]}\}\{#{args[1]}\}\{#{args[2]}\}"
+      else
+        ''
+    end
+  end
+
   def self.apply_macros(macro_list, arg)
     val = arg
     macro_list.reverse.each do |macro_name|
@@ -446,8 +460,6 @@ module Asciidoctor
 
     def click_process
 
-      # warn "begin click_process".blue + "title = #{self.title}".yellow if $VERBOSE
-
       click = self.attributes["role"]
       # record any environments encounted but not built=in
       if !STANDARD_ENVIRONMENT_NAMES.include? click
@@ -458,15 +470,11 @@ module Asciidoctor
       click = 'note'
 
       if self.id == nil # No label
-        output = "\\begin\{#{click}\}\n#{self.content}\n\\end\{#{click}\}\n"
+        $tex.env 'click', self.content
       else
-        output = "\\begin\{#{click}\}\n\\label\{#{self.id}\}\n#{self.content}\\end\{#{click}\}\n"
+        label = $tex.macro 'label', self.id
+        $tex.env 'click', "#{label}\n#{self.content}"
       end
-
-      # warn "end click_process\n".blue if $VERBOSE
-
-      output
-
     end
 
     def toc_process
@@ -521,8 +529,7 @@ module Asciidoctor
        title = title.strip
 
       if attr['role'] == 'text-center'
-        # $tex.env 'center', self.content
-        "\\begin\{center\}\n#{self.content}\\end\{center\}"
+        $tex.env 'center', self.content
       else
         self.content
       end
@@ -536,17 +543,11 @@ module Asciidoctor
     end
 
     def example_process
-      # warn "exAmple_process".yellow
-      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      # warn "attributes: #{self.attributes}".cyan if $VERBOSE
-      # self.content_model = :verbatim
-      # warn "content: #{self.content}".cyan if $VERBOSE
-      "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
+      $tex.env 'verbatim', self.content
     end
 
 
     def floating_title_process
-      # warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
       doctype = self.document.doctype
 
       tags = { 'article' => [ 'part',  'section', 'subsection', 'subsubsection', 'paragraph' ],
@@ -558,8 +559,6 @@ module Asciidoctor
     end
 
     def image_process
-      # warn ["IXX: Node:".magenta, "#{self.blockname}".cyan].join(" ")  if $VERBOSE
-      # warn "IXX: attributes: #{self.attributes}".cyan  if $VERBOSE
       if self.attributes['width']
         width = "#{self.attributes['width'].to_f/100.0}truein"
       else
@@ -603,6 +602,10 @@ module Asciidoctor
       else
         position = '[h]'
       end
+      # pos_option = "#{figure_type}}#{position}"
+      # incl_graphics = $tex.macro_opt, "width=#{width}", image
+      # $tex.env figure_type, "#{pos_option}\{#{ftext_width}\}", incl_graphics,
+      #\n\\includegraphics[width=#{width}]{#{image}}\n#{caption}\n#{align}"
       "\\begin{#{figure_type}}#{position}\{#{ftext_width}\}\n\\includegraphics[width=#{width}]{#{image}}\n#{caption}\n#{align}\n\\end{#{figure_type}}\n"
     end
 
@@ -621,17 +624,15 @@ module Asciidoctor
         content = self.content
       end
       if title
-        "\\begin\{sidebar\}\n\{\\bf #{title}\}\n\\\\\n#{content}\n\\end\{sidebar\}\n"
+        title  = $tex.macro 'bf', title
+        $tex.env 'sidebar', "#{title}\\\\#{content}"
       else
-        "\\begin\{sidebar\}\n#{content}\n\\end\{sidebar\}\n"
+        $tex.env 'sidebar', content
       end
     end
 
     def verse_process
-      # warn "verse_process".yellow if $VERBOSE
-      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      # warn "attributes: #{self.attributes}".cyan if $VERBOSE
-      "\\begin\{alltt\}\n#{self.content}\n\\end\{alltt\}\n"
+      $tex.env 'alltt', self.content
     end
 
   end # class Block
@@ -719,16 +720,14 @@ module Asciidoctor
         reftext = ""
       end
       case self.type
-      when :link
-        "\\href\{#{self.target}\}\{#{self.text}\}"
-      when :ref
-        "\\label\{#{self.text.gsub(/\[(.*?)\]/, "\\1")}\}"
-      when :xref
-        #"\\ref\{#{self.target.gsub('#','')}\}"
-        # # warn "\\hyperlink\{#{refid}\}\{#{reftext}\}".yellow
-        "\\hyperlink\{#{refid}\}\{#{reftext}\}"
-      else
-        # warn "!!  : undefined inline anchor -----------".magenta if $VERBOSE
+        when :link
+          $tex.macro 'href', self.target, self.text
+        when :ref
+          $tex.macro 'label', self.text.gsub(/\[(.*?)\]/, "\\1")
+        when :xref
+          $tex.macro 'hyperlink', refid, reftext
+        else
+          # warn "!!".magenta if $VERBOSE
       end
     end
 
@@ -737,10 +736,7 @@ module Asciidoctor
     end
 
     def inline_footnote_process
-      # warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
-      # # warn self.content.yellow
-      # # warn self.style.magenta
-      "\\footnote\{#{self.text}\}"
+      $tex.macro 'footnote', self.text
     end
 
     def inline_callout_process

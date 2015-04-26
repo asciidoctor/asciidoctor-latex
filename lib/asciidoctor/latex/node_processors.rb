@@ -5,8 +5,17 @@ require 'asciidoctor/latex/core_ext/utility'
 
 module TexUtilities
 
-  def self.macro(name, arg)
-    "\\#{name}\{#{arg}\}"
+  def self.macro(name, *args)
+    case args.count
+      when 1
+        "\\#{name}\{#{args[0]}\}"
+      when 2
+        "\\#{name}\{#{args[0]}\}\{#{args[1]}\}"
+      when 3
+        "\\#{name}\{#{args[0]}\}\{#{args[1]}\}\{#{args[2]}\}"
+      else
+        ''
+    end
   end
 
   def self.apply_macros(macro_list, arg)
@@ -28,11 +37,11 @@ module TexUtilities
   def self.env(env, *args)
     case args.count
       when 1
-        "#{self.begin(env)}\n#{args[0]}\n#{self.end(env)}\n"
+        "#{self.begin(env)}\n#{args[0]}\n#{self.end(env)}\n\n"
       when 2
-        "#{self.begin(env)}\{#{args[0]}\}\n#{args[1]}\n#{self.end(env)}\n"
+        "#{self.begin(env)}\{#{args[0]}\}\n#{args[1]}\n#{self.end(env)}\n\n"
       when 3
-        "#{self.begin(env)}\{#{args[0]}\}\{#{args[1]}\}\n#{args[2]}\n#{self.end(env)}\n"
+        "#{self.begin(env)}\{#{args[0]}\}\{#{args[1]}\}\n#{args[2]}\n#{self.end(env)}\n\n"
       else
         ''
     end
@@ -281,7 +290,6 @@ module Asciidoctor
 
 
     def paragraph_process
-      warn "ATTR (para): #{self.attributes}".cyan if $VERBOSE
       options = self.attributes['options']
       out = ""
       if self.attributes['title']
@@ -303,45 +311,35 @@ module Asciidoctor
     end
 
     def stem_process
-      warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      warn self.content.cyan if $VERBOSE
       environment = LaTeX::TeXBlock.environment_type self.content
       if LaTeX::TeXBlock::INNER_TYPES.include? environment
-        out = "\\\[\n#{LaTeX::TeXPostProcess.stem_substitutions self.content}\n\\\]\n"
-        warn out.yellow if $VERBOSE
-        out
+        "\\\[\n#{LaTeX::TeXPostProcess.stem_substitutions self.content}\n\\\]\n"
       else
         self.content
       end
     end
 
     def admonition_process
-      # warn ["Node:".blue, "#{self.blockname}".cyan, "#{self.style}:".magenta, "#{self.lines[0]}"].join(" ") if $VERBOSE
-      "\\admonition\{#{self.style}\}\{#{self.content}\}\n"
+      $tex.macro 'admonition', self.style, self.content
     end
 
     def page_break_process
-      # warn ["Node:".blue, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       "\n\\vfill\\eject\n"
     end
 
     def literal_process
-      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
+      $tex.env 'verbatim', self.content
     end
 
     def pass_process
-      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
       self.content
     end
 
     def quote_process
-      warn "node quote: #{self.attributes}".yellow if $VERBOSE
       if self.attr? 'attribution'
         attribution = self.attr 'attribution'
         citetitle = (self.attr? 'citetitle') ? (self.attr 'citetitle') : nil
         citetitle = citetitle ? ' - ' + citetitle : ''
-        #  "\\begin\{aquote\}{#{attribution}#{citetitle ? ' - ' + citetitle : ''}}\n#{self.content}\\end\{aquote\}\n"
         $tex.env 'aquote', attribution, citetitle, self.content
       else
         $tex.env 'quote', self.content
@@ -350,27 +348,19 @@ module Asciidoctor
 
     def environment_process
 
-      # warn "begin environment_process, ".blue + "title = #{self.title}".yellow if $VERBOSE
-      # warn "environment attributes = #{self.attributes}".red if $VERBOSE
-      # warn "role = #{self.attributes["role"]}" if $VERBOSE
-
       env = self.attributes["role"]
       options = self.attributes['options']
 
       # record any environments encountered but not built=in
       if !STANDARD_ENVIRONMENT_NAMES.include? env and !$latex_environment_names.include? env
-      # if  !($latex_environment_names.include? env)
-        # warn "env added: [#{env}]".blue if $VERBOSE
         $latex_environment_names << env
       end
 
       if self.id
-        label = "\n\\label\{#{self.id}\}"
+        label = $tex.macro 'label', self.id
       else
         label = ""
       end
-
-      # warn "self.attributes['original_title'] = #{self.attributes['original_title']}".cyan if $VERBOSE
 
       if self.attributes['original_title']
         title = "\{\\rm (#{self.attributes['original_title']}) \}"
@@ -379,12 +369,15 @@ module Asciidoctor
       end
 
       if env == 'listing'
-        output = "\\begin\{#{env}\}#{label}\\begin{verbatim}\n\n#{self.content}\\end{verbatim}\n\\end\{#{env}\}\n"
+        content = $tex.env 'verbatim', self.content
+        output = $tex.env env, label, content
       elsif env == 'equationalign'
         if options.include? 'numbered'
-          output = "\\begin\{equation\}#{label}\n\\begin\{split\}\n#{self.content}\n\\end\{split\}\n\\end\{equation\}\n"
+          content = $tex.env 'split', label + "\n" + self.content
+          output = $tex.env 'equation', content
         else
-          output = "\\begin\{equation*\}#{label}\n\\begin\{split\}\n#{self.content}\n\\end\{split\}\n\\end\{equation*\}\n"
+          content = $tex.env 'split', label + "\n" + self.content
+          output = $tex.env 'equation*', content
         end
       elsif env == 'equation'
         if options.include? 'numbered'
@@ -402,8 +395,6 @@ module Asciidoctor
         end
 
       end
-
-
 
       output
 
@@ -704,7 +695,6 @@ module Asciidoctor
     end
 
     def inline_break_process
-      warn "ATTR (break): #{self.attributes}".cyan if $VERBOSE
       "#{self.text} \\\\"
     end
 

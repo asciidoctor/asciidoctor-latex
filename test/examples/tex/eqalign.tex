@@ -1,23 +1,131 @@
-%== .eqalign ==%
-\begin{equation*}
-\begin{split}
-a &= b + c   \\
-b &= x + y  \\
-a &= x + y + c
-\end{split}
-\end{equation*}
-\begin{equation}
-\begin{split}
-\label{foo}
-A &= B + C   \\
-B &= X + Y  \\
-Z &= X + Y + C
-\end{split}
-\end{equation}
-\begin{equation}
-\begin{split}
-a &= b + c   \\
-b &= x + y  \\
-a &= x + y + c
-\end{split}
-\end{equation}
+%% Preamble %%
+%% A minimal LaTeX preamble
+
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}               % ... or a4paper or a5paper or ...
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}       % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{wrapfig}
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{alltt}
+\usepackage[version=3]{mhchem}
+\usepackage{amsmath}
+
+% Needed to properly typeset
+% standard unicode characters:
+%
+\RequirePackage{fix-cm}
+\usepackage{fontspec}
+\usepackage[Latin,Greek]{ucharclasses}
+%
+% NOTE: you must also use xelatex
+% as the typesetting engine
+
+
+% \usepackage{fontspec}
+% \usepackage{polyglossia}
+% \setmainlanguage{en}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+\DeclareGraphicsExtensions{.png, .jpg, jpeg, .pdf}
+
+%% \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%% Asciidoc TeX Macros %%
+
+% Needed for Asciidoc
+
+\newcommand{\admonition}[2]{\textbf{#1}: {#2}}
+\newcommand{\rolered}[1]{ \textcolor{red}{#1} }
+\newcommand{\roleblue}[1]{ \textcolor{blue}{#1} }
+\newcommand{\rolehighlight}[1]{ \backgroundcolor{yellow}{#1} }
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+
+
+%%%
+%  Extended quote environment with author
+\def\signed#1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil\raise-3pt\hbox{(#1)}%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newsavebox\mybox
+\newenvironment{aquote}[1]
+  {\savebox\mybox{#1}\begin{quotation}}
+  {\signed{\usebox\mybox}\end{quotation}}
+%%%
+
+\newenvironment{preamble}
+  {}
+  {}
+
+%% http://tex.stackexchange.com/questions/99809/box-or-sidebar-for-additional-text
+\newenvironment{sidebar}[1][r]
+  {\wrapfigure{#1}{0.5\textwidth}\tcolorbox}
+  {\endtcolorbox\endwrapfigure}
+
+%% Style
+\parindent0pt
+\parskip8pt
+%% User Macros %%
+%% Front Matter %%
+
+\title{}
+\author{}
+\date{}
+
+
+%% Begin Document %%
+
+\begin{document}
+\maketitle
+\begin{equationalign}
+  a &= b + c   \\
+  b &= x + y  \\
+  a &= x + y + c
+
+\end{equationalign}
+
+
+\begin{equationalign}
+\label{foo}  A &= B + C   \\
+  B &= X + Y  \\
+  Z &= X + Y + C
+
+\end{equationalign}
+
+
+\begin{equationalign}
+  a &= b + c   \\
+  b &= x + y  \\
+  a &= x + y + c
+
+\end{equationalign}
+
+
+\end{document}
+

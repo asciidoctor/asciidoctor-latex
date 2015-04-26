@@ -45,7 +45,10 @@ module TexUtilities
       else
         ''
     end
+  end
 
+  def self.hypertarget(name, text)
+    "\\hypertarget\{#{name}\}\{#{text}\}"
   end
 
 
@@ -345,60 +348,96 @@ module Asciidoctor
       end
     end
 
+
+
+ ####################################################################
+
+    def label
+      if self.id
+        label = $tex.macro 'label', self.id
+        # label = $tex.macro 'label', $tex.hypertarget(self.id, self.id)
+      else
+        label = ""
+      end
+      label
+    end
+
+    def options
+      self.attributes['options']
+    end
+
+    def env_title
+      if self.attributes['original_title']
+        "\{\\rm (#{self.attributes['original_title']}) \}"
+      else
+        ''
+      end
+    end
+
+ ####################################################################
+
+    def handle_listing
+      content = $tex.env 'verbatim', self.content
+      $tex.env env, label, content
+    end
+
+    def handle_eqalign
+      if options.include? 'numbered'
+        content = $tex.env 'split', label + "\n" + self.content.strip
+        $tex.env 'equation', content
+      else
+        content = $tex.env 'split', label + "\n" + self.content.strip
+        $tex.env 'equation*', content
+      end
+    end
+
+    def handle_equation
+      if options.include? 'numbered'
+        content = $tex.hypertarget self.id, self.content.strip
+        $tex.env 'equation', "#{label}#{content}"
+      else
+        $tex.env 'equation*', "#{label}#{self.content.strip}"
+      end
+    end
+
+    def handle_chem
+      $tex.env 'equation', "#{label}\n\\ce\{#{self.content.strip}\}\n"
+    end
+
+    def handle_plain(env)
+      if self.attributes['plain-option']
+        content = $tex.macro 'rm', self.content
+        $tex.env env, "#{env_title}#{label}#{content}\n"
+        # output = "\\begin\{#{env}\}#{title}#{label}\n#{self.content}\n\\end\{#{env}\}\n"
+      else
+        $tex.env env, "#{env_title}#{label}#{self.content}\n"
+        # output = "\\begin\{#{env}\}#{title}#{label}\\rm\n#{self.content}\n\\end\{#{env}\}\n"
+      end
+    end
+
+ ####################################################################
+
     def environment_process
 
       env = self.attributes["role"]
-      options = self.attributes['options']
 
       # record any environments encountered but not built=in
       if !STANDARD_ENVIRONMENT_NAMES.include? env and !$latex_environment_names.include? env
         $latex_environment_names << env
       end
 
-      if self.id
-        label = $tex.macro 'label', self.id
-      else
-        label = ""
-      end
-
-      if self.attributes['original_title']
-        title = "\{\\rm (#{self.attributes['original_title']}) \}"
-      else
-        title = ''
-      end
-
-      if env == 'listing'
-        content = $tex.env 'verbatim', self.content
-        output = $tex.env env, label, content
-      elsif env == 'equationalign'
-        if options.include? 'numbered'
-          content = $tex.env 'split', label + "\n" + self.content
-          output = $tex.env 'equation', content
+      case env
+        when 'listing'
+          handle_listing
+        when 'equationalign'
+          handle_eqalign
+        when 'equation'
+          handle_equation
+        when 'chem'
+          handle_chem
         else
-          content = $tex.env 'split', label + "\n" + self.content
-          output = $tex.env 'equation*', content
-        end
-      elsif env == 'equation'
-        if options.include? 'numbered'
-          output = $tex.env 'equation', "#{label}\n#{self.content}\n"
-        else
-          output = $tex.env 'equation*', "#{label}\n#{self.content}\n"
-        end
-      elsif env == 'chem'
-        output = $tex.env 'equation', "#{label}\n\\ce\{#{self.content}\}\n"
-
-        # output = "\\begin\{equation\}#{label}\n\\ce\{#{self.content}\}\n\\end\{equation\}\n"
-      else
-        if self.attributes['plain-option']
-          output = "\\begin\{#{env}\}#{title}#{label}\n#{self.content}\n\\end\{#{env}\}\n"
-        else
-          output = "\\begin\{#{env}\}#{title}#{label}\\rm\n#{self.content}\n\\end\{#{env}\}\n"
-        end
-
+          handle_plain(env)
       end
-
-      output
-
     end
 
     def click_process

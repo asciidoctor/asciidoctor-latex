@@ -16,7 +16,10 @@ NOTE: CHANGELOG.adoc has been added to this repo.
 :adp: http://asciidoctor.org[Asciidoctor]
 :adoc: http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[Asciidoc]
 :adlm: http://www.noteshare.io/section/asciidoctor-latex-manual-intro[Asciidoctor-LaTeX Manual]
+////
 :tex: https://www.sharelatex.com/[LaTeX]
+////
+:tex: LaTeX
 :article: http://noteshare.io/book/transcendental-numbers-and-periods[article]
 :ns: http://www.noteshare.io[Noteshare.io]
 
@@ -62,6 +65,40 @@ If you would like to install a development version from the repository, use:
  $ gem build asciidoctor-latex.gemspec
  $ gem install *.gem
 
+
+== Commands
+
+Asciidoc math files can be rendered
+
+Render as HTML::
+Use `$ asciidoctor-latex -b html foo.adoc` to produce `foo.html`.
+With this command the Asciidoc-LaTeX syntax and extensions will be rendered.
+
+
+Render as LaTeX:: Use `$ asciidoctor-latex foo.adoc`
+to produce `foo.tex`.
+
+
+=== Macro files
+
+The contents of a file named `macros.tex` will
+read and used by `asciidoctor-latex`
+if it is in the same directory as the file
+being rendered.  This is the case regardless
+of the output format -- HTML or tex.
+
+
+=== Switches
+
+asciidoctor-latex -a header=no foo.adoc::
+Use a minimal header for the generated tex file.
+
+
+{adlp}'s default form at is `:latexmath`.
+To use `:stem`, put the text `:stem:`
+in your file.  To turn the switch
+on and set it to `latexmath`, say
+instead of `stem:latexmth`.
 
 == Document format
 
@@ -195,28 +232,3 @@ clickable.
 The default for click blocks is not to number them.
 See the file `click.adoc` in the `exampless` directory
 for more information.
-
-== Commands for rendering
-
-Asciidoc math files can be rendered
-
-* as HTML.  Use `$ asciidoctor-latex -b html foo.adoc` to produce `foo.html`.
-With this command the Asciidoc-LaTeX syntax and extensions will be rendered.
-* as LaTeX.  Use `$ asciidoctor-latex foo.adoc`
-to produce `foo.tex`.
-
-
-== Switches
-
-=== Command-line switces
-
-asciidoctor-latex -a header=no foo.adoc::
-Use a minimal header for the generated tex file.
-
-
-
-=== Text switches
-
-{adlp}'s default form at is `:latexmath`.  To use `:stem`, put the text `:stem:`
-in your file.  To turn the switch on and set it to `latexmath`, say
-instead of `stem:latexmth`.

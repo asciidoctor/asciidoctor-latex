@@ -1,0 +1,8 @@
+//.chem-env
+[env.chem]
+--
+2Fe2O3 + 3C -> 4Fe + 3CO2
+--
+
+//.chem-inline
+chem::[Fe3+], chem::[H20]

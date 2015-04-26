@@ -295,7 +295,6 @@ module Asciidoctor
       if self.attributes['title']
         title = "#{self.attributes['title']}\."
         out << title.macro('bf')
-        # out << "\{\\bf #{self.attributes['title']}\.}" << "\n"
       end
       content =  LaTeX::TeXPostProcess.make_substitutions(self.content)
       if role == "red"
@@ -381,12 +380,14 @@ module Asciidoctor
         end
       elsif env == 'equation'
         if options.include? 'numbered'
-          output = "\\begin\{equation\}#{label}\n#{self.content}\n\\end\{equation\}\n"
+          output = $tex.env 'equation', "#{label}\n#{self.content}\n"
         else
-          output = "\\begin\{equation*\}#{label}\n#{self.content}\n\\end\{equation*\}\n"
+          output = $tex.env 'equation*', "#{label}\n#{self.content}\n"
         end
       elsif env == 'chem'
-        output = "\\begin\{equation\}#{label}\n\\ce\{#{self.content}\}\n\\end\{equation\}\n"
+        output = $tex.env 'equation', "#{label}\n\\ce\{#{self.content}\}\n"
+
+        # output = "\\begin\{equation\}#{label}\n\\ce\{#{self.content}\}\n\\end\{equation\}\n"
       else
         if self.attributes['plain-option']
           output = "\\begin\{#{env}\}#{title}#{label}\n#{self.content}\n\\end\{#{env}\}\n"

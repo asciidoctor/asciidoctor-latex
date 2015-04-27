@@ -353,7 +353,19 @@ module Asciidoctor
     end
 
     def literal_process
-      $tex.env 'verbatim', self.content
+      warn "literal_process, attributes = #{self.attributes}".yellow
+      if self.title
+        heading = $tex.region 'bf', self.title
+      else
+        heading = ""
+      end
+      if id and self.title
+        heading = $tex.hypertarget id, heading
+        heading += "\\vglue-1.5em"
+      end
+       content = $tex.env 'verbatim', self.content
+      "#{heading}\n#{content}"
+
     end
 
     def pass_process

@@ -39,7 +39,7 @@ module Asciidoctor::LaTeX
       # end
       output = output.gsub('DOLLOD', '$')
       output = output.gsub('!!!BACKSLASH', '\\')
-      output.gsub('%', '\%')
+      # output.gsub('%', '\%')  This messes up the html bigtimw
     end
 
   end

@@ -18,6 +18,11 @@ module TexUtilities
     end
   end
 
+  # tex.region('bf', 'foo bar') => {\bf foo bar}
+  def self.region(name, arg)
+    "\{\\#{name} #{arg}\}"
+  end
+
 
   def self.macro_opt(name, opt, args)
     case args.count
@@ -543,7 +548,21 @@ module Asciidoctor
     end
 
     def example_process
-      $tex.env 'verbatim', self.content
+      warn "example_process, title: #{self.title}".yellow
+      warn "id: #{self.attributes['id']}".blue
+      warn "role: #{self.attributes['role']}".blue
+      id = self.attributes['id']
+      if self.title
+        heading = $tex.region 'bf', self.title
+        content  = "-- #{heading}.\n#{self.content}"
+      else
+        content = self.content
+      end
+      if id
+        hypertarget = $tex.hypertarget id, self.content.split("\n")[0]
+        content = "#{hypertarget}\n#{content}" if id
+      end
+      $tex.env 'example', content
     end
 
 

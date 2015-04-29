@@ -720,8 +720,11 @@ module Asciidoctor
           "\\emph\{#{self.text}\}"
         when :asciimath
           warn "asciimath: #{self.text}".yellow if $VERBOSE
+          output = Asciidoctor.convert( self.text, backend: 'html')
+          warn "Converted input: #{output}".blue
+          output
           #"\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\)"
-          self.text
+          # self.text
         when :monospaced
           "\{\\tt #{self.text}\}"
         when :superscript
@@ -737,9 +740,11 @@ module Asciidoctor
         when :single
           "`#{self.text}'"
         when :latexmath
-          warn "latexmath: #{self.text}".yellow if $VERBOSE
+          warn "!!latexmath: #{self.text}".yellow if $VERBOSE
            "\\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\\)"
-          # self.text
+          output = Asciidoctor.convert self.text, {stem: 'asciimath', backend: 'html'}
+          warn "Converted input: #{output}".blue
+          output
         when :unquoted
           role = self.attributes["role"]
           # warn "  --  role = #{role}".yellow if $VERBOSE

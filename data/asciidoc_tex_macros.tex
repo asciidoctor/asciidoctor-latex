@@ -19,17 +19,45 @@
 \newtheorem{note}{Note}
 
 
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %  Extended quote environment with author
 \def\signed#1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
   \hbox{}\nobreak\hfil\raise-3pt\hbox{(#1)}%
   \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
 
 \newsavebox\mybox
+\newenvironment{aOrignalAquote}[1]
+  {\savebox\mybox{#1}\begin{quotation}}
+  {\signed{\usebox\mybox}\end{quotation}}
+
 \newenvironment{aquote}[1]
   {\savebox\mybox{#1}\begin{quotation}}
   {\signed{\usebox\mybox}\end{quotation}}
-%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewenvironment{quotation}
+{   \leftskip 4em \begin{em} }
+{\end{em}\par }
+
+\def\signed#1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil\raise-3pt\hbox{(#1)}%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newenvironment{tquote}[1]
+  {  {\bf #1} \begin{quotation} \\ }
+  { \end{quotation} }
+
+%% BOXES: http://tex.stackexchange.com/questions/83930/what-are-the-different-kinds-of-boxes-in-latex
+%% ENVIRONMENTS: https://www.sharelatex.com/learn/Environments
+
+\newenvironment{foo}[2]
+ {{\bf #1}:{\bf #2}\\ }
+ {\it }
+
+
+
 
 \newenvironment{preamble}
   {}

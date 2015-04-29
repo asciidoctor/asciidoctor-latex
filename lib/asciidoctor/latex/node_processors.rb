@@ -56,11 +56,11 @@ module TexUtilities
   def self.env(env, *args)
     case args.count
       when 1
-        "#{self.begin(env)}\n#{args[0].strip}\n#{self.end(env)}\n\n"
+        "#{self.begin(env)}\n#{args[0].strip}\n#{self.end(env)}\n"
       when 2
-        "#{self.begin(env)}\{#{args[0]}\}\n#{args[1]}\n#{self.end(env)}\n\n"
+        "#{self.begin(env)}\{#{args[0]}\}\n#{args[1]}\n#{self.end(env)}\n"
       when 3
-        "#{self.begin(env)}\{#{args[0]}\}\{#{args[1]}\}\n#{args[2]}\n#{self.end(env)}\n\n"
+        "#{self.begin(env)}\{#{args[0]}\}\{#{args[1]}\}\n#{args[2]}\n#{self.end(env)}\n"
       else
         ''
     end
@@ -336,6 +336,8 @@ module Asciidoctor
     end
 
     def stem_process
+      warn "stemblock: self.content = #{self.content}" if $VERBOSE
+      report
       environment = LaTeX::TeXBlock.environment_type self.content
       if LaTeX::TeXBlock::INNER_TYPES.include? environment
         "\\\[\n#{LaTeX::TeXPostProcess.stem_substitutions self.content}\n\\\]\n"
@@ -376,10 +378,13 @@ module Asciidoctor
       if self.attr? 'attribution'
         attribution = self.attr 'attribution'
         citetitle = (self.attr? 'citetitle') ? (self.attr 'citetitle') : nil
-        citetitle = citetitle ? ' - ' + citetitle : ''
+        # citetitle = citetitle ? ' - ' + citetitle : ''
+        citetitle = citetitle ? $tex.region('bf', citetitle) + ' \\\\' : ''
         $tex.env 'aquote', attribution, citetitle, self.content
+      elsif self.title
+        $tex.env 'tquote', self.title, self.content
       else
-        $tex.env 'quote', self.content
+        $tex.env 'quotation', self.content
       end
     end
 
@@ -476,21 +481,37 @@ module Asciidoctor
     end
 
     def click_process
-
+      warn self.attributes.to_s.yellow
+      attr = self.attributes
       click = self.attributes["role"]
-      # record any environments encounted but not built=in
+      # record any environ$ments encounted but not built=in
       if !STANDARD_ENVIRONMENT_NAMES.include? click
         $latex_environment_names << click
       end
 
-      ### XXX fixme:
-      click = 'note'
+      title = self.title.downcase
+      original_title = title.split(' ')[0].downcase
+      # FIXME: the above is  work-around: insted set
+      # originaltitle in clickblock
+
+      if attr['options'] and attr['options'].include? 'plain'
+        content = $tex.region 'rm', self.content
+      else
+        content = self.content
+      end
+
+      if attr['options'] and attr['options'].include? 'numbered'
+        env = original_title + '-click-numbered'
+      else
+        env = original_title + '-click'
+      end
+
 
       if self.id == nil # No label
-        $tex.env 'click', self.content
+        $tex.env env, content
       else
         label = $tex.macro 'label', self.id
-        $tex.env 'click', "#{label}\n#{self.content}"
+        $tex.env env, "#{label}\n#{content}"
       end
     end
 
@@ -500,12 +521,12 @@ module Asciidoctor
 
     def report
       # Report on this node
-      # warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ")
-      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ")
-      # warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ")
-      # warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ") if title
-      # warn ["Content:".magenta, "#{self.content}".yellow].join(" ")
-      # warn ["Style:".green, "#{self.style}".red].join(" ")
+      warn ["OPEN BLOCK:".magenta, "id: #{self.id}"].join(" ")
+      warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ")
+      warn ["Attributes:".magenta, "#{self.attributes}".cyan].join(" ")
+      warn ["Title: ".magenta, title.cyan, "style:", self.style].join(" ") if title
+      warn ["Content:".magenta, "#{self.content}".yellow].join(" ")
+      warn ["Style:".green, "#{self.style}".red].join(" ")
       # warn ["METHODS:".red, "#{self.methods}".yellow].join(" ")
     end
 
@@ -698,6 +719,7 @@ module Asciidoctor
         when :emphasis
           "\\emph\{#{self.text}\}"
         when :asciimath
+          warn "asciimath: #{self.text}".yellow if $VERBOSE
           #"\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\)"
           self.text
         when :monospaced
@@ -715,8 +737,9 @@ module Asciidoctor
         when :single
           "`#{self.text}'"
         when :latexmath
-          # "\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\)"
-          self.text
+          warn "latexmath: #{self.text}".yellow if $VERBOSE
+           "\\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\\)"
+          # self.text
         when :unquoted
           role = self.attributes["role"]
           # warn "  --  role = #{role}".yellow if $VERBOSE

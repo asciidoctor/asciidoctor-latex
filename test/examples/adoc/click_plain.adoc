@@ -1,10 +1,23 @@
-//.env_plain
+//.click-normal
 [click.remark]
 --
 This is a normal remark.
 --
 
+//.click-plain
 [click.remark%plain]
 --
 This is a plain remark.
+--
+
+//.click-no-number
+[click.remark%numbered]
+--
+This is a numbered remark.
+--
+
+
+[click.remark%numbered]
+--
+So is this.
 --

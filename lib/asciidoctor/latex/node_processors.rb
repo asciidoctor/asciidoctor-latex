@@ -475,8 +475,20 @@ module Asciidoctor
           handle_equation
         when 'chem'
           handle_chem
+        when 'box'
+          handle_box
         else
           handle_plain(env)
+      end
+    end
+
+    def handle_box
+      # titledasciidocbox
+      warn "attributes: #{self.attributes}".yellow if $VERBOSE
+      if self.title.nil? or self.title == ''
+        $tex.env 'asciidocbox', self.content
+      else
+        $tex.env 'titledasciidocbox',  self.title, self.content
       end
     end
 
@@ -611,6 +623,8 @@ module Asciidoctor
     end
 
     def image_process
+
+      warn "image_proces, attributes = #{self.attributes}".yellow
       if self.attributes['width']
         width = "#{self.attributes['width'].to_f/100.0}truein"
       else
@@ -618,19 +632,23 @@ module Asciidoctor
       end
       raw_image = self.attributes['target']
       if document.attributes['noteshare'] == 'yes'
-        # warn "IXX: extracting image name".red if $VERBOSE
+        warn "IXX: extracting image name".red if $VERBOSE
         image_rx = /image.*original\/(.*)\?/
         match_data = raw_image.match image_rx
         if match_data
           image = match_data[1]
-          # warn "IXX: image name: #{image}".red if $VERBOSE
+          warn "IXX: image name: #{image}".red if $VERBOSE
         else
           image = "undefined"
         end
       else
         image = raw_image
       end
-      caption =   "\\caption\{#{self.attributes['title']}\}"
+      if self.title and self.title != ''
+        caption =   "\\caption\{#{self.attributes['title']}\}"
+      else
+        caption = ''
+      end
       refs = self.parent.document.references  # [:ids]
       if self.attributes['align'] == 'center'
         align = '\\centering'
@@ -654,11 +672,12 @@ module Asciidoctor
       else
         position = '[h]'
       end
+      warn "caption = #{caption}".blue if $VERBOSE
       # pos_option = "#{figure_type}}#{position}"
       # incl_graphics = $tex.macro_opt, "width=#{width}", image
       # $tex.env figure_type, "#{pos_option}\{#{ftext_width}\}", incl_graphics,
       #\n\\includegraphics[width=#{width}]{#{image}}\n#{caption}\n#{align}"
-      "\\begin{#{figure_type}}#{position}\{#{ftext_width}\}\n\\includegraphics[width=#{width}]{#{image}}\n#{caption}\n#{align}\n\\end{#{figure_type}}\n"
+      "\\begin{#{figure_type}}#{position}\{#{ftext_width}\}\n\\centering\\includegraphics[width=#{width}]{#{image}}\n#{caption}\n#{align}\n\\end{#{figure_type}}\n"
     end
 
     def preamble_process
@@ -740,11 +759,11 @@ module Asciidoctor
         when :single
           "`#{self.text}'"
         when :latexmath
-          warn "!!latexmath: #{self.text}".yellow if $VERBOSE
+          warn "latexmath for latex backend is not currently supported.".yellow if $VERBOSE
+          warn "-- latexmath input: #{self.text}".blue if $VERBOSE
            "\\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\\)"
-          output = Asciidoctor.convert self.text, {stem: 'asciimath', backend: 'html'}
-          warn "Converted input: #{output}".blue
-          output
+          # output = Asciidoctor.convert self.text, {stem: 'asciimath', backend: 'html'}
+          self.text
         when :unquoted
           role = self.attributes["role"]
           # warn "  --  role = #{role}".yellow if $VERBOSE

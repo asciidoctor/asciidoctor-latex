@@ -367,7 +367,11 @@ module Asciidoctor::LaTeX
       outfilesuffix '.tex'
     end
 
+    # FIXME: find a solution without a global variable
     $latex_environment_names = []
+
+    # FIXME: this should be retired -- still used
+    # in click blocks but no longer in env blocks
     $label_counter = 0
 
     def convert node, transform = nil

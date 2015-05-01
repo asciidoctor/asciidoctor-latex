@@ -53,11 +53,15 @@ module Asciidoctor::LaTeX
         if line =~ /^\\\]/
           line = line.gsub /^\\\]/, '\\]+'
         end
+        # if line =~ /\[env\..*?\]/
+        #  m = line.match /(\[env\..*?)\]/
+        #  line = line.gsub m[1], m[1]+',subs=none'
+        # end
         # if line =~ /\&/
         #  line = line.gsub('&', '\\\&')
         # end
         # We do need to make this substition, but ONLY oustside
-        # of matheamtical text.
+        # of mathematical text.
         # Please $FIXME!
         #
         # We would like to ensure that underscores in names,

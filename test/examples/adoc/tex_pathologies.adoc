@@ -1,8 +1,8 @@
-//.tex_pathologiy1 
-$\Delta = \set{\text{0, roots of $g$}}$
+//.tex_pathology1
+$\Delta = \set{\text{0, roots of \(g\)}}$
 
 //.tex_pathology2
-2s^{-1/2}\arctan\left(\frac{x-s}{s}\right)^{1/2}
+$2s^{-1/2}\arctan\left(\frac{x-s}{s}\right)^{1/2}$
 
 //.tex_pathology3
 $x^{1/2}(x-1)^{1/2}(x-s)^{3/2}$
@@ -10,11 +10,14 @@ $x^{1/2}(x-1)^{1/2}(x-s)^{3/2}$
 //.tae_pathology4
 $f'(x) = s(s-1)+ O((x-s))$
 
+//.tae_pathology4b
+$f'(x) = s(s-1)+ O( (x-s) )$
+
 //.tex_patholgies5
 [env.equation]
 --
 a_g(s) \frac{ d^g  }{ds^g}[\omega(s)] + \cdots +
-ba_1(s) \frac{ d  }{ds}[\omega(s)] +  
+ba_1(s) \frac{ d  }{ds}[\omega(s)] +
 a_0(s) [\omega(s)]  = 0
 --
 

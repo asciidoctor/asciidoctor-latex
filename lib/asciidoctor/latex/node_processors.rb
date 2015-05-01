@@ -355,19 +355,20 @@ module Asciidoctor
     end
 
     def literal_process
-      warn "literal_process, attributes = #{self.attributes}".yellow
-      if self.title
-        heading = $tex.region 'bf', self.title
-      else
-        heading = ""
-      end
+      warn "literal_process, attributes = #{self.attributes}".yellow if $VERBOSE
+      heading = ''
       if id and self.title
-        heading = $tex.hypertarget id, heading
-        heading += "\\vglue-1.5em"
+        heading = $tex.hypertarget id, self.title
+      elsif self.title
+        heading = self.title
       end
-       content = $tex.env 'verbatim', self.content
-      "#{heading}\n#{content}"
-
+      if heading == ''
+        $tex.env 'verbatim', self.content
+      else
+        output = $tex.region 'bf', heading
+        output << "\\vspace\{-1\\baselineskip\}\n"
+        output << ($tex.env 'verbatim', self.content)
+      end
     end
 
     def pass_process
@@ -417,6 +418,7 @@ module Asciidoctor
  ####################################################################
 
     def handle_listing
+      warn "Listing".yellow if $VERBOSE
       content = $tex.env 'verbatim', self.content
       $tex.env env, label, content
     end
@@ -703,7 +705,8 @@ module Asciidoctor
     end
 
     def verse_process
-      $tex.env 'alltt', self.content
+      # $tex.env 'alltt', self.content
+      $tex.env 'verse', self.content
     end
 
   end # class Block

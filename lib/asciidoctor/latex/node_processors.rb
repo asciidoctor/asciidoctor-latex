@@ -191,9 +191,6 @@ module Asciidoctor
       tagname = tags[doctype][self.level]
       tagsuffix = self.numbered ? '' : '*'
       id ="_#{self.title.downcase.gsub(' ', '_')}"
-
-      # "\\#{tagname}#{tagsuffix}\{#{self.title}\}\n\n#{self.content}\n\n"
-
       heading = "\\#{tagname}#{tagsuffix}\{#{self.title}\}"
       heading = $tex.hypertarget id, heading
       value = "#{heading}\n#{self.content}"
@@ -449,10 +446,9 @@ module Asciidoctor
     end
 
     def handle_plain(env)
-      warn self.role.yellow
-      warn self.options.cyan
-      # content = $tex.hypertarget self.id, self.content.strip
-      content = self.content
+
+      content = $tex.hypertarget self.id, self.content
+      
       if self.attributes['plain-option']
         content = $tex.macro 'rm', self.content
       end

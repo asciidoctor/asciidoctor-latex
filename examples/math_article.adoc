@@ -1,10 +1,9 @@
 :numbered:
 :latex:
 
-== A Short Math Article
 
-++++
-\(
+[env.tex_macro]
+--
 %% Blackboard bold
 
 \def\NN{\mathbb{N}}
@@ -18,8 +17,10 @@
 \newcommand{\Set}[1]{ \Big\{\,#1\,  \Big\} }
 \newcommand{\Sett}[2]{ \Big\{\,#1\, \Big\vert\; #2\,  \Big\} }
 \newcommand{\mapright}[1]{\ \smash{ \mathop{\longrightarrow}\limits^{#1}}\ }
-\)
-++++
+--
+
+
+== A Short Math Article
 
 This "article" is a demonstration of how one can write
 mathematics in Noteshare.  Use arbitrary LaTeX inside

@@ -448,7 +448,7 @@ module Asciidoctor
     def handle_plain(env)
 
       content = $tex.hypertarget self.id, self.content
-      
+
       if self.attributes['plain-option']
         content = $tex.macro 'rm', self.content
       end
@@ -477,9 +477,15 @@ module Asciidoctor
           handle_chem
         when 'box'
           handle_box
+        when 'tex_macro'
+          handle_tex_macro
         else
           handle_plain(env)
       end
+    end
+
+    def handle_tex_macro
+      self.content
     end
 
     def handle_box

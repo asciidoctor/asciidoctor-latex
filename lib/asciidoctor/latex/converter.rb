@@ -186,12 +186,19 @@ module Asciidoctor::LaTeX
           handle_chem(node)
         when 'jsxgraph'
           handle_jsxgraph(node)
+        when 'tex_macro'
+          handle_tex_macro(node)
         else
           handle_default(node)
       end
 
       node.attributes['roles'] = (node.roles + ['environment']) * ' '
       self.open node
+    end
+
+    def handle_tex_macro node
+      node.title = nil
+      node.lines = ["+++\n\\("] + node.lines + ["\\)\n+++"]
     end
 
     def click node

@@ -195,9 +195,18 @@ module Asciidoctor
       # "\\#{tagname}#{tagsuffix}\{#{self.title}\}\n\n#{self.content}\n\n"
 
       heading = "\\#{tagname}#{tagsuffix}\{#{self.title}\}"
-      hypertarget = $tex.hypertarget id, self.content.split("\n")[0]
-      "#{heading}\n#{hypertarget}\n#{self.content}"
-
+      part = self.content.split("\n")
+      if part[0] =~ /\A\\begin/
+        # the idea is not to put a hyperref if it will just link to a macro or environment start
+        value = value = "#{heading}\n#{self.content}"
+      else
+        hypertarget = $tex.hypertarget id, part[0]
+        value = "#{heading}\n#{hypertarget}\n#{self.content}"
+      end
+      warn value.red if $VERBOSE
+      # hypertarget = $tex.hypertarget id, self.content.split("\n")[0]
+      # "#{heading}\n#{hypertarget}\n#{self.content}"
+      value
     end
   end
 
@@ -208,7 +217,7 @@ module Asciidoctor
   class List
 
     def tex_process
-      # warn ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if $VERBOSE
+      warn ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if $VERBOSE
       case self.node_name
       when 'dlist'
         dlist_process
@@ -251,6 +260,7 @@ module Asciidoctor
     def olist_process
       list = "\\begin{enumerate}\n\n"
       self.content.each do |item|
+        warn "olist_process: #{item.to_s}".cyan if $VERBOSE
         # warn ["  --  item:  ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
         # list << "\\item #{item.text}\n\n"
         list << item.text.macro('item') << "\n\n"
@@ -507,7 +517,7 @@ module Asciidoctor
       if title
         title = self.title.downcase
       end
-      
+
       # original_title = title.split(' ')[0].downcase
       # FIXME: the above is  work-around: instead set
       # originaltitle in clickblock

@@ -320,7 +320,7 @@ module Asciidoctor
       out = ""
       if self.attributes['title']
         title = "#{self.attributes['title']}\."
-        out << title.macro('bf')
+        out << $tex.region('bf', title) + ' '
       end
       content =  LaTeX::TeXPostProcess.make_substitutions(self.content)
       if role == "red"
@@ -697,7 +697,7 @@ module Asciidoctor
         content = self.content
       end
       if title
-        title  = $tex.macro 'bf', title
+        title  = $tex.env 'bf', title
         $tex.env 'sidebar', "#{title}\\\\#{content}"
       else
         $tex.env 'sidebar', content

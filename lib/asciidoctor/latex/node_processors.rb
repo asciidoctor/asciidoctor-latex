@@ -495,6 +495,7 @@ module Asciidoctor
     end
 
     def click_process
+      warn 'click_process'
       warn self.attributes.to_s.yellow
       attr = self.attributes
       click = self.attributes["role"]
@@ -503,9 +504,12 @@ module Asciidoctor
         $latex_environment_names << click
       end
 
-      title = self.title.downcase
-      original_title = title.split(' ')[0].downcase
-      # FIXME: the above is  work-around: insted set
+      if title
+        title = self.title.downcase
+      end
+      
+      # original_title = title.split(' ')[0].downcase
+      # FIXME: the above is  work-around: instead set
       # originaltitle in clickblock
 
       if attr['options'] and attr['options'].include? 'plain'
@@ -515,9 +519,9 @@ module Asciidoctor
       end
 
       if attr['options'] and attr['options'].include? 'numbered'
-        env = original_title + '-click-numbered'
+        env = 'comment' # original_title + '-click-numbered'
       else
-        env = original_title + '-click'
+        env = 'comment*' # original_title + '-click'
       end
 
 

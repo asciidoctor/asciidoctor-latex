@@ -195,17 +195,9 @@ module Asciidoctor
       # "\\#{tagname}#{tagsuffix}\{#{self.title}\}\n\n#{self.content}\n\n"
 
       heading = "\\#{tagname}#{tagsuffix}\{#{self.title}\}"
-      part = self.content.split("\n")
-      if part[0] =~ /\A\\begin/
-        # the idea is not to put a hyperref if it will just link to a macro or environment start
-        value = value = "#{heading}\n#{self.content}"
-      else
-        hypertarget = $tex.hypertarget id, part[0]
-        value = "#{heading}\n#{hypertarget}\n#{self.content}"
-      end
-      warn value.red if $VERBOSE
-      # hypertarget = $tex.hypertarget id, self.content.split("\n")[0]
-      # "#{heading}\n#{hypertarget}\n#{self.content}"
+      heading = $tex.hypertarget id, heading
+      value = "#{heading}\n#{self.content}"
+      warn value.cyan if $VERBOSE
       value
     end
   end
@@ -457,14 +449,14 @@ module Asciidoctor
     end
 
     def handle_plain(env)
+      warn self.role.yellow
+      warn self.options.cyan
+      # content = $tex.hypertarget self.id, self.content.strip
+      content = self.content
       if self.attributes['plain-option']
         content = $tex.macro 'rm', self.content
-        $tex.env env, "#{env_title}#{label}#{content}\n"
-        # output = "\\begin\{#{env}\}#{title}#{label}\n#{self.content}\n\\end\{#{env}\}\n"
-      else
-        $tex.env env, "#{env_title}#{label}#{self.content}\n"
-        # output = "\\begin\{#{env}\}#{title}#{label}\\rm\n#{self.content}\n\\end\{#{env}\}\n"
       end
+      $tex.env env, "#{env_title}#{label}#{content}\n"
     end
 
  ####################################################################

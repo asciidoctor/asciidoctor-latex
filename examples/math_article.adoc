@@ -21,32 +21,32 @@
 \)
 ++++
 
-This "article" is a demonstration of how one can write 
-mathematics in Noteshare.  Use arbitrary LaTeX inside 
+This "article" is a demonstration of how one can write
+mathematics in Noteshare.  Use arbitrary LaTeX inside
 the traditional dollar sign, bracket delimiters, and a form
-of the LaTeX environment.  Equation 
-numbering and cross-referencing is supported, as is the numbered 
-theorem environment.footnote:[We are working on a prototype 
-asciidoctor-to-latex converter.  At the present moment it is 
+of the LaTeX environment.  Equation
+numbering and cross-referencing is supported, as is the numbered
+theorem environment.footnote:[We are working on a prototype
+asciidoctor-to-latex converter.  At the present moment it is
 adequate to convert this file into LaTeX.  Stay tuned!]
 
 [quote]
 --
-_Observe the footnote reference in the previous paragraph.  
-The footnote is *way*at the bottom.  However, you can click on 
-it it reference it._
+Observe the footnote reference in the previous paragraph.
+The footnote is *way*at the bottom.  However, you can click on
+it it reference it.
 --
 
 
 === Pythagorean triples
 
-One of the first real pieces of mathematics we 
+One of the first real pieces of mathematics we
 learn is this:
 
-[env.theorem#th-pyth] 
+[env.theorem#th-pyth]
 --
-_Let $a$, $b$, and $c$ be the sides of a right triangle, 
-where $c$ is the hypotenuse.  Then $a^2 + b^2 = c^2$._
+Let $a$, $b$, and $c$ be the sides of a right triangle,
+where $c$ is the hypotenuse.  Then $a^2 + b^2 = c^2$.
 --
 
 The Pythagorean theorem suggests an equation,
@@ -54,43 +54,43 @@ The Pythagorean theorem suggests an equation,
 --
    x^2 + y^2 = z^2
 --
-If we demand that the unknowns be integers, 
-then this is a _Diophantine equation_. We all 
-know one solution, to equation <<eq-pyth>>, the 
-3-4-5 triangle.  However, there are many 
-more,  in fact, infinitely many.  One 
-way of generating more solutions is to rescale existing ones.  
-Thus 6-8-10 is a solution. However, 
+If we demand that the unknowns be integers,
+then this is a _Diophantine equation_. We all
+know one solution, to equation <<eq-pyth>>, the
+3-4-5 triangle.  However, there are many
+more,  in fact, infinitely many.  One
+way of generating more solutions is to rescale existing ones.
+Thus 6-8-10 is a solution. However,
 what is  interesting is that there are infinitely
- many _dissimilar solutions_.  One is 5-12-13.  
-Quite remarkably, there is a clay tablet (Plympton 322) from 
-Mesopotamia, dated to about 1800 BC, that 
-contains a list of 15 such 
+ many _dissimilar solutions_.  One is 5-12-13.
+Quite remarkably, there is a clay tablet (Plympton 322) from
+Mesopotamia, dated to about 1800 BC, that
+contains a list of 15 such
 "Pythagorean triples."   See http://en.wikipedia.org/wiki/Plimpton_322[Wikipedia].
 
 It is unlikely
-that the Babylonian mathematicians, despite 
-their sophistication and skill, knew that 
+that the Babylonian mathematicians, despite
+their sophistication and skill, knew that
 equation <<eq-pyth>>
-has infinitely many solutions.  This fact is 
-equivalent to the statement that the unit circle 
-centered at the origin has infinitely many points 
+has infinitely many solutions.  This fact is
+equivalent to the statement that the unit circle
+centered at the origin has infinitely many points
 with rational coordinates.
 
-For more information on Pythagorean triplets, see 
+For more information on Pythagorean triplets, see
 http://en.wikipedia.org/wiki/Pythagorean_triple[Wikipedia].
 
 === Another result from ancient times
 
 [env.theorem#th-primes]
 --
-_There are infinitely many primes._
+There are infinitely many primes.
 --
 
 .Proof
 --
 Suppose that there are only finitely many primes, say
-$p_1, p_2, \ldots, p_N$.  Let 
+$p_1, p_2, \ldots, p_N$.  Let
 --
 
 [env.equation#eq-infprimes]
@@ -99,8 +99,8 @@ $p_1, p_2, \ldots, p_N$.  Let
 --
 
 This number is is greater than the greatest prime, $p_N$.
-Therefore it is composite, and therefore it is divisible 
-by $p_i$ for some $i$.  But the remainder of $Q$ upon 
+Therefore it is composite, and therefore it is divisible
+by $p_i$ for some $i$.  But the remainder of $Q$ upon
 division by $p_i$ is 1, a contradiction. *Q.E.D.*
 
 
@@ -109,10 +109,10 @@ division by $p_i$ is 1, a contradiction. *Q.E.D.*
 Let us consider <<th-pyth>> once again.  Pierre Fermat asked whether
 this family of Diophantine equations $x^d + y^d = z^d$, where
 parameter $d$ is greater than two, have any other than the obvious
-solutions, e.g., $x, y, z = 1, 0 ,1$ where one variable is zero.  
+solutions, e.g., $x, y, z = 1, 0 ,1$ where one variable is zero.
 Fermat conjectured that the answer
 was no, and he wrote in the margin of Diophantus' treatise that
-he had a marvelous proof of this fact, alas, too long to fit int he 
+he had a marvelous proof of this fact, alas, too long to fit int he
 space available.  More than 300 years later, Andrew Wiles, using
 techniques developed only in the twentieth century, gave a proof of
 the theorem of Fermat.
@@ -122,7 +122,7 @@ the theorem of Fermat.
 Georg Cantor introduced the notion of _set_, e.g.,
 [env.equation#eq-set-integers]
 --
- \NN = \set{ \text{integers} } 
+ \NN = \set{ \text{integers} }
          = \set{ 1, 2, 3, \ldots }
 --
 
@@ -130,9 +130,8 @@ Story to be continued  ...
 
 However, let's check that our cross-references work.  We learned
 about the Pythagorean formula <<eq-pyth>>,  and the
-number of solutions it has in <<th-pyth>>.  We also 
+number of solutions it has in <<th-pyth>>.  We also
 learned in  <<th-primes>> that prime numbers
 are quite abundant in Nature: there are infinitely many of them.
 Our last, incomplete section, featuring the set of integers <<eq-set-integers>>,
 is devoted to the work of Georg Cantor.
-

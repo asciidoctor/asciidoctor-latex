@@ -477,14 +477,14 @@ module Asciidoctor
           handle_chem
         when 'box'
           handle_box
-        when 'tex_macro'
-          handle_tex_macro
+        when 'texmacro'
+          handle_texmacro
         else
           handle_plain(env)
       end
     end
 
-    def handle_tex_macro
+    def handle_texmacro
       self.content
     end
 

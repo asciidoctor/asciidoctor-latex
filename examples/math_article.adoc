@@ -2,7 +2,7 @@
 :latex:
 
 
-[env.tex_macro]
+[env.texmacro]
 --
 %% Blackboard bold
 
@@ -51,13 +51,13 @@ where $c$ is the hypotenuse.  Then $a^2 + b^2 = c^2$.
 --
 
 The Pythagorean theorem suggests an equation,
-[env.equation#eq-pyth]
+[env.equation#eqpyth]
 --
    x^2 + y^2 = z^2
 --
 If we demand that the unknowns be integers,
 then this is a _Diophantine equation_. We all
-know one solution, to equation <<eq-pyth>>, the
+know one solution, to equation <<eqpyth>>, the
 3-4-5 triangle.  However, there are many
 more,  in fact, infinitely many.  One
 way of generating more solutions is to rescale existing ones.
@@ -72,7 +72,7 @@ contains a list of 15 such
 It is unlikely
 that the Babylonian mathematicians, despite
 their sophistication and skill, knew that
-equation <<eq-pyth>>
+equation <<eqpyth>>
 has infinitely many solutions.  This fact is
 equivalent to the statement that the unit circle
 centered at the origin has infinitely many points

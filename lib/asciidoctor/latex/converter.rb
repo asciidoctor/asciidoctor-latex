@@ -186,8 +186,8 @@ module Asciidoctor::LaTeX
           handle_chem(node)
         when 'jsxgraph'
           handle_jsxgraph(node)
-        when 'tex_macro'
-          handle_tex_macro(node)
+        when 'texmacro'
+          handle_texmacro(node)
         else
           handle_default(node)
       end
@@ -196,7 +196,7 @@ module Asciidoctor::LaTeX
       self.open node
     end
 
-    def handle_tex_macro node
+    def handle_texmacro node
       node.title = nil
       node.lines = ["+++\n\\("] + node.lines + ["\\)\n+++"]
     end

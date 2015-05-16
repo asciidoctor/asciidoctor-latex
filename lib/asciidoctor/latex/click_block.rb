@@ -36,8 +36,7 @@ module Asciidoctor::LaTeX
 
     def process parent, reader, attrs
 
-      click_name = attrs["role"]
-      original_title = attrs['title']
+      original_title = attrs["role"]
 
       # Ensure that role is defined
        original_role = attrs['role']
@@ -106,11 +105,17 @@ module Asciidoctor::LaTeX
       end
       attrs['role'] = 'click'
 
+      attrs['original_title'] = original_title
+
+      warn attrs.to_s.blue if $VERBOSE
+
       if role == 'listing'
-        create_block parent, :listing, reader.lines, attrs
+        block = create_block parent, :listing, reader.lines, attrs
       else
-        create_block parent, :click, reader.lines, attrs
+        block = create_block parent, :click, reader.lines, attrs
       end
+
+    block
 
     end
 

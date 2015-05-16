@@ -499,8 +499,9 @@ module Asciidoctor
     end
 
     def click_process
-      warn 'click_process'
-      warn self.attributes.to_s.yellow
+      warn 'click_process' if $VERBOSE
+      warn self.attributes.to_s.yellow if $VERBOSE
+      warn "role: #{self.role}" if $VERBOSE
       attr = self.attributes
       click = self.attributes["role"]
       # record any environ$ments encounted but not built=in
@@ -516,16 +517,17 @@ module Asciidoctor
       # FIXME: the above is  work-around: instead set
       # originaltitle in clickblock
 
-      if attr['options'] and attr['options'].include? 'plain'
+      if attr['plain-option']
         content = $tex.region 'rm', self.content
       else
-        content = self.content
+        content = $tex.region 'it', self.content
       end
 
+
       if attr['options'] and attr['options'].include? 'numbered'
-        env = 'comment' # original_title + '-click-numbered'
+        env = attr['original_title'].downcase
       else
-        env = 'comment*' # original_title + '-click'
+        env =  attr['original_title'].downcase+'*'
       end
 
 

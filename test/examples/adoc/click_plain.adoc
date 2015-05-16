@@ -1,3 +1,5 @@
+
+
 //.click-normal
 [click.remark]
 --
@@ -10,12 +12,11 @@ This is a normal remark.
 This is a plain remark.
 --
 
-//.click-no-number
+//.numbered
 [click.remark%numbered]
 --
 This is a numbered remark.
 --
-
 
 [click.remark%numbered]
 --

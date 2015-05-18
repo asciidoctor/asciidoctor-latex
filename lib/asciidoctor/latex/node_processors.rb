@@ -523,12 +523,19 @@ module Asciidoctor
         content = $tex.region 'it', self.content
       end
 
-
-      if attr['options'] and attr['options'].include? 'numbered'
-        env = attr['original_title'].downcase
+      # FIXME! This is a temporary hack.
+      # attr['original_title'] can be nil --
+      # it shouldn't be
+      if attr['original_title']
+        if attr['options'] and attr['options'].include? 'numbered'
+          env = attr['original_title'].downcase
+        else
+          env =  attr['original_title'].downcase+'*'
+        end
       else
-        env =  attr['original_title'].downcase+'*'
+        env = 'click'
       end
+
 
 
       if self.id == nil # No label

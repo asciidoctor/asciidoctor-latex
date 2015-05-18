@@ -1,51 +1,4 @@
 
-%% A minimal LaTeX preamble
-
-% \documentclass[11pt]{amsbook}
-\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
-\geometry{letterpaper}               % ... or a4paper or a5paper or ...
-%\geometry{landscape}                % Activate for for rotated page geometry
-%\usepackage[parfill]{parskip}       % Activate to begin paragraphs with an empty line rather than an indent
-\usepackage{graphicx}
-\graphicspath{images/}
-\usepackage{wrapfig}
-\usepackage{tcolorbox}
-\usepackage{lipsum}
-\usepackage{amssymb}
-\usepackage{epstopdf}
-\usepackage{color}
-\usepackage{alltt}
-\usepackage[version=3]{mhchem}
-\usepackage{amsmath}
-\usepackage{amsthm}
-%\usepackage{minipage}
-
-% Needed to properly typeset
-% standard unicode charaters:
-%
-\RequirePackage{fix-cm}
-\usepackage{fontspec}
-\usepackage[Latin,Greek]{ucharclasses}
-%
-% NOTE: you must also use xelatex
-% as the typesetting engine
-
-
-% \usepackage{fontspec}
-%\usepackage{polyglossia}
-%\setmainlanguage{en}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=cyan,
-}
-
-\DeclareGraphicsExtensions{.png, .jpg, jpeg, .pdf}
-
-%% \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
-
 
 % \pagecolor{black}
 %%%%%%%%%%%%
@@ -123,10 +76,6 @@
   {\wrapfigure{#1}{0.5\textwidth}\tcolorbox}
   {\endtcolorbox\endwrapfigure}
 
-%% Style
-\parindent0pt
-\parskip8pt
-
 
 %%%%%%%%%%
 
@@ -151,3 +100,9 @@
   {}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Style
+
+\parindent0pt
+\parskip8pt

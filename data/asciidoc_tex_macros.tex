@@ -7,7 +7,7 @@
 %\geometry{landscape}                % Activate for for rotated page geometry
 %\usepackage[parfill]{parskip}       % Activate to begin paragraphs with an empty line rather than an indent
 \usepackage{graphicx}
-\graphicspath{ {images/} }
+\graphicspath{images/}
 \usepackage{wrapfig}
 \usepackage{tcolorbox}
 \usepackage{lipsum}
@@ -42,7 +42,7 @@
     urlcolor=cyan,
 }
 
-\DeclareGraphicsExtensions{.png, .jpg, jpeg, .pdf}
+\DeclareGraphicsExtensions{.png, .jpg, jpeg, .gif, .pdf}
 
 %% \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
@@ -66,7 +66,6 @@
 \newtheorem{problem}{Problem}
 \newtheorem{exercise}{Exercise}
 \newtheorem{example}{Example}
-\newtheorem{exercise}{Exercise}
 \newtheorem{note}{Note}
 \newtheorem{joke}{Joke}
 \newtheorem{objection}{Objection}
@@ -106,10 +105,6 @@
 \newenvironment{titledasciidocbox}[1]
   {\leftskip6em\rightskip6em\par{\bf #1}\vskip-0.6em\par}
   {\par}
-
-\newenvironment{foo}[2]
- {{\bf #1}:{\bf #2}\\ }
- {\it }
 
 
 

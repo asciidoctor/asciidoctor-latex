@@ -40,12 +40,23 @@ module Asciidoctor::LaTeX
         if line.include? '<-' and document.basebackend? 'tex'
           line = line.gsub('<-', 'CHEMLEFTARROW')
         end
-        if line.include? '\$' and document.basebackend? 'html'
-          line = line.gsub '\$', 'DOLLOD'
+
+        # SPECIAL CHARACTER SUBSTITUTIONS
+        if line.include? '\&' and document.basebackend? 'html'
+          line = line.gsub '\&', 'ESCAMPERSAND'
         end
+        if line.include? '\_' and document.basebackend? 'html'
+          line = line.gsub '\_', 'ESCUNDERSCORE'
+        end
+        if line.include? '\$' and document.basebackend? 'html'
+          line = line.gsub '\$', 'ESCDOLLAR'
+        end
+        # It is important the previous transformation
+        # come before the next one
         if line.include? '$'
           line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB2
         end
+
         # protect math, e.g., (a^2)^3 from Asciidoc subsitutions:
         if line =~ /^\\\[/
           line = line.gsub /^\\\[/, '+\\['

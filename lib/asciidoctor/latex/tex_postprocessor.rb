@@ -21,7 +21,9 @@ module Asciidoctor::LaTeX
   class TexPostprocessor < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
-      output = output.gsub('DOLLOD', '\$')
+      output = output.gsub('ESCAMPERSAND', '\&')
+      output = output.gsub('ESCUNDERSCORE', '\_')
+      output = output.gsub('ESCDOLLAR', '\$')
       output = output.gsub('CHEMRIGHTARROW','->').gsub('CHEMLEFTARROW','<-').gsub('CHEMLEFTRIGHTARROW','<-->')
       output = output.gsub('\\(','$').gsub('\\)','$')
       output.gsub('!!!BACKSLASH', '\\')
@@ -32,12 +34,14 @@ module Asciidoctor::LaTeX
   class HTMLPostprocessor < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
+      output = output.gsub('ESCAMPERSAND', '&')
+      output = output.gsub('ESCUNDERSCORE', '_')
+      output = output.gsub('ESCDOLLAR', '$')
       output = output.gsub('\DOLLOD', '\$')
       # match_data = output.match /%%(.*)%%/
       # if match_data
       #  output = output.gsub(match_data[0], match_data[1])
       # end
-      output = output.gsub('DOLLOD', '$')
       output = output.gsub('!!!BACKSLASH', '\\')
       # output.gsub('%', '\%')  This messes up the html bigtimw
     end

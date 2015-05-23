@@ -311,13 +311,16 @@ module Asciidoctor::LaTeX
       # line_array += ['<div id="box" class="jxgbox" style="width:500px; height:500px;"></div>']
       line_array += ["<div id='#{attrs['box']}' class='jxgbox' style='width:" + "#{attrs['width']}" + "px; height:" + "#{attrs['height']}" +"px;'></div>"]
       line_array += ['<script type="text/javascript">']
-
+      
       line_array += node.lines
       line_array += ['</script>']
       line_array += ['<br/>']
       line_array += ["\n+++\n"]
       node.lines = line_array
     end
+
+
+
 
     def handle_null(node)
 

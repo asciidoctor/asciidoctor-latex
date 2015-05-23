@@ -42,14 +42,14 @@ module Asciidoctor::LaTeX
         end
 
         # SPECIAL CHARACTER SUBSTITUTIONS
-        if line.include? '\&' and document.basebackend? 'html'
-          line = line.gsub '\&', 'ESCAMPERSAND'
+        if line.include? '\\&' and document.basebackend? 'html'
+          line = line.gsub '\\&', 'ESCAMPERSAND'
         end
-        if line.include? '\_' and document.basebackend? 'html'
-          line = line.gsub '\_', 'ESCUNDERSCORE'
+        if line.include? '\\_' and document.basebackend? 'html'
+          line = line.gsub '\\_', 'ESCUNDERSCORE'
         end
-        if line.include? '\$' and document.basebackend? 'html'
-          line = line.gsub '\$', 'ESCDOLLAR'
+        if line.include? '\\' and document.basebackend? 'html'
+          line = line.gsub '\\$', 'ESCDOLLAR'
         end
         # It is important the previous transformation
         # come before the next one
@@ -71,7 +71,7 @@ module Asciidoctor::LaTeX
         # if line =~ /\&/
         #  line = line.gsub('&', '\\\&')
         # end
-        # We do need to make this substition, but ONLY oustside
+        # We do need to make this substitution, but ONLY ouutside
         # of mathematical text.
         # Please $FIXME!
         #

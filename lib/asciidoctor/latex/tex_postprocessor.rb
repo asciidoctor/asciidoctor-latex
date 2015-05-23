@@ -21,9 +21,9 @@ module Asciidoctor::LaTeX
   class TexPostprocessor < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
-      output = output.gsub('ESCAMPERSAND', '\&')
-      output = output.gsub('ESCUNDERSCORE', '\_')
-      output = output.gsub('ESCDOLLAR', '\$')
+      output = output.gsub('ESCAMPERSAND', '\\&')
+      output = output.gsub('ESCUNDERSCORE', '\\_')
+      output = output.gsub('ESCDOLLAR', '\\$')
       output = output.gsub('CHEMRIGHTARROW','->').gsub('CHEMLEFTARROW','<-').gsub('CHEMLEFTRIGHTARROW','<-->')
       output = output.gsub('\\(','$').gsub('\\)','$')
       output.gsub('!!!BACKSLASH', '\\')

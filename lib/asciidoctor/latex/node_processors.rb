@@ -753,8 +753,7 @@ module Asciidoctor
       # warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
       case self.type
         when :strong
-          #"\\textbf\{#{self.text}\}"
-          self.text
+          "\\textbf\{#{self.text}\}"
         when :emphasis
           "\\emph\{#{self.text}\}"
         when :asciimath

@@ -427,12 +427,17 @@ module Asciidoctor
 
     def handle_plain(env)
 
-      content = $tex.hypertarget self.id, self.content
+      if self.id and self.title
+        _title = $tex.hypertarget self.id, self.env_title
+      else
+        _title = self.env_title
+      end
 
       if self.attributes['plain-option']
-        content = $tex.macro 'rm', self.content
+        content = $tex.region 'rm', self.content
       end
-      $tex.env env, "#{env_title}#{label}#{content}\n"
+
+      $tex.env env, "#{_title}#{label}#{content}\n"
     end
 
  ####################################################################

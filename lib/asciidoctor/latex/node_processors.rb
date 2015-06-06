@@ -435,6 +435,8 @@ module Asciidoctor
 
       if self.attributes['plain-option']
         content = $tex.region 'rm', self.content
+      else
+        content = self.content
       end
 
       $tex.env env, "#{_title}#{label}#{content}\n"

@@ -104,17 +104,13 @@ module Asciidoctor
 
 
     def tex_process
-      # warn "Node: #{self.class}".blue if $VERBOSE
 
       doc = ''
-
-      # # warn "document.attributes['header'] = #{document.attributes['header']}".magenta if $VERBOSE
 
       unless embedded? or document.attributes['header']=='no'
         doc << "%% Preamble %%\n"
         if File.exist? 'preamble.tex'
           preamble = IO.read('preamble.tex')
-          # warn "preamble: #{preamble.length} chars".yellow
           doc << preamble << "\n "
         else
           doc << File.open(File.join(LaTeX::DATA_DIR, "preamble_#{self.document.doctype}.tex"), 'r') { |f| f.read }
@@ -125,13 +121,11 @@ module Asciidoctor
         # doc << File.open(File.join(LaTeX::DATA_DIR, 'macros.tex'), 'r') { |f| f.read }
         if File.exist? 'macros.tex'
           macros = IO.read('macros.tex')
-          # warn "macros: #{macros.length} chars".yellow
           doc << macros
         else
           # warn "Could not find file macros.tex".yellow
         end
         if File.exist?('myEnvironments.tex')
-          # warn "I will take input from myEnvironments.tex".blue
           doc << "\\input myEnvironments.tex\n"
         else
           # warn "I will take input from newEnvironments.tex".blue
@@ -159,11 +153,9 @@ module Asciidoctor
       unless embedded?
         # Now write the defnitions of the new environments
         # discovered to file
-        # warn "Writing environment definitions to file: newEnvironments.tex" if $VERBOSE
         definitions = ""
 
         $latex_environment_names.uniq.each do |name|
-          # warn name if $VERBOSE
           definitions << "\\newtheorem\{#{name}\}\{#{name.capitalize}\}" << "\n"
         end
 
@@ -182,7 +174,6 @@ module Asciidoctor
   class Section
 
     def tex_process
-      # warn ["Node:".blue, "section[#{self.level}]:".cyan, "#{self.title}"].join(" ") if $VERBOSE
       doctype = self.document.doctype
 
       tags = { 'article' => [ 'part',  'section', 'subsection', 'subsubsection', 'paragraph' ],
@@ -194,7 +185,6 @@ module Asciidoctor
       heading = "\\#{tagname}#{tagsuffix}\{#{self.title}\}"
       heading = $tex.hypertarget id, heading
       value = "#{heading}\n#{self.content}"
-      warn value.cyan if $VERBOSE
       value
     end
   end
@@ -206,7 +196,6 @@ module Asciidoctor
   class List
 
     def tex_process
-      warn ["Node:".blue, "#{self.node_name}[#{self.level}]".cyan, "#{self.content.count} items"].join(" ") if $VERBOSE
       case self.node_name
       when 'dlist'
         dlist_process
@@ -239,7 +228,6 @@ module Asciidoctor
     def ulist_process
       list = "\\begin{itemize}\n\n"
       self.content.each do |item|
-        # warn ["  --  item: ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
         list << "\\item #{item.text}\n\n"
         list << item.content
       end
@@ -249,9 +237,6 @@ module Asciidoctor
     def olist_process
       list = "\\begin{enumerate}\n\n"
       self.content.each do |item|
-        warn "olist_process: #{item.to_s}".cyan if $VERBOSE
-        # warn ["  --  item:  ".blue, "#{item.text.split("\n").first}"].join(" ") if $VERBOSE
-        # list << "\\item #{item.text}\n\n"
         list << item.text.macro('item') << "\n\n"
         list << item.content
       end
@@ -267,7 +252,6 @@ module Asciidoctor
     STANDARD_ENVIRONMENT_NAMES = %w(equation)
 
     def tex_process
-      # warn ["Node:".blue , "#{self.blockname}".blue].join(" ") if $VERBOSE
       case self.blockname
       when :paragraph
         paragraph_process
@@ -335,8 +319,6 @@ module Asciidoctor
     end
 
     def stem_process
-      warn "stemblock: self.content = #{self.content}" if $VERBOSE
-      report
       environment = LaTeX::TeXBlock.environment_type self.content
       if LaTeX::TeXBlock::INNER_TYPES.include? environment
         "\\\[\n#{LaTeX::TeXPostProcess.stem_substitutions self.content}\n\\\]\n"
@@ -354,7 +336,6 @@ module Asciidoctor
     end
 
     def literal_process
-      warn "literal_process, attributes = #{self.attributes}".yellow if $VERBOSE
       heading = ''
       if id and self.title
         heading = $tex.hypertarget id, self.title
@@ -417,7 +398,6 @@ module Asciidoctor
  ####################################################################
 
     def handle_listing
-      warn "Listing".yellow if $VERBOSE
       content = $tex.env 'verbatim', self.content
       $tex.env env, label, content
     end
@@ -489,8 +469,6 @@ module Asciidoctor
     end
 
     def handle_box
-      # titledasciidocbox
-      warn "attributes: #{self.attributes}".yellow if $VERBOSE
       if self.title.nil? or self.title == ''
         $tex.env 'asciidocbox', self.content
       else
@@ -499,9 +477,6 @@ module Asciidoctor
     end
 
     def click_process
-      warn 'click_process' if $VERBOSE
-      warn self.attributes.to_s.yellow if $VERBOSE
-      warn "role: #{self.role}" if $VERBOSE
       attr = self.attributes
       click = self.attributes["role"]
       # record any environ$ments encounted but not built=in
@@ -583,8 +558,6 @@ module Asciidoctor
     #
     def open_process
 
-      report if $VERBOSE
-
       attr = self.attributes
 
       # Get title !- nil or make a dummy one
@@ -606,15 +579,10 @@ module Asciidoctor
     end
 
     def listing_process
-      # warn ["Node:".magenta, "#{self.blockname}".cyan].join(" ") if $VERBOSE
-      # warn "attributes: #{self.attributes}".cyan if $VERBOSE
       "\\begin\{verbatim\}\n#{self.content}\n\\end\{verbatim\}\n"
     end
 
     def example_process
-      warn "example_process, title: #{self.title}".yellow
-      warn "id: #{self.attributes['id']}".blue
-      warn "role: #{self.attributes['role']}".blue
       id = self.attributes['id']
       if self.title
         heading = $tex.region 'bf', self.title
@@ -642,8 +610,6 @@ module Asciidoctor
     end
 
     def image_process
-
-      warn "image_proces, attributes = #{self.attributes}".yellow
       if self.attributes['width']
         width = "#{self.attributes['width'].to_f/100.0}truein"
       else
@@ -651,12 +617,10 @@ module Asciidoctor
       end
       raw_image = self.attributes['target']
       if document.attributes['noteshare'] == 'yes'
-        warn "IXX: extracting image name".red if $VERBOSE
         image_rx = /image.*original\/(.*)\?/
         match_data = raw_image.match image_rx
         if match_data
           image = match_data[1]
-          warn "IXX: image name: #{image}".red if $VERBOSE
         else
           image = "undefined"
         end
@@ -691,7 +655,6 @@ module Asciidoctor
       else
         position = '[h]'
       end
-      warn "caption = #{caption}".blue if $VERBOSE
       # pos_option = "#{figure_type}}#{position}"
       # incl_graphics = $tex.macro_opt, "width=#{width}", image
       # $tex.env figure_type, "#{pos_option}\{#{ftext_width}\}", incl_graphics,
@@ -744,13 +707,11 @@ module Asciidoctor
       when 'inline_callout'
         self.inline_callout_process
       else
-        # warn "This is Asciidoctor::Inline, tex_process.  I don't know how to do that (#{self.node_name})".yellow if $VERBOSE
         ""
       end
     end
 
     def inline_quoted_process
-      # warn ["Node:".blue, "#{self.node_name}".cyan,  "type[#{self.type}], ".green + " text: #{self.text}"].join(" ") if $VERBOSE
       case self.type
         when :strong
           #"\\textbf\{#{self.text}\}"
@@ -758,19 +719,13 @@ module Asciidoctor
         when :emphasis
           "\\emph\{#{self.text}\}"
         when :asciimath
-          warn "asciimath: #{self.text}".yellow if $VERBOSE
           output = Asciidoctor.convert( self.text, backend: 'html')
-          warn "Converted input: #{output}".blue
           output
-          #"\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\)"
-          # self.text
         when :monospaced
           "\{\\tt #{self.text}\}"
         when :superscript
-          # warn "SUPER: #{self.attributes}"
           "$\{\}^{#{self.text}}$"
         when :subscript
-          # warn "SUB: #{self.attributes}"
           "$\{\}_{#{self.text}}$"
         when :mark
           "\\colorbox\{yellow\}\{ #{self.text}\}"
@@ -779,14 +734,11 @@ module Asciidoctor
         when :single
           "`#{self.text}'"
         when :latexmath
-          warn "latexmath for latex backend is not currently supported.".yellow if $VERBOSE
-          warn "-- latexmath input: #{self.text}".blue if $VERBOSE
            "\\(#{LaTeX::TeXPostProcess.stem_substitutions self.text}\\)"
           # output = Asciidoctor.convert self.text, {stem: 'asciimath', backend: 'html'}
           self.text
         when :unquoted
           role = self.attributes["role"]
-          # warn "  --  role = #{role}".yellow if $VERBOSE
           if role == "red"
             "\\rolered\{ #{self.text}\}"
           elsif role == "blue"
@@ -800,8 +752,6 @@ module Asciidoctor
     end
 
     def inline_anchor_process
-
-      # warn ["Node:".blue, "#{self.node_name}".magenta,  "type[#{self.type}], ".green + " text: #{self.text} target: #{self.target}".cyan].join(" ") if $VERBOSE
 
       refid = self.attributes['refid']
       refs = self.parent.document.references[:ids]

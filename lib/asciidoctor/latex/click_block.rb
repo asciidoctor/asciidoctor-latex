@@ -107,8 +107,6 @@ module Asciidoctor::LaTeX
 
       attrs['original_title'] = original_title
 
-      warn attrs.to_s.blue if $VERBOSE
-
       if role == 'listing'
         block = create_block parent, :listing, reader.lines, attrs
       else

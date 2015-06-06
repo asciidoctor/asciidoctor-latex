@@ -105,8 +105,6 @@ module Asciidoctor::LaTeX
         role = attrs['role']
       end
 
-      warn "env: role = #{role}".yellow if $VERBOSE
-
       # fixme: this should not be necessary
       if attrs['role'] =~ /\\/
         attrs['role'] = attrs['role'].gsub(/\\/, '')

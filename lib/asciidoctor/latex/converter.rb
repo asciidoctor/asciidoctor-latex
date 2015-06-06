@@ -251,7 +251,6 @@ module Asciidoctor::LaTeX
       attrs = node.attributes
       options = attrs['options']
       node.title = nil
-      warn "node.attributes (EQUATION): #{node.attributes}".cyan if $VERBOSE
       number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
       number_part = ["+++ #{number_part} +++"]
       equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
@@ -267,7 +266,6 @@ module Asciidoctor::LaTeX
     def handle_equation_align(node)
       attrs = node.attributes
       options = attrs['options']
-      warn "node.attributes (EQUATION ALIGN): #{node.attributes}".cyan if $VERBOSE
       node.title = nil
       number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
       number_part = ["+++ #{number_part} +++"]
@@ -311,7 +309,7 @@ module Asciidoctor::LaTeX
       # line_array += ['<div id="box" class="jxgbox" style="width:500px; height:500px;"></div>']
       line_array += ["<div id='#{attrs['box']}' class='jxgbox' style='width:" + "#{attrs['width']}" + "px; height:" + "#{attrs['height']}" +"px;'></div>"]
       line_array += ['<script type="text/javascript">']
-      
+
       line_array += node.lines
       line_array += ['</script>']
       line_array += ['<br/>']

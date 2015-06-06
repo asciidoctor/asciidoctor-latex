@@ -23,9 +23,7 @@ module Asciidoctor::LaTeX
     # TEX_DOLLAR_SUB = '\1\\\(\2\\\)\3'
 
     TEX_DOLLAR_RX = /\$(.*?)\$/
-    TEX_DOLLAR_SUB = '\\\(\1\\\)'
-    TEX_DOLLAR_SUB2 = '+\\\(\1\\\)+'
-    TEX_DOLLAR_SUB3 = 'pass:[\\\(\1\\\)]'
+    TEX_DOLLAR_SUB = 'pass:[\\\(\1\\\)]'
 
 
     def process document, reader
@@ -55,15 +53,19 @@ module Asciidoctor::LaTeX
         # It is important the previous transformation
         # come before the next one
         if line.include? '$'
-          line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB3
+          line = line.gsub TEX_DOLLAR_RX, TEX_DOLLAR_SUB
         end
 
         # protect math, e.g., (a^2)^3 from Asciidoc subsitutions:
         if line =~ /^\\\[/
-          line = line.gsub /^\\\[/, '+\\['
+          line = line.gsub '\\[', "+++\n\\["
+          # line = line.gsub /^\\\[/, '+\\]'
+          # line = line.gsub '\\[', '\\['
         end
         if line =~ /^\\\]/
-          line = line.gsub /^\\\]/, '\\]+'
+          line = line.gsub '\\]', "\\]\n+++\n"
+          # line = line.gsub /'^\\\]/, '\\]+'
+          # line = line.gsub '\\]', '\\]+'
         end
         # if line =~ /\[env\..*?\]/
         #  m = line.match /(\[env\..*?)\]/

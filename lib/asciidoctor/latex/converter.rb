@@ -173,11 +173,17 @@ module Asciidoctor::LaTeX
     # based on its role.
     def environment node
 
+      warn "entering environment(node)".red if $VERBOSE
+
       attrs = node.attributes
+
+      warn "attrs['role'] = #{attrs['role']}".blue if $VERBOSE
 
       case attrs['role']
         when 'box'
           handle_null(node)
+        when 'code'
+          handle_code(node)
         when 'equation'
           handle_equation(node)
         when 'equationalign'
@@ -322,6 +328,14 @@ module Asciidoctor::LaTeX
 
     def handle_null(node)
 
+    end
+
+    def handle_code(node)
+      warn "handle code".red  if $VERBOSE
+      if node.attributes['id'].nil?
+        node.title = 'FOO'
+        node.caption = '666'
+      end
     end
 
     def handle_default(node)

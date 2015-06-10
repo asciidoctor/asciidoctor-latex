@@ -130,7 +130,12 @@ module Asciidoctor::LaTeX
       if %w(equation equationalign chem).include? role
         attrs['title'] = env_name
       elsif role == 'code'
-        attrs['title'] = 'Listing'
+        if attrs['id'] or attrs['title']
+          attrs['title'] = 'Listing'
+        else
+          attrs['title'] = ''
+          attrs['options'] = 'no_number'
+        end
       elsif role == 'jsxgraph'
         attrs['title'] = 'JSXGraph'
       elsif role == 'box'
@@ -143,6 +148,7 @@ module Asciidoctor::LaTeX
 
       # Creat the block
       if attrs['role'] == 'code'
+        warn "for rode = code, attrs = #{attrs}".cyan
         block = create_block parent, :listing, reader.lines, attrs
       else
         block = create_block parent, :environment, reader.lines, attrs
@@ -198,8 +204,6 @@ module Asciidoctor::LaTeX
       block.assign_caption caption
       if %w(equation equationalign chem).include? role
         block.title = "#{caption_num}"
-      elsif %w(box).include? role
-          block.title =  attrs['title']
       else
         block.title = attrs['title']
       end

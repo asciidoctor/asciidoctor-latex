@@ -721,8 +721,7 @@ module Asciidoctor
     def inline_quoted_process
       case self.type
         when :strong
-          #"\\textbf\{#{self.text}\}"
-          self.text
+          "\\textbf\{#{self.text}\}"
         when :emphasis
           "\\emph\{#{self.text}\}"
         when :asciimath

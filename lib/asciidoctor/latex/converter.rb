@@ -276,7 +276,7 @@ module Asciidoctor::LaTeX
       number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
       number_part = ["+++ #{number_part} +++"]
       equation_part = ['+++<td style="width:100%";>+++'] + ['\\[\\begin{split}'] + node.lines + ['\\end{split}\\]'] + ['+++</td>+++']
-      table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
+      table_style='style="width:100%; border-collapse:collapse;border:0;"  class="zero" '
       row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
       if options.include? 'numbered'
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]

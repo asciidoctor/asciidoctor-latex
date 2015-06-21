@@ -114,7 +114,7 @@ module Asciidoctor::LaTeX
       # Use the option set if present (numbered, no+_number) otherwise
       # use a default value, e.g. 'box' is not numbered, the others are numbered
       if !(attrs['options'] =~ /no_number|numbered/)
-        if %w(box equation equationalign).include? role
+        if %w(capsule box equation equationalign).include? role
           attrs['options'] = 'no_number'
         else
           attrs['options'] = 'numbered'
@@ -138,7 +138,7 @@ module Asciidoctor::LaTeX
         end
       elsif role == 'jsxgraph'
         attrs['title'] = 'JSXGraph'
-      elsif role == 'box'
+      elsif role == 'box'or role == 'capsule'
         attrs['title'] = ''
       else
         attrs['title'] = env_name.capitalize

@@ -180,7 +180,7 @@ module Asciidoctor::LaTeX
       warn "attrs['role'] = #{attrs['role']}".blue if $VERBOSE
 
       case attrs['role']
-        when 'box'
+        when 'box', 'capsule'
           handle_null(node)
         when 'code'
           handle_code(node)

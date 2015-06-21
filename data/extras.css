@@ -3,5 +3,11 @@
     margin-bottom: 1em;
     margin-left:3em;
     margin-right:4em;
+    background-color: #aaa;
 }
 
+.openblock.capsule.content {
+    margin-bottom:2em;
+    font-style:italic;
+    font-size:0.85em;
+}

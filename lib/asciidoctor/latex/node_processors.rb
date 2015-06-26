@@ -728,7 +728,7 @@ module Asciidoctor
           output = Asciidoctor.convert( self.text, backend: 'html')
           output
         when :monospaced
-          "\{\\tt #{self.text}\}"
+          "\\textt\{ #{self.text}\}"
         when :superscript
           "$\{\}^{#{self.text}}$"
         when :subscript

@@ -719,7 +719,7 @@ module Asciidoctor
     end
 
     def inline_quoted_process
-      warn "inline_quoted_process: #{self.type}"  if $VERBOSE
+      warn "THIS IS: inline_quoted_process: #{self.type}"  if $VERBOSE
       case self.type
         when :strong
           "\\textbf\{#{self.text}\}"

@@ -343,7 +343,7 @@ module Asciidoctor::LaTeX
     end
 
   end
-
+  # END OF Html5ConverterExtensions
 
   class Converter
     include Asciidoctor::Converter
@@ -410,5 +410,10 @@ end # module Asciidoctor::LaTeX
 
 class Asciidoctor::Converter::Html5Converter
   # inject our custom code into the existing Html5Converter class (Ruby 2.0 and above)
-  prepend Asciidoctor::LaTeX::Html5ConverterExtensions
+  if respond_to? :prepend
+    prepend Asciidoctor::LaTeX::Html5ConverterExtensions
+  else
+    include Asciidoctor::LaTeX::Html5ConverterExtensions
+  end
+  # include Asciidoctor::LaTeX::Html5ConverterExtensions
 end

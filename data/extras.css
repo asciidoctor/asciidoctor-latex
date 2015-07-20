@@ -12,3 +12,28 @@
     font-style:italic;
     font-size:0.85em;
 }
+
+.chem_row_style {
+
+    border-collapse: collapse;
+    border:0;
+    font-size: 10pt;
+}
+
+.chem_table_style {
+
+    width:100%;
+    border-collapse:collapse;
+    border:0
+}
+
+.chem_number_part {
+
+    text-align:right;
+}
+
+.chem_content_part {
+
+    width:100%;
+
+}

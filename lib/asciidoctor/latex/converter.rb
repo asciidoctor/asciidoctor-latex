@@ -289,11 +289,11 @@ module Asciidoctor::LaTeX
 
     def handle_chem(node)
       node.title = nil
-      number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
+      number_part = '<td class="chem_number_part">' + "(#{node.caption}) </td>"
       number_part = ["+++ #{number_part} +++"]
-      equation_part = ['+++<td style="width:100%;">+++'] + [' \\[\\ce{' + node.lines[0] + '}\\] '] + ['+++</td>+++']
-      table_style='class="zero" style="width:100%; border-collapse:collapse; border:0"'
-      row_style='class="zero" style="border-collapse: collapse; border:0; font-size: 10pt; "'
+      equation_part = ['+++<td class="chem_content_part">+++'] + [' \\[\\ce{' + node.lines[0] + '}\\] '] + ['+++</td>+++']
+      table_style='class="chem_table_style"'
+      row_style='class="chem_row_style"'
       node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"]  + equation_part + number_part +['+++</tr></table>+++']
     end
 

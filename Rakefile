@@ -38,12 +38,13 @@ begin
   task :default => :test
 
   namespace :generate do
+=begin
     DocTest::GeneratorTask.new(:latex) do |t|
       t.converter_opts[:backend_name] = :latex
       t.output_suite = DocTest::Latex::ExamplesSuite.new(examples_path: 'test/examples/tex')
       t.examples_path.unshift 'test/examples/adoc'  # extra input examples
     end
-
+=end
     DocTest::GeneratorTask.new(:html) do |t|
       t.converter_opts[:backend_name] = :html
       t.output_suite = DocTest::HTML::ExamplesSuite.new(examples_path: 'test/examples/html')

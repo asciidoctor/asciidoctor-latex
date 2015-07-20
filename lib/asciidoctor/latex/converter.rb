@@ -155,12 +155,8 @@ module Asciidoctor::LaTeX
   # template by @mojavelinux
   module Html5ConverterExtensions
 
-
-    # ENV_CSS_OBLIQUE = "+++<div class='env_oblique'>+++"
-    # ENV_CSS_NOBLIQUE = "+++<div class='env_noblique'>+++"
-
-    ENV_CSS_OBLIQUE = "+++<div style='line-height:1.5em;font-size:1.05em;font-style:oblique;margin-bottom:1.5em'>+++"
-    ENV_CSS_PLAIN = "+++<div style='line-height:1.5em;font-size:1.05em;;margin-bottom:1.5em'>+++"
+    ENV_CSS_OBLIQUE = "+++<div class='click_oblique'>+++"
+    ENV_CSS_PLAIN = "+++<div class='click_plain'>+++"
 
     DIV_END = '+++</div>+++'
     TABLE_ROW_END = '+++</tr></table>+++'
@@ -215,7 +211,6 @@ module Asciidoctor::LaTeX
       else
         node.lines = [ENV_CSS_OBLIQUE] + node.lines + [DIV_END]
       end
-      # node.lines = [ENV_CSS] + node.lines + [DIV_END]
       node.attributes['roles'] = (node.roles + ['click']) * ' '
       self.open node
     end
@@ -235,13 +230,13 @@ module Asciidoctor::LaTeX
             reftext = refs[refid].gsub('.', '')
             reftext = reftext.gsub(/:.*/,'')
             if refid =~ /\Aeq-/
-              output = "<span><a href=\##{refid}>equation #{reftext}</a></span>"
+              output = "<span class='xref'><a href=\##{refid}>equation #{reftext}</a></span>"
             elsif refid =~ /\Aformula-/
-              output = "<span><a href=\##{refid}>formula #{reftext}</a></span>"
+              output = "<span class='xref'><a href=\##{refid}>formula #{reftext}</a></span>"
             elsif refid =~ /\Areaction-/
-              output = "<span><a href=\##{refid}>reaction #{reftext}</a></span>"
+              output = "<span class='xref'><a href=\##{refid}>reaction #{reftext}</a></span>"
             else
-              output = "<span><a href=\##{refid} style='text-decoration:none'>#{reftext}</a></span>"
+              output = "<span class='xref'><a href=\##{refid}>#{reftext}</a></span>"
             end
           else
             output = 'ERROR: refs[refid] was nil'
@@ -259,11 +254,11 @@ module Asciidoctor::LaTeX
       attrs = node.attributes
       options = attrs['options']
       node.title = nil
-      number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
+      number_part = '<td class="equation_number_style">' + "(#{node.caption}) </td>"
       number_part = ["+++ #{number_part} +++"]
-      equation_part = ['+++<td style="width:100%";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
-      table_style='style="width:100%; border-collapse:collapse;border:0"  class="zero" '
-      row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
+      equation_part = ['+++<td class="equation_content_style";>+++'] + ['\\['] + node.lines + ['\\]'] + ['+++</td>+++']
+      table_style='class="equation_table_style"'
+      row_style='class="equation_row_style"'
       if options.include? 'numbered'
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
       else
@@ -275,11 +270,11 @@ module Asciidoctor::LaTeX
       attrs = node.attributes
       options = attrs['options']
       node.title = nil
-      number_part = '<td style="text-align:right">' + "(#{node.caption}) </td>"
+      number_part = '<td class="equation_number_style">' + "(#{node.caption}) </td>"
       number_part = ["+++ #{number_part} +++"]
-      equation_part = ['+++<td style="width:100%";>+++'] + ['\\[\\begin{split}'] + node.lines + ['\\end{split}\\]'] + ['+++</td>+++']
-      table_style='style="width:100%; border-collapse:collapse;border:0;"  class="zero" '
-      row_style='style="border-collapse: collapse; border:0; font-size: 12pt; "'
+      equation_part = ['+++<td class="equation_content_style";>+++'] + ['\\[\\begin{split}'] + node.lines + ['\\end{split}\\]'] + ['+++</td>+++']
+      table_style='class="equation_table_style" '
+      row_style='class="equation_row_style"'
       if options.include? 'numbered'
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
       else
@@ -289,11 +284,11 @@ module Asciidoctor::LaTeX
 
     def handle_chem(node)
       node.title = nil
-      number_part = '<td class="chem_number_part">' + "(#{node.caption}) </td>"
+      number_part = '<td class="equation_number_style">' + "(#{node.caption}) </td>"
       number_part = ["+++ #{number_part} +++"]
-      equation_part = ['+++<td class="chem_content_part">+++'] + [' \\[\\ce{' + node.lines[0] + '}\\] '] + ['+++</td>+++']
-      table_style='class="chem_table_style"'
-      row_style='class="chem_row_style"'
+      equation_part = ['+++<td class="equation_content_style">+++'] + [' \\[\\ce{' + node.lines[0] + '}\\] '] + ['+++</td>+++']
+      table_style='class="equation_table_style"'
+      row_style='class="equation_row_style"'
       node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"]  + equation_part + number_part +['+++</tr></table>+++']
     end
 
@@ -314,7 +309,6 @@ module Asciidoctor::LaTeX
       line_array += ["<link rel='stylesheet' type='text/css'  href='http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css' />"]
       line_array += ['<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>']
       line_array += ["<script src='http://jsxgraph.uni-bayreuth.de/distrib/GeonextReader.js' type='text/javascript'></script>"]
-      # line_array += ['<div id="box" class="jxgbox" style="width:500px; height:500px;"></div>']
       line_array += ["<div id='#{attrs['box']}' class='jxgbox' style='width:" + "#{attrs['width']}" + "px; height:" + "#{attrs['height']}" +"px;'></div>"]
       line_array += ['<script type="text/javascript">']
 

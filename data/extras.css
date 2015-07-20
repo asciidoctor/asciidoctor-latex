@@ -1,9 +1,10 @@
-.openblock.box.content {
+.openblock.box {
     margin-top:1em;
     margin-bottom: 1em;
     margin-left:3em;
     margin-right:4em;
-    background-color: #aaa;
+    padding: 1em;
+    background-color: #ddd;
 }
 
 .openblock.capsule.content {

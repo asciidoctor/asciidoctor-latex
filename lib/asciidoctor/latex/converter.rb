@@ -123,7 +123,9 @@
 #
 
 require 'asciidoctor'
+require 'asciidoctor/extensions' unless RUBY_ENGINE == 'opal'
 require 'asciidoctor/converter/html5'
+require 'asciidoctor/latex/css'
 require 'asciidoctor/latex/inline_macros'
 require 'asciidoctor/latex/core_ext/colored_string'
 require 'asciidoctor/latex/click_block'
@@ -356,6 +358,7 @@ module Asciidoctor::LaTeX
 
 
     Asciidoctor::Extensions.register do
+      docinfo_processor CSSDocinfoProcessor
       preprocessor TeXPreprocessor
       preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html') and !(document.attributes['noteshare'] == 'yes')
       block EnvironmentBlock

@@ -4,33 +4,22 @@ require 'asciidoctor/extensions' unless RUBY_ENGINE == 'opal'
 
 include ::Asciidoctor
 
+
+# The following docinfo processor permits the converter to
+# read an additional style file (extras.css in the data directory).
+# The docinfo extension is registered in the converter.rb:
+#
+#   Asciidoctor::Extensions.register do
+#     docinfo_processor CSSDocinfoProcessor
+#     ..
+#   end
+#
+
 class CSSDocinfoProcessor < Asciidoctor::Extensions::DocinfoProcessor
 
   use_dsl
   at_location :header
 
-  STYLESHEETS_DATA_PATH = ::File.join DATA_PATH, 'stylesheets'
-
-  def extra_stylesheet_name
-    'extras.css'
-  end
-
-  # Public: Read the contents of the default Asciidoctor stylesheet
-  #
-  # returns the [String] Asciidoctor stylesheet data
-  def extra_stylesheet_data
-    @extra_stylesheet_data ||= ::IO.read(::File.join(STYLESHEETS_DATA_PATH, extra_stylesheet_name)).chomp
-  end
-
-  def embed_extra_stylesheet
-    %(<style>
-#extra_stylesheet_data}
-</style>)
-  end
-
-  def write_extra_stylesheet target_dir
-    ::File.open(::File.join(target_dir, extra_stylesheet_name), 'w') {|f| f.write extra_stylesheet_data }
-  end
 
   def process doc
     extdir = File.expand_path("../../../../data", __FILE__)

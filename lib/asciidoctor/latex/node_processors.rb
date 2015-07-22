@@ -66,8 +66,18 @@ module TexUtilities
     end
   end
 
+  # normalize the name because it is an id
+  # and so frequently contains underscores
   def self.hypertarget(name, text)
-    "\\hypertarget\{#{name}\}\{#{text}\}"
+    if text
+     # text = text.rstrip.chomp
+    end
+    if name
+      "\\hypertarget\{#{name.tex_normalize}\}\{#{text}\}"
+    else
+      "\\hypertarget\{'NO-ID'\}\{#{text}\}"
+      # FIXME: why do we need this branch?
+    end
   end
 
 
@@ -679,7 +689,7 @@ module Asciidoctor
       attr = self.attributes
       id = attr['id']
       if id
-        content = "\\hypertarget\{#{id}\}\{#{self.content}\}"
+        content = "\\hypertarget\{#{id}\}\{#{self.content.rstrip}\}"
       else
         content = self.content
       end
@@ -719,7 +729,7 @@ module Asciidoctor
     end
 
     def inline_quoted_process
-      warn "THIS IS: inline_quoted_process: #{self.type}"  if $VERBOSE
+      # warn "THIS IS: inline_quoted_process: #{self.type}"  if $VERBOSE
       case self.type
         when :strong
           "\\textbf\{#{self.text}\}"
@@ -729,7 +739,7 @@ module Asciidoctor
           output = Asciidoctor.convert( self.text, backend: 'html')
           output
         when :monospaced
-          "\\textt\{#{self.text}\}"
+          "\\texttt\{#{self.text}\}"
         when :superscript
           "$\{\}^{#{self.text}}$"
         when :subscript
@@ -753,8 +763,12 @@ module Asciidoctor
           else
             # warn "This is inline_quoted_process.  I don't understand role = #{role}" if $VERBOSE
           end
+        when :literal
+          "\\texttt\{#{self.text}\}"
+        when :verse
+          "\\texttt\{#{self.text}\}"
         else
-          "\\unknown\\{#{self.text}\\}"
+          "\\unknown:#{self.type}\\{#{self.text}\\}"
       end
     end
 
@@ -780,7 +794,7 @@ module Asciidoctor
         when :ref
           $tex.macro 'label', self.text.gsub(/\[(.*?)\]/, "\\1")
         when :xref
-          $tex.macro 'hyperlink', refid, reftext
+          $tex.macro 'hyperlink', refid.tex_normalize, reftext
         else
           # warn "!!".magenta if $VERBOSE
       end
@@ -831,7 +845,7 @@ module Asciidoctor
 
   module LaTeX
     # TeXPostProcess cleans up undesired transformations
-    # inside the TeX enveronment.  Strings
+    # inside the TeX environment.  Strings
     # &ampp;, &gt;, &lt; are mapped back to
     # &, >, < and \\ is conserved.
     module TeXPostProcess

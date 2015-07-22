@@ -52,4 +52,16 @@ class String
   end
 
 
+  # map '_' to '-' and prefix by 'x' if the
+  # leading character is '-'
+  def tex_normalize
+    str = self.gsub('_', '-')
+    if str[0] == '-'
+      'x'+str
+    else
+      str
+    end
+  end
+
+
 end

@@ -161,7 +161,7 @@ module Asciidoctor
       doc << processed_content
 
       unless embedded?
-        # Now write the defnitions of the new environments
+        # Now write the definitions of the new environments
         # discovered to file
         definitions = ""
 
@@ -482,7 +482,7 @@ module Asciidoctor
     end
 
     def handle_texmacro
-      self.content
+      "%% User tex macros:\n#{self.content}\n%% end of user macros\n"
     end
 
     def handle_box
@@ -680,7 +680,8 @@ module Asciidoctor
     end
 
     def preamble_process
-      "\\begin\{preamble\}\n#{self.content}\n\\end\{preamble\}\n"
+      # "\\begin\{preamble\}\n%% HO HO HO!\n#{self.content}\n\\end\{preamble\}\n"
+      self.content
     end
 
 

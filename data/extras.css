@@ -16,9 +16,7 @@
     margin-bottom:1.5em;
 }
 
-
 /* BOX */
-
 
 .openblock.box {
     margin-top:1em;
@@ -26,6 +24,7 @@
     margin-left:3em;
     margin-right:4em;
     padding: 1em;
+    font-size: 0.85em;
     background-color: #ddd;
 }
 
@@ -33,11 +32,13 @@
 /* CAPSULE */
 
 
-.openblock.capsule.content {
+.openblock.capsule {
+    margin-left:10em;
     margin-bottom:2em;
     font-style:italic;
     font-size:0.85em;
 }
+
 
 
 /* Equation Style */

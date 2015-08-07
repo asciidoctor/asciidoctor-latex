@@ -140,6 +140,7 @@ require 'asciidoctor/latex/tex_preprocessor'
 require 'asciidoctor/latex/dollar'
 require 'asciidoctor/latex/tex_postprocessor'
 require 'asciidoctor/latex/chem'
+require 'asciidoctor/latex/sectnumoffset-treeprocessor'
 
 
 

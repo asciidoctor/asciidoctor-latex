@@ -14,7 +14,7 @@ Extensions.register do
     process do |document|
       if (document.attr? 'sectnums') && (sectnumoffset = (document.attr 'sectnumoffset', 0).to_i) > 0
         ((document.find_by context: :section) || []).each do |sect|
-          next unless sect.level == 1
+          next unless sect.level <= 2     
           sect.number += sectnumoffset
         end
       end

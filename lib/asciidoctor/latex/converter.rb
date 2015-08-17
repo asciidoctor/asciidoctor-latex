@@ -125,6 +125,7 @@
 require 'asciidoctor'
 require 'asciidoctor/extensions' unless RUBY_ENGINE == 'opal'
 require 'asciidoctor/converter/html5'
+
 require 'asciidoctor/latex/css'
 require 'asciidoctor/latex/inline_macros'
 require 'asciidoctor/latex/core_ext/colored_string'
@@ -140,6 +141,7 @@ require 'asciidoctor/latex/tex_preprocessor'
 require 'asciidoctor/latex/dollar'
 require 'asciidoctor/latex/tex_postprocessor'
 require 'asciidoctor/latex/chem'
+require 'asciidoctor/latex/sectnumoffset-treeprocessor'
 
 
 
@@ -319,9 +321,6 @@ module Asciidoctor::LaTeX
       node.lines = line_array
     end
 
-
-
-
     def handle_null(node)
 
     end
@@ -410,6 +409,9 @@ end # module Asciidoctor::LaTeX
 
 class Asciidoctor::Converter::Html5Converter
   # inject our custom code into the existing Html5Converter class (Ruby 2.0 and above)
+  # the ideal is to use 'prepend'; however, this is incompatible
+  # with the current version of Opal, so the alternative of 'include' is provided for
+  # cases in which 'prepend' is not available
   if respond_to? :prepend
     prepend Asciidoctor::LaTeX::Html5ConverterExtensions
   else

@@ -23,7 +23,11 @@ class CSSDocinfoProcessor < Asciidoctor::Extensions::DocinfoProcessor
 
   def process doc
     extdir = File.expand_path("../../../../data", __FILE__)
-    stylesheet_name = 'extras.css'
+    if doc.attributes['print_format'] == 'yes'
+      stylesheet_name = 'extras_print_version.css'
+    else
+      stylesheet_name = 'extras.css'
+    end
     if doc.attr? 'linkcss'
       stylesheet_href = handle_stylesheet doc, extdir, stylesheet_name
       %(<link rel="stylesheet" href="#{stylesheet_href}">)

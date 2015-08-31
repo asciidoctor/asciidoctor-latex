@@ -125,6 +125,7 @@
 require 'asciidoctor'
 require 'asciidoctor/extensions' unless RUBY_ENGINE == 'opal'
 require 'asciidoctor/converter/html5'
+
 require 'asciidoctor/latex/css'
 require 'asciidoctor/latex/inline_macros'
 require 'asciidoctor/latex/core_ext/colored_string'
@@ -320,9 +321,6 @@ module Asciidoctor::LaTeX
       node.lines = line_array
     end
 
-
-
-
     def handle_null(node)
 
     end
@@ -355,7 +353,7 @@ module Asciidoctor::LaTeX
     Asciidoctor::Extensions.register do
       docinfo_processor CSSDocinfoProcessor
       preprocessor TeXPreprocessor
-      preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html') and !(document.attributes['noteshare'] == 'yes')
+      preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html' and document.attributes['include_macros'] == 'yes')
       block EnvironmentBlock
       block ClickBlock
       inline_macro ChemInlineMacro
@@ -411,6 +409,9 @@ end # module Asciidoctor::LaTeX
 
 class Asciidoctor::Converter::Html5Converter
   # inject our custom code into the existing Html5Converter class (Ruby 2.0 and above)
+  # the ideal is to use 'prepend'; however, this is incompatible
+  # with the current version of Opal, so the alternative of 'include' is provided for
+  # cases in which 'prepend' is not available
   if respond_to? :prepend
     prepend Asciidoctor::LaTeX::Html5ConverterExtensions
   else

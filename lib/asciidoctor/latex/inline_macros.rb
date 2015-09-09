@@ -23,7 +23,7 @@ module Asciidoctor::LaTeX
     named :gloss
     def process parent, target, attributes
       array = attributes.values
-      array[0]
+      "<span class='glossary_term'>#{array[0]}</span>"
     end
   end
 

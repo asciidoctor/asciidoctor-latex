@@ -1,7 +1,7 @@
 == Making an Index
 
 Mark terms like this if you want them to appear
-in the document index
+in the document index:
 ----
    ((potrezebie))
 ----

@@ -16,6 +16,15 @@ EOF
 
   end
 
+  it 'can be initialized from a string', :string_setup do
+    ti = TextIndex.new(string: @text)
+    expect(ti.lines.count).to eq(3)
+  end
+
+  it 'can be initialized from a file', :file_setup do
+    ti = TextIndex.new(string: @text)
+    expect(ti.lines.count).to eq(3)
+  end
 
   it 'scans the array lines, producing an array of index terms', :scan  do
 

@@ -2,14 +2,11 @@ class TextIndex
 
   attr_reader :text, :lines, :term_array, :index_map, :index_array, :index
 
-
-  def initialize(input, option= nil)
-    if option == nil
-      @text = input
-      @lines =  @text.split("\n")
-    elsif option == :file
-      @lines = IO.readlines input
-    end
+  # Construct an array of lines
+  # by reading a string or a file
+  def initialize(hash)
+    @lines = hash[:string].split("\n") if hash[:string]
+    @lines = IO.readlines(hash[:file]) if hash[:file]
   end
 
   def self.scan_string(str)
@@ -138,4 +135,4 @@ def make_index
 end
 
 
-make_index
+# make_index

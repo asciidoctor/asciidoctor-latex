@@ -133,7 +133,7 @@ def make_index
   input_file = ARGV[0]
   ti = TextIndex.new input_file, :file
   basename = File.basename(input_file, '.adoc')
-  output_file = "#{basename}-index.adoc"
+  output_file = "#{basename}-indexed.adoc"
   ti.preprocess(output_file)
 end
 

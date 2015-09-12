@@ -1,0 +1,19 @@
+== Making an Index
+
+Mark terms like this if you want them to appear
+in the document index
+----
+   ((potrezebie))
+----
+Assuming that your document is `foo.adoc`, follow
+these steps to make a version with an index:
+
+- `$ ruby make_index.rb foo.adoc`
+- `$ asciidoctor-latex -b html foo-indexed.adoc`
+
+The rendered file will be `foo-indexed.html`
+
+NOTE: The index feature of Asciidoctor-LaTeX experimental.
+It is designed to be syntax-compatible with the
+corresponding feature for Asciidoctor when
+it is released.

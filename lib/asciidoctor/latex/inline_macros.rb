@@ -27,4 +27,13 @@ module Asciidoctor::LaTeX
     end
   end
 
+  class IndexTermInlineMacro <  Asciidoctor::Extensions::InlineMacroProcessor
+    use_dsl
+    named :index_term
+    def process parent, target, attributes
+      array = attributes.values
+      "<span class='index_term' id='index_term_#{array[1]}'>#{array[0]}</span>"
+    end
+  end
+
 end

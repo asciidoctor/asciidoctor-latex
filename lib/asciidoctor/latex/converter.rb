@@ -386,6 +386,7 @@ module Asciidoctor::LaTeX
       block ClickBlock
       inline_macro ChemInlineMacro
       inline_macro GlossInlineMacro
+      inline_macro IndexTermInlineMacro
       # preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
       postprocessor InjectHTML unless document.attributes['noteshare'] == 'yes'
       postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'

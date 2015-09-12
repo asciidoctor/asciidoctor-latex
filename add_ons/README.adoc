@@ -7,13 +7,33 @@ in the document index
 ----
 Assuming that your document is `foo.adoc`, follow
 these steps to make a version with an index:
-
-- `$ ruby make_index.rb foo.adoc`
-- `$ asciidoctor-latex -b html foo-indexed.adoc`
-
+----
+  $ ruby make_index.rb foo.adoc
+  $ asciidoctor-latex -b html foo-indexed.adoc
+----
 The rendered file will be `foo-indexed.html`
 
-NOTE: The index feature of Asciidoctor-LaTeX experimental.
+.Larger Example
+For testing purposes, the 5900-word file
+`keynes_ch_2.adoc` is included.
+It has a few terms marked marked for the
+index.  To play with it, do this:
+----
+  $  ruby make_index.rb keynes_ch_2.adoc
+  $  asciidoctor-latex keynes_ch_2-indexed.adoc
+----
+Then view the file `keynes_ch_2-indexed.html`
+in your browser.
+
+
+
+.Notes
+. The index feature of Asciidoctor-LaTeX experimental.
 It is designed to be syntax-compatible with the
 corresponding feature for Asciidoctor when
-it is released.
+it is released.  At that point,
+`make_index.rb` will be redundant.
+. In the next few days, the index feature will be rolled into
+http://www.noteshare.io[Noteshare.io].  Then the *Show Doc*
+item in the *View* menu will compile the current notebook
+with an index if the attribute `:make_index:` is set.

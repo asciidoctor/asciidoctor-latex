@@ -1,0 +1,33 @@
+This is a test of index_term::[Foo, 0].
+That is to say, we went to the index_term::[bar, 1].
+However, index_term::[Foo, 2] was nowhere to be found!
+
+
+== Padding
+
+orem ipsum dolor sit amet, consectetur adipiscing elit. Fusce feugiat blandit purus, sit amet dictum erat accumsan id. Nullam sem elit, ultrices a suscipit sit amet, aliquam at dui. Pellentesque mollis, diam a tristique accumsan, risus nisi ultrices risus, at dignissim augue neque et enim. Phasellus id tristique lectus. Mauris tempor fermentum tincidunt. Duis quis odio erat. Aliquam bibendum ex ut nisl tincidunt malesuada. Curabitur lobortis erat augue, ut faucibus risus accumsan quis. Phasellus mollis elit nec arcu dictum, id convallis lacus interdum. Ut varius magna in accumsan volutpat. Sed sed libero vel leo venenatis tincidunt in a metus. Aenean porttitor mi eget neque vulputate, in sodales quam euismod. Vestibulum id mauris at ligula ullamcorper ultricies. Maecenas non eros ullamcorper, placerat nulla id, ultrices ex. Ut lorem odio, elementum et justo quis, bibendum luctus velit.
+
+Duis posuere mauris a purus luctus porta. Mauris iaculis feugiat augue. Nunc iaculis euismod leo ut dictum. Vivamus et euismod augue, sit amet rhoncus neque. Suspendisse posuere quam dui, a tempor ipsum bibendum nec. Praesent tellus leo, egestas eget porttitor sed, pulvinar et ante. Quisque mattis nisi elit, quis aliquam leo aliquet ultrices. Nulla facilisi. Duis rutrum ante eget elementum dapibus. Nunc pellentesque purus erat, ac lacinia tortor rhoncus quis.
+
+Curabitur cursus nisi sit amet ante dignissim rhoncus. Vivamus elementum elit tempus consequat ultricies. Praesent mattis erat a ornare egestas. Mauris sit amet placerat purus. Proin dictum ullamcorper suscipit. Nam at pellentesque lacus. Fusce dictum tincidunt nunc, vel sodales leo elementum vitae. Nunc dapibus dignissim posuere.
+
+In hac habitasse platea dictumst. Sed vulputate, lorem et tincidunt feugiat, ipsum sapien porttitor odio, eu tristique tortor est sed tellus. Morbi hendrerit tortor viverra arcu consectetur, eget ullamcorper urna sagittis. Nulla sagittis faucibus turpis non semper. Aenean lacinia eros vel enim viverra, sit amet convallis lectus dapibus. Maecenas venenatis commodo dolor et semper. Fusce vestibulum nunc quis aliquet volutpat. Donec gravida ex id accumsan rhoncus. Aenean sit amet gravida nisl. Phasellus nisl est, imperdiet at facilisis a, elementum quis tellus.
+
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam cursus risus est, ut facilisis velit suscipit sed. Suspendisse vestibulum justo eget quam suscipit, et egestas elit molestie. Aenean eget elit a dolor tincidunt consequat nec luctus mi. Aliquam vitae laoreet purus, sed gravida nulla. Phasellus eu maximus nisi. Phasellus lobortis mattis mauris finibus egestas. Nam risus tellus, faucibus non dolor vitae, porta viverra mi. Ut at pulvinar nibh. Etiam ultrices tortor lacus, eu placerat quam posuere eget. Nulla et mauris lectus. Mauris fringilla turpis urna. Nulla scelerisque nulla nec sapien scelerisque, vel pharetra augue dignissim. Donec sed magna dignissim arcu ullamcorper hendrerit. Fusce pulvinar rhoncus tortor, in blandit nulla condimentum at. Nunc in ante a diam sollicitudin euismod ac et justo.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce feugiat blandit purus, sit amet dictum erat accumsan id. Nullam sem elit, ultrices a suscipit sit amet, aliquam at dui. Pellentesque mollis, diam a tristique accumsan, risus nisi ultrices risus, at dignissim augue neque et enim. Phasellus id tristique lectus. Mauris tempor fermentum tincidunt. Duis quis odio erat. Aliquam bibendum ex ut nisl tincidunt malesuada. Curabitur lobortis erat augue, ut faucibus risus accumsan quis. Phasellus mollis elit nec arcu dictum, id convallis lacus interdum. Ut varius magna in accumsan volutpat. Sed sed libero vel leo venenatis tincidunt in a metus. Aenean porttitor mi eget neque vulputate, in sodales quam euismod. Vestibulum id mauris at ligula ullamcorper ultricies. Maecenas non eros ullamcorper, placerat nulla id, ultrices ex. Ut lorem odio, elementum et justo quis, bibendum luctus velit.
+
+Duis posuere mauris a purus luctus porta. Mauris iaculis feugiat augue. Nunc iaculis euismod leo ut dictum. Vivamus et euismod augue, sit amet rhoncus neque. Suspendisse posuere quam dui, a tempor ipsum bibendum nec. Praesent tellus leo, egestas eget porttitor sed, pulvinar et ante. Quisque mattis nisi elit, quis aliquam leo aliquet ultrices. Nulla facilisi. Duis rutrum ante eget elementum dapibus. Nunc pellentesque purus erat, ac lacinia tortor rhoncus quis.
+
+Curabitur cursus nisi sit amet ante dignissim rhoncus. Vivamus elementum elit tempus consequat ultricies. Praesent mattis erat a ornare egestas. Mauris sit amet placerat purus. Proin dictum ullamcorper suscipit. Nam at pellentesque lacus. Fusce dictum tincidunt nunc, vel sodales leo elementum vitae. Nunc dapibus dignissim posuere.
+
+In hac habitasse platea dictumst. Sed vulputate, lorem et tincidunt feugiat, ipsum sapien porttitor odio, eu tristique tortor est sed tellus. Morbi hendrerit tortor viverra arcu consectetur, eget ullamcorper urna sagittis. Nulla sagittis faucibus turpis non semper. Aenean lacinia eros vel enim viverra, sit amet convallis lectus dapibus. Maecenas venenatis commodo dolor et semper. Fusce vestibulum nunc quis aliquet volutpat. Donec gravida ex id accumsan rhoncus. Aenean sit amet gravida nisl. Phasellus nisl est, imperdiet at facilisis a, elementum quis tellus.
+
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam cursus risus est, ut facilisis velit suscipit sed. Suspendisse vestibulum justo eget quam suscipit, et egestas elit molestie. Aenean eget elit a dolor tincidunt consequat nec luctus mi. Aliquam vitae laoreet purus, sed gravida nulla. Phasellus eu maximus nisi. Phasellus lobortis mattis mauris finibus egestas. Nam risus tellus, faucibus non dolor vitae, porta viverra mi. Ut at pulvinar nibh. Etiam ultrices tortor lacus, eu placerat quam posuere eget. Nulla et mauris lectus. Mauris fringilla turpis urna. Nulla scelerisque nulla nec sapien scelerisque, vel pharetra augue dignissim. Donec sed magna dignissim arcu ullamcorper hendrerit. Fusce pulvinar rhoncus tortor, in blandit nulla condimentum at. Nunc in ante a diam sollicitudin euismod ac et justo.
+
+
+
+== Index
+
+<<index_term_1, bar>> +
+<<index_term_0, Foo>>, <<index_term _2, 2>> +

@@ -119,11 +119,22 @@ class TextIndex
 
 end
 
+def message
+  out = "\nUsage: 'ruby make_index.rb foo.adoc'\n"
+  out << "Purpose: add index to foo.adoc\n"
+  out << "Output is in file foo-index.adoc\n\n"
+end
 
 def make_index
-  input = ARGV[0]
-  ti = TextIndex.new input, :file
-  ti.preprocess('out.adoc')
+  if ARGV.count == 0
+    puts message
+    return
+  end
+  input_file = ARGV[0]
+  ti = TextIndex.new input_file, :file
+  basename = File.basename(input_file, '.adoc')
+  output_file = "#{basename}-index.adoc"
+  ti.preprocess(output_file)
 end
 
 

@@ -86,7 +86,7 @@ class TextIndex
     out = ["<<index_term_#{index}, #{reference}>>"]
     if indices
       indices.each do |index|
-        out <<  "<<index_term _#{index}, #{count}>>"
+        out <<  "<<index_term_#{index}, #{count}>>"
       end
     end
     out.join(', ') + " +\n"

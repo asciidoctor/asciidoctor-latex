@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../add_ons/make_index'
 
 describe TextIndex do
 
@@ -16,13 +16,6 @@ EOF
 
   end
 
-  it 'breaks the text into an array of lines', :lines do
-
-    ti = TextIndex.new(@text)
-    ti.get_lines
-    expect(ti.lines.count).to eq(3)
-
-  end
 
   it 'scans the array lines, producing an array of index terms', :scan  do
 
@@ -86,10 +79,8 @@ EOF
     ti = TextIndex.new(@text)
     ti.scan
     ti.make_index_map
-    d { ti.index_map ; ti.index_array}
     ti.make_index
-    d { ti.index }
-    expected_index_text = "<<index_item_1, bar>> +\n<<index_item_0, Foo>>, <<index_item_2, 2>> +\n"
+    expected_index_text = "<<index_term_1, bar>> +\n<<index_term_0, Foo>>, <<index_term_2, 2>> +\n"
     expect(ti.index).to eq(expected_index_text)
   end
 
@@ -97,7 +88,7 @@ EOF
     ti = TextIndex.new(@text)
     ti.preprocess('out.adoc')
     output = File.read('out.adoc')
-    expected_output = "This is a test of index_term::[Foo, 0].\nThat is to say, we went to the index_term::[bar, 1].\nHowever, index_term::[Foo, 2] was nowhere to be found!\n\n\n== Index\n\n<<index_item_1, bar>> +\n<<index_item_0, Foo>>, <<index_item_2, 2>> +\n"
+    expected_output = "This is a test of index_term::[Foo, 0].\nThat is to say, we went to the index_term::[bar, 1].\nHowever, index_term::[Foo, 2] was nowhere to be found!\n\n\n== Index\n\n<<index_term_1, bar>> +\n<<index_term_0, Foo>>, <<index_term_2, 2>> +\n"
     expect(output).to eq(expected_output)
   end
 

@@ -12,8 +12,18 @@ module Asciidoctor::LaTeX
     use_dsl
     named :chem
     def process parent, target, attributes
-      text = attributes.values * ', ' # iky!
-      %(\\(\\ce{ #{text} }\\))
+      # text = attributes.values * ', ' # iky!
+      array = attributes.values
+      %(\\(\\ce{ #{array[0]} }\\))
+    end
+  end
+
+  class GlossInlineMacro <  Asciidoctor::Extensions::InlineMacroProcessor
+    use_dsl
+    named :gloss
+    def process parent, target, attributes
+      array = attributes.values
+      "<span class='glossary_term'>#{array[0]}</span>"
     end
   end
 

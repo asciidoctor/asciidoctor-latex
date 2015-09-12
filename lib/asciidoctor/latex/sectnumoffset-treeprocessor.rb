@@ -22,10 +22,10 @@ Extensions.register do
     process do |document|
       if (document.attr? 'sectnums') && (sectnumoffset = (document.attr 'sectnumoffset', 0).to_i) > 0
         subsectnumoffset = (document.attr 'subsectnumoffset', 0).to_i
-        warn "subsectnumoffset: #{subsectnumoffset}".red
+        warn "subsectnumoffset: #{subsectnumoffset}".red if $VERBOSE
         section_count = 0
         if subsectnumoffset > 0
-          warn "Insert parent section at 'head' of document with offset #{sectnumoffset}".cyan
+          warn "Insert parent section at 'head' of document with offset #{sectnumoffset}".cyan if $VERBOSE
         end
         ((document.find_by context: :section) || []).each do |sect|
           next unless sect.level <= 2

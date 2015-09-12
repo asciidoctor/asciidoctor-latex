@@ -126,7 +126,7 @@ require 'asciidoctor'
 require 'asciidoctor/extensions' unless RUBY_ENGINE == 'opal'
 require 'asciidoctor/converter/html5'
 
-require 'asciidoctor/latex/css'
+require 'asciidoctor/latex/css_doc_info'
 require 'asciidoctor/latex/inline_macros'
 require 'asciidoctor/latex/core_ext/colored_string'
 require 'asciidoctor/latex/click_block'
@@ -217,9 +217,37 @@ module Asciidoctor::LaTeX
       self.open node
     end
 
+    def old_inline_anchor node
+      target = node.target
+      case node.type
+        when :xref
+          refid = node.attributes['refid'] || target
+          # NOTE we lookup text in converter because DocBook doesn't need this logic
+          text = node.text || (node.document.references[:ids][refid] || %([#{refid}]))
+          # FIXME shouldn't target be refid? logic seems confused here
+          %(<a href="#{target}">#{text}</a>)
+        when :ref
+          %(<a id="#{target}"></a>)
+        when :link
+          attrs = []
+          attrs << %( id="#{node.id}") if node.id
+          if (role = node.role)
+            attrs << %( class="#{role}")
+          end
+          attrs << %( title="#{node.attr 'title'}") if node.attr? 'title', nil, false
+          attrs << %( target="#{node.attr 'window'}") if node.attr? 'window', nil, false
+          %(<a href="#{target}"#{attrs.join}>#{node.text}</a>)
+        when :bibref
+          %(<a id="#{target}"></a>[#{target}])
+        else
+          warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
+      end
+    end
+
     def inline_anchor node
 
       case node.type.to_s
+
       when 'xref'
         refid = node.attributes['refid']
         if refid and refid[0] == '_'
@@ -241,13 +269,13 @@ module Asciidoctor::LaTeX
               output = "<span class='xref'><a href=\##{refid}>#{reftext}</a></span>"
             end
           else
-            output = 'ERROR: refs[refid] was nil'
+            output = old_inline_anchor node
           end
         end
       when 'link'
         output = "<a href=#{node.target}>#{node.text}</a>"
       else
-        output = 'FOOBAR'
+        output =  old_inline_anchor node
       end
       output
     end
@@ -357,6 +385,7 @@ module Asciidoctor::LaTeX
       block EnvironmentBlock
       block ClickBlock
       inline_macro ChemInlineMacro
+      inline_macro GlossInlineMacro
       # preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
       postprocessor InjectHTML unless document.attributes['noteshare'] == 'yes'
       postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'

@@ -28,7 +28,7 @@ EOF
 
   it 'scans the array lines, producing an array of index terms', :scan  do
 
-    ti = TextIndex.new(@text)
+    ti = TextIndex.new(string: @text)
     ti.scan
     expect(ti.term_array).to eq(["Foo", "bar", "Foo"])
 
@@ -41,7 +41,7 @@ EOF
   end
 
   it 'produces a list of index terms from a piece of text' , :index_map do
-    ti = TextIndex.new(@text)
+    ti = TextIndex.new(string: @text)
     ti.scan
     ti.make_index_map
     expect(ti.index_map).to be_instance_of(Hash)
@@ -51,7 +51,7 @@ EOF
 
   it 'transforms a string, replacing terms with the corresponding asciidoc element', :transform_line do
     input = 'This is a test of ((Foo)). Afterwards we will go to the ((bar)).'
-    ti = TextIndex.new(input)
+    ti = TextIndex.new(string: input)
     ti.scan
     ti.make_index_map
     output = ti.transform_line(input)
@@ -62,7 +62,7 @@ EOF
 
 
   it 'transforms an array of lines, writing the output to a file', :transform_lines do
-    ti = TextIndex.new(@text)
+    ti = TextIndex.new(string: @text)
     ti.scan
     ti.make_index_map
     ti.transform_lines('out.adoc')
@@ -76,7 +76,7 @@ EOF
   end
 
   it 'creates the data structure for the index', :index_array  do
-    ti = TextIndex.new(@text)
+    ti = TextIndex.new(string: @text)
     ti.scan
     ti.make_index_map
     expected_index_array  = [['bar', [1]], ['Foo', [0,2]]]
@@ -85,7 +85,7 @@ EOF
   end
 
   it 'creates an Asciidoc version of the index', :ad_version do
-    ti = TextIndex.new(@text)
+    ti = TextIndex.new(string: @text)
     ti.scan
     ti.make_index_map
     ti.make_index
@@ -94,7 +94,7 @@ EOF
   end
 
   it 'transforms the marked index terms and appends an index to the generated asciidoc file', :preprocess do
-    ti = TextIndex.new(@text)
+    ti = TextIndex.new(string: @text)
     ti.preprocess('out.adoc')
     output = File.read('out.adoc')
     expected_output = "This is a test of index_term::[Foo, 0].\nThat is to say, we went to the index_term::[bar, 1].\nHowever, index_term::[Foo, 2] was nowhere to be found!\n\n\n== Index\n\n<<index_term_1, bar>> +\n<<index_term_0, Foo>>, <<index_term_2, 2>> +\n"

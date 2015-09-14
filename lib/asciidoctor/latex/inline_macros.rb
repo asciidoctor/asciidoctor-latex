@@ -32,9 +32,9 @@ module Asciidoctor::LaTeX
     named :index_term
     def process parent, target, attributes
       array = attributes.values
-      warn array.to_s.red
       index = array.pop
-      reference = array.pop
+      reference = array.pop.split(',').pop
+
       "<span class='index_term' id='index_term_#{index}'>#{reference}</span>"
     end
   end

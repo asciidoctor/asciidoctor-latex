@@ -33,7 +33,12 @@ module Asciidoctor::LaTeX
     def process parent, target, attributes
       array = attributes.values
       index = array.pop
-      reference = array.pop.split(',').pop
+      reference_array = array.pop.split(',')
+      if reference_array.count == 1
+        reference = reference_array.pop
+      else
+        reference = ''
+      end
 
       "<span class='index_term' id='index_term_#{index}'>#{reference}</span>"
     end

@@ -1,6 +1,14 @@
+
+# Usage:
+# Instantiate with a file  ti = TextIndex.new(file: 'infile.adoc')
+# or instantiate with a string ti = TextIndex.new(string: 'foo, bar, etc')
+# Then execute ti.process('outfile.adoc') to write the indexed version
+# of the Asciidoc file to 'outfile.adoc'
 class TextIndex
 
   attr_reader :text, :lines, :term_array, :index_map, :index_array, :index
+
+  INDEX_TERM_REGEX = /\({2}\(*(.*?)\){2}\)*/
 
   # Construct an array of lines
   # by reading a string or a file:
@@ -14,20 +22,28 @@ class TextIndex
   # locate the occurrences of terms marked
   # for indexing and return them as an array
   def self.scan_string(str)
-    regex = /\(\((.*?)\)\)/
-    str.scan(regex).flatten
+    str.scan(INDEX_TERM_REGEX).flatten
   end
 
   # Return the terms to be index by
   # scanning the entire @lines array
   def scan
-    regex = /\(\((.*?)\)\)/
     output = []
     @lines.each do |line|
-      term_array = line.scan(regex)
+      term_array = line.scan(INDEX_TERM_REGEX)
       output << term_array
     end
     @term_array = output.flatten
+  end
+
+  def sort_indicator(element)
+    components = element[0].split(',')
+    if components.count == 1
+      components[0].downcase
+    else
+      components.pop
+      components.join(',').strip.downcase
+    end
   end
 
   # Build a hash, the @index_map which maps an index term to an
@@ -59,7 +75,7 @@ class TextIndex
       end
     end
     @index_map = dict
-    @index_array = @index_map.to_a.sort{ |a,b| a[0].downcase <=> b[0].downcase }
+    @index_array = @index_map.to_a.sort{ |a,b| sort_indicator(a) <=> sort_indicator(b) }
   end
 
   # Map in index term to an inline_macro
@@ -88,7 +104,7 @@ class TextIndex
     if  value
       k = value.shift
       @index_map[term] = value
-      "index_term::[#{term}, #{k}]"
+      "index_term::['#{term}', #{k}]"
     end
   end
 
@@ -98,7 +114,12 @@ class TextIndex
     terms = TextIndex.scan_string(line)
     if terms
       terms.each do |term|
-        line = line.gsub("((#{term}))", transformed_term(term))
+        elements = term.split(',')
+        if elements.count == 1
+          line = line.gsub("((#{term}))", transformed_term(term))
+        else
+          line = line.gsub("(((#{term})))", transformed_term(term))
+        end
       end
     end
     line
@@ -138,6 +159,11 @@ class TextIndex
   #
   def index_pair_to_index_item(pair)
     reference = pair[0]
+    reference_elements = reference.split(',')
+    if reference_elements.count > 1
+      reference_elements.pop
+      reference = "'#{reference_elements.join(',').strip}'"
+    end
     indices = pair[1].dup
     index = indices.shift
 
@@ -153,13 +179,29 @@ class TextIndex
   end
 
 
+  # Insert letter "A", "B", etc in index
+  # before first letter of index term changes
+  def heading(reference)
+    first_char = reference[0].downcase
+    if first_char =~ /\w/ && first_char != @previous_char
+      @previous_char = first_char
+      "\n\n*#{first_char.upcase}* +\n"
+    else
+      ""
+    end
+  end
+
+
   # Construct the Asciidoc version of the index
   # by applying 'index_pair_to_index_item' to
-  # each elemnet and accumulating the result
+  # each element and accumulating the result
   # in the string 'output'
   def make_index
     output = ''
+    @previous_char = nil
     @index_array.each do |index_pair|
+      reference = index_pair[0]
+      output << heading(reference)
       output << index_pair_to_index_item(index_pair)
     end
     @index = output
@@ -176,14 +218,9 @@ class TextIndex
     transform_lines(outfile)
 
     file = File.open(outfile, 'a')
-    file.puts "\n\n== Index\n\n"
+    file.puts "\n\n:!numbered:\n\n== Index\n\n"
     file.puts index
     file.close
   end
 
 end
-
-
-
-
-

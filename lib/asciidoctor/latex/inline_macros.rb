@@ -32,17 +32,21 @@ module Asciidoctor::LaTeX
     named :index_term
     def process parent, target, attributes
       array = attributes.values
+      warn array.to_s.red
       css = array.pop
+      warn "css: #{css}".cyan
       index = array.pop
+      warn "index: #{index}".cyan
       reference_array = array.pop.split(',')
+      warn "reference_array: #{reference_array.to_s}".cyan
       if reference_array.count == 1
         reference = reference_array.pop
       else
         reference = ''
       end
       reference ||= ''
-      if css == 'hide'
-        "<span style='display:none' id='index_term_#{index}'>#{reference}</span>"
+      if css == 'invisible'
+        "<span class='invisible' id='index_term_#{index}'>#{reference}</span>"
       else
         "<span class='index_term' id='index_term_#{index}'>#{reference}</span>"
       end

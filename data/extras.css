@@ -87,3 +87,11 @@
 
     color: darkred;
 }
+
+
+/* use for targets of index items */
+.invisible {
+    color: #fff;
+    font-size: 1pt;
+}
+

@@ -39,7 +39,7 @@ module Asciidoctor::LaTeX
       else
         reference = ''
       end
-
+      reference ||= ''
       "<span class='index_term' id='index_term_#{index}'>#{reference}</span>"
     end
   end

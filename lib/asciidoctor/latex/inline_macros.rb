@@ -32,6 +32,7 @@ module Asciidoctor::LaTeX
     named :index_term
     def process parent, target, attributes
       array = attributes.values
+      css = array.pop
       index = array.pop
       reference_array = array.pop.split(',')
       if reference_array.count == 1
@@ -40,7 +41,11 @@ module Asciidoctor::LaTeX
         reference = ''
       end
       reference ||= ''
-      "<span class='index_term' id='index_term_#{index}'>#{reference}</span>"
+      if css == 'hide'
+        "<span style='display:none' id='index_term_#{index}'>#{reference}</span>"
+      else
+        "<span class='index_term' id='index_term_#{index}'>#{reference}</span>"
+      end
     end
   end
 

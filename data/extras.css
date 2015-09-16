@@ -70,7 +70,7 @@
 }
 
 
-/* XREF */
+/* XREF asciidoctor-latex */
 
 .xref {
 
@@ -95,3 +95,18 @@
     font-size: 1pt;
 }
 
+.index_style ul {
+
+    list-style-type: none;
+    padding:0;
+    margin:0;
+    margin-left:0.5em;
+    margin-bottom: 2em;
+}
+
+.index_style p {
+
+    padding:0;
+    margin:0;
+    line-height: 1.1em;
+}

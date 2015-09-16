@@ -95,18 +95,19 @@
     font-size: 1pt;
 }
 
+
 .index_style ul {
 
     list-style-type: none;
     padding:0;
     margin:0;
-    margin-left:0.5em;
-    margin-bottom: 2em;
+    margin-left:1em;
 }
 
 .index_style p {
 
     padding:0;
     margin:0;
-    line-height: 1.1em;
+    line-height: 1.4em;
+    font-size:1.0em;
 }

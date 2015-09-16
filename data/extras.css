@@ -111,3 +111,9 @@
     line-height: 1.4em;
     font-size:1.0em;
 }
+
+.index_style .title {
+
+    font-weight:bold;
+    margin-top:1em;
+}

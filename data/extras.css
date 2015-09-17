@@ -112,8 +112,22 @@
     font-size:1.0em;
 }
 
-.index_style .title {
+#index_style .title {
 
     font-weight:bold;
     margin-top:1em;
+}
+
+#publisher {
+
+    margin-top:-1.35em;
+    font-size:9pt;
+    color: #555
+}
+
+#simple_publisher {
+
+    margin-top:-1.35em;
+    font-size:9pt;
+    color: #555
 }

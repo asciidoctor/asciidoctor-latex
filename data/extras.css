@@ -132,3 +132,7 @@
     font-size:9pt;
     color: #555
 }
+
+
+@media print{@page{margin:2.25cm 2.75cm}
+    body{ font-size: 0.75em; }}

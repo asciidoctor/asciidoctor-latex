@@ -129,10 +129,10 @@
 #simple_publisher {
 
     margin-top:-1.35em;
-    font-size:9pt;
+    font-size:9pt;  
     color: #555
 }
 
 
 @media print{@page{margin:2.25cm 2.75cm}
-    body{ font-size: 0.75em; }}
+    body{ font-size: 0.75em; text-align: justify; }}

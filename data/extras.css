@@ -151,8 +151,34 @@
 #simple_publisher {
 
     margin-top:-1.35em;
-    font-size:9pt;  
+    font-size:9pt;
     color: #555
 }
 
 
+@media print {
+    @page {
+        margin: 2.25cm 2.75cm
+    }
+
+    body {
+        font-size: 0.7em;
+        line-height: 1.15em;
+        text-align: justify;
+    }
+
+    h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
+        font-weight: 500;
+        font-style: normal;
+        color: #000
+    }
+
+    h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title small, h4 small, h5 small, h6 small {
+        color: #000
+    }
+
+    .openblock .title strong {
+        font-weight: 400;
+        font-size: 0.85em;
+    }
+}

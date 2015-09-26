@@ -181,4 +181,8 @@
         font-weight: 400;
         font-size: 0.85em;
     }
+
+    .verseblock pre{font-size:0.7em;}
+
+    blockquote{font-size: 0.7em;}
 }

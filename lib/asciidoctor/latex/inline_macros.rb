@@ -32,7 +32,20 @@ module Asciidoctor::LaTeX
     named :index_term
     def process parent, target, attributes
       array = attributes.values
-      "<span class='index_term' id='index_term_#{array[1]}'>#{array[0]}</span>"
+      css = array.pop
+      index = array.pop
+      reference_array = array.pop.split(',')
+      if reference_array.count == 1
+        reference = reference_array.pop
+      else
+        reference = ''
+      end
+      reference ||= ''
+      if css == 'invisible'
+        "<span class='invisible' id='index_term_#{index}'>#{reference}</span>"
+      else
+        "<span class='index_term' id='index_term_#{index}'>#{reference}</span>"
+      end
     end
   end
 

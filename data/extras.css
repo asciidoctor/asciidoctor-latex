@@ -36,7 +36,8 @@
     margin-left:10em;
     margin-bottom:2em;
     font-style:italic;
-    font-size:0.85em;
+    font-size:0.95em;
+    line-height: 1.2em;
 }
 
 
@@ -70,7 +71,7 @@
 }
 
 
-/* XREF */
+/* XREF asciidoctor-latex */
 
 .xref {
 
@@ -87,6 +88,7 @@
 
     color: darkred;
 }
+
 
 @media print {
     @page {
@@ -108,3 +110,49 @@
         color: #000
     }
 }
+
+
+/* use for targets of index items */
+.invisible {
+    color: #fff;
+    font-size: 1pt;
+}
+
+
+.index_style ul {
+
+    list-style-type: none;
+    padding:0;
+    margin:0;
+    margin-left:1em;
+}
+
+.index_style p {
+
+    padding:0;
+    margin:0;
+    line-height: 1.4em;
+    font-size:1.0em;
+}
+
+#index_style .title {
+
+    font-weight:bold;
+    margin-top:1em;
+}
+
+#publisher {
+
+    margin-top:-1.35em;
+    font-size:9pt;
+    color: #555
+}
+
+#simple_publisher {
+
+    margin-top:-1.35em;
+    font-size:9pt;  
+    color: #555
+}
+
+

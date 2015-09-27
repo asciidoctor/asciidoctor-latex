@@ -138,6 +138,7 @@ require 'asciidoctor/latex/prepend_processor'
 require 'asciidoctor/latex/macro_insert'
 require 'asciidoctor/latex/tex_block'
 require 'asciidoctor/latex/tex_preprocessor'
+require 'asciidoctor/latex/macro_preprocessor'
 require 'asciidoctor/latex/dollar'
 require 'asciidoctor/latex/tex_postprocessor'
 require 'asciidoctor/latex/chem'
@@ -381,6 +382,7 @@ module Asciidoctor::LaTeX
     Asciidoctor::Extensions.register do
       docinfo_processor CSSDocinfoProcessor
       preprocessor TeXPreprocessor
+      preprocessor MacroPreprocessor
       preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html' and document.attributes['include_macros'] == 'yes')
       block EnvironmentBlock
       block ClickBlock

@@ -27,20 +27,32 @@ module Asciidoctor::LaTeX
 
 <script>
 
-  $(document).ready(function(){
-    $('.openblock.click').click( function()  { $(this).find('.content').slideToggle('200');
-      $.reloadMathJax() }  )
-    $('.openblock.click').find('.content').hide()
-  });
-
-  $(document).ready(function(){
-    $('.listingblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )
-    $('.listingblock.click').find('.content').hide()
-  });
 
 
-  $(document).ready(ready);
-  $(document).on('page:load', ready);
+var ready2;
+
+ready2 = function() {
+
+    $(document).ready(function(){
+
+        $('.openblock.click').click( function()  { $(this).find('.content').slideToggle('200'); } )
+        $('.openblock.click').find('.content').hide()
+
+
+        $('.listingblock.click').click( function()  { $(this).find('.content').slideToggle('200') }  )
+        $('.listingblock.click').find('.content').hide()
+
+    });
+
+}
+
+
+
+
+$(document).ready(ready2);
+$(document).on('page:load', ready2);
+
+
 </script>
 
 </head>

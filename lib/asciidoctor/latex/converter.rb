@@ -388,7 +388,7 @@ module Asciidoctor::LaTeX
       inline_macro GlossInlineMacro
       inline_macro IndexTermInlineMacro
       # preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
-      postprocessor InjectHTML unless document.attributes['noteshare'] == 'yes'
+      postprocessor InjectHTML unless document.attributes['inject_javascript'] == 'no'
       postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'
       postprocessor Chem if document.basebackend? 'html'
       postprocessor HTMLPostprocessor if document.basebackend? 'html'

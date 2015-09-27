@@ -1,6 +1,10 @@
 
 /* CLICK BLOCK */
 
+
+.openblock.click .title  {  color: blue;}
+.openblock.click {  margin-bottom:1.5em; }
+
 .click_oblique {
 
     line-height:1.5em;
@@ -182,7 +186,7 @@
         font-size: 0.85em;
     }
 
-    .verseblock pre{font-size:0.7em;}
+    .verseblock pre{font-size:0.8em;}
 
-    blockquote{font-size: 0.7em;}
+    blockquote{font-size: 0.8em;}
 }

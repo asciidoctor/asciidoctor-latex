@@ -41,7 +41,7 @@ module Asciidoctor::LaTeX
         reference = ''
       end
       reference ||= ''
-      ref_id = "gloss_#{reference}"
+      ref_id = "gloss_#{reference.gsub(' ', '_')}"
       # ref_id = "'" + ref_id + "'"
       if css == 'invisible'
         "<span class='invisible' id=#{ref_id} >#{reference}</span>"

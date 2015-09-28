@@ -23,9 +23,35 @@ module Asciidoctor::LaTeX
     named :gloss
     def process parent, target, attributes
       term = attributes.values[0]
-      "<span class='glossary_term' id=gloss_#{term} >#{term}</span>"
+      id = term.gsub(' ', '_').gsub(/\W/, '')
+      "<span class='glossary_term' id=gloss_#{id} >#{term}</span>"
     end
   end
+
+=begin
+  class IndexTermInlineMacro <  Asciidoctor::Extensions::InlineMacroProcessor
+    use_dsl
+    named :index_term
+    def process parent, target, attributes
+      array = attributes.values
+      css = array.pop
+      index = array.pop
+      reference_array = array.pop.split(',')
+      if reference_array.count == 1
+        reference = reference_array.pop
+      else
+        reference = ''
+      end
+      reference ||= ''
+      ref_id = "gloss_#{reference.gsub(' ', '_').gsub(/\W/, '')}"
+      if css == 'invisible'
+        "<span class='invisible' id=#{ref_id} >#{reference}</span>"
+      else
+        "<span class='index_term' id=#{ref_id} >#{reference}</span>"
+      end
+    end
+  end
+=end
 
   class IndexTermInlineMacro <  Asciidoctor::Extensions::InlineMacroProcessor
     use_dsl
@@ -41,12 +67,10 @@ module Asciidoctor::LaTeX
         reference = ''
       end
       reference ||= ''
-      ref_id = "gloss_#{reference.gsub(' ', '_')}"
-      # ref_id = "'" + ref_id + "'"
       if css == 'invisible'
-        "<span class='invisible' id=#{ref_id} >#{reference}</span>"
+        "<span class='invisible' id='index_term_#{index}'>#{reference}</span>"
       else
-        "<span class='index_term' id=#{ref_id} >#{reference}</span>"
+        "<span class='index_term' id='index_term_#{index}'>#{reference}</span>"
       end
     end
   end

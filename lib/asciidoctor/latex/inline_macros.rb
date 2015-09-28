@@ -22,8 +22,8 @@ module Asciidoctor::LaTeX
     use_dsl
     named :gloss
     def process parent, target, attributes
-      array = attributes.values
-      "<span class='glossary_term'>#{array[0]}</span>"
+      term = attributes.values[0]
+      "<span class='glossary_term' id=gloss_#{term} >#{term}</span>"
     end
   end
 
@@ -41,10 +41,12 @@ module Asciidoctor::LaTeX
         reference = ''
       end
       reference ||= ''
+      ref_id = "gloss_#{reference}"
+      # ref_id = "'" + ref_id + "'"
       if css == 'invisible'
-        "<span class='invisible' id='index_term_#{index}'>#{reference}</span>"
+        "<span class='invisible' id=#{ref_id} >#{reference}</span>"
       else
-        "<span class='index_term' id='index_term_#{index}'>#{reference}</span>"
+        "<span class='index_term' id=#{ref_id} >#{reference}</span>"
       end
     end
   end

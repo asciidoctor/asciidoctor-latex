@@ -28,31 +28,6 @@ module Asciidoctor::LaTeX
     end
   end
 
-=begin
-  class IndexTermInlineMacro <  Asciidoctor::Extensions::InlineMacroProcessor
-    use_dsl
-    named :index_term
-    def process parent, target, attributes
-      array = attributes.values
-      css = array.pop
-      index = array.pop
-      reference_array = array.pop.split(',')
-      if reference_array.count == 1
-        reference = reference_array.pop
-      else
-        reference = ''
-      end
-      reference ||= ''
-      ref_id = "gloss_#{reference.gsub(' ', '_').gsub(/\W/, '')}"
-      if css == 'invisible'
-        "<span class='invisible' id=#{ref_id} >#{reference}</span>"
-      else
-        "<span class='index_term' id=#{ref_id} >#{reference}</span>"
-      end
-    end
-  end
-=end
-
   class IndexTermInlineMacro <  Asciidoctor::Extensions::InlineMacroProcessor
     use_dsl
     named :index_term

@@ -15,7 +15,7 @@ module Asciidoctor::LaTeX
           scan.each do |match|
             target = match[0]
             puts "target: #{target}".red
-            line = line.gsub("{{#{target}}}", "gloss::[#{target}]")
+            line = line.gsub("{{#{target}}}", "glossterm::[#{target}]")
           end
         end
         line

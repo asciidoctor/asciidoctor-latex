@@ -20,7 +20,7 @@ module Asciidoctor::LaTeX
 
   class GlossInlineMacro <  Asciidoctor::Extensions::InlineMacroProcessor
     use_dsl
-    named :gloss
+    named :glossterm
     def process parent, target, attributes
       term = attributes.values[0]
       id = term.gsub(' ', '_').gsub(/\W/, '')

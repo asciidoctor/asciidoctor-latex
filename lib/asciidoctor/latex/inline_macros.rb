@@ -27,7 +27,7 @@ module Asciidoctor::LaTeX
       identifier = term.gsub(' ', '_').gsub(/\W/, '')
       id = 'glossterm_' + identifier
       css_class = 'glossterm'
-      href = '#gloss_entry_' + identifier
+      href = '#glossentry_' + identifier
       "<a href=#{href} class=#{css_class} id=#{id} >#{term}</a>"
     end
 

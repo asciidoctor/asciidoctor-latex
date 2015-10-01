@@ -18,13 +18,22 @@ module Asciidoctor::LaTeX
     end
   end
 
+  # MODEL: <a href=#gloss_entry_cammin class=glossterm id=glossterm_cammin >cammin</a>
   class GlossInlineMacro <  Asciidoctor::Extensions::InlineMacroProcessor
     use_dsl
     named :glossterm
+
+    def glossterm(term)
+      identifier = term.gsub(' ', '_').gsub(/\W/, '')
+      id = 'glossterm_' + identifier
+      css_class = 'glossterm'
+      href = '#gloss_entry_' + identifier
+      "<a href=#{href} class=#{css_class} id=#{id} >#{term}</a>"
+    end
+
     def process parent, target, attributes
       term = attributes.values[0]
-      id = term.gsub(' ', '_').gsub(/\W/, '')
-      "<span class='glossary_term' id=gloss_#{id} >#{term}</span>"
+      glossterm(term)
     end
   end
 

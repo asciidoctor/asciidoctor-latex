@@ -44,6 +44,11 @@
     line-height: 1.2em;
 }
 
+.openblock.texmacro {
+
+    display:none;
+}
+
 
 
 /* Equation Style */

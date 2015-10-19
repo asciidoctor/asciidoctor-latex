@@ -4,3 +4,6 @@ gemspec
 gem 'asciidoctor-doctest', github: 'asciidoctor/asciidoctor-doctest', ref: 'latex'
 
 gem 'rspec'
+
+gem 'thread_safe'
+

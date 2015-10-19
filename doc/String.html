@@ -94,7 +94,9 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/asciidoctor/latex/core_ext/colored_string.rb</dd>
+    <dd class="r2 last">lib/asciidoctor/latex/core_ext/colored_string.rb<span class="defines">,<br />
+  lib/asciidoctor/latex/core_ext/utility.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
@@ -125,6 +127,31 @@ etc.</p>
     </h2>
 
     <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#apply_macros-instance_method" title="#apply_macros (instance method)">- (Object) <strong>apply_macros</strong>(macro_list) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The &#39;apply_macros&#39; method simplifies the   chaining of a sequence
+of macro applications.</p>
+</div></span>
+  
+</li>
+
       
         <li class="public ">
   <span class="summary_signature">
@@ -217,6 +244,32 @@ etc.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#macro-instance_method" title="#macro (instance method)">- (Object) <strong>macro</strong>(macro) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This method allows one to compute the strings that represent LaTeX macro
+applicatins without descent into a hell of backlslshes and braces,
+especially when more than one macro has to be applied.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#magenta-instance_method" title="#magenta (instance method)">- (Object) <strong>magenta</strong> </a>
     
 
@@ -254,6 +307,31 @@ etc.</p>
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tex_normalize-instance_method" title="#tex_normalize (instance method)">- (Object) <strong>tex_normalize</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>map &#39;_&#39; to &#39;-&#39; and prefix by &#39;x&#39; if the leading
+character is &#39;-&#39;.</p>
+</div></span>
   
 </li>
 
@@ -312,7 +390,73 @@ etc.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="black-instance_method">
+  <h3 class="signature first" id="apply_macros-instance_method">
+  
+    - (<tt>Object</tt>) <strong>apply_macros</strong>(macro_list) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The &#39;apply_macros&#39; method simplifies the</p>
+
+<pre class="code ruby"><code class="ruby">chaining of a sequence of macro applications.
+For example, we could say
+
+&#39;yoda&#39;.macro(&#39;baz&#39;).macro(&#39;bar&#39;).macro(&#39;foo&#39;)
+
+      =&gt; &quot;\\foo{\\bar{\\baz{yoda}}}&quot;
+
+But it is simpler to say
+
+&#39;yoda&#39;.apply_macros([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;])
+
+    =&gt; &quot;\\foo{\\bar{\\baz{yoda}}}&quot;
+
+Because we reverse the argument list, the
+application order of the LaTeX macros
+matches the order in the argument list.</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+46
+47
+48
+49
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/core_ext/utility.rb', line 46</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_apply_macros'>apply_macros</span><span class='lparen'>(</span><span class='id identifier rubyid_macro_list'>macro_list</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='kw'>self</span>
+  <span class='id identifier rubyid_macro_list'>macro_list</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_macro_name'>macro_name</span><span class='op'>|</span>
+    <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_macro'>macro</span><span class='lparen'>(</span><span class='id identifier rubyid_macro_name'>macro_name</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_val'>val</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="black-instance_method">
   
     - (<tt>Object</tt>) <strong>black</strong> 
   
@@ -454,6 +598,63 @@ etc.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="macro-instance_method">
+  
+    - (<tt>Object</tt>) <strong>macro</strong>(macro) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This method allows one to compute the strings that represent LaTeX macro
+applicatins without descent into a hell of backlslshes and braces,
+especially when more than one macro has to be applied.  For example,
+instead of</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\roleblue\{ </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_content'>content</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<p>we say just</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='id identifier rubyid_content'>content</span><span class='period'>.</span><span class='id identifier rubyid_macro'>macro</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>roleblue</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<p>Here is an appication of three macros:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_content'>content</span><span class='period'>.</span><span class='id identifier rubyid_macro'>macro</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>roleblue</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_macro'>macro</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_macro'>macro</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bar</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24
+25
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/core_ext/utility.rb', line 24</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_macro'>macro</span><span class='lparen'>(</span><span class='id identifier rubyid_macro'>macro</span><span class='rparen'>)</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_macro'>macro</span><span class='embexpr_end'>}</span><span class='tstring_content'>\{</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='embexpr_end'>}</span><span class='tstring_content'>\}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="magenta-instance_method">
   
     - (<tt>Object</tt>) <strong>magenta</strong> 
@@ -507,6 +708,58 @@ etc.</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_red'>red</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[1;31m</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='embexpr_end'>}</span><span class='tstring_content'>\e[0m</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tex_normalize-instance_method">
+  
+    - (<tt>Object</tt>) <strong>tex_normalize</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>map &#39;_&#39; to &#39;-&#39; and prefix by &#39;x&#39; if the leading
+character is &#39;-&#39;</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/core_ext/utility.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tex_normalize'>tex_normalize</span>
+  <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>_</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_str'>str</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-</span><span class='tstring_end'>&#39;</span></span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x</span><span class='tstring_end'>&#39;</span></span><span class='op'>+</span><span class='id identifier rubyid_str'>str</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_str'>str</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -578,9 +831,9 @@ etc.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Apr 19 18:37:45 2015 by
+  Generated on Mon Oct 19 14:44:07 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.1.2).
+  0.8.7.6 (ruby-2.2.3).
 </div>
 
   </body>

@@ -148,7 +148,7 @@ require 'asciidoctor/latex/sectnumoffset-treeprocessor'
 
 # require 'asciidoctor/latex/preamble_processor'
 
-$VERBOSE = true
+$VERBOSE = false
 
 
 

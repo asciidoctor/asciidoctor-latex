@@ -61,7 +61,23 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><div id='filecontents'><div class="sect1">
+    <div id="content"><div id='filecontents'><div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+CHANGELOG.adoc has been added to this repo.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_purpose">1. Purpose</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -75,14 +91,16 @@ and LaTeX.<span class="footnote">[<a id="_footnoteref_1" class="footnote" href="
 <div class="paragraph">
 <p>Below, we descibe the main
 features of Asciidoc-LaTeX.  However, since
-Asciidoc-LaTeX will not render in GitHub, you
+it will not render in GitHub, you
 are encouraged to view this write-up:
-<a href=https://vschool.s3.amazonaws.com/manuscripts/372.html>Asciidoc-LaTeX</a>.
-For more information on using , please consult the
-<a href=http://www.noteshare.io/book/asciidoctor-latex-manual>Asciidoctor-LaTeX manual</a>.
+<a href="https://vschool.s3.amazonaws.com/manuscripts/372.html">Asciidoc-LaTeX</a>.
+For more information on using Asciidoc-LaTeX, please consult the
+<a href="http://www.noteshare.io/book/asciidoctor-latex-manual">Asciidoctor-LaTeX manual</a>.
 For more information on conversion of Asciidoc-LaTeX
-documents to <a href=https://www.sharelatex.com/>LaTeX</a>, see the file <code>tech-report.adoc</code> in
-this repository.</p>
+documents to LaTeX, see the file <code>tech-report.adoc</code> in
+this repository or consult the
+<a href="https://vschool.s3.amazonaws.com/manuscripts/389.html">online version</a>,
+which has a table of contents.</p>
 </div>
 <div class="paragraph">
 <p>Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.</p>
@@ -93,11 +111,11 @@ this repository.</p>
 <h2 id="_installation">2. Installation</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_using_rubygems">2.1. Using Rubygems</h3>
+<h3 id="_from_rubygems">2.1. From Rubygems</h3>
 <div class="paragraph">
-<p>There is a development release at
-<a href=https://rubygems.org/gems/asciidoctor-latex>RubyGems.org</a>
-  Beta alert!</p>
+<p>The development release, currenty 1.5.0.3.dev, is at
+<a href="https://rubygems.org/gems/asciidoctor-latex">RubyGems.org</a>
+Beta alert!</p>
 </div>
 </div>
 <div class="sect2">
@@ -117,14 +135,64 @@ $ gem install *.gem</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_document_format">3. Document format</h2>
+<h2 id="_commands">3. Commands</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Asciidoc math files can be rendered</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Render as HTML</dt>
+<dd>
+<p>Use <code>$ asciidoctor-latex -b html foo.adoc</code> to produce <code>foo.html</code>.
+With this command the Asciidoc-LaTeX syntax and extensions will be rendered.</p>
+</dd>
+<dt class="hdlist1">Render as LaTeX</dt>
+<dd>
+<p>Use <code>$ asciidoctor-latex foo.adoc</code>
+to produce <code>foo.tex</code>.</p>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="_macro_files">3.1. Macro files</h3>
+<div class="paragraph">
+<p>The contents of a file named <code>macros.tex</code> will
+read and used by <code>asciidoctor-latex</code>
+if it is in the same directory as the file
+being rendered.  This is the case regardless
+of the output format&#8201;&#8212;&#8201;HTML or tex.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_switches">3.2. Switches</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">asciidoctor-latex -a header=no foo.adoc</dt>
+<dd>
+<p>Use a minimal header for the generated tex file.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Asciidoctor-LaTeX&#8217;s default form at is <code>:latexmath</code>.
+To use <code>:stem</code>, put the text <code>:stem:</code>
+in your file.  To turn the switch
+on and set it to <code>latexmath</code>, say
+instead of <code>stem:latexmth</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_format">4. Document format</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Asciidoctor supports two closely-related
 math formats, <span class="blue">Asciidoc-LaTeX</span>
 and <span class="blue">AsciiMath</span>.
 In Asciidoc-LaTeX,
-one can write <code>\( a^2 + b^2 = c^2 \)</code> and</p>
+one can write <code>$ a^2 + b^2 = c^2 $</code> and</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -139,8 +207,8 @@ text, respectively.
 You will need to express dollar-denominated
 currency using
 escaped dollar signs, as
- in the sentence, "He paid $100 for that
-theore.m"  In AsciiMath, one writes
+ in the sentence, "He paid \$100 for that
+theorem."  In AsciiMath, one writes
 <code>stem:[ a^2 + b^2 = c^2 ]</code>
 and</p>
 </div>
@@ -155,7 +223,7 @@ and</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_asciidoc_latex_environments">4. Asciidoc-LaTeX environments</h2>
+<h2 id="_asciidoc_latex_environments">5. Asciidoc-LaTeX environments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Asciidoc-LaTeX supports an <code>env</code> construct that maps to LaTeX environments.
@@ -185,7 +253,7 @@ its determinant is nonzero, i.e., if
     c &amp; d
   \end{matrix}\right| \ne 0
 \]
-This result extends to +\(n\times n\)+ matrices.
+This result extends to $n\times n$ matrices.
 --</code></pre>
 </div>
 </div>
@@ -197,9 +265,9 @@ of <code>[env.NAME]</code>, Thus,one can write</p>
 <div class="content">
 <pre class="code ruby"><code class="ruby">[env.definition]
 --
-An integer +\(n\)+ is *prime* if (a) it is not
-+\(\pm 1\)+ and (b) it has no divisors other
-than +\(\pm 1\)+ and +\(\pm n\)+.
+An integer $n$ is *prime* if (a) it is not
+$\pm 1$ and (b) it has no divisors other
+than $\pm 1$ and $\pm n$.
 --</code></pre>
 </div>
 </div>
@@ -231,7 +299,7 @@ for a drink.  The lawyer said ...
 </div>
 </div>
 <div class="paragraph">
-<p>then referencing it later as <code>ERROR: refs[refid] was nil</code>.</p>
+<p>then referencing it later as <code><a href="#mathjoke1">[mathjoke1]</a></code>.</p>
 </div>
 <div class="paragraph">
 <p>Certain environments receive special treatment.
@@ -261,7 +329,7 @@ V &amp; = \frac{4}{3} \pi r^3
 </div>
 </div>
 <div class="sect1">
-<h2 id="_click_blocks">5. Click blocks</h2>
+<h2 id="_click_blocks">6. Click blocks</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Click blocks are similar to <code>[env]</code> blocks exceptiipoo that the body of
@@ -288,36 +356,6 @@ for more information.</p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_commands_for_rendering">6. Commands for rendering</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Asciidoc math files can be rendered</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>as HTML.  Use <code>$ asciidoctor-latex -b html foo.adoc</code> to produce <code>foo.html</code>.
-With this command the Asciidoc-LaTeX syntax and extensions will be rendered.</p>
-</li>
-<li>
-<p>as LaTeX.  Use <code>$ asciidoctor-latex foo.adoc</code>
-to produce <code>foo.tex</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_switches">7. Switches</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Switch <code>:stem:</code> processing on by puttinng the text <code>:stem:</code>
-in your file.  To turn the switch on and set it to <code>latexmath</code>, say
-instead of <code>stem:latexmth</code>.</p>
-</div>
-</div>
-</div>
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnote_1">
@@ -326,9 +364,9 @@ instead of <code>stem:latexmth</code>.</p>
 </div></div></div>
 
     <div id="footer">
-  Generated on Sun Apr 19 18:37:45 2015 by
+  Generated on Mon Oct 19 14:44:06 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.1.2).
+  0.8.7.6 (ruby-2.2.3).
 </div>
 
   </body>

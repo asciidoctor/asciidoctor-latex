@@ -127,12 +127,7 @@ href=“2”>1latexmath:</a>3&#39; TEX_DOLLAR_SUB = &#39;1\(2\)3&#39;</p>
         <dt id="TEX_DOLLAR_SUB-constant" class="">TEX_DOLLAR_SUB =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\\(\1\\\)</span><span class='tstring_end'>&#39;</span></span></pre></dd>
-      
-        <dt id="TEX_DOLLAR_SUB2-constant" class="">TEX_DOLLAR_SUB2 =
-          
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>+\\\(\1\\\)+</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pass:[\\\(\1\\\)]</span><span class='tstring_end'>&#39;</span></span></pre></dd>
       
     </dl>
   
@@ -198,6 +193,7 @@ href=“2”>1latexmath:</a>3&#39; TEX_DOLLAR_SUB = &#39;1\(2\)3&#39;</p>
       <pre class="lines">
 
 
+29
 30
 31
 32
@@ -230,10 +226,47 @@ href=“2”>1latexmath:</a>3&#39; TEX_DOLLAR_SUB = &#39;1\(2\)3&#39;</p>
 59
 60
 61
-62</pre>
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/tex_preprocessor.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/tex_preprocessor.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span> <span class='id identifier rubyid_document'>document</span><span class='comma'>,</span> <span class='id identifier rubyid_reader'>reader</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_reader'>reader</span> <span class='kw'>if</span> <span class='id identifier rubyid_reader'>reader</span><span class='period'>.</span><span class='id identifier rubyid_eof?'>eof?</span>
@@ -248,22 +281,60 @@ href=“2”>1latexmath:</a>3&#39; TEX_DOLLAR_SUB = &#39;1\(2\)3&#39;</p>
     <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;-</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>and</span> <span class='id identifier rubyid_document'>document</span><span class='period'>.</span><span class='id identifier rubyid_basebackend?'>basebackend?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>tex</span><span class='tstring_end'>&#39;</span></span>
       <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;-</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>CHEMLEFTARROW</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
     <span class='kw'>end</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\$</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>and</span> <span class='id identifier rubyid_document'>document</span><span class='period'>.</span><span class='id identifier rubyid_basebackend?'>basebackend?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>html</span><span class='tstring_end'>&#39;</span></span>
-      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\$</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>DOLLOD</span><span class='tstring_end'>&#39;</span></span>
+
+    <span class='comment'># SPECIAL CHARACTER SUBSTITUTIONS
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\&amp;</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>and</span> <span class='id identifier rubyid_document'>document</span><span class='period'>.</span><span class='id identifier rubyid_basebackend?'>basebackend?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>html</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\&amp;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ESCAMPERSAND</span><span class='tstring_end'>&#39;</span></span>
     <span class='kw'>end</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>and</span> <span class='id identifier rubyid_document'>document</span><span class='period'>.</span><span class='id identifier rubyid_basebackend?'>basebackend?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>tex</span><span class='tstring_end'>&#39;</span></span>
-      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\%</span><span class='tstring_end'>&#39;</span></span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\_</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>and</span> <span class='id identifier rubyid_document'>document</span><span class='period'>.</span><span class='id identifier rubyid_basebackend?'>basebackend?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>html</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\_</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ESCUNDERSCORE</span><span class='tstring_end'>&#39;</span></span>
     <span class='kw'>end</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>$</span><span class='tstring_end'>&#39;</span></span>
-      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='const'>TEX_DOLLAR_RX</span><span class='comma'>,</span> <span class='const'>TEX_DOLLAR_SUB2</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>and</span> <span class='id identifier rubyid_document'>document</span><span class='period'>.</span><span class='id identifier rubyid_basebackend?'>basebackend?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>html</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\$</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ESCDOLLAR</span><span class='tstring_end'>&#39;</span></span>
     <span class='kw'>end</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^\\[</span><span class='tstring_end'>&#39;</span></span>
-      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\[</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>+\\[</span><span class='tstring_end'>&#39;</span></span>
+    <span class='comment'># It is important the previous transformation
+</span>    <span class='comment'># come before the next one
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>$</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='const'>TEX_DOLLAR_RX</span><span class='comma'>,</span> <span class='const'>TEX_DOLLAR_SUB</span>
     <span class='kw'>end</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^\\]</span><span class='tstring_end'>&#39;</span></span>
-      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\]+</span><span class='tstring_end'>&#39;</span></span>
-    <span class='kw'>end</span>
-    <span class='id identifier rubyid_line'>line</span>
+
+    <span class='comment'># protect math, e.g., (a^2)^3 from Asciidoc subsitutions:
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\\\[</span><span class='regexp_end'>/</span></span>
+      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\[</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>+++\n\\[</span><span class='tstring_end'>&quot;</span></span>
+      <span class='comment'># line = line.gsub /^\\\[/, &#39;+\\]&#39;
+</span>      <span class='comment'># line = line.gsub &#39;\\[&#39;, &#39;\\[&#39;
+</span>    <span class='kw'>end</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\\\]</span><span class='regexp_end'>/</span></span>
+      <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\]\n+++\n</span><span class='tstring_end'>&quot;</span></span>
+      <span class='comment'># line = line.gsub /&#39;^\\\]/, &#39;\\]+&#39;
+</span>      <span class='comment'># line = line.gsub &#39;\\]&#39;, &#39;\\]+&#39;
+</span>    <span class='kw'>end</span>
+    <span class='comment'># if line =~ /\[env\..*?\]/
+</span>    <span class='comment'>#  m = line.match /(\[env\..*?)\]/
+</span>    <span class='comment'>#  line = line.gsub m[1], m[1]+&#39;,subs=none&#39;
+</span>    <span class='comment'># end
+</span>    <span class='comment'># if line =~ /\&amp;/
+</span>    <span class='comment'>#  line = line.gsub(&#39;&amp;&#39;, &#39;\\\&amp;&#39;)
+</span>    <span class='comment'># end
+</span>    <span class='comment'># We do need to make this substitution, but ONLY ouutside
+</span>    <span class='comment'># of mathematical text.
+</span>    <span class='comment'># Please $FIXME!
+</span>    <span class='comment'>#
+</span>    <span class='comment'># We would like to ensure that underscores in names,
+</span>    <span class='comment'># e.g., MACRO_NAME, do not cause LaTeX bugs. However,
+</span>    <span class='comment'># the code below introduces a more serious bug: expressons
+</span>    <span class='comment'># lik4 $\int_0^1 x^n dx$ are mapped to  $\int\_0^1 x^n dx$.
+</span>    <span class='comment'># I&#39;m not sure this problem can be solved using regex&#39;s:
+</span>    <span class='comment'># we need to apply a substitution to a line when there is a match
+</span>    <span class='comment'># with &#39;_&#39; AND the word containing the &#39;_&#39; IS NOT in any enclosng
+</span>    <span class='comment'># $ ... $ or \[ ... \].  If we had a parser that would recognize
+</span>    <span class='comment'># $ ... $ and \[ ... \] and build them into the AST as nodes,
+</span>    <span class='comment'># then there would be an easy solution.  This issue may
+</span>    <span class='comment'># have to wait.
+</span>    <span class='comment'># if line =~ /_/
+</span>    <span class='comment'>#  line = line.gsub /_/, &#39;\_&#39;
+</span>    <span class='comment'># end
+</span>    <span class='id identifier rubyid_line'>line</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_reader'>reader</span><span class='period'>.</span><span class='id identifier rubyid_unshift_lines'>unshift_lines</span> <span class='id identifier rubyid_replacement_lines'>replacement_lines</span>
   <span class='id identifier rubyid_reader'>reader</span>
@@ -278,9 +349,9 @@ href=“2”>1latexmath:</a>3&#39; TEX_DOLLAR_SUB = &#39;1\(2\)3&#39;</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Apr 19 18:37:45 2015 by
+  Generated on Mon Oct 19 14:44:07 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.1.2).
+  0.8.7.6 (ruby-2.2.3).
 </div>
 
   </body>

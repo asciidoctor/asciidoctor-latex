@@ -42,7 +42,7 @@ module Asciidoctor::LaTeX
       # if match_data
       #  output = output.gsub(match_data[0], match_data[1])
       # end
-      output = output.gsub('!!!BACKSLASH', '\\')
+      output.gsub('!!!BACKSLASH', '\\')
       # output.gsub('%', '\%')  This messes up the html bigtimw
     end
 

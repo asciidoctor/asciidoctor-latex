@@ -189,6 +189,8 @@ module Asciidoctor::LaTeX
           handle_equation(node)
         when 'equationalign'
           handle_equation_align(node)
+        when 'cd'
+          handle_cd(node)
         when 'chem'
           handle_chem(node)
         when 'jsxgraph'
@@ -201,7 +203,40 @@ module Asciidoctor::LaTeX
 
       node.attributes['roles'] = (node.roles + ['environment']) * ' '
       self.open node
-    end
+    end # method environment
+
+    def environment_literal node
+
+      warn "entering environment(node)".red if $VERBOSE
+
+      attrs = node.attributes
+
+      warn "attrs['role'] = #{attrs['role']}".blue if $VERBOSE
+
+      case attrs['role']
+        when 'box', 'capsule'
+          handle_null(node)
+        when 'code'
+          handle_code(node)
+        when 'equation'
+          handle_equation_literal(node)
+        when 'equationalign'
+          handle_equation_align(node)
+        when 'cd'
+          handle_cd(node)
+        when 'chem'
+          handle_chem(node)
+        when 'jsxgraph'
+          handle_jsxgraph(node)
+        when 'texmacro'
+          handle_texmacro(node)
+        else
+          handle_default(node)
+      end
+
+      node.attributes['roles'] = (node.roles + ['environment']) * ' '
+      self.open node
+    end # method environment_literal
 
     def handle_texmacro node
       node.title = nil
@@ -297,6 +332,21 @@ module Asciidoctor::LaTeX
       end
     end
 
+    def handle_equation_literal(node)
+      attrs = node.attributes
+      options = attrs['options']
+      node.title = nil
+      number_part = '<td class="equation_number_style">' + "(#{node.caption}) </td>"
+      equation_part = ['<td class="equation_content_style";>'] + ['\\['] + node.lines + ['\\]'] + ['</td>']
+      table_style='class="equation_table_style"'
+      row_style='class="equation_row_style"'
+      if options.include? 'numbered'
+        node.lines =  ["<table #{table_style}><tr #{row_style}>"] + equation_part + number_part + ['</tr></table>']
+      else
+        node.lines =  ["<table #{table_style}><tr #{row_style}>"] + equation_part + ['</tr></table>']
+      end
+    end
+
     def handle_equation_align(node)
       attrs = node.attributes
       options = attrs['options']
@@ -311,6 +361,11 @@ module Asciidoctor::LaTeX
       else
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
       end
+    end
+
+    def handle_cd(node)
+      node.title = nil
+      node.lines  = ['\\[', '\require{AMScd}', '\\begin{CD}', node.lines, '\\end{CD}', '\\]']
     end
 
     def handle_chem(node)
@@ -385,6 +440,7 @@ module Asciidoctor::LaTeX
       preprocessor MacroPreprocessor
       preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html' and document.attributes['include_macros'] == 'yes')
       block EnvironmentBlock
+      block EnvironmentBlock2
       block ClickBlock
       inline_macro ChemInlineMacro
       inline_macro GlossInlineMacro
@@ -429,7 +485,7 @@ module Asciidoctor::LaTeX
       if NODE_TYPES.include? node.node_name
         node.tex_process
       else
-        warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta  if $VERBOSE
+        warn %(Node to implement: #{node.node_name}, class = #{node.class}).magenta  # if $VERBOSE
         # This warning should not be switched off by $VERBOSE
       end
 

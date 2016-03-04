@@ -73,14 +73,14 @@ module Asciidoctor::LaTeX
         # end
         # if line =~ /\&/
         #  line = line.gsub('&', '\\\&')
-        # end
+        # en
         # We do need to make this substitution, but ONLY ouutside
         # of mathematical text.
         # Please $FIXME!
         #
         # We would like to ensure that underscores in names,
         # e.g., MACRO_NAME, do not cause LaTeX bugs. However,
-        # the code below introduces a more serious bug: expressons
+        # the code below introduces a more serious bug: expressions
         # lik4 $\int_0^1 x^n dx$ are mapped to  $\int\_0^1 x^n dx$.
         # I'm not sure this problem can be solved using regex's:
         # we need to apply a substitution to a line when there is a match

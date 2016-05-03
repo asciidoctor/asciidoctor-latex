@@ -315,14 +315,14 @@ href=“2”>1latexmath:</a>3&#39; TEX_DOLLAR_SUB = &#39;1\(2\)3&#39;</p>
 </span>    <span class='comment'># end
 </span>    <span class='comment'># if line =~ /\&amp;/
 </span>    <span class='comment'>#  line = line.gsub(&#39;&amp;&#39;, &#39;\\\&amp;&#39;)
-</span>    <span class='comment'># end
+</span>    <span class='comment'># en
 </span>    <span class='comment'># We do need to make this substitution, but ONLY ouutside
 </span>    <span class='comment'># of mathematical text.
 </span>    <span class='comment'># Please $FIXME!
 </span>    <span class='comment'>#
 </span>    <span class='comment'># We would like to ensure that underscores in names,
 </span>    <span class='comment'># e.g., MACRO_NAME, do not cause LaTeX bugs. However,
-</span>    <span class='comment'># the code below introduces a more serious bug: expressons
+</span>    <span class='comment'># the code below introduces a more serious bug: expressions
 </span>    <span class='comment'># lik4 $\int_0^1 x^n dx$ are mapped to  $\int\_0^1 x^n dx$.
 </span>    <span class='comment'># I&#39;m not sure this problem can be solved using regex&#39;s:
 </span>    <span class='comment'># we need to apply a substitution to a line when there is a match
@@ -349,9 +349,9 @@ href=“2”>1latexmath:</a>3&#39; TEX_DOLLAR_SUB = &#39;1\(2\)3&#39;</p>
 </div>
 
     <div id="footer">
-  Generated on Mon Oct 19 14:44:07 2015 by
+  Generated on Tue May  3 13:31:56 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.3).
+  0.8.7.6 (ruby-2.3.0).
 </div>
 
   </body>

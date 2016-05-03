@@ -191,6 +191,52 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#environment_literal-instance_method" title="#environment_literal (instance method)">- (Object) <strong>environment_literal</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>method environment.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#handle_cd-instance_method" title="#handle_cd (instance method)">- (Object) <strong>handle_cd</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#handle_chem-instance_method" title="#handle_chem (instance method)">- (Object) <strong>handle_chem</strong>(node) </a>
     
 
@@ -301,6 +347,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#handle_equation_literal-instance_method" title="#handle_equation_literal (instance method)">- (Object) <strong>handle_equation_literal</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#handle_jsxgraph-instance_method" title="#handle_jsxgraph (instance method)">- (Object) <strong>handle_jsxgraph</strong>(node) </a>
     
 
@@ -359,7 +427,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>method environment_literal.</p>
+</div></span>
   
 </li>
 
@@ -454,18 +524,18 @@
       <pre class="lines">
 
 
-211
-212
-213
-214
-215
-216
-217
-218
-219</pre>
+246
+247
+248
+249
+250
+251
+252
+253
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 211</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_click'>click</span> <span class='id identifier rubyid_node'>node</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>plain-option</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
@@ -536,7 +606,9 @@
 201
 202
 203
-204</pre>
+204
+205
+206</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 175</span>
@@ -558,6 +630,8 @@
       <span class='id identifier rubyid_handle_equation'>handle_equation</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>equationalign</span><span class='tstring_end'>&#39;</span></span>
       <span class='id identifier rubyid_handle_equation_align'>handle_equation_align</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>cd</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_handle_cd'>handle_cd</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>chem</span><span class='tstring_end'>&#39;</span></span>
       <span class='id identifier rubyid_handle_chem'>handle_chem</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>jsxgraph</span><span class='tstring_end'>&#39;</span></span>
@@ -570,6 +644,137 @@
 
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>roles</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_roles'>roles</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>environment</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span> <span class='id identifier rubyid_node'>node</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="environment_literal-instance_method">
+  
+    - (<tt>Object</tt>) <strong>environment_literal</strong>(node) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>method environment</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 208</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_environment_literal'>environment_literal</span> <span class='id identifier rubyid_node'>node</span>
+
+  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>entering environment(node)</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_red'>red</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+
+  <span class='id identifier rubyid_attrs'>attrs</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
+
+  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>attrs[&#39;role&#39;] = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>role</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span> <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
+
+  <span class='kw'>case</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>role</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>box</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>capsule</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_handle_null'>handle_null</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>code</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_handle_code'>handle_code</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>equation</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_handle_equation_literal'>handle_equation_literal</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>equationalign</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_handle_equation_align'>handle_equation_align</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>cd</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_handle_cd'>handle_cd</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>chem</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_handle_chem'>handle_chem</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>jsxgraph</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_handle_jsxgraph'>handle_jsxgraph</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>texmacro</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_handle_texmacro'>handle_texmacro</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_handle_default'>handle_default</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>roles</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_roles'>roles</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>environment</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span> <span class='id identifier rubyid_node'>node</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="handle_cd-instance_method">
+  
+    - (<tt>Object</tt>) <strong>handle_cd</strong>(node) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+366
+367
+368
+369</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 366</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_handle_cd'>handle_cd</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\[</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\require{AMScd}</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\begin{CD}</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\end{CD}</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\]</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -591,18 +796,18 @@
       <pre class="lines">
 
 
-316
-317
-318
-319
-320
-321
-322
-323
-324</pre>
+371
+372
+373
+374
+375
+376
+377
+378
+379</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 316</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 371</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_chem'>handle_chem</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -633,16 +838,16 @@
       <pre class="lines">
 
 
-357
-358
-359
-360
-361
-362
-363</pre>
+412
+413
+414
+415
+416
+417
+418</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 412</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_code'>handle_code</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>handle code</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_red'>red</span>  <span class='kw'>if</span> <span class='gvar'>$VERBOSE</span>
@@ -671,16 +876,16 @@
       <pre class="lines">
 
 
-365
-366
-367
-368
-369
-370
-371</pre>
+420
+421
+422
+423
+424
+425
+426</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 420</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_default'>handle_default</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>plain-option</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
@@ -709,24 +914,24 @@
       <pre class="lines">
 
 
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298</pre>
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 284</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 319</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_equation'>handle_equation</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_attrs'>attrs</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
@@ -763,24 +968,24 @@
       <pre class="lines">
 
 
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314</pre>
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 350</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_equation_align'>handle_equation_align</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_attrs'>attrs</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
@@ -803,6 +1008,58 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="handle_equation_literal-instance_method">
+  
+    - (<tt>Object</tt>) <strong>handle_equation_literal</strong>(node) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 335</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_handle_equation_literal'>handle_equation_literal</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_attrs'>attrs</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
+  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_attrs'>attrs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>options</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_number_part'>number_part</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;td class=&quot;equation_number_style&quot;&gt;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_caption'>caption</span><span class='embexpr_end'>}</span><span class='tstring_content'>) &lt;/td&gt;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_equation_part'>equation_part</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;td class=&quot;equation_content_style&quot;;&gt;</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\[</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\]</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;/td&gt;</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_table_style'>table_style</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>class=&quot;equation_table_style&quot;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_row_style'>row_style</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>class=&quot;equation_row_style&quot;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>numbered</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span>  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;table </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_table_style'>table_style</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;&lt;tr </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_row_style'>row_style</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_equation_part'>equation_part</span> <span class='op'>+</span> <span class='id identifier rubyid_number_part'>number_part</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;/tr&gt;&lt;/table&gt;</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span>  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;table </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_table_style'>table_style</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;&lt;tr </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_row_style'>row_style</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_equation_part'>equation_part</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;/tr&gt;&lt;/table&gt;</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="handle_jsxgraph-instance_method">
   
     - (<tt>Object</tt>) <strong>handle_jsxgraph</strong>(node) 
@@ -817,35 +1074,35 @@
       <pre class="lines">
 
 
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351</pre>
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 381</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_jsxgraph'>handle_jsxgraph</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_attrs'>attrs</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
@@ -893,12 +1150,12 @@
       <pre class="lines">
 
 
-353
-354
-355</pre>
+408
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 353</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 408</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_null'>handle_null</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
 
@@ -917,19 +1174,30 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>method environment_literal</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-206
-207
-208
-209</pre>
+241
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 241</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_texmacro'>handle_texmacro</span> <span class='id identifier rubyid_node'>node</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -989,44 +1257,44 @@
       <pre class="lines">
 
 
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282</pre>
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 283</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inline_anchor'>inline_anchor</span> <span class='id identifier rubyid_node'>node</span>
 
@@ -1083,35 +1351,35 @@
       <pre class="lines">
 
 
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246</pre>
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/converter.rb', line 256</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_old_inline_anchor'>old_inline_anchor</span> <span class='id identifier rubyid_node'>node</span>
   <span class='id identifier rubyid_target'>target</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_target'>target</span>
@@ -1149,9 +1417,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Oct 19 14:44:06 2015 by
+  Generated on Tue May  3 13:31:55 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.3).
+  0.8.7.6 (ruby-2.3.0).
 </div>
 
   </body>

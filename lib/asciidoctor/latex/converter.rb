@@ -3,17 +3,46 @@
 # File: latex-converter.rb
 # Author: J. Carlson (jxxcarlson@gmail.com)
 # First commit: 9/26/2014
-# Date: 2/20/1015
+# Date: 2/20/2015
 #
 # OVERVIEW
 #
-# Asciidoctor-latex does two things:
+# Asciidoctor-latex adds certain latex-like constructs to the asciidoc markup
+# language and provides two backends:
 #
-#   -- provides an HTML backend which adds latex-like features to asciidoctor
-#      asciidoc(tor) with these additional features will be called 'asciidoctor-latex'
+#   - a converter with HTML as output
 #
-#  -- provides a converter from asciidoctor-latex to asciidoctor.  This converter
-#     is 'usable' but has limited coverage of asciidoctor-latex
+#  -- a convert with LaTeX as output
+#
+# The goal of this project is to be able to combine the
+# strengths of asciidoc and late:
+#
+#  - to use asciidoc for most of the non-mathematical text
+#
+#  - to write inline mathematical text as one does in LaTeX:
+#
+#       $ a^2 + b^2 = c^1 $,
+#
+#    for example.
+#
+#  - the same for displayed mathematical text
+#
+#    \[
+#        \int_0^1 x^n dx = \frac{1}{n+1}
+#    \]
+#
+#  - to provide constructs which map to LaTeX environments.
+#    Thus one can say
+#
+#    [env.theorem]
+#    --
+#    There are infinitely many primes
+#    --
+#
+#     In the HTML converter the output will appear just
+#     as if it had been rendered by xelatex.  If the
+#     LaTeX backend is used, the output is as one would
+#     expect
 #
 # See http://www.noteshare.io/section/asciidoctor-latex-manual-intro
 # for a description (with examples) of asciidoctor-latex.
@@ -30,12 +59,14 @@
 #
 # to render an asciidoctor-latex document to html
 #
-# Some documents (those with 'click blocks', see http://www.noteshare.io/section/homework-problems)
-# For these, run
+# Some documents -- those with 'click blocks',
+# use a variant of the regular command:
 #
 #     'asciidoctor-latex -b html -a click_extras=include foo.adoc'
 #
 # In both cases the output is 'foo.html'
+# see http://www.noteshare.io/section/homework-problems)
+# for information on this topic.
 #
 # USAGE (2: latex)
 #
@@ -43,37 +74,33 @@
 #
 #      'asciidoctor-latex foo.adoc'
 #
-# to convert foo.adoc to foo.tex.  This feature
-# needs a lot of work.
+# to convert foo.adoc to foo.tex.  The resulting
+# file should be typeset with xelatex
+# because of the likely appearance of unicode
+# characters.
 #
-# to convert foo.tex to the latex file foo.latex
+# To convert foo.tex to the latex file foo.latex,
 # You can put files 'macros.tex' and 'preamble.tex' to
 # replace the default preamble and set of macros.
-# Define your own 'newEnvironments.tex' to use yours
+# Define your own 'newEnvironments.tex' to use your definitions
 # as opposed to the default definitons of environments
-# in tex mapping to [tex.ENVIRNOMENT] in asciidoctor-latex.
+# in tex mapping to [tex.ENVIRONOMENT] in asciidoctor-latex.
 #
-# TECHNICAL NOTES
+# TECHNICAL NOTES (This section needs a thorough rewrite)
 #
 # This is a first step towards writing a LaTeX backend
 # for Asciidoctor. It is based on the
-# Dan Allen's demo-converter.rb.  The "convert" method
-# is unchanged, the methods "document node" and "section node"
-# have been redefined, and several new methods have been added.
+# Dan Allen's demo-converter.rb.
 #
 # The main work will be in identifying asciidoc elements
 # that need to be transformed and adding a method for
 # each such element.  As noted below, the "warn" clause
 # in the "convert" method is a useful tool for this task.
 #
-# Usage:
-#
-#   $ asciidoctor -r ./latex-converter.rb -b latex test/sample1.adoc
-#
 # Comments
 #
 #   1.  The "warn" clause in the converter code is quite useful.
-#       For example, you will discover in running the converter on
+#       For example, you may discover in running the converter on
 #       "test/sample-1.adoc" that you have not implemented code for
 #       the "olist" node. Thus you can work through ever more complex
 #       examples to discover what you need to do to increase the coverage
@@ -81,7 +108,7 @@
 #
 #   2.  The converter simply passes on what it does not understand, e.g.,
 #       LaTeX, This is good. However, we will have to map constructs
-#       like"+\( a^2 = b^2 \)+" to $ a^2 + b^2 $, etc.
+#       like "+\( a^2 = b^2 \)+" to $ a^2 + b^2 $, etc.
 #       This can be done at the preprocessor level.
 #
 #   3.  In view of the preceding, we may need to chain a frontend
@@ -110,17 +137,7 @@
 #       in "node_processors.rb" to date was written using this
 #       hackish process.
 #
-#
-#  CURRENT STATUS
-#
-#  The following constructs are processed
-#
-#  * sections to a depth of five, e.g., == foo, === foobar, etc.
-#  * ordered and unordered lists, though nestings is untested and
-#    likely does not work.
-#  * *bold* and _italic_
-#  * hyperlinks like http://foo.com[Nerdy Stuff]
-#
+
 
 require 'asciidoctor'
 require 'asciidoctor/extensions' unless RUBY_ENGINE == 'opal'

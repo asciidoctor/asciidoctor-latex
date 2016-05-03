@@ -61,7 +61,28 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><div id='filecontents'><div id="preamble">
+    <div id="content"><div id='filecontents'><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_purpose">1. Purpose</a></li>
+<li><a href="#_installation">2. Installation</a>
+<ul class="sectlevel2">
+<li><a href="#_from_rubygems">2.1. From Rubygems</a></li>
+<li><a href="#_from_github">2.2. From GitHub</a></li>
+</ul>
+</li>
+<li><a href="#_commands">3. Commands</a>
+<ul class="sectlevel2">
+<li><a href="#_macro_files">3.1. Macro files</a></li>
+<li><a href="#_switches">3.2. Switches</a></li>
+</ul>
+</li>
+<li><a href="#_document_format">4. Document format</a></li>
+<li><a href="#_asciidoc_latex_environments">5. Asciidoc-LaTeX environments</a></li>
+<li><a href="#_click_blocks">6. Click blocks</a></li>
+</ul>
+</div>
+<div id="preamble">
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -86,20 +107,20 @@ for the Asciidoc markup language
 that closely parallels LaTeX.  The
 Asciidoctor-LaTeX converter renders documents written
 in this extended markup language into both HTML
-and LaTeX.<span class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</span></p>
+and LaTeX.<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>Below, we descibe the main
 features of Asciidoc-LaTeX.  However, since
 it will not render in GitHub, you
 are encouraged to view this write-up:
-<a href="https://vschool.s3.amazonaws.com/manuscripts/372.html">Asciidoc-LaTeX</a>.
+<a href=https://vschool.s3.amazonaws.com/manuscripts/372.html>Asciidoc-LaTeX</a>.
 For more information on using Asciidoc-LaTeX, please consult the
-<a href="http://www.noteshare.io/book/asciidoctor-latex-manual">Asciidoctor-LaTeX manual</a>.
+<a href=http://www.noteshare.io/book/asciidoctor-latex-manual>Asciidoctor-LaTeX manual</a>.
 For more information on conversion of Asciidoc-LaTeX
 documents to LaTeX, see the file <code>tech-report.adoc</code> in
 this repository or consult the
-<a href="https://vschool.s3.amazonaws.com/manuscripts/389.html">online version</a>,
+<a href=https://vschool.s3.amazonaws.com/manuscripts/389.html>online version</a>,
 which has a table of contents.</p>
 </div>
 <div class="paragraph">
@@ -114,7 +135,7 @@ which has a table of contents.</p>
 <h3 id="_from_rubygems">2.1. From Rubygems</h3>
 <div class="paragraph">
 <p>The development release, currenty 1.5.0.3.dev, is at
-<a href="https://rubygems.org/gems/asciidoctor-latex">RubyGems.org</a>
+<a href=https://rubygems.org/gems/asciidoctor-latex>RubyGems.org</a>
 Beta alert!</p>
 </div>
 </div>
@@ -192,7 +213,7 @@ instead of <code>stem:latexmth</code>.</p>
 math formats, <span class="blue">Asciidoc-LaTeX</span>
 and <span class="blue">AsciiMath</span>.
 In Asciidoc-LaTeX,
-one can write <code>$ a^2 + b^2 = c^2 $</code> and</p>
+one can write <code>\( a^2 + b^2 = c^2 \)</code> and</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -207,7 +228,7 @@ text, respectively.
 You will need to express dollar-denominated
 currency using
 escaped dollar signs, as
- in the sentence, "He paid \$100 for that
+ in the sentence, "He paid $100 for that
 theorem."  In AsciiMath, one writes
 <code>stem:[ a^2 + b^2 = c^2 ]</code>
 and</p>
@@ -247,13 +268,16 @@ Environments can contain in-line and display mathematics, e.g.,</p>
 --
 A two-by-two matrix is invertible if
 its determinant is nonzero, i.e., if
++++
 \[
   \left|\begin{matrix}
     a &amp; b \\
     c &amp; d
   \end{matrix}\right| \ne 0
 \]
-This result extends to $n\times n$ matrices.
++++
+
+This result extends to pass:[\(n\times n\)] matrices.
 --</code></pre>
 </div>
 </div>
@@ -265,9 +289,9 @@ of <code>[env.NAME]</code>, Thus,one can write</p>
 <div class="content">
 <pre class="code ruby"><code class="ruby">[env.definition]
 --
-An integer $n$ is *prime* if (a) it is not
-$\pm 1$ and (b) it has no divisors other
-than $\pm 1$ and $\pm n$.
+An integer pass:[\(n\)] is *prime* if (a) it is not
+pass:[\(\pm 1\)] and (b) it has no divisors other
+than pass:[\(\pm 1\)] and pass:[\(\pm n\)].
 --</code></pre>
 </div>
 </div>
@@ -359,14 +383,14 @@ for more information.</p>
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnote_1">
-<a href="#_footnoteref_1">1</a> Many, but not all Asciidoc language features are covered by this release.
+<a href="#_footnoteref_1">1</a>. Many, but not all Asciidoc language features are covered by this release.
 </div>
 </div></div></div>
 
     <div id="footer">
-  Generated on Mon Oct 19 14:44:06 2015 by
+  Generated on Tue May  3 13:31:55 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.3).
+  0.8.7.6 (ruby-2.3.0).
 </div>
 
   </body>

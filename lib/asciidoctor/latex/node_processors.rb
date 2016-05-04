@@ -494,7 +494,7 @@ module Asciidoctor
    # \usepackage{def}
    # --
    # Nothing appears in the HTML,
-   # bu lines 
+   # bu lines
    # \nput abc.text
    # \usepackage{def}
    # appear in the generated tex file.

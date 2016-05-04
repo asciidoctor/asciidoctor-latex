@@ -476,6 +476,8 @@ module Asciidoctor
           handle_box
         when 'texmacro'
           handle_texmacro
+        when 'include_latex'
+          handle_include_latex
         else
           handle_plain(env)
       end
@@ -483,6 +485,24 @@ module Asciidoctor
 
     def handle_texmacro
       "%% User tex macros:\n#{self.content}\n%% end of user macros\n"
+    end
+
+   # Example:
+   # [env.include_latex]
+   # --
+   # \nput abc.text
+   # \usepackage{def}
+   # --
+   # Nothing appears in the HTML,
+   # bu lines 
+   # \nput abc.text
+   # \usepackage{def}
+   # appear in the generated tex file.
+    def handle_include_latex
+      puts "Hi Boss, it's me again!"
+      puts self.content
+      puts "---------------"
+      self.content
     end
 
     def handle_box

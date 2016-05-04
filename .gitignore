@@ -1,5 +1,6 @@
 .gitignore
 
+mytest/
 # Jakub, could you review this paragraph?
 /Gemfile.lock
 /pkg/

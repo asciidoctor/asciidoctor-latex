@@ -214,6 +214,8 @@ module Asciidoctor::LaTeX
           handle_jsxgraph(node)
         when 'texmacro'
           handle_texmacro(node)
+        when 'include_latex'
+          handle_include_latex(node)
         else
           handle_default(node)
       end
@@ -258,6 +260,23 @@ module Asciidoctor::LaTeX
     def handle_texmacro node
       node.title = nil
       node.lines = ["+++\n\\("] + node.lines + ["\\)\n+++"]
+    end
+
+    # Example:
+    # [env.include_latex]
+    # --
+    # \nput abc.text
+    # \usepackage{def}
+    # --
+    # Nothing appears in the HTML,
+    # bu lines
+    # \nput abc.text
+    # \usepackage{def}
+    # appear in the generated tex file.
+    def handle_include_latex node
+      node.title = nil
+      node.lines = [] # ["// "] + node.lines
+      self.open node
     end
 
     def click node

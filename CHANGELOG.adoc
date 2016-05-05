@@ -1,6 +1,7 @@
 == Change Log
 
-NOTE: Released on RubyGems.org, plan to 
+////
+NOTE: Released on RubyGems.org, plan to
 release on GitHub in a few days to bring
 into sync.
 
@@ -14,12 +15,40 @@ To number an equation, do this:
 `[eq.equation%numbered]`. For equation
 alignments, do
 `[eq.equationalign%numbered]`.  Better for
-better style! 
+better style!
 . Moreover, if an equation
 or equation alignment environment is labeled
 for cross-referencing, e.g.,
 `[env.equation#hohoho]`, then it is numbered.
+////
 
+1.5.0.8dev:: One can now say
+----
+$ asciidoctor-latex -a preprocess=no -b html bar.adoc
+----
+to suppress preprocessing for the mathematician's
+much beloved $.  This makes `asciidoctor-latex`
+an almost faithful superset of `asciidoctor`.
+
+
+1.5.0.7dev:: Introduce the construct `env.include_latex`
+as in the example below:
+----
+[env.include_latex]
+--
+\include abc.tex
+\usepackage{foobar}
+--
+----
+The presence of this block has no effect
+on the HTML output.  But when the file
+is rendered as LaTeX, the indicated
+commands are run. Thus one can specify
+the style files etc. that one uses
+almost exactly as in LaTeX.
+
+
+1.5.0.4-6dev:: Missing in action!
 
 1.5.0.3dev::
 Double exponents in display math are

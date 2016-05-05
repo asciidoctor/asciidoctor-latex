@@ -472,7 +472,7 @@ module Asciidoctor::LaTeX
 
     Asciidoctor::Extensions.register do
       docinfo_processor CSSDocinfoProcessor
-      preprocessor TeXPreprocessor
+      preprocessor TeXPreprocessor unless document.attributes['preprocess'] == 'no'
       preprocessor MacroPreprocessor
       preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html' and document.attributes['include_macros'] == 'yes')
       block EnvironmentBlock
@@ -481,7 +481,7 @@ module Asciidoctor::LaTeX
       inline_macro ChemInlineMacro
       inline_macro GlossInlineMacro
       inline_macro IndexTermInlineMacro
-      # preprocessor ClickStyleInsert if document.attributes['click_extras'] == 'include2'
+      preprocessor ClickStyleInsert if document.attributes['css_extras'] == 'include'
       postprocessor InjectHTML unless document.attributes['inject_javascript'] == 'no'
       postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'
       postprocessor Chem if document.basebackend? 'html'

@@ -22,6 +22,11 @@
 
 /* BOX */
 
+.openblock {
+
+    margin-top: 1em;
+}
+
 .openblock.box {
     margin-top:1em;
     margin-bottom: 1em;

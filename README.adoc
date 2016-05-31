@@ -59,17 +59,25 @@ Beta alert!
 NOTE: Version 1.5.0.7 is "stable".  Version 1.5.0.9 introduces
 new syntax with switches for three 'dialects' See below.
 
-# Invoke asciidoctor-latex by
+# Invoke asciidoctor-latex for LaTeX output by
 #
-#   asciidoctor-latex foo.adoc
+#   asciidoctor-latex -a dialect=asciidoc foo.adoc
 #   asciidoctor-latex -a dialect=manuscript foo.adoc
 #   asciidoctor-latex -a dialect=latex foo.adoc
 #
-# These are source file options for dialects of asciidoc:
+# Be sure to use XeLaTex for tex'ing
+# For html output, use
+#
+#   asciidoctor-latex -a dialect=asciidoc foo.adoc -b html
+#   asciidoctor-latex -a dialect=manuscript foo.adoc -b html
+#   asciidoctor-latex -a dialect=latex foo.adoc -b html
+#
+# The above are *source file* options for dialects of asciidoc:
 #
 #   asciidoc
 #   asciidoc-manuscript
 #   asciidoc-latex
+#
 #
 
 === From GitHub

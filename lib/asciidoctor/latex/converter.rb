@@ -469,9 +469,11 @@ module Asciidoctor::LaTeX
 
     register_for 'latex'
 
+    # puts "HOLA!".red
+
     # Note: invoke asciidoctor-latex by
     #
-    #   asciidoctor-latex foo.adoc
+    #   asciidoctor-latex -a dialect=asciidoc foo.adoc
     #   asciidoctor-latex -a dialect=manuscript foo.adoc
     #   asciidoctor-latex -a dialect=latex foo.adoc
     #
@@ -480,6 +482,12 @@ module Asciidoctor::LaTeX
     Asciidoctor::Extensions.register do
 
       # puts "options: #{document.options}"
+
+      if ['asciidoc', 'manuscript'].include? document.attributes['dialect']
+
+        preprocessor DollarPreprocessor if document.basebackend? 'tex'
+
+      end
 
       if ['latex', 'manuscript'].include? document.attributes['dialect']
         preprocessor ClickStyleInsert if document.attributes['css_extras'] == 'include'

@@ -99,4 +99,24 @@ module Asciidoctor::LaTeX
     end
 
   end
+
+  # Map $ to \$ for dialect = 'asciidoctor' or 'manuscript' and
+  # basebackend = 'tex'
+  class DollarPreprocessor < Asciidoctor::Extensions::Preprocessor
+
+    def process document, reader
+      return reader if reader.eof?
+      replacement_lines = reader.read_lines.map do |line|
+
+        if line.include? '$' and document.basebackend? 'tex'
+          line = line.gsub('$', '\$')
+        end
+
+        line
+      end
+      reader.unshift_lines replacement_lines
+      reader
+    end
+
+  end
 end

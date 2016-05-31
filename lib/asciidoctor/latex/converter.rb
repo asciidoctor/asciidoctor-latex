@@ -469,26 +469,50 @@ module Asciidoctor::LaTeX
 
     register_for 'latex'
 
-
+    # Note: invoke asciidoctor-latex by
+    #
+    #   asciidoctor-latex foo.adoc
+    #   asciidoctor-latex -a dialect=manuscript foo.adoc
+    #   asciidoctor-latex -a dialect=latex foo.adoc
+    #
+    # These are source file options: for plain asciidoc,
+    # asciidoc-manuscript, and asciidoc-latex
     Asciidoctor::Extensions.register do
-      docinfo_processor CSSDocinfoProcessor
-      preprocessor TeXPreprocessor unless document.attributes['preprocess'] == 'no'
-      preprocessor MacroPreprocessor
-      preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html' and document.attributes['include_macros'] == 'yes')
-      block EnvironmentBlock
-      block EnvironmentBlock2
-      block ClickBlock
-      inline_macro ChemInlineMacro
-      inline_macro GlossInlineMacro
-      inline_macro IndexTermInlineMacro
-      preprocessor ClickStyleInsert if document.attributes['css_extras'] == 'include'
-      postprocessor InjectHTML unless document.attributes['inject_javascript'] == 'no'
-      postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'
-      postprocessor Chem if document.basebackend? 'html'
+
+      # puts "options: #{document.options}"
+
+      if ['latex', 'manuscript'].include? document.attributes['dialect']
+        preprocessor ClickStyleInsert if document.attributes['css_extras'] == 'include'
+        preprocessor MacroPreprocessor
+
+        block EnvironmentBlock
+        block EnvironmentBlock2
+        block ClickBlock
+
+        inline_macro GlossInlineMacro
+        inline_macro IndexTermInlineMacro
+
+        postprocessor InjectHTML unless document.attributes['inject_javascript'] == 'no'
+        postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'
+      end
+
+      if ['latex'].include? document.attributes['dialect']
+        docinfo_processor CSSDocinfoProcessor
+
+        preprocessor TeXPreprocessor unless document.attributes['preprocess'] == 'no'
+        preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html' and document.attributes['include_macros'] == 'yes')
+
+        inline_macro ChemInlineMacro
+        inline_macro GlossInlineMacro
+        inline_macro IndexTermInlineMacro
+
+        postprocessor InjectHTML unless document.attributes['inject_javascript'] == 'no'
+        postprocessor Chem if document.basebackend? 'html'
+      end
+
       postprocessor HTMLPostprocessor if document.basebackend? 'html'
       postprocessor TexPostprocessor if document.basebackend? 'tex'
     end
-
 
     Asciidoctor::Extensions.register :latex do
       # EnvironmentBlock

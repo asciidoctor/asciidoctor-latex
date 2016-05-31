@@ -52,9 +52,25 @@ Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.
 
 === From Rubygems
 
-The development release, currenty 1.5.0.3.dev, is at
+The development release, currenty 1.5.0.9.dev, is at
 https://rubygems.org/gems/asciidoctor-latex[RubyGems.org]
 Beta alert!
+
+NOTE: Version 1.5.0.7 is "stable".  Version 1.5.0.9 introduces
+new syntax with switches for three 'dialects' See below.
+
+# Invoke asciidoctor-latex by
+#
+#   asciidoctor-latex foo.adoc
+#   asciidoctor-latex -a dialect=manuscript foo.adoc
+#   asciidoctor-latex -a dialect=latex foo.adoc
+#
+# These are source file options for dialects of asciidoc:
+#
+#   asciidoc
+#   asciidoc-manuscript
+#   asciidoc-latex
+#
 
 === From GitHub
 

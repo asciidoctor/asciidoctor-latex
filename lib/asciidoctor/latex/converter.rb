@@ -483,6 +483,8 @@ module Asciidoctor::LaTeX
 
       # puts "options: #{document.options}"
 
+      document.attributes['dialect'] = document.options['dialect'] if document.options['dialect']
+
       if ['asciidoc', 'manuscript'].include? document.attributes['dialect']
 
         preprocessor DollarPreprocessor if document.basebackend? 'tex'
@@ -490,6 +492,7 @@ module Asciidoctor::LaTeX
       end
 
       if ['latex', 'manuscript'].include? document.attributes['dialect']
+
         preprocessor ClickStyleInsert if document.attributes['css_extras'] == 'include'
         preprocessor MacroPreprocessor
 

@@ -281,36 +281,36 @@
       <pre class="lines">
 
 
-776
-777
-778
-779
-780
-781
-782
-783
-784
-785
-786
-787
-788
-789
-790
-791
-792
-793
-794
-795
 796
 797
 798
 799
 800
 801
-802</pre>
+802
+803
+804
+805
+806
+807
+808
+809
+810
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 776</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 796</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inline_anchor_process'>inline_anchor_process</span>
 
@@ -359,12 +359,12 @@
       <pre class="lines">
 
 
-804
-805
-806</pre>
+824
+825
+826</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 804</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 824</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inline_break_process'>inline_break_process</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='embexpr_end'>}</span><span class='tstring_content'> \\\\</span><span class='tstring_end'>&quot;</span></span>
@@ -389,12 +389,12 @@
       <pre class="lines">
 
 
-812
-813
-814</pre>
+832
+833
+834</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 812</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 832</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inline_callout_process'>inline_callout_process</span>
   <span class='comment'># warn &quot;Please implement me! (inline_callout_process)&quot;.red if $VERBOSE
@@ -419,12 +419,12 @@
       <pre class="lines">
 
 
-808
-809
-810</pre>
+828
+829
+830</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 808</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 828</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inline_footnote_process'>inline_footnote_process</span>
   <span class='gvar'>$tex</span><span class='period'>.</span><span class='id identifier rubyid_macro'>macro</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>footnote</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span>
@@ -449,26 +449,6 @@
       <pre class="lines">
 
 
-732
-733
-734
-735
-736
-737
-738
-739
-740
-741
-742
-743
-744
-745
-746
-747
-748
-749
-750
-751
 752
 753
 754
@@ -491,10 +471,30 @@
 771
 772
 773
-774</pre>
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 732</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 752</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inline_quoted_process'>inline_quoted_process</span>
   <span class='comment'># warn &quot;THIS IS: inline_quoted_process: #{self.type}&quot;  if $VERBOSE
@@ -559,25 +559,25 @@
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730</pre>
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/asciidoctor/latex/node_processors.rb', line 735</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tex_process'>tex_process</span>
   <span class='kw'>case</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node_name'>node_name</span>
@@ -605,9 +605,9 @@
 </div>
 
     <div id="footer">
-  Generated on Tue May  3 13:31:56 2016 by
+  Generated on Tue Jun  7 05:32:26 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.3.0).
+  0.8.7.6 (ruby-2.2.3).
 </div>
 
   </body>

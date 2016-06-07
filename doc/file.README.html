@@ -68,18 +68,22 @@
 <li><a href="#_installation">2. Installation</a>
 <ul class="sectlevel2">
 <li><a href="#_from_rubygems">2.1. From Rubygems</a></li>
-<li><a href="#_from_github">2.2. From GitHub</a></li>
 </ul>
 </li>
-<li><a href="#_commands">3. Commands</a>
+<li><a href="#_invoke_asciidoctor_latex_for_latex_output_by">Invoke asciidoctor-latex for LaTeX output by</a>
 <ul class="sectlevel2">
-<li><a href="#_macro_files">3.1. Macro files</a></li>
-<li><a href="#_switches">3.2. Switches</a></li>
+<li><a href="#_from_github">1.1. From GitHub</a></li>
+<li><a href="#_commands">2. Commands</a>
+<ul class="sectlevel2">
+<li><a href="#_macro_files">2.1. Macro files</a></li>
+<li><a href="#_switches">2.2. Switches</a></li>
 </ul>
 </li>
-<li><a href="#_document_format">4. Document format</a></li>
-<li><a href="#_asciidoc_latex_environments">5. Asciidoc-LaTeX environments</a></li>
-<li><a href="#_click_blocks">6. Click blocks</a></li>
+<li><a href="#_document_format">3. Document format</a></li>
+<li><a href="#_asciidoc_latex_environments">4. Asciidoc-LaTeX environments</a></li>
+<li><a href="#_click_blocks">5. Click blocks</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div id="preamble">
@@ -114,13 +118,13 @@ and LaTeX.<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#
 features of Asciidoc-LaTeX.  However, since
 it will not render in GitHub, you
 are encouraged to view this write-up:
-<a href=https://vschool.s3.amazonaws.com/manuscripts/372.html>Asciidoc-LaTeX</a>.
+<a href="https://vschool.s3.amazonaws.com/manuscripts/372.html">Asciidoc-LaTeX</a>.
 For more information on using Asciidoc-LaTeX, please consult the
-<a href=http://www.noteshare.io/book/asciidoctor-latex-manual>Asciidoctor-LaTeX manual</a>.
+<a href="http://www.noteshare.io/book/asciidoctor-latex-manual">Asciidoctor-LaTeX manual</a>.
 For more information on conversion of Asciidoc-LaTeX
 documents to LaTeX, see the file <code>tech-report.adoc</code> in
 this repository or consult the
-<a href=https://vschool.s3.amazonaws.com/manuscripts/389.html>online version</a>,
+<a href="https://vschool.s3.amazonaws.com/manuscripts/389.html">online version</a>,
 which has a table of contents.</p>
 </div>
 <div class="paragraph">
@@ -134,13 +138,50 @@ which has a table of contents.</p>
 <div class="sect2">
 <h3 id="_from_rubygems">2.1. From Rubygems</h3>
 <div class="paragraph">
-<p>The development release, currenty 1.5.0.3.dev, is at
-<a href=https://rubygems.org/gems/asciidoctor-latex>RubyGems.org</a>
+<p>The development release, currenty 1.5.0.9.dev, is at
+<a href="https://rubygems.org/gems/asciidoctor-latex">RubyGems.org</a>
 Beta alert!</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Version 1.5.0.7 is "stable".  Version 1.5.0.9 introduces
+new syntax with switches for three 'dialects' See below.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_invoke_asciidoctor_latex_for_latex_output_by" class="sect0">Invoke asciidoctor-latex for LaTeX output by</h1>
+<div class="paragraph">
+<p>#
+#   asciidoctor-latex -a dialect=asciidoc foo.adoc
+#   asciidoctor-latex -a dialect=manuscript foo.adoc
+#   asciidoctor-latex -a dialect=latex foo.adoc
+#
+# Be sure to use XeLaTex for tex&#8217;ing
+# For html output, use
+#
+#   asciidoctor-latex -a dialect=asciidoc foo.adoc -b html
+#   asciidoctor-latex -a dialect=manuscript foo.adoc -b html
+#   asciidoctor-latex -a dialect=latex foo.adoc -b html
+#
+# The above are <strong>source file</strong> options for dialects of asciidoc:
+#
+#   asciidoc
+#   asciidoc-manuscript
+#   asciidoc-latex
+#
+#</p>
 </div>
 <div class="sect2">
-<h3 id="_from_github">2.2. From GitHub</h3>
+<h3 id="_from_github">1.1. From GitHub</h3>
 <div class="paragraph">
 <p>If you would like to install a development version from the repository, use:</p>
 </div>
@@ -153,10 +194,8 @@ $ gem install *.gem</code></pre>
 </div>
 </div>
 </div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="_commands">3. Commands</h2>
+<h2 id="_commands">2. Commands</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Asciidoc math files can be rendered</p>
@@ -176,7 +215,7 @@ to produce <code>foo.tex</code>.</p>
 </dl>
 </div>
 <div class="sect2">
-<h3 id="_macro_files">3.1. Macro files</h3>
+<h3 id="_macro_files">2.1. Macro files</h3>
 <div class="paragraph">
 <p>The contents of a file named <code>macros.tex</code> will
 read and used by <code>asciidoctor-latex</code>
@@ -186,7 +225,7 @@ of the output format&#8201;&#8212;&#8201;HTML or tex.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_switches">3.2. Switches</h3>
+<h3 id="_switches">2.2. Switches</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">asciidoctor-latex -a header=no foo.adoc</dt>
@@ -206,14 +245,14 @@ instead of <code>stem:latexmth</code>.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_document_format">4. Document format</h2>
+<h2 id="_document_format">3. Document format</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Asciidoctor supports two closely-related
 math formats, <span class="blue">Asciidoc-LaTeX</span>
 and <span class="blue">AsciiMath</span>.
 In Asciidoc-LaTeX,
-one can write <code>\( a^2 + b^2 = c^2 \)</code> and</p>
+one can write <code>$ a^2 + b^2 = c^2 $</code> and</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -228,7 +267,7 @@ text, respectively.
 You will need to express dollar-denominated
 currency using
 escaped dollar signs, as
- in the sentence, "He paid $100 for that
+ in the sentence, "He paid \$100 for that
 theorem."  In AsciiMath, one writes
 <code>stem:[ a^2 + b^2 = c^2 ]</code>
 and</p>
@@ -244,7 +283,7 @@ and</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_asciidoc_latex_environments">5. Asciidoc-LaTeX environments</h2>
+<h2 id="_asciidoc_latex_environments">4. Asciidoc-LaTeX environments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Asciidoc-LaTeX supports an <code>env</code> construct that maps to LaTeX environments.
@@ -268,16 +307,13 @@ Environments can contain in-line and display mathematics, e.g.,</p>
 --
 A two-by-two matrix is invertible if
 its determinant is nonzero, i.e., if
-+++
 \[
   \left|\begin{matrix}
     a &amp; b \\
     c &amp; d
   \end{matrix}\right| \ne 0
 \]
-+++
-
-This result extends to pass:[\(n\times n\)] matrices.
+This result extends to $n\times n$ matrices.
 --</code></pre>
 </div>
 </div>
@@ -289,9 +325,9 @@ of <code>[env.NAME]</code>, Thus,one can write</p>
 <div class="content">
 <pre class="code ruby"><code class="ruby">[env.definition]
 --
-An integer pass:[\(n\)] is *prime* if (a) it is not
-pass:[\(\pm 1\)] and (b) it has no divisors other
-than pass:[\(\pm 1\)] and pass:[\(\pm n\)].
+An integer $n$ is *prime* if (a) it is not
+$\pm 1$ and (b) it has no divisors other
+than $\pm 1$ and $\pm n$.
 --</code></pre>
 </div>
 </div>
@@ -353,7 +389,7 @@ V &amp; = \frac{4}{3} \pi r^3
 </div>
 </div>
 <div class="sect1">
-<h2 id="_click_blocks">6. Click blocks</h2>
+<h2 id="_click_blocks">5. Click blocks</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Click blocks are similar to <code>[env]</code> blocks exceptiipoo that the body of
@@ -388,9 +424,9 @@ for more information.</p>
 </div></div></div>
 
     <div id="footer">
-  Generated on Tue May  3 13:31:55 2016 by
+  Generated on Tue Jun  7 05:32:25 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.3.0).
+  0.8.7.6 (ruby-2.2.3).
 </div>
 
   </body>

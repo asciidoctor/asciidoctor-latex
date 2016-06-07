@@ -78,6 +78,11 @@ new syntax with switches for three 'dialects' See below.
 #   asciidoc-manuscript
 #   asciidoc-latex
 #
+# Ruby API to convert to HTML:
+#
+# Use for example
+#
+#        Asciidoctor.convert str, { 'dialect' => 'latex' }
 #
 
 === From GitHub

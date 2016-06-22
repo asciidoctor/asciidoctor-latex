@@ -3,6 +3,6 @@ require 'test_helper'
 DocTest.examples_path.unshift 'test/examples/tex', 'test/examples/adoc'
 
 class LatexTest < DocTest::Test
-  converter_opts backend_name: 'latex'
+  converter_opts backend_name: 'latex', dialect: 'latex'
   generate_tests! DocTest::Latex::ExamplesSuite
 end

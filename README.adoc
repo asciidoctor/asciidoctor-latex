@@ -59,6 +59,7 @@ Beta alert!
 NOTE: Version 1.5.0.7 is "stable".  Version 1.5.0.9 introduces
 new syntax with switches for three 'dialects' See below.
 
+----
 # Invoke asciidoctor-latex for LaTeX output by
 #
 #   asciidoctor-latex -a dialect=asciidoc foo.adoc
@@ -84,6 +85,7 @@ new syntax with switches for three 'dialects' See below.
 #
 #        Asciidoctor.convert str, { 'dialect' => 'latex' }
 #
+----
 
 === From GitHub
 

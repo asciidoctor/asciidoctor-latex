@@ -57,34 +57,25 @@ https://rubygems.org/gems/asciidoctor-latex[RubyGems.org]
 Beta alert!
 
 NOTE: Version 1.5.0.7 is "stable".  Version 1.5.0.9 introduces
-new syntax with switches for three 'dialects' See below.
+
+new syntax with switches for three 'dialects'. See below.
+
+There are three dialects that you can set with the `:dialect` attribute:
+
+- `asciidoc`
+- `asciidoc-manuscript`
+- `asciidoc-latex`
+
+See the option flag `-a` to set the dialect from the command line. For example:
+
+ $ asciidoctor-latex -a dialect=manuscript foo.adoc
+
+Be sure to use XeLaTex for tex'ing.
+
+To set the dialect with the Ruby API, use for example :
 
 ----
-# Invoke asciidoctor-latex for LaTeX output by
-#
-#   asciidoctor-latex -a dialect=asciidoc foo.adoc
-#   asciidoctor-latex -a dialect=manuscript foo.adoc
-#   asciidoctor-latex -a dialect=latex foo.adoc
-#
-# Be sure to use XeLaTex for tex'ing
-# For html output, use
-#
-#   asciidoctor-latex -a dialect=asciidoc foo.adoc -b html
-#   asciidoctor-latex -a dialect=manuscript foo.adoc -b html
-#   asciidoctor-latex -a dialect=latex foo.adoc -b html
-#
-# The above are *source file* options for dialects of asciidoc:
-#
-#   asciidoc
-#   asciidoc-manuscript
-#   asciidoc-latex
-#
-# Ruby API to convert to HTML:
-#
-# Use for example
-#
-#        Asciidoctor.convert str, { 'dialect' => 'latex' }
-#
+      Asciidoctor.convert str, { 'dialect' => 'latex' }
 ----
 
 === From GitHub
@@ -99,7 +90,7 @@ If you would like to install a development version from the repository, use:
 
 == Commands
 
-Asciidoc math files can be rendered
+Asciidoc math files can be rendered as follows
 
 Render as HTML::
 Use `$ asciidoctor-latex -b html foo.adoc` to produce `foo.html`.
@@ -112,7 +103,7 @@ to produce `foo.tex`.
 
 === Macro files
 
-The contents of a file named `macros.tex` will
+The contents of a file named `macros.tex` will be
 read and used by `asciidoctor-latex`
 if it is in the same directory as the file
 being rendered.  This is the case regardless
@@ -121,9 +112,9 @@ of the output format -- HTML or tex.
 
 === Switches
 
-asciidoctor-latex -a header=no foo.adoc::
-Use a minimal header for the generated tex file.
+To generate a tex file with a minial header, do:
 
+ $ asciidoctor-latex -a header=no foo.adoc
 
 {adlp}'s default form at is `:latexmath`.
 To use `:stem`, put the text `:stem:`

@@ -508,7 +508,7 @@ module Asciidoctor::LaTeX
       end
 
       if ['latex'].include? document.attributes['dialect']
-        
+
         docinfo_processor CSSDocinfoProcessor
 
         preprocessor TeXPreprocessor unless document.attributes['preprocess'] == 'no'

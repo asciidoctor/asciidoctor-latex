@@ -22,6 +22,16 @@ for cross-referencing, e.g.,
 `[env.equation#hohoho]`, then it is numbered.
 ////
 
+
+1.5.0.12.dev:: Fix issue #44 in which the file
+macros.tex is ignored in the latex dialect
+when using the html backend.
+
+
+1.5.0.11.dev:: Enable the syntax
+`Asciidoctor.convert str, { 'dialect' => 'latex' }`
+for specifying the dialect in the Ruby API.
+
 1.5.0.10.dev:: NOTE: Version 1.5.0.10 introduces
 a new syntax with switches for three 'dialects'
 of asciidoc: asciidoc itself, 'manuscript',

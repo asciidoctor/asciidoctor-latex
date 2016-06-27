@@ -508,10 +508,12 @@ module Asciidoctor::LaTeX
       end
 
       if ['latex'].include? document.attributes['dialect']
+        
         docinfo_processor CSSDocinfoProcessor
 
         preprocessor TeXPreprocessor unless document.attributes['preprocess'] == 'no'
-        preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html' and document.attributes['include_macros'] == 'yes')
+        # preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html' and document.attributes['include_macros'] == 'yes')
+        preprocessor MacroInsert if (File.exist? 'macros.tex')
 
         inline_macro ChemInlineMacro
         inline_macro GlossInlineMacro

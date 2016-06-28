@@ -481,18 +481,15 @@ module Asciidoctor::LaTeX
     # asciidoc-manuscript, and asciidoc-latex
     Asciidoctor::Extensions.register do
 
-      # puts "options: #{document.options}"
+      dialect = document.options['dialect'] || document.attributes['dialect'] || 'latex'
 
-      document.attributes['dialect'] = document.options['dialect'] if document.options['dialect']
-
-      if ['asciidoc', 'manuscript'].include? document.attributes['dialect']
+      if ['asciidoc', 'manuscript'].include? dialect
 
         preprocessor DollarPreprocessor if document.basebackend? 'tex'
 
       end
 
-      if ['latex', 'manuscript'].include? document.attributes['dialect']
-
+      if ['latex', 'manuscript'].include? dialect
         preprocessor ClickStyleInsert if document.attributes['css_extras'] == 'include'
         preprocessor MacroPreprocessor
 
@@ -505,26 +502,22 @@ module Asciidoctor::LaTeX
 
         postprocessor InjectHTML unless document.attributes['inject_javascript'] == 'no'
         postprocessor EntToUni if document.basebackend? 'tex' unless document.attributes['unicode'] == 'no'
-      end
-
-      if ['latex'].include? document.attributes['dialect']
 
         docinfo_processor CSSDocinfoProcessor
+      end
 
+      if ['latex'].include? dialect
         preprocessor TeXPreprocessor unless document.attributes['preprocess'] == 'no'
-        # preprocessor MacroInsert if (File.exist? 'macros.tex' and document.basebackend? 'html' and document.attributes['include_macros'] == 'yes')
         preprocessor MacroInsert if (File.exist? 'macros.tex')
 
         inline_macro ChemInlineMacro
-        inline_macro GlossInlineMacro
-        inline_macro IndexTermInlineMacro
 
         postprocessor InjectHTML unless document.attributes['inject_javascript'] == 'no'
         postprocessor Chem if document.basebackend? 'html'
+        postprocessor HTMLPostprocessor if document.basebackend? 'html'
+        postprocessor TexPostprocessor if document.basebackend? 'tex'
       end
 
-      postprocessor HTMLPostprocessor if document.basebackend? 'html'
-      postprocessor TexPostprocessor if document.basebackend? 'tex'
     end
 
     Asciidoctor::Extensions.register :latex do

@@ -112,15 +112,26 @@ of the output format -- HTML or tex.
 
 === Switches
 
-To generate a tex file with a minial header, do:
+.Tex header
+To generate a tex file with a minimal header, do:
 
  $ asciidoctor-latex -a header=no foo.adoc
+
+.Print style
+ An alternate css file, `data/print.css` is provided
+ for printing.  It features wider margins and a smaller
+ type size.  Copy it to the root of your document
+ folder and use the commeand `asciidoctor-latex -a stylesheet=print.css`
+ or more generally `asciidoctor-latex -a stylesheet=path_to/print.css`.
+
 
 {adlp}'s default form at is `:latexmath`.
 To use `:stem`, put the text `:stem:`
 in your file.  To turn the switch
 on and set it to `latexmath`, say
 instead of `stem:latexmth`.
+
+
 
 == Document format
 

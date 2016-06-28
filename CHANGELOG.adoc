@@ -22,6 +22,13 @@ for cross-referencing, e.g.,
 `[env.equation#hohoho]`, then it is numbered.
 ////
 
+1.5.0.12.dev:: (1) Make 'latex' the default dialect: no ``-a dialect=blahblah` switch is needed.
+(2) Add file data/print.css for better print output.
+(3) Add documentnation on how to use data/print.css.
+(4)NOTE: solution in previous line is awkward.  One should be able to access
+the css file without copying it form data/ (or useing a long file path)
+
+
 
 1.5.0.12.dev:: Fix issue #44 in which the file
 macros.tex is ignored in the latex dialect

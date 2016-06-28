@@ -22,18 +22,22 @@ for cross-referencing, e.g.,
 `[env.equation#hohoho]`, then it is numbered.
 ////
 
-1.5.0.12.dev:: (1) Make 'latex' the default dialect: no ``-a dialect=blahblah` switch is needed.
+1.5.0.15.dev:: (1) Eliminate automatic inclusion of `macros.tex` if it is present.
+(2) Introduce the block macro `include_latex_macros::LATEX_FILE`, where LATEX_FILE is
+typically a LaTeX style or macro file, or a path thereto.  For the HTML backend, the file is included
+in the source text as `\( FILE CONTENTS \)`.  For the tex backend it is included as-is.
+
+1.5.0.14.dev:: Add the inadvertently omitted file `print.css` to the repository.
+
+1.5.0.13.dev:: (1) Make 'latex' the default dialect: no ``-a dialect=blahblah` switch is needed.
 (2) Add file data/print.css for better print output.
 (3) Add documentnation on how to use data/print.css.
 (4)NOTE: solution in previous line is awkward.  One should be able to access
 the css file without copying it form data/ (or useing a long file path)
 
-
-
 1.5.0.12.dev:: Fix issue #44 in which the file
 macros.tex is ignored in the latex dialect
 when using the html backend.
-
 
 1.5.0.11.dev:: Enable the syntax
 `Asciidoctor.convert str, { 'dialect' => 'latex' }`

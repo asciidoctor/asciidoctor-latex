@@ -83,7 +83,7 @@
 # You can put files 'macros.tex' and 'preamble.tex' to
 # replace the default preamble and set of macros.
 # Define your own 'newEnvironments.tex' to use your definitions
-# as opposed to the default definitons of environments
+# as opposed to the default definitions of environments
 # in tex mapping to [tex.ENVIRONOMENT] in asciidoctor-latex.
 #
 # TECHNICAL NOTES (This section needs a thorough rewrite)
@@ -265,12 +265,12 @@ module Asciidoctor::LaTeX
     # Example:
     # [env.include_latex]
     # --
-    # \nput abc.text
+    # \input abc.text
     # \usepackage{def}
     # --
     # Nothing appears in the HTML,
     # bu lines
-    # \nput abc.text
+    # \input abc.text
     # \usepackage{def}
     # appear in the generated tex file.
     def handle_include_latex node
@@ -483,6 +483,8 @@ module Asciidoctor::LaTeX
 
       dialect = document.options['dialect'] || document.attributes['dialect'] || 'latex'
 
+      # puts "DIALECT = #{dialect}".red
+
       if ['asciidoc', 'manuscript'].include? dialect
 
         preprocessor DollarPreprocessor if document.basebackend? 'tex'
@@ -511,6 +513,8 @@ module Asciidoctor::LaTeX
         preprocessor MacroInsert if (File.exist? 'macros.tex')
 
         inline_macro ChemInlineMacro
+
+        block_macro IncludeLatexBlockMacro
 
         postprocessor InjectHTML unless document.attributes['inject_javascript'] == 'no'
         postprocessor Chem if document.basebackend? 'html'

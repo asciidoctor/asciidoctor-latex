@@ -103,11 +103,13 @@ to produce `foo.tex`.
 
 === Macro files
 
-The contents of a file named `macros.tex` will be
-read and used by `asciidoctor-latex`
-if it is in the same directory as the file
-being rendered.  This is the case regardless
-of the output format -- HTML or tex.
+To include a LaTeX macro file MACRO_FILE, insert the code
+`include_latex_macros::MACRO_FILE[]`.  This works
+for both the html and tex backends.
+
+
+NOTE: Automatic inclusion of the file `macros.tex`
+has been discontinued.
 
 
 === Switches

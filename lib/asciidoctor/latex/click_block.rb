@@ -19,11 +19,43 @@ require 'asciidoctor/extensions'
 require 'asciidoctor/latex/core_ext/colored_string'
 
 
+
 module Asciidoctor::LaTeX
+
+  # Usage: `include_latex::LATEX_FILE`, where LATEX_FILE is
+  # typically a LaTeX style or macro file, or a path thereto.
+  # For the HTML backend, the file is included
+  # in the source text as `\( FILE CONTENTS \)`.
+  # For the tex backend it is included as-is.
+  class IncludeLatexBlockMacro < Asciidoctor::Extensions::BlockMacroProcessor
+
+    use_dsl
+
+    named :include_latex_macros
+
+    def process parent, target, attrs
+      # puts "attrs: #{attrs.values.to_s.red}"
+      # puts "target: #{target.to_s.red}"
+
+      file_contents = IO.read(target)
+      if file_contents == nil
+        file_contents = IO.read('public/macros.tex')
+      end
+
+      if parent.document.basebackend? 'html'
+        content = "\n\\(\n#{file_contents}\n\\)\n" || ''
+      else
+        content = "\n#{file_contents}\n" || ''
+      end
+
+      create_pass_block parent, content, attrs,  subs: nil
+    end
+
+  end
+
   class ClickBlock < Asciidoctor::Extensions::BlockProcessor
 
     use_dsl
-    # ^^^ don't know what this is.  Could you explain?
 
     named :click
     on_context :open

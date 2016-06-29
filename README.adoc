@@ -1,6 +1,6 @@
 = Asciidoc-LaTeX README
 James Carlson
-2015-04-19
+2016-06-29
 :sectnums:
 :toc2:
 
@@ -36,11 +36,11 @@ to produce `foo.tex`, then use `xelatex foo.tex` to create `foo.pdf`.
 
 Below, we describe the main
 features of {adl}.  However, since this document
-it will not render fully in GitHub, you
+will not render fully in GitHub, you
 are encouraged to compile it yourself using
-`asciidoctor-latex -b html README.adoc` or to view this
- http://www.shoobox.io/share/230[online version].  The
-online version is hosted at http://www.shoobox.io[shoobox.io],
+`asciidoctor-latex -b html README.adoc` or to consult the
+http://vschool.s3.amazonaws.com/asciidoctor-latex/README.html[README at S3].
+There is also an online version hosted at http://www.shoobox.io/share/230[shoobox.io],
 a site for editing and distributing Asciidoc and Asciidoc-LaTeX documents.
 
 Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.  Display of mathematical text
@@ -49,7 +49,7 @@ relies on http://docs.mathjax.org/en/latest/start.html[MathJax].
 == Features
 
 {adl} renders inline and displayed mathematical, and it supports a construct akin to LaTeX environments
-for theorems, equations, etc.  These and other features are described briefly below and more fully in XX.
+for theorems, equations, etc.  These and other features are described briefly below and more fully in <<Asciidoc-LaTeX environments>>.
 
 === Inline and displayed formulas
 
@@ -218,6 +218,20 @@ If you would like to install a development version from the repository, use:
  $ gem install *.gem
 
 
+==  Contributing
+
+If you wish to contribute to the
+https://github.com/asciidoctor/asciidoctor-latex[asciidoctor-latex project], you should set up your environments to use
+Jakub Jirutka's https://github.com/asciidoctor/asciidoctor-doctest[asciidoctor-doctest].  At the moment you will need to
+use the https://github.com/jxxcarlson/asciidoctor-doctest[version which handles dialects] using
+```
+gem 'asciidoctor-doctest', github: 'jxxcarlson/asciidoctor-doctest', ref: 'latex'
+```
+in your Gemfile.  Run all tests with `rake doctest`,
+or run individual tests with `rake doctest:html` or
+`rake doctest:tex`.
+
+At the moment the tests are for the latex dialect.
 
 == Dialects
 

@@ -513,10 +513,8 @@ module Asciidoctor::LaTeX
         preprocessor MacroInsert if (File.exist? 'macros.tex')
 
         inline_macro ChemInlineMacro
-
         block_macro IncludeLatexBlockMacro
 
-        postprocessor InjectHTML unless document.attributes['inject_javascript'] == 'no'
         postprocessor Chem if document.basebackend? 'html'
         postprocessor HTMLPostprocessor if document.basebackend? 'html'
         postprocessor TexPostprocessor if document.basebackend? 'tex'

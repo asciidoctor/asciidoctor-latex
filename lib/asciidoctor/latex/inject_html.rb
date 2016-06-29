@@ -19,6 +19,7 @@ module Asciidoctor::LaTeX
 
 <style>
   .click .title { color: blue; }
+  .click {margin-top: 0.5em; margin-bottom: 0.5em;}
   .openblock>.box>.content { margin-top:1em;margin-bottom: 1em;margin-left:3em;margin-right:4em; }
 </style>
 

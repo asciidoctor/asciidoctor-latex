@@ -22,6 +22,9 @@ for cross-referencing, e.g.,
 `[env.equation#hohoho]`, then it is numbered.
 ////
 
+1.5.0.16.dev:: Update CSS for click blocks; remove duplicate injection of
+javascript code; update README.
+
 1.5.0.15.dev:: (1) Eliminate automatic inclusion of `macros.tex` if it is present.
 (2) Introduce the block macro `include_latex_macros::LATEX_FILE`, where LATEX_FILE is
 typically a LaTeX style or macro file, or a path thereto.  For the HTML backend, the file is included

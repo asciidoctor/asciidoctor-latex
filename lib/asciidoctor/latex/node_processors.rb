@@ -130,7 +130,7 @@ module Asciidoctor
         # doc << "\n\n\\begin\{document\}\n"
         doc << "\n\n\\begin\{document\}\n"
         doc << "\\maketitle\n"
-        if self.attributes["toc"]
+        if self.attributes['toc-placement']=="auto"
           doc << "\\tableofcontents\n"
         end
       end
@@ -539,6 +539,9 @@ module Asciidoctor
     end
 
     def toc_process
+      if document.attributes['toc-placement'] == 'macro'
+        $tex.macro 'tableofcontents'
+      end
       # warn "Please implement me! (toc_process)".red if $VERBOSE
     end
 

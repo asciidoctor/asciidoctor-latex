@@ -10,7 +10,7 @@ module Asciidoctor::LaTeX
   class InjectHTML < Asciidoctor::Extensions::Postprocessor
 
     def process document, output
-      output.gsub('</head>', $click_insertion)
+      output.sub('</head>', $click_insertion)
     end
 
   end

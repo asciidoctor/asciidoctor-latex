@@ -393,11 +393,16 @@ module Asciidoctor
     end
 
     def handle_eqalign
+      if label == ""
+        lab = ""
+      else
+        lab = label + "\n"
+      end
       if options.include? 'numbered'
-        content = $tex.env 'split', label + "\n" + self.content.strip
+        content = $tex.env 'split', lab + self.content.strip
         $tex.env 'equation', content
       else
-        content = $tex.env 'split', label + "\n" + self.content.strip
+        content = $tex.env 'split', lab + self.content.strip
         $tex.env 'equation*', content
       end
     end

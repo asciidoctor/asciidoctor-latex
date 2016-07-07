@@ -386,6 +386,14 @@ module Asciidoctor
     end
 
  ####################################################################
+    
+    def label_line
+      if label == ""
+        ""
+      else
+        label + "\n"
+      end
+    end
 
     def handle_listing
       content = $tex.env 'verbatim', self.content
@@ -393,11 +401,10 @@ module Asciidoctor
     end
 
     def handle_eqalign
+      content = $tex.env 'split', "#{label_line}#{self.content.strip}"
       if options.include? 'numbered'
-        content = $tex.env 'split', label + "\n" + self.content.strip
         $tex.env 'equation', content
       else
-        content = $tex.env 'split', label + "\n" + self.content.strip
         $tex.env 'equation*', content
       end
     end
@@ -405,14 +412,14 @@ module Asciidoctor
     def handle_equation
       if options.include? 'numbered'
         content = $tex.hypertarget self.id, self.content.strip
-        $tex.env 'equation', "#{label}#{content}"
+        $tex.env 'equation', "#{label_line}#{content}"
       else
-        $tex.env 'equation*', "#{label}#{self.content.strip}"
+        $tex.env 'equation*', "#{label_line}#{self.content.strip}"
       end
     end
 
     def handle_chem
-      $tex.env 'equation', "#{label}\n\\ce\{#{self.content.strip}\}\n"
+      $tex.env 'equation', "#{label_line}\\ce\{#{self.content.strip}\}\n"
     end
 
     def handle_plain(env)
@@ -429,7 +436,7 @@ module Asciidoctor
         content = self.content
       end
 
-      $tex.env env, "#{_title}#{label}#{content}\n"
+      $tex.env env, "#{_title}#{label_line}#{content}\n"
     end
 
  ####################################################################

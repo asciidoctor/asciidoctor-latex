@@ -643,6 +643,9 @@ module Asciidoctor
         width = '2.5truein'
       end
       raw_image = self.attributes['target']
+      unless (imagesdir = document.attr 'imagesdir').nil_or_empty?
+        raw_image = ::File.join imagesdir, raw_image
+      end
       if document.attributes['noteshare'] == 'yes'
         image_rx = /image.*original\/(.*)\?/
         match_data = raw_image.match image_rx

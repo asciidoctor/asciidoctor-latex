@@ -641,6 +641,10 @@ module Asciidoctor
         width = '2.5truein'
       end
       raw_image = self.attributes['target']
+      imagesdir = "#{document.attributes['imagesdir']}"
+      unless imagesdir.empty?
+        raw_image = "#{imagesdir}/#{raw_image}"
+      end
       if document.attributes['noteshare'] == 'yes'
         image_rx = /image.*original\/(.*)\?/
         match_data = raw_image.match image_rx

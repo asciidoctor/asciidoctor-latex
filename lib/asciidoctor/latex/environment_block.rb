@@ -92,8 +92,7 @@ module Asciidoctor::LaTeX
 
     named :env
     on_context :open
-    # parse_context_as :complex
-    # ^^^ The above line gave me an error.  I'm not sure what do to with it.
+    parse_content_as :compound
 
     def process parent, reader, attrs
 
@@ -153,7 +152,7 @@ module Asciidoctor::LaTeX
         warn "for rode = code, attrs = #{attrs}".cyan
         block = create_block parent, :listing, reader.lines, attrs
       else
-        block = create_block parent, :environment, reader.lines, attrs
+        block = create_block parent, :environment, reader.lines, attrs, content_model: :compound
       end
 
       if attrs['options'] =~ /numbered/
@@ -223,7 +222,7 @@ module Asciidoctor::LaTeX
 
     named :envv
     on_context :literal
-    # parse_context_as :complex
+    parse_content_as :compound
     # ^^^ The above line gave me an error.  I'm not sure what do to with it.
 
     def process parent, reader, attrs

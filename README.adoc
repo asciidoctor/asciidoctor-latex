@@ -31,7 +31,7 @@ Documents written in this extended markup language can be converted into  HTML o
 Render as HTML::
 Use `asciidoctor-latex -b html foo.adoc` to produce `foo.html`.
 
-Render as LaTeX:: Use `sasciidoctor-latex foo.adoc`
+Render as LaTeX:: Use `asciidoctor-latex foo.adoc`
 to produce `foo.tex`, then use `xelatex foo.tex` to create `foo.pdf`.
 
 Below, we describe the main

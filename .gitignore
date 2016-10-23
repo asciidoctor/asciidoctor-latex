@@ -40,5 +40,6 @@ test/examples/tex/asciidoc_tex_macros.tex
 jc/
 buildit
 
-
-
+# Node.js
+build/
+node_modules/

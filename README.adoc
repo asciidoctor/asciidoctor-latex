@@ -104,7 +104,7 @@ ifdef::env_standard[]
  \[
     x^n + y^n = z^n
  \]
- for \$n > 2\$ has only trivial solutions
+ for $n > 2$ has only trivial solutions
 --
 ----
 endif::[]

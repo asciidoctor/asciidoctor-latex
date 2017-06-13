@@ -203,7 +203,7 @@ endif::[]
 
 === From Rubygems
 
-Run `gem install asciidoc-latex` to install from
+Run `gem install asciidoctor-latex --pre` to install from
 https://rubygems.org/gems/asciidoctor-latex[RubyGems.org].
 See the https://github.com/asciidoctor/asciidoctor-latex/blob/master/CHANGELOG.adoc[change log]
 for a list of updates.

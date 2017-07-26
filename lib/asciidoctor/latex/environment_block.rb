@@ -97,8 +97,7 @@ module Asciidoctor::LaTeX
 
     def process parent, reader, attrs
 
-      original_title = attrs['title']
-      attrs['original_title'] = attrs['title']
+      original_title = attrs['original_title'] = attrs['title']
 
       # Ensure that role is defined
       if attrs['role'] == nil
@@ -189,7 +188,7 @@ module Asciidoctor::LaTeX
         # in the line preceding "[env.theorem]"
         # FIXME: this code is a tad spaghetti-like
         if original_title
-          if  %w(box).include? role
+          if %w(box).include? role
             attrs['title'] = "#{original_title}"
           else
             attrs['title'] = "#{env_title}: #{original_title}"
@@ -203,12 +202,13 @@ module Asciidoctor::LaTeX
         caption = nil
       end
 
-      block.assign_caption caption
       if %w(equation equationalign chem).include? role
         block.title = "#{caption_num}"
-      else
+      elsif !attrs['title'].empty?
         block.title = attrs['title']
       end
+      block.assign_caption caption
+      block.attributes.delete 'title'
       block
 
     end
@@ -228,8 +228,7 @@ module Asciidoctor::LaTeX
 
     def process parent, reader, attrs
 
-      original_title = attrs['title']
-      attrs['original_title'] = attrs['title']
+      original_title = attrs['original_title'] = attrs['title']
 
       # Ensure that role is defined
       if attrs['role'] == nil
@@ -322,7 +321,7 @@ module Asciidoctor::LaTeX
         # in the line preceding "[env.theorem]"
         # FIXME: this code is a tad spaghetti-like
         if original_title
-          if  %w(box).include? role
+          if %w(box).include? role
             attrs['title'] = "#{original_title}"
           else
             attrs['title'] = "#{env_title}: #{original_title}"
@@ -336,12 +335,13 @@ module Asciidoctor::LaTeX
         caption = nil
       end
 
-      block.assign_caption caption
       if %w(equation equationalign chem).include? role
         block.title = "#{caption_num}"
-      else
+      elsif !attrs['title'].empty?
         block.title = attrs['title']
       end
+      block.assign_caption caption
+      block.attributes.delete 'title'
       block
 
     end

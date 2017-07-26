@@ -1,17 +1,14 @@
-= Asciidoc-LaTeX README
+= Asciidoctor LaTeX
 James Carlson
 2016-06-29
 :sectnums:
 :toc2:
-
-
 :env_standard:
-
-:adl: Asciidoc-LaTeX
+:adl: AsciiDoc-LaTeX
 :adlp: Asciidoctor-LaTeX
-:ad: Asciidoc
+:ad: AsciiDoc
 :adp: http://asciidoctor.org[Asciidoctor]
-:adoc: http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[Asciidoc]
+:adoc: http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[AsciiDoc]
 :adlm: http://www.noteshare.io/section/asciidoctor-latex-manual-intro[Asciidoctor-LaTeX Manual]
 ////
 :tex: https://www.sharelatex.com/[LaTeX]
@@ -23,10 +20,8 @@ James Carlson
 
 == Introduction
 
-Asciidoc-LaTeX defines an extended syntax
-for the Asciidoc markup language
-that closely parallels LaTeX for inline and display mathematical formulas and for environments.
-Documents written in this extended markup language can be converted into  HTML or LaTeX:
+Asciidoctor LaTeX defines an extended syntax for the AsciiDoc markup language (AsciiDoc-LaTeX) that closely parallels LaTeX for inline and display mathematical formulas and for environments.
+Documents written in this extended markup language can be converted into HTML or LaTeX:
 
 Render as HTML::
 Use `asciidoctor-latex -b html foo.adoc` to produce `foo.html`.
@@ -41,15 +36,15 @@ are encouraged to compile it yourself using
 `asciidoctor-latex -b html README.adoc` or to consult the
 http://vschool.s3.amazonaws.com/asciidoctor-latex/README.html[README at S3].
 There is also an online version hosted at http://www.shoobox.io/share/230[shoobox.io],
-a site for editing and distributing Asciidoc and Asciidoc-LaTeX documents.
+a site for editing and distributing AsciiDoc and AsciiDoc-LaTeX documents.
 
-Asciidoctor-LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.  Display of mathematical text
-relies on http://docs.mathjax.org/en/latest/start.html[MathJax].
+Asciidoctor LaTeX is developed by James Carlson, Jakub Jirutka, and Dan Allen.
+Display of mathematical text relies on http://docs.mathjax.org/en/latest/start.html[MathJax].
 
 == Features
 
 {adl} renders inline and displayed mathematical, and it supports a construct akin to LaTeX environments
-for theorems, equations, etc.  These and other features are described briefly below and more fully in <<Asciidoc-LaTeX environments>>.
+for theorems, equations, etc.  These and other features are described briefly below and more fully in <<AsciiDoc-LaTeX environments>>.
 
 === Inline and displayed formulas
 
@@ -233,7 +228,7 @@ At the moment the tests are for the latex dialect.
 
 == Dialects
 
-`Asciidoctor-LaTeX` processes three dialects of the core Asciidoc language:
+Asciidoctor LaTeX processes three dialects of the core AsciiDoc language:
 
 - `asciidoc` (the core language)
 - `manuscript`
@@ -257,9 +252,7 @@ To set the dialect with the Ruby API, use for example :
 
 == Macros
 
-Macros can be included in the body of an Asciidoc-LaTeX
-file using the `texmacro` environment, as in the example
-below.
+Macros can be included in the body of an AsciiDoc-LaTeX file using the `texmacro` environment, as in the example below.
 
 ----
 
@@ -308,9 +301,9 @@ instead of `stem:latexmth`.
 == Document format
 
 Asciidoctor supports two closely-related
-math formats, [blue]#Asciidoc-LaTeX#
+math formats, [blue]#AsciiDoc-LaTeX#
 and [blue]#AsciiMath#.
-In Asciidoc-LaTeX,
+In AsciiDoc-LaTeX,
 one can write `\$ a^2 + b^2 = c^2 \$` and
 ----
  \[
@@ -334,9 +327,9 @@ and
 ----
 
 ifdef::env_standard[]
-== Asciidoc-LaTeX environments
+== AsciiDoc-LaTeX environments
 
-Asciidoc-LaTeX supports an `env` construct that maps to LaTeX environments.
+AsciiDoctor LaTeX supports an `env` construct that maps to LaTeX environments.
 Thus
 ----
 [env.theorem]
@@ -426,18 +419,19 @@ endif::[]
 
 
 ifndef::env_standard[]
-== Asciidoc-LaTeX environments
+== AsciiDoc-LaTeX environments
 
-Asciidoc-LaTeX supports an `env` construct that maps to LaTeX environments.
-Thus
+Asciidoctor LaTeX supports an `env` construct that maps to LaTeX environments.
+Thus,
+
 ----
 [env.theorem]
 --
 There exist infinitely many prime numbers.
 --
 ----
-renders as an automatically numbered theorem:
 
+renders as an automatically numbered theorem:
 
 [env.theorem]
 --
@@ -573,6 +567,3 @@ V & = \frac{4}{3} \pi r^3
 --
 
 endif::[]
-
-
-

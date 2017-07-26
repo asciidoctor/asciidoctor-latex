@@ -311,8 +311,8 @@ module Asciidoctor
     def paragraph_process
       options = self.attributes['options']
       out = ""
-      if self.attributes['title']
-        title = "#{self.attributes['title']}\."
+      if self.title?
+        title = "#{self.title}\."
         out << $tex.region('bf', title) + ' '
       end
       content =  LaTeX::TeXPostProcess.make_substitutions(self.content)
@@ -598,14 +598,11 @@ module Asciidoctor
       attr = self.attributes
 
       # Get title !- nil or make a dummy one
-      title = self.attributes["title"]
-      if title == nil
-        title = "Dummy"
-      end
+      title = self.title? ? self.title : 'Dummy'
 
-       # strip constructs like {counter:theorem} from the title
-       title = title.gsub /\{.*?\}/, ""
-       title = title.strip
+      # strip constructs like {counter:theorem} from the title
+      title = title.gsub /\{.*?\}/, ""
+      title = title.strip
 
       if attr['role'] == 'text-center'
         $tex.env 'center', self.content
@@ -664,8 +661,8 @@ module Asciidoctor
       else
         image = raw_image
       end
-      if self.title and self.title != ''
-        caption =   "\\caption\{#{self.attributes['title']}\}"
+      if self.title?
+        caption = "\\caption\{#{self.title}\}"
       else
         caption = ''
       end
@@ -849,7 +846,11 @@ module Asciidoctor
       self.rows.body.each_with_index do |row, index|
         row_array = []
         row.each do |cell|
-          row_array << cell.content[0]
+          if Array === (cell_content = cell.content)
+            row_array << cell_content.join("\n")
+          else
+            row_array << cell_content
+          end
         end
         output << row_array.join(' & ')
         output << " \\\\ \n"

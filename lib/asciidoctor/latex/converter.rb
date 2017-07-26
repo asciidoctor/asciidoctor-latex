@@ -328,7 +328,7 @@ module Asciidoctor::LaTeX
           refs = node.parent.document.references[:ids]
           # FIXME: the next line is HACKISH (and it crashes the app when refs[refid]) is nil)
           # FIXME: and with the fix for nil results is even more hackish
-          if refs[refid]
+          if !node.text && refs[refid]
             reftext = refs[refid].gsub('.', '')
             reftext = reftext.gsub(/:.*/,'')
             if refid =~ /\Aeq-/

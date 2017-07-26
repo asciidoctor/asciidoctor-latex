@@ -174,7 +174,14 @@ module Asciidoctor
       id ="_#{self.title.downcase.gsub(' ', '_')}"
       heading = "\\#{tagname}#{tagsuffix}\{#{self.title}\}"
       heading = $tex.hypertarget id, heading
-      value = "#{heading}\n#{self.content}"
+
+      if self.sectname == 'index'
+        value = $tex.macro 'renewcommand', '\\indexname', self.title
+        value += $tex.hypertarget id, '\\printindex'
+      else
+        value = "#{heading}\n#{self.content}"
+      end
+
       value
     end
   end
@@ -734,6 +741,8 @@ module Asciidoctor
         self.inline_footnote_process
       when 'inline_callout'
         self.inline_callout_process
+      when 'inline_indexterm'
+        self.inline_indexterm_process
       else
         ""
       end
@@ -821,6 +830,16 @@ module Asciidoctor
 
     def inline_callout_process
       # warn "Please implement me! (inline_callout_process)".red if $VERBOSE
+    end
+
+    def inline_indexterm_process
+      case self.type
+      when :visible
+        output = $tex.macro 'index', self.text
+        output += self.text
+      else
+        $tex.macro 'index', self.attributes['terms'].join('!')
+      end
     end
 
   end

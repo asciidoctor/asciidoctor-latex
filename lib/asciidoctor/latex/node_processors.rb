@@ -2,39 +2,23 @@ require 'asciidoctor'
 require 'asciidoctor/latex/core_ext/colored_string'
 require 'asciidoctor/latex/core_ext/utility'
 
-
 module TexUtilities
 
+  def self.braces(*args)
+    args.map{|arg| "\{#{arg}\}"}.join("")
+  end
+
   def self.macro(name, *args)
-    case args.count
-      when 1
-        "\\#{name}\{#{args[0]}\}"
-      when 2
-        "\\#{name}\{#{args[0]}\}\{#{args[1]}\}"
-      when 3
-        "\\#{name}\{#{args[0]}\}\{#{args[1]}\}\{#{args[2]}\}"
-      else
-        ''
-    end
+    "\\#{name}#{braces *args}"
+  end
+
+  def self.macro_opt(name, opt, *args)
+    "\\#{name}[#{opt}]#{braces *args}"
   end
 
   # tex.region('bf', 'foo bar') => {\bf foo bar}
-  def self.region(name, arg)
-    "\{\\#{name} #{arg}\}"
-  end
-
-
-  def self.macro_opt(name, opt, args)
-    case args.count
-      when 1
-        "\\#{name}[#{opt}]\{#{args[0]}\}"
-      when 2
-        "\\#{name}[#{opt}]\{#{args[0]}\}\{#{args[1]}\}"
-      when 3
-        "\\#{name}[#{opt}]\{#{args[0]}\}\{#{args[1]}\}\{#{args[2]}\}"
-      else
-        ''
-    end
+  def self.region(name, *args)
+    "\{\\#{name} #{args.join(" ")}\}"
   end
 
   def self.apply_macros(macro_list, arg)
@@ -54,16 +38,13 @@ module TexUtilities
   end
 
   def self.env(env, *args)
-    case args.count
-      when 1
-        "#{self.begin(env)}\n#{args[0].strip}\n#{self.end(env)}\n"
-      when 2
-        "#{self.begin(env)}\{#{args[0]}\}\n#{args[1]}\n#{self.end(env)}\n"
-      when 3
-        "#{self.begin(env)}\{#{args[0]}\}\{#{args[1]}\}\n#{args[2]}\n#{self.end(env)}\n"
-      else
-        ''
-    end
+    body = args.pop
+    "#{self.begin(env)}#{braces *args}\n#{body}\n#{self.end(env)}"
+  end
+
+  def self.env_opt(env, opt, *args)
+    body = args.pop
+    "#{self.begin(env)}[#{opt}]#{braces *args}\n#{body}\n#{self.end(env)}"
   end
 
   # normalize the name because it is an id
@@ -82,7 +63,6 @@ module TexUtilities
 
 
 end
-
 
 # Yuuk!, The classes in node_processor implement the
 # latex backend for Asciidoctor-latex.  This
@@ -150,7 +130,7 @@ module Asciidoctor
         # doc << "\n\n\\begin\{document\}\n"
         doc << "\n\n\\begin\{document\}\n"
         doc << "\\maketitle\n"
-        if self.attributes["toc"]
+        if self.attributes['toc-placement']=="auto"
           doc << "\\tableofcontents\n"
         end
       end
@@ -406,6 +386,14 @@ module Asciidoctor
     end
 
  ####################################################################
+    
+    def label_line
+      if label == ""
+        ""
+      else
+        label + "\n"
+      end
+    end
 
     def handle_listing
       content = $tex.env 'verbatim', self.content
@@ -413,11 +401,10 @@ module Asciidoctor
     end
 
     def handle_eqalign
+      content = $tex.env 'split', "#{label_line}#{self.content.strip}"
       if options.include? 'numbered'
-        content = $tex.env 'split', label + "\n" + self.content.strip
         $tex.env 'equation', content
       else
-        content = $tex.env 'split', label + "\n" + self.content.strip
         $tex.env 'equation*', content
       end
     end
@@ -425,14 +412,14 @@ module Asciidoctor
     def handle_equation
       if options.include? 'numbered'
         content = $tex.hypertarget self.id, self.content.strip
-        $tex.env 'equation', "#{label}#{content}"
+        $tex.env 'equation', "#{label_line}#{content}"
       else
-        $tex.env 'equation*', "#{label}#{self.content.strip}"
+        $tex.env 'equation*', "#{label_line}#{self.content.strip}"
       end
     end
 
     def handle_chem
-      $tex.env 'equation', "#{label}\n\\ce\{#{self.content.strip}\}\n"
+      $tex.env 'equation', "#{label_line}\\ce\{#{self.content.strip}\}\n"
     end
 
     def handle_plain(env)
@@ -449,7 +436,7 @@ module Asciidoctor
         content = self.content
       end
 
-      $tex.env env, "#{_title}#{label}#{content}\n"
+      $tex.env env, "#{_title}#{label_line}#{content}\n"
     end
 
  ####################################################################
@@ -559,6 +546,9 @@ module Asciidoctor
     end
 
     def toc_process
+      if document.attributes['toc-placement'] == 'macro'
+        $tex.macro 'tableofcontents'
+      end
       # warn "Please implement me! (toc_process)".red if $VERBOSE
     end
 
@@ -650,6 +640,9 @@ module Asciidoctor
         width = '2.5truein'
       end
       raw_image = self.attributes['target']
+      unless (imagesdir = document.attr 'imagesdir').nil_or_empty?
+        raw_image = ::File.join imagesdir, raw_image
+      end
       if document.attributes['noteshare'] == 'yes'
         image_rx = /image.*original\/(.*)\?/
         match_data = raw_image.match image_rx

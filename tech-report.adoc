@@ -951,7 +951,7 @@ NOTE: More attention needed here
 existing Html5Converter for {adp}.  It does
 this via Ruby 2.0's `prepend` method:
 
-[code, Ruby]
+[source, Ruby]
 ----
 class Asciidoctor::Converter::Html5Converter
   # inject our custom code into the
@@ -987,7 +987,7 @@ has two components, `module Html5ConverterExtensions`
 and `class Converter`.  Let us examine these
 in ever greater detail.
 
-[code, ruby]
+[source, ruby]
 ----
 
 module Asciidoctor::LaTeX
@@ -1009,7 +1009,7 @@ contains handlers for nodes, e.g, the
 and the `inline_anchor` node, which
 has new behavior.
 
-[code, ruby]
+[source, ruby]
 ----
 
 module Asciidoctor::LaTeX
@@ -1023,7 +1023,7 @@ end
 
 ==== Html5ConverterExtensions in more detail
 
-[code, ruby]
+[source, ruby]
 ----
 module Html5ConverterExtensions
 
@@ -1059,7 +1059,7 @@ end
 
 ==== A typical node handler
 
-[code, ruby]
+[source, ruby]
 ----
 def handle_equation(node)
   options = node.attributes['options']
@@ -1096,7 +1096,7 @@ is determined by the node, e.g., by its name
  to add the needed behavior to the converter.
 
 
-[code, ruby]
+[source, ruby]
 ----
 
 class Converter
@@ -1116,7 +1116,7 @@ end
 
 ==== Registration
 
-[code, ruby]
+[source, ruby]
 ----
 
   class Converter
@@ -1155,7 +1155,7 @@ end
 
 ==== Converter code
 
-[code, ruby]
+[source, ruby]
 ----
 class Converter
 

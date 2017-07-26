@@ -813,7 +813,7 @@ module Asciidoctor
         when :link
           $tex.macro 'href', self.target, self.text
         when :ref
-          $tex.macro 'label', self.text.gsub(/\[(.*?)\]/, "\\1")
+          $tex.macro 'label', (self.id || self.target)
         when :xref
           $tex.macro 'hyperlink', refid.tex_normalize, reftext
         else

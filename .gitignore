@@ -1,5 +1,4 @@
 mytest/
-# Jakub, could you review this paragraph?
 /Gemfile.lock
 /pkg/
 /.bundle/
@@ -40,5 +39,5 @@ jc/
 buildit
 
 # Node.js
-build/
-node_modules/
+/build/
+/node_modules/

@@ -43,3 +43,6 @@ buildit
 # Node.js
 build/
 node_modules/
+
+# Ruby stuff
+.bundle/

@@ -386,7 +386,7 @@ module Asciidoctor
     end
 
  ####################################################################
-    
+
     def label_line
       if label == ""
         ""
@@ -431,9 +431,9 @@ module Asciidoctor
       end
 
       if self.attributes['plain-option']
-        content = $tex.region 'rm', self.content
+        content = $tex.region 'rm', self.content.rstrip
       else
-        content = self.content
+        content = self.content.rstrip
       end
 
       $tex.env env, "#{_title}#{label_line}#{content}\n"
@@ -706,7 +706,7 @@ module Asciidoctor
       end
       if title
         title  = $tex.env 'bf', title
-        $tex.env 'sidebar', "#{title}\\\\#{content}"
+        $tex.env 'sidebar', "#{title}\n#{content.rstrip}"
       else
         $tex.env 'sidebar', content
       end

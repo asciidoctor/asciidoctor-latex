@@ -76,6 +76,10 @@
 # conventions: the body of the block is
 # italicized.
 
+# -        block = create_block parent, :environment, reader.lines, attrs
+# +        block = create_block parent, :environment, reader.lines, attrs, content_model: :compound
+
+
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 require 'asciidoctor/latex/core_ext/colored_string'
@@ -151,7 +155,40 @@ module Asciidoctor::LaTeX
         warn "for rode = code, attrs = #{attrs}".cyan
         block = create_block parent, :listing, reader.lines, attrs
       else
-        block = create_block parent, :environment, reader.lines, attrs, content_model: :compound
+        # From commit e414171:
+        #    -    block = create_block parent, :environment, reader.lines, attrs
+        #    +    block = create_block parent, :environment, reader.lines, attrs, content_model: :compound
+        # This change (+) is to allow one to nest envirnoment blocks --- which we want.
+        # However, this change also creates a serious bug (why I don't know) in the
+        # processing of blocks like this:
+        #     [env.equationalign]
+        #     --
+        #     a &= b + c   \\
+        #     b &= x + y  \\
+        #     a &= x + y + c
+        #     --
+        #
+        # The tex output is
+        #
+        #     \begin{equation*}
+        #     \begin{split}
+        #     \begin{verbatim}
+        #     a &= b + c   \\
+        #     b &= x + y  \\
+        #     a &= x + y + c
+        #     \end{verbatim}
+        #     \end{split}
+        #     \end{equation*}
+        #
+        # The begin-end verbatim pair is erroneous.
+        #
+        # Consequently, I am going back to the old code (-) until we can fix this issue.
+        #
+        #     -- @jxxcarlson
+        #
+
+        # block = create_block parent, :environment, reader.lines, attrs, content_model: :compound
+        block = create_block parent, :environment, reader.lines, attrs
       end
 
       if attrs['options'] =~ /numbered/

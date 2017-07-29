@@ -2,6 +2,7 @@ mytest/
 /Gemfile.lock
 /pkg/
 /.bundle/
+/vendor/
 /.ruby-gemset
 /.ruby-version
 /.yardoc/

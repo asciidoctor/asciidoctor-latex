@@ -321,14 +321,11 @@ module Asciidoctor::LaTeX
       case node.type.to_s
 
       when 'xref'
-        refid = node.attributes['refid']
-        if refid and refid[0] == '_'
-          output = "<a href=\##{refid}>#{refid.gsub('_',' ')}</a>"
-        else
+          refid = node.attributes['refid']
           refs = node.parent.document.references[:ids]
           # FIXME: the next line is HACKISH (and it crashes the app when refs[refid]) is nil)
           # FIXME: and with the fix for nil results is even more hackish
-          if refs[refid]
+          if !node.text && refid && refs[refid]
             reftext = refs[refid].gsub('.', '')
             reftext = reftext.gsub(/:.*/,'')
             if refid =~ /\Aeq-/
@@ -341,13 +338,10 @@ module Asciidoctor::LaTeX
               output = "<span class='xref'><a href=\##{refid}>#{reftext}</a></span>"
             end
           else
-            output = old_inline_anchor node
+            output = "<span class='xref'>" + old_inline_anchor(node) + "</span>"
           end
-        end
-      when 'link'
-        output = "<a href=#{node.target}>#{node.text}</a>"
       else
-        output =  old_inline_anchor node
+        output = old_inline_anchor node
       end
       output
     end
@@ -529,7 +523,7 @@ module Asciidoctor::LaTeX
 
     TOP_TYPES = %w(document section)
     LIST_TYPES = %w(dlist olist ulist)
-    INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted inline_callout)
+    INLINE_TYPES = %w(inline_anchor inline_break inline_footnote inline_quoted inline_callout inline_indexterm)
     BLOCK_TYPES = %w(admonition listing literal page_break paragraph stem pass open quote \
      example floating_title image click preamble sidebar verse toc)
     OTHER_TYPES = %w(environment environment_literal table)

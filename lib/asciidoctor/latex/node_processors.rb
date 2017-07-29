@@ -174,7 +174,14 @@ module Asciidoctor
       id ="_#{self.title.downcase.gsub(' ', '_')}"
       heading = "\\#{tagname}#{tagsuffix}\{#{self.title}\}"
       heading = $tex.hypertarget id, heading
-      value = "#{heading}\n#{self.content}"
+
+      if self.sectname == 'index'
+        value = $tex.macro 'renewcommand', '\\indexname', self.title
+        value += $tex.hypertarget id, '\\printindex'
+      else
+        value = "#{heading}\n#{self.content}"
+      end
+
       value
     end
   end
@@ -734,6 +741,8 @@ module Asciidoctor
         self.inline_footnote_process
       when 'inline_callout'
         self.inline_callout_process
+      when 'inline_indexterm'
+        self.inline_indexterm_process
       else
         ""
       end
@@ -790,14 +799,14 @@ module Asciidoctor
       # FIXME: the next line is HACKISH (and it crashes the app when refs[refid]) is nil)
       # FIXME: and with the fix for nil results is even more hackish
       # if refs[refid]
-      if refs[refid]
+      if !self.text && refs[refid]
         reftext = refs[refid].gsub('.', '')
         m = reftext.match /(\d*)/
         if m[1] == reftext
           reftext = "(#{reftext})"
         end
       else
-        reftext = ""
+        reftext = self.text
       end
       case self.type
         when :link
@@ -821,6 +830,16 @@ module Asciidoctor
 
     def inline_callout_process
       # warn "Please implement me! (inline_callout_process)".red if $VERBOSE
+    end
+
+    def inline_indexterm_process
+      case self.type
+      when :visible
+        output = $tex.macro 'index', self.text
+        output += self.text
+      else
+        $tex.macro 'index', self.attributes['terms'].join('!')
+      end
     end
 
   end

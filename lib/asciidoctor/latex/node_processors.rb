@@ -799,14 +799,14 @@ module Asciidoctor
       # FIXME: the next line is HACKISH (and it crashes the app when refs[refid]) is nil)
       # FIXME: and with the fix for nil results is even more hackish
       # if refs[refid]
-      if refs[refid]
+      if !self.text && refs[refid]
         reftext = refs[refid].gsub('.', '')
         m = reftext.match /(\d*)/
         if m[1] == reftext
           reftext = "(#{reftext})"
         end
       else
-        reftext = ""
+        reftext = self.text
       end
       case self.type
         when :link

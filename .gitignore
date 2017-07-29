@@ -1,9 +1,7 @@
-.gitignore
-
 mytest/
-# Jakub, could you review this paragraph?
 /Gemfile.lock
 /pkg/
+/.bundle/
 /.ruby-gemset
 /.ruby-version
 /.yardoc/

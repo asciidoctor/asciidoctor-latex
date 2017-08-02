@@ -408,11 +408,11 @@ module Asciidoctor
     end
 
     def handle_eqalign
-      content = $tex.env 'split', "#{label_line}#{self.content.strip}"
+      content = $tex.env 'aligned', "#{label_line}#{self.content.strip}"
       if options.include? 'numbered'
-        $tex.env 'equation', content
+        $tex.env 'align', content
       else
-        $tex.env 'equation*', content
+        $tex.env 'align*', content
       end
     end
 

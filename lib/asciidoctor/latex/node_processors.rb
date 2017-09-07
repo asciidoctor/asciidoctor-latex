@@ -39,12 +39,12 @@ module TexUtilities
 
   def self.env(env, *args)
     body = args.pop
-    "#{self.begin(env)}#{braces *args}\n#{body}\n#{self.end(env)}"
+    "#{self.begin(env)}#{braces *args}\n#{body}\n#{self.end(env)}\n"
   end
 
   def self.env_opt(env, opt, *args)
     body = args.pop
-    "#{self.begin(env)}[#{opt}]#{braces *args}\n#{body}\n#{self.end(env)}"
+    "#{self.begin(env)}[#{opt}]#{braces *args}\n#{body}\n#{self.end(env)}\n"
   end
 
   # normalize the name because it is an id
@@ -268,6 +268,8 @@ module Asciidoctor
         self.open_process
       when :environment
         self.environment_process
+      when :environment_literal
+        self.environment_literal_process
       when :click
         self.click_process
       when :listing
@@ -475,6 +477,29 @@ module Asciidoctor
         else
           handle_plain(env)
       end
+
+
+    end
+
+    def environment_literal_process
+
+      env = self.attributes["role"]
+
+      # record any environments encountered but not built=in
+      if !STANDARD_ENVIRONMENT_NAMES.include? env and !$latex_environment_names.include? env
+        $latex_environment_names << env
+      end
+
+      case env
+        when 'equationalign'
+          handle_eqalign
+        when 'equation'
+          handle_equation
+        else
+          handle_plain(env)
+      end
+
+
     end
 
     def handle_texmacro

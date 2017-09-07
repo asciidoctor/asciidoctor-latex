@@ -240,7 +240,7 @@ module Asciidoctor::LaTeX
         when 'equation'
           handle_equation_literal(node)
         when 'equationalign'
-          handle_equation_align(node)
+          handle_equation_align_literal(node)
         when 'cd'
           handle_cd(node)
         when 'chem'
@@ -390,6 +390,22 @@ module Asciidoctor::LaTeX
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + number_part + [TABLE_ROW_END]
       else
         node.lines =  ["+++<table #{table_style}><tr #{row_style}>+++"] + equation_part + [TABLE_ROW_END]
+      end
+    end
+
+    def handle_equation_align_literal(node)
+      attrs = node.attributes
+      options = attrs['options']
+      node.title = nil
+      number_part = '<td class="equation_number_style">' + "(#{node.caption}) </td>"
+      number_part = ["#{number_part}"]
+      equation_part = ['<td class="equation_content_style";>'] + ['\\[\\begin{split}'] + node.lines + ['\\end{split}\\]'] + ['</td>']
+      table_style='class="equation_table_style" '
+      row_style='class="equation_row_style"'
+      if options.include? 'numbered'
+        node.lines =  ["<table #{table_style}><tr #{row_style}>"] + equation_part + number_part + ["</tr></table>"]
+      else
+        node.lines =  ["<table #{table_style}><tr #{row_style}>"] + equation_part + ["</tr></table>"]
       end
     end
 

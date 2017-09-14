@@ -383,7 +383,7 @@ module Asciidoctor::LaTeX
       node.title = nil
       number_part = '<td class="equation_number_style">' + "(#{node.caption}) </td>"
       number_part = ["+++ #{number_part} +++"]
-      equation_part = ['+++<td class="equation_content_style";>+++'] + ['\\[\\begin{split}'] + node.lines + ['\\end{split}\\]'] + ['+++</td>+++']
+      equation_part = ['+++<td class="equation_content_style";>+++'] + ['\\[\\begin{aligned}'] + node.lines + ['\\end{aligned}\\]'] + ['+++</td>+++']
       table_style='class="equation_table_style" '
       row_style='class="equation_row_style"'
       if options.include? 'numbered'

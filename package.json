@@ -1,10 +1,10 @@
 {
   "name": "asciidoctor-latex.js",
-  "version": "1.5.5-3",
+  "version": "1.5.5",
   "description": "Add LaTeX features to AsciiDoc & convert AsciiDoc to LaTeX in JavaScript!",
   "main": "dist/main.js",
   "engines": {
-    "node": ">=0.12",
+    "node": ">=6",
     "npm": ">=3.0.0"
   },
   "files": [
@@ -13,7 +13,8 @@
     "README.adoc"
   ],
   "scripts": {
-    "build": "node npm/build.js"
+    "build": "node npm/build.js",
+    "test": "node spec/test.js"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,7 @@
     "async": "^1.5.0",
     "bestikk-fs": "^0.1.0",
     "bestikk-log": "0.1.0",
-    "bestikk-opal-compiler": "0.2.0"
+    "bestikk-opal-compiler": "0.3.0-integration7",
+    "opal-runtime": "0.11.0-integration8"
   }
 }

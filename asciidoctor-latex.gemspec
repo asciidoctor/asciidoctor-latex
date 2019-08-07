@@ -24,8 +24,8 @@ Gem::Specification.new do |s|
   s.has_rdoc      = 'yard'
 
   s.required_ruby_version = '>= 2.0'
-  
-  s.add_runtime_dependency 'asciidoctor', '~> 1.5', '>= 1.5.2'
+
+  s.add_runtime_dependency 'asciidoctor', '>= 1.5.2'
   s.add_runtime_dependency 'opal', '~> 0.6.3'
   s.add_runtime_dependency 'htmlentities', '~> 4.3'
 
